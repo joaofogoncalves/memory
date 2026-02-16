@@ -5,9 +5,12 @@ __pycache__/
 cache/
 logs/
 *.log
-posts/**/media/
+# Ignore large media files but allow images
 posts/**/*.mp4
 posts/**/*.mov
+posts/**/*.avi
+posts/**/*.webm
 posts/**/*.pdf
-!posts/**/*.md
+posts/**/*.doc
+posts/**/*.docx
 .DS_Store

@@ -20,6 +20,7 @@ from scraper.linkedin_client import LinkedInClient
 from scraper.post_fetcher import PostFetcher
 from scraper.media_downloader import MediaDownloader
 from scraper.markdown_generator import MarkdownGenerator
+from scraper.export_parser import LinkedInExportParser
 
 
 logger = logging.getLogger('linkedin_scraper')
@@ -177,6 +178,84 @@ class LinkedInArchiver:
 
         return stats
 
+    def import_and_archive_export(self, export_path: str) -> dict:
+        """
+        Import LinkedIn data export and archive posts.
+
+        Args:
+            export_path: Path to LinkedIn export ZIP file or directory
+
+        Returns:
+            Dictionary with statistics
+        """
+        logger.info(f"Importing LinkedIn data export from: {export_path}")
+
+        # Parse export
+        parser = LinkedInExportParser(export_path)
+        posts = parser.parse_export()
+
+        if not posts:
+            logger.warning("No posts found in export")
+            return {'total_posts': 0}
+
+        logger.info(f"Found {len(posts)} posts in export")
+
+        # Archive posts (reuse existing logic)
+        stats = {
+            'total_posts': len(posts),
+            'successful': 0,
+            'failed': 0,
+            'media_downloaded': 0,
+            'api_requests': 0
+        }
+
+        existing_slugs = []
+
+        for post in tqdm(posts, desc="Archiving posts from export"):
+            try:
+                # Generate slug
+                base_slug = slugify_post(post.content, post.created_at)
+                slug = get_unique_slug(base_slug, existing_slugs)
+                existing_slugs.append(slug)
+                post.slug = slug
+
+                # Create post directory
+                post_date_path = post.created_at.strftime(self.config['output']['date_format'])
+                post_dir = self.base_dir / post_date_path / slug
+                create_directory(post_dir)
+
+                # Check if post already exists
+                md_path = post_dir / 'post.md'
+                if md_path.exists():
+                    logger.debug(f"Post already archived: {slug}")
+                    stats['successful'] += 1
+                    continue
+
+                # Download media (if any)
+                if post.has_media():
+                    downloaded = self.media_downloader.download_media_for_post(post, post_dir)
+                    stats['media_downloaded'] += len(downloaded)
+
+                # Generate markdown
+                success = self.markdown_generator.save_post_markdown(post, md_path)
+
+                if success:
+                    stats['successful'] += 1
+                else:
+                    stats['failed'] += 1
+
+            except Exception as e:
+                logger.error(f"Failed to archive post {post.id}: {e}")
+                stats['failed'] += 1
+                continue
+
+        # Generate index
+        logger.info("Generating index file...")
+        index_path = self.base_dir / 'INDEX.md'
+        self.markdown_generator.generate_index(posts, index_path)
+
+        return stats
+
     def run(self, args):
         """
         Run the archiver based on command-line arguments.
@@ -187,6 +266,23 @@ class LinkedInArchiver:
         logger.info("=" * 60)
         logger.info("LinkedIn Post Archiver")
         logger.info("=" * 60)
+
+        # Handle import-export mode (no authentication needed)
+        if args.import_export:
+            logger.info("\nImporting from LinkedIn data export...\n")
+            stats = self.import_and_archive_export(args.import_export)
+
+            # Print summary
+            logger.info("\n" + "=" * 60)
+            logger.info("Import Complete!")
+            logger.info("=" * 60)
+            logger.info(f"Total posts: {stats.get('total_posts', 0)}")
+            logger.info(f"Successfully archived: {stats.get('successful', 0)}")
+            logger.info(f"Failed: {stats.get('failed', 0)}")
+            logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
+            logger.info(f"\nArchive location: {self.base_dir}")
+            logger.info("=" * 60)
+            return
 
         # Handle authentication-only mode
         if args.auth:
@@ -236,30 +332,40 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Authenticate only
-  python scraper/main.py --auth
+  # Import from LinkedIn data export (no API needed!)
+  python -m scraper.main --import-export /path/to/linkedin-export.zip
 
-  # Fetch and archive all posts
-  python scraper/main.py --fetch
+  # Authenticate with LinkedIn API
+  python -m scraper.main --auth
 
-  # Fetch only the last 50 posts
-  python scraper/main.py --limit 50
+  # Fetch and archive all posts via API
+  python -m scraper.main --fetch
+
+  # Fetch only the last 50 posts via API
+  python -m scraper.main --limit 50
 
   # Force re-authentication and fetch posts
-  python scraper/main.py --reauth --fetch
+  python -m scraper.main --reauth --fetch
         """
+    )
+
+    parser.add_argument(
+        '--import-export',
+        type=str,
+        metavar='PATH',
+        help='Import from LinkedIn data export (ZIP file or directory)'
     )
 
     parser.add_argument(
         '--auth',
         action='store_true',
-        help='Run authentication flow only'
+        help='Run authentication flow only (for API method)'
     )
 
     parser.add_argument(
         '--fetch',
         action='store_true',
-        help='Fetch and archive all posts'
+        help='Fetch and archive all posts (via API - requires auth)'
     )
 
     parser.add_argument(

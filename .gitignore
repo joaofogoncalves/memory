@@ -1,0 +1,13 @@
+.env
+venv/
+__pycache__/
+*.pyc
+cache/
+logs/
+*.log
+posts/**/media/
+posts/**/*.mp4
+posts/**/*.mov
+posts/**/*.pdf
+!posts/**/*.md
+.DS_Store

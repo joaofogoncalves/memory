@@ -7,6 +7,8 @@ from pathlib import Path
 from datetime import datetime
 from tqdm import tqdm
 
+import re
+
 from scraper.utils import (
     setup_logging,
     load_config,
@@ -86,6 +88,17 @@ class LinkedInArchiver:
             logger.error(f"Authentication failed: {e}")
             return False
 
+    @staticmethod
+    def _content_fingerprint(text: str) -> str:
+        """Normalize post text into a fingerprint for duplicate detection."""
+        text = text.lower()
+        text = re.sub(r'http\S+', '', text)       # remove URLs
+        text = re.sub(r'#\w+', '', text)           # remove hashtags
+        text = re.sub(r'@\w+', '', text)           # remove mentions
+        text = re.sub(r'[^\w\s]', '', text)        # remove punctuation
+        text = re.sub(r'\s+', ' ', text).strip()   # collapse whitespace
+        return text
+
     def _archive_posts(self, posts: list, desc: str = "Archiving posts") -> dict:
         """
         Archive a list of LinkedInPost objects to disk.
@@ -101,13 +114,26 @@ class LinkedInArchiver:
             'total_posts': len(posts),
             'successful': 0,
             'failed': 0,
+            'skipped_self_reposts': 0,
             'media_downloaded': 0,
         }
 
         existing_slugs = []
+        # Track content fingerprints to detect self-reposts
+        content_fingerprints: set = set()
 
         for post in tqdm(posts, desc=desc):
             try:
+                fingerprint = self._content_fingerprint(post.content)
+
+                # If this is a repost and we already have the original content, skip it
+                if post.is_repost() and fingerprint in content_fingerprints:
+                    logger.debug(f"Skipping self-repost: {post.content[:60]}...")
+                    stats['skipped_self_reposts'] += 1
+                    continue
+
+                content_fingerprints.add(fingerprint)
+
                 # Generate slug
                 base_slug = slugify_post(post.content, post.created_at)
                 slug = get_unique_slug(base_slug, existing_slugs)
@@ -259,6 +285,8 @@ class LinkedInArchiver:
         logger.info(f"Total posts: {stats.get('total_posts', 0)}")
         logger.info(f"Successfully archived: {stats.get('successful', 0)}")
         logger.info(f"Failed: {stats.get('failed', 0)}")
+        if stats.get('skipped_self_reposts'):
+            logger.info(f"Skipped self-reposts: {stats['skipped_self_reposts']}")
         logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
         if stats.get('api_requests'):
             logger.info(f"API requests made: {stats['api_requests']}")

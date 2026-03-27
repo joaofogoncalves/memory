@@ -14,6 +14,14 @@ media:
   download_documents: true
   max_video_size_mb: 500
 
+browser:
+  profile_dir: cache/browser_profile
+  scroll_delay_min: 3.0
+  scroll_delay_max: 8.0
+  action_delay_min: 1.0
+  action_delay_max: 3.0
+  max_stale_scrolls: 5
+
 logging:
   level: INFO
   file: logs/scraper.log

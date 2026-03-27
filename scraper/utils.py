@@ -1,12 +1,13 @@
 """Utility functions for the LinkedIn scraper."""
 
+import json
 import os
 import re
 import logging
 import yaml
 from pathlib import Path
-from datetime import datetime
-from typing import List, Optional
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional
 from slugify import slugify as make_slug
 from dotenv import load_dotenv
 
@@ -156,3 +157,62 @@ def parse_linkedin_date(date_str: str) -> Optional[datetime]:
         return datetime.fromtimestamp(timestamp)
     except (ValueError, TypeError):
         return None
+
+
+def parse_relative_date(text: str) -> Optional[datetime]:
+    """
+    Parse LinkedIn relative date strings to datetime.
+
+    Examples: '2h', '3d', '1w', '2mo', '1yr', '30m', '5s',
+              '2 hours', '3 days ago', '1 week'
+    """
+    text = text.strip().lower().rstrip('.')
+    text = text.replace(' ago', '')
+
+    patterns = [
+        (r'(\d+)\s*s(?:ec(?:ond)?s?)?$', 'seconds'),
+        (r'(\d+)\s*m(?:in(?:ute)?s?)?$', 'minutes'),
+        (r'(\d+)\s*h(?:(?:ou)?rs?)?$', 'hours'),
+        (r'(\d+)\s*d(?:ays?)?$', 'days'),
+        (r'(\d+)\s*w(?:(?:ee)?ks?)?$', 'weeks'),
+        (r'(\d+)\s*mo(?:nths?)?$', 'months'),
+        (r'(\d+)\s*yr?(?:(?:ea)?rs?)?$', 'years'),
+    ]
+
+    for pattern, unit in patterns:
+        match = re.match(pattern, text)
+        if match:
+            value = int(match.group(1))
+            now = datetime.now()
+            if unit == 'seconds':
+                return now - timedelta(seconds=value)
+            elif unit == 'minutes':
+                return now - timedelta(minutes=value)
+            elif unit == 'hours':
+                return now - timedelta(hours=value)
+            elif unit == 'days':
+                return now - timedelta(days=value)
+            elif unit == 'weeks':
+                return now - timedelta(weeks=value)
+            elif unit == 'months':
+                return now - timedelta(days=value * 30)
+            elif unit == 'years':
+                return now - timedelta(days=value * 365)
+
+    return None
+
+
+def load_checkpoint(path: str = 'cache/crawl_checkpoint.json') -> Optional[Dict]:
+    """Load crawl checkpoint from disk."""
+    try:
+        with open(path, 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
+def save_checkpoint(data: Dict, path: str = 'cache/crawl_checkpoint.json') -> None:
+    """Save crawl checkpoint to disk."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=2, default=str)

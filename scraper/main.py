@@ -15,9 +15,6 @@ from scraper.utils import (
     get_unique_slug,
     create_directory
 )
-from scraper.auth import LinkedInAuthenticator
-from scraper.linkedin_client import LinkedInClient
-from scraper.post_fetcher import PostFetcher
 from scraper.media_downloader import MediaDownloader
 from scraper.markdown_generator import MarkdownGenerator
 from scraper.export_parser import LinkedInExportParser
@@ -38,14 +35,16 @@ class LinkedInArchiver:
         """
         self.config = load_config(config_path)
         self.logger = setup_logging(self.config)
-        self.env_vars = load_env_vars()
 
         self.base_dir = Path(self.config['output']['base_dir'])
+        self.media_downloader = MediaDownloader(self.config)
+        self.markdown_generator = MarkdownGenerator(self.config)
+
+        # API-related state (lazy init)
+        self.env_vars = None
         self.authenticator = None
         self.client = None
         self.post_fetcher = None
-        self.media_downloader = MediaDownloader(self.config)
-        self.markdown_generator = MarkdownGenerator(self.config)
 
     def authenticate(self, force_reauth: bool = False):
         """
@@ -54,7 +53,14 @@ class LinkedInArchiver:
         Args:
             force_reauth: Force new authentication flow
         """
+        from scraper.auth import LinkedInAuthenticator
+        from scraper.linkedin_client import LinkedInClient
+        from scraper.post_fetcher import PostFetcher
+
         logger.info("Starting authentication...")
+
+        if not self.env_vars:
+            self.env_vars = load_env_vars()
 
         self.authenticator = LinkedInAuthenticator(
             client_id=self.env_vars['client_id'],
@@ -80,60 +86,27 @@ class LinkedInArchiver:
             logger.error(f"Authentication failed: {e}")
             return False
 
-    def fetch_and_archive_posts(self, limit: int = None) -> dict:
+    def _archive_posts(self, posts: list, desc: str = "Archiving posts") -> dict:
         """
-        Fetch all posts and archive them.
+        Archive a list of LinkedInPost objects to disk.
 
         Args:
-            limit: Maximum number of posts to fetch (None = all)
+            posts: List of LinkedInPost objects
+            desc: Progress bar description
 
         Returns:
             Dictionary with statistics
         """
-        if not self.client:
-            logger.error("Not authenticated. Run authentication first.")
-            return {}
-
-        logger.info("Fetching user profile...")
-        profile = self.client.get_user_profile()
-
-        if not profile:
-            logger.error("Failed to fetch user profile")
-            return {}
-
-        user_name = profile.get('name', 'Unknown')
-        logger.info(f"Archiving posts for: {user_name}")
-
-        # Get person URN
-        person_urn = self.client.get_person_urn(profile)
-        if not person_urn:
-            logger.error("Could not determine person URN")
-            return {}
-
-        logger.info(f"Person URN: {person_urn}")
-
-        # Fetch posts
-        logger.info("Fetching posts from LinkedIn...")
-        posts = self.post_fetcher.fetch_all_posts(person_urn, limit=limit)
-
-        if not posts:
-            logger.warning("No posts found")
-            return {'total_posts': 0}
-
-        logger.info(f"Found {len(posts)} posts to archive")
-
-        # Archive each post
         stats = {
             'total_posts': len(posts),
             'successful': 0,
             'failed': 0,
             'media_downloaded': 0,
-            'api_requests': self.client.get_request_count()
         }
 
         existing_slugs = []
 
-        for post in tqdm(posts, desc="Archiving posts"):
+        for post in tqdm(posts, desc=desc):
             try:
                 # Generate slug
                 base_slug = slugify_post(post.content, post.created_at)
@@ -178,6 +151,52 @@ class LinkedInArchiver:
 
         return stats
 
+    def fetch_and_archive_posts(self, limit: int = None) -> dict:
+        """
+        Fetch all posts via API and archive them.
+
+        Args:
+            limit: Maximum number of posts to fetch (None = all)
+
+        Returns:
+            Dictionary with statistics
+        """
+        if not self.client:
+            logger.error("Not authenticated. Run authentication first.")
+            return {}
+
+        logger.info("Fetching user profile...")
+        profile = self.client.get_user_profile()
+
+        if not profile:
+            logger.error("Failed to fetch user profile")
+            return {}
+
+        user_name = profile.get('name', 'Unknown')
+        logger.info(f"Archiving posts for: {user_name}")
+
+        # Get person URN
+        person_urn = self.client.get_person_urn(profile)
+        if not person_urn:
+            logger.error("Could not determine person URN")
+            return {}
+
+        logger.info(f"Person URN: {person_urn}")
+
+        # Fetch posts
+        logger.info("Fetching posts from LinkedIn...")
+        posts = self.post_fetcher.fetch_all_posts(person_urn, limit=limit)
+
+        if not posts:
+            logger.warning("No posts found")
+            return {'total_posts': 0}
+
+        logger.info(f"Found {len(posts)} posts to archive")
+
+        stats = self._archive_posts(posts, desc="Archiving posts")
+        stats['api_requests'] = self.client.get_request_count()
+        return stats
+
     def import_and_archive_export(self, export_path: str) -> dict:
         """
         Import LinkedIn data export and archive posts.
@@ -190,7 +209,6 @@ class LinkedInArchiver:
         """
         logger.info(f"Importing LinkedIn data export from: {export_path}")
 
-        # Parse export
         parser = LinkedInExportParser(export_path)
         posts = parser.parse_export()
 
@@ -199,62 +217,53 @@ class LinkedInArchiver:
             return {'total_posts': 0}
 
         logger.info(f"Found {len(posts)} posts in export")
+        return self._archive_posts(posts, desc="Archiving posts from export")
 
-        # Archive posts (reuse existing logic)
-        stats = {
-            'total_posts': len(posts),
-            'successful': 0,
-            'failed': 0,
-            'media_downloaded': 0,
-            'api_requests': 0
-        }
+    def crawl_and_archive_posts(
+        self, profile_url: str, limit: int = None, headed: bool = False
+    ) -> dict:
+        """
+        Crawl posts via browser automation and archive them.
 
-        existing_slugs = []
+        Args:
+            profile_url: LinkedIn profile URL
+            limit: Maximum number of posts to crawl
+            headed: Run browser in visible mode
 
-        for post in tqdm(posts, desc="Archiving posts from export"):
-            try:
-                # Generate slug
-                base_slug = slugify_post(post.content, post.created_at)
-                slug = get_unique_slug(base_slug, existing_slugs)
-                existing_slugs.append(slug)
-                post.slug = slug
+        Returns:
+            Dictionary with statistics
+        """
+        from scraper.browser_crawler import BrowserCrawler
 
-                # Create post directory
-                post_date_path = post.created_at.strftime(self.config['output']['date_format'])
-                post_dir = self.base_dir / post_date_path / slug
-                create_directory(post_dir)
+        logger.info("Starting browser-based crawl...")
+        crawler = BrowserCrawler(self.config)
 
-                # Check if post already exists
-                md_path = post_dir / 'post.md'
-                if md_path.exists():
-                    logger.debug(f"Post already archived: {slug}")
-                    stats['successful'] += 1
-                    continue
+        posts = crawler.crawl_posts(
+            profile_url=profile_url,
+            limit=limit,
+            headed=headed,
+        )
 
-                # Download media (if any)
-                if post.has_media():
-                    downloaded = self.media_downloader.download_media_for_post(post, post_dir)
-                    stats['media_downloaded'] += len(downloaded)
+        if not posts:
+            logger.warning("No posts crawled")
+            return {'total_posts': 0}
 
-                # Generate markdown
-                success = self.markdown_generator.save_post_markdown(post, md_path)
+        logger.info(f"Crawled {len(posts)} posts, archiving...")
+        return self._archive_posts(posts, desc="Archiving crawled posts")
 
-                if success:
-                    stats['successful'] += 1
-                else:
-                    stats['failed'] += 1
-
-            except Exception as e:
-                logger.error(f"Failed to archive post {post.id}: {e}")
-                stats['failed'] += 1
-                continue
-
-        # Generate index
-        logger.info("Generating index file...")
-        index_path = self.base_dir / 'INDEX.md'
-        self.markdown_generator.generate_index(posts, index_path)
-
-        return stats
+    def _print_stats(self, stats: dict, label: str = "Archival") -> None:
+        """Print summary statistics."""
+        logger.info("\n" + "=" * 60)
+        logger.info(f"{label} Complete!")
+        logger.info("=" * 60)
+        logger.info(f"Total posts: {stats.get('total_posts', 0)}")
+        logger.info(f"Successfully archived: {stats.get('successful', 0)}")
+        logger.info(f"Failed: {stats.get('failed', 0)}")
+        logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
+        if stats.get('api_requests'):
+            logger.info(f"API requests made: {stats['api_requests']}")
+        logger.info(f"\nArchive location: {self.base_dir}")
+        logger.info("=" * 60)
 
     def run(self, args):
         """
@@ -271,58 +280,63 @@ class LinkedInArchiver:
         if args.import_export:
             logger.info("\nImporting from LinkedIn data export...\n")
             stats = self.import_and_archive_export(args.import_export)
-
-            # Print summary
-            logger.info("\n" + "=" * 60)
-            logger.info("Import Complete!")
-            logger.info("=" * 60)
-            logger.info(f"Total posts: {stats.get('total_posts', 0)}")
-            logger.info(f"Successfully archived: {stats.get('successful', 0)}")
-            logger.info(f"Failed: {stats.get('failed', 0)}")
-            logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
-            logger.info(f"\nArchive location: {self.base_dir}")
-            logger.info("=" * 60)
+            self._print_stats(stats, "Import")
             return
 
-        # Handle authentication-only mode
-        if args.auth:
-            success = self.authenticate(force_reauth=args.reauth)
+        # Handle browser login mode
+        if args.browser_login:
+            from scraper.browser_crawler import BrowserCrawler
+            crawler = BrowserCrawler(self.config)
+            success = crawler.manual_login()
             if success:
-                logger.info("✓ Authentication complete!")
-                logger.info("You can now run with --fetch to archive your posts")
+                logger.info("Browser login successful! Session saved.")
+                logger.info("You can now run with --crawl to archive your posts.")
             else:
-                logger.error("✗ Authentication failed")
+                logger.error("Browser login failed.")
                 sys.exit(1)
             return
 
-        # Authenticate
-        success = self.authenticate(force_reauth=args.reauth)
-        if not success:
-            logger.error("Authentication failed. Exiting.")
-            sys.exit(1)
+        # Handle crawl mode (browser-based, no API needed)
+        if args.crawl:
+            if not args.profile_url:
+                logger.error("--profile-url is required with --crawl")
+                logger.error("Example: --crawl --profile-url https://www.linkedin.com/in/username")
+                sys.exit(1)
 
-        # Fetch and archive posts
-        if args.fetch or args.limit:
+            logger.info("\nStarting browser-based crawl...\n")
+            stats = self.crawl_and_archive_posts(
+                profile_url=args.profile_url,
+                limit=args.limit,
+                headed=args.headed,
+            )
+            self._print_stats(stats, "Crawl")
+            return
+
+        # Handle authentication-only mode (API)
+        if args.auth:
+            success = self.authenticate(force_reauth=args.reauth)
+            if success:
+                logger.info("Authentication complete!")
+                logger.info("You can now run with --fetch to archive your posts")
+            else:
+                logger.error("Authentication failed")
+                sys.exit(1)
+            return
+
+        # API fetch mode
+        if args.fetch:
+            success = self.authenticate(force_reauth=args.reauth)
+            if not success:
+                logger.error("Authentication failed. Exiting.")
+                sys.exit(1)
+
             logger.info("\nStarting post archival...\n")
             stats = self.fetch_and_archive_posts(limit=args.limit)
+            self._print_stats(stats, "Archival")
 
-            # Print summary
-            logger.info("\n" + "=" * 60)
-            logger.info("Archival Complete!")
-            logger.info("=" * 60)
-            logger.info(f"Total posts: {stats.get('total_posts', 0)}")
-            logger.info(f"Successfully archived: {stats.get('successful', 0)}")
-            logger.info(f"Failed: {stats.get('failed', 0)}")
-            logger.info(f"API requests made: {stats.get('api_requests', 0)}")
-            logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
-            logger.info(f"\nArchive location: {self.base_dir}")
-
-            # Rate limit warning
             requests_made = stats.get('api_requests', 0)
             if requests_made > 400:
-                logger.warning(f"⚠️  High API usage: {requests_made}/~500 daily limit")
-
-            logger.info("=" * 60)
+                logger.warning(f"High API usage: {requests_made}/~500 daily limit")
 
 
 def main():
@@ -332,55 +346,78 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Import from LinkedIn data export (no API needed!)
+  # Browser crawl (recommended - no API needed):
+  python -m scraper.main --browser-login
+  python -m scraper.main --crawl --profile-url https://www.linkedin.com/in/username
+  python -m scraper.main --crawl --profile-url https://www.linkedin.com/in/username --limit 50
+
+  # Import from LinkedIn data export:
   python -m scraper.main --import-export /path/to/linkedin-export.zip
 
-  # Authenticate with LinkedIn API
+  # API method (if you have API access):
   python -m scraper.main --auth
-
-  # Fetch and archive all posts via API
   python -m scraper.main --fetch
-
-  # Fetch only the last 50 posts via API
-  python -m scraper.main --limit 50
-
-  # Force re-authentication and fetch posts
-  python -m scraper.main --reauth --fetch
         """
     )
 
-    parser.add_argument(
+    # Browser crawl options
+    crawl_group = parser.add_argument_group('Browser crawl (recommended)')
+    crawl_group.add_argument(
+        '--browser-login',
+        action='store_true',
+        help='Open browser for manual LinkedIn login (do this first)'
+    )
+    crawl_group.add_argument(
+        '--crawl',
+        action='store_true',
+        help='Crawl posts via browser automation (no API needed)'
+    )
+    crawl_group.add_argument(
+        '--profile-url',
+        type=str,
+        metavar='URL',
+        help='LinkedIn profile URL (e.g. https://www.linkedin.com/in/username)'
+    )
+    crawl_group.add_argument(
+        '--headed',
+        action='store_true',
+        help='Run browser in visible mode (for debugging)'
+    )
+
+    # Import options
+    import_group = parser.add_argument_group('Data export import')
+    import_group.add_argument(
         '--import-export',
         type=str,
         metavar='PATH',
         help='Import from LinkedIn data export (ZIP file or directory)'
     )
 
-    parser.add_argument(
+    # API options
+    api_group = parser.add_argument_group('API method (requires LinkedIn API access)')
+    api_group.add_argument(
         '--auth',
         action='store_true',
-        help='Run authentication flow only (for API method)'
+        help='Run OAuth authentication flow'
     )
-
-    parser.add_argument(
+    api_group.add_argument(
         '--fetch',
         action='store_true',
-        help='Fetch and archive all posts (via API - requires auth)'
+        help='Fetch and archive all posts via API'
+    )
+    api_group.add_argument(
+        '--reauth',
+        action='store_true',
+        help='Force re-authentication'
     )
 
+    # Common options
     parser.add_argument(
         '--limit',
         type=int,
         metavar='N',
-        help='Fetch only the last N posts'
+        help='Maximum number of posts to process'
     )
-
-    parser.add_argument(
-        '--reauth',
-        action='store_true',
-        help='Force re-authentication (clear cached token)'
-    )
-
     parser.add_argument(
         '--config',
         default='config/config.yaml',
@@ -390,7 +427,7 @@ Examples:
     args = parser.parse_args()
 
     # If no action specified, show help
-    if not any([args.auth, args.fetch, args.limit]):
+    if not any([args.auth, args.fetch, args.crawl, args.browser_login, args.import_export]):
         parser.print_help()
         sys.exit(0)
 

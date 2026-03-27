@@ -211,16 +211,21 @@ class BrowserCrawler:
                         logger.warning(f"Failed to extract post {urn}: {e}")
                         continue
 
+                # Show progress with oldest post date
+                oldest_date = ''
+                if posts:
+                    oldest_date = f", oldest: {posts[-1].created_at.strftime('%Y-%m-%d')}"
+
                 # Check stale
                 if new_count == 0:
                     stale_count += 1
                     logger.info(
-                        f"No new posts this scroll (stale {stale_count}/{self.max_stale_scrolls}, total: {len(posts)})"
+                        f"No new posts this scroll (stale {stale_count}/{self.max_stale_scrolls}, total: {len(posts)}{oldest_date})"
                     )
                 else:
                     stale_count = 0
                     logger.info(
-                        f"Found {new_count} new posts (total: {len(posts)})"
+                        f"Found {new_count} new posts (total: {len(posts)}{oldest_date})"
                     )
 
                 if stale_count >= self.max_stale_scrolls:

@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74196473259265761
 post_type: original
 archived_at: 2026-03-27
 tags: [ai, slop, dobetter]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Aaron Francis (@aarondfrancis) on X/Twitter in
+    light mode. Lists AI coding capability progression by year: "2021: it can't
+    even autocomplete a line... 2025: it can't even handle complex projects...
+    2026: oh no." Shows 180 replies, 344 retweets, 4.8K likes. Light background,
+    text-only, humorous timeline format.
 ---
 
 # January 26, 2026

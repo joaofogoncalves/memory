@@ -4,6 +4,14 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74192951777077821
 post_type: original
 archived_at: 2026-03-27
 tags: [agents, ai, leadership]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated split-composition graphic titled "AI is Reshaping Engineering
+    Leadership." Left side shows traditional pyramid hierarchy of suited figures.
+    Right side shows a flat circle of people sitting around glowing robot/AI
+    agents. Four pillars labeled: "From Hierarchies to Horizontal Teams,"
+    "Leaders as Enablers, Not Bottlenecks," "AI Agents as New Junior Devs,"
+    "Obsess Over Quality." Teal/green corporate illustration style.
 ---
 
 # January 26, 2026

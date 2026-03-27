@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74272538644139663
 post_type: original
 archived_at: 2026-03-27
 tags: [Codex, Claude, SoftwareDevelopment, AI]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Filip Kowalski (@filippkowalski) on X/Twitter in
+    dark mode. Compares Codex to a "senior/architect engineer in their 40s" and
+    Claude Code to a "senior engineer in their mid-20s running on Red Bulls."
+    Dark background, text-only, verified badge visible.
 ---
 
 # February 25, 2026

@@ -3,6 +3,13 @@ date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7416751057080569856/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Custom graphic with bold statistic overlay on a dark atmospheric background
+    showing a broken window with green Matrix-style code rain. White text reads
+    "96% of developers don't fully trust AI-generated code..." with gold text
+    below: "yet only 48% always verify it." Moody, dramatic composition with
+    strong visual contrast. Data-driven hook image.
 ---
 
 # January 26, 2026

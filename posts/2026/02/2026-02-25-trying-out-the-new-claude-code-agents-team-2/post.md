@@ -3,6 +3,13 @@ date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7425874644961984512/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tmux terminal session showing Claude Code's multi-agent "team"
+    feature running. Dark terminal background with colored syntax output across
+    split panes. Shows a team lead coordinating 4 parallel agents (cli-agent,
+    env-updater, docs-docs, vdocs-docs) with status updates and progress logs.
+    Developer tooling screenshot, information-dense, multiple colored highlights.
 ---
 
 # February 25, 2026

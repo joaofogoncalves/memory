@@ -3,6 +3,13 @@ date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7424810702164623361/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Uncle Bob Martin (@unclebobmar) on X/Twitter in
+    dark mode. Text about using AI for coding for 6 weeks, comparing the
+    experience to a carpenter given access to power tools for the first time.
+    Dark background, white text, profile avatar showing cartoon illustration.
+    Text-heavy, no embedded media.
 ---
 
 # February 25, 2026

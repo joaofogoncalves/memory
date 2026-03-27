@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74243593402219315
 post_type: original
 archived_at: 2026-03-27
 tags: [ClaudeCode, AI, DeveloperProductivity, 1]
+media_descriptions:
+  image-1.jpg: >-
+    Infographic cheat sheet titled "10 Claude Code Tips from the Creator" in
+    retro/vintage design style. Orange, cream, and dark color palette. Grid
+    layout of 12 illustrated tips with small icons for each (clipboard, code
+    blocks, charts, microphone). Information-dense, compact design. Credit to
+    Carl Velloti. Professional but stylized visual.
 ---
 
 # February 25, 2026

@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74240108751597158
 post_type: original
 archived_at: 2026-03-27
 tags: [SoftwareEngineering, Startups, TechLeadership, BuildVsBuy]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated illustration of hands typing on a laptop with code on screen,
+    surrounded by floating SaaS logos and app icons on a blue-lit workspace.
+    Coffee cup and "Terms of Service" document visible on desk. Digital
+    illustration style with warm/cool lighting contrast. Visual metaphor for
+    SaaS sprawl vs building your own tools.
 ---
 
 # February 25, 2026

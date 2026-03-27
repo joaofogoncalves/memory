@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74215340107004477
 post_type: original
 archived_at: 2026-03-27
 tags: [Productivity, GenerativeAI, DevTools, SoftwareEngineering, AI]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated abstract graphic showing two curved arrows forming a circular
+    feedback loop. Contains code snippets, an "AI" brain icon, and code bracket
+    symbols. Dark blue/purple background with neon blue and purple glowing
+    accents. Tech-futuristic style, square aspect ratio. Visual metaphor for
+    engineering feedback loops applied to AI.
 ---
 
 # January 26, 2026

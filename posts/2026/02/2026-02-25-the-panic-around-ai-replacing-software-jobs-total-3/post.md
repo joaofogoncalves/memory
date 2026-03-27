@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74233231306367139
 post_type: original
 archived_at: 2026-03-27
 tags: [ProductManagement, CareerGrowth, FutureOfWork, SoftwareEngineering, AI]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated illustration of a silhouetted figure with six arms holding
+    various tools (paintbrush, wrench, pen, lightbulb, laptop, blueprint).
+    Purple/magenta "AI" chip at center with glowing circuit board patterns
+    radiating outward. Dark blue background, neon cyberpunk style. Visual
+    metaphor for AI amplifying multiple skills simultaneously.
 ---
 
 # February 25, 2026

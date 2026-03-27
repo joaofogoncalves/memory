@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74399561209929646
 post_type: original
 archived_at: 2026-03-27
 tags: [AI]
+media_descriptions:
+  image-1.jpg: >-
+    Line chart titled "BullshitBench: How have models improved?" comparing three AI
+    companies over time. Anthropic (orange) leads at ~90%, OpenAI (blue) and Google
+    (green) cluster around 30-50%. White background, clean data visualization style.
+    X-axis spans Q1 2024 to Q2 2026 by model launch date, Y-axis is "% Clear
+    Pushback." Individual model names labeled on each data point.
 ---
 
 # March 20, 2026

@@ -3,6 +3,13 @@ date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7421834734336540674/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of X/Twitter thread in dark mode. Shows a reply from Jorg Jessen
+    promoting German open-source alternatives (GDPR-compliant, ISO 27001) in
+    response to Emmanuel Pernot-Leplay's post about France phasing out Teams/Zoom
+    for European solution Visio. Dark background, text-heavy, nested thread format
+    with quote tweet visible.
 ---
 
 # January 26, 2026

@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74229031466805780
 post_type: original
 archived_at: 2026-03-27
 tags: [Refactoring, TheFutureIsNow, AI, Innovation]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Malte Ubl (@cramforce) on X/Twitter in dark mode.
+    Short quip: "Major refactorings used to be expensive to do and very risky.
+    Now they are only very risky." Shows 96.4K views, timestamp Jan 28 2026.
+    Dark background, white text, minimal composition.
 ---
 
 # February 25, 2026

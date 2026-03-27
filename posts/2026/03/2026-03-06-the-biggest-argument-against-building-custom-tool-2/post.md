@@ -3,6 +3,13 @@ date: 2026-03-06
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7434144216911556608/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated or editorial photo of a cluttered office shelf overflowing with
+    stacked folders, papers, and sticky notes. SaaS-branded stickers and logos
+    line the middle shelf as a visual metaphor for SaaS tool bloat. Moody,
+    blue-tinted lighting with a single laptop on an empty lower shelf. Editorial,
+    conceptual composition.
 ---
 
 # March 06, 2026

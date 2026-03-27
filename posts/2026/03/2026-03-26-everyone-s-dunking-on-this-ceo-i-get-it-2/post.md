@@ -3,6 +3,12 @@ date: 2026-03-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7442945372102017026/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a forum/Reddit post where someone vents about their CEO being
+    obsessed with AI, asking "have you asked AI?" after every presentation. Light
+    mode interface with yellow "Support" flair tag, black text on white background.
+    Text-heavy, mobile-style layout showing 402 upvotes and 193 comments.
 ---
 
 # March 26, 2026

@@ -3,6 +3,12 @@ date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7429843940163612672/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Custom branded infographic with Anthropic's asterisk logo, titled "Claude Code
+    planning tools for your skills." Dark background with warm orange/brown accents.
+    Table format listing three tools (EnterPlanMode, AskUserQuestion, ExitPlanMode)
+    with descriptions. Polished, product-documentation style design.
 ---
 
 # February 25, 2026

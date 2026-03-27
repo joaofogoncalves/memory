@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74269148306592604
 post_type: original
 archived_at: 2026-03-27
 tags: [SoftwareDevelopment, AI]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated split-composition image. Left side shows a Cold War-era meeting
+    with two men in suits at a desk with world map behind them. Right side shows
+    a humanoid robot with exposed mechanical parts sitting at a modern desk with
+    a laptop displaying code. Cinematic, desaturated tones. Visual metaphor for
+    "trust but verify" applied to AI coding agents.
 ---
 
 # February 25, 2026

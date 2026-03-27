@@ -3,6 +3,14 @@ date: 2026-03-13
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7435802802595057664/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Radar/spider chart titled "Theoretical capability and observed exposure by
+    occupational category" from an Anthropic labor market report. Blue polygon
+    shows theoretical AI coverage reaching far outward, red polygon shows much
+    smaller observed usage clustered in center. Covers ~20 occupational categories
+    including Computer & Math, Legal, Management, etc. Academic research style,
+    white background with blue and red color coding.
 ---
 
 # March 13, 2026

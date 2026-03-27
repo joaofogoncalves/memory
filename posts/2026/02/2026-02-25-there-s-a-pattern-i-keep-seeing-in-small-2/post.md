@@ -3,6 +3,12 @@ date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7432337316494618624/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Photo of a hand erasing a densely cluttered whiteboard covered in diagrams,
+    flowcharts, arrows, and technical drawings in blue, red, and green markers.
+    Office environment visible in background. Visual metaphor for engineering
+    complexity and process overhead. Candid, editorial feel.
 ---
 
 # February 25, 2026

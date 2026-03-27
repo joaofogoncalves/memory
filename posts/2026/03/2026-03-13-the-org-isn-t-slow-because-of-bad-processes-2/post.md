@@ -3,6 +3,12 @@ date: 2026-03-13
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7436185576791363585/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Quote card from Ed Sim's newsletter "What's Hot in Enterprise IT/VC #488"
+    (whatshotit.vc). Large bold text reads "Velocity is no longer a code problem.
+    It's an org design problem." Minimal white background with newsletter branding
+    and Substack icon at bottom. Clean, text-dominant composition.
 ---
 
 # March 13, 2026

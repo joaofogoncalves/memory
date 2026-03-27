@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74316250784144097
 post_type: original
 archived_at: 2026-03-27
 tags: [ClaudeCode, SoftwareDevelopment, AI]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Cody Plofker (@codyplof) on X/Twitter in dark mode.
+    Tweet compares Claude Code to "a video game for adults" where you get stuck,
+    try everything, break through, and stack skills. Verified badge visible. Dark
+    background, standard Twitter post layout, text-only content.
 ---
 
 # February 25, 2026

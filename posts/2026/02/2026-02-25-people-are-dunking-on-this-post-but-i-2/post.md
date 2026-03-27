@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74280071045750702
 post_type: original
 archived_at: 2026-03-27
 tags: [regex, SoftwareDevelopment, AI]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet from Dan (@robustus) on X/Twitter in dark mode. Lists
+    things he never deeply learned (regexs, sql, nginx confs, shell commands,
+    JavaScript frameworks, webpack, etc.) saying Claude Code validated that
+    strategy. Dark background, white text, text-only tweet with verified badge.
 ---
 
 # February 25, 2026

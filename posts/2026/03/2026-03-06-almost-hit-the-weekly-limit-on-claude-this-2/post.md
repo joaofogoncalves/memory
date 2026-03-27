@@ -3,6 +3,12 @@ date: 2026-03-06
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7435432013613969408/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of Claude's weekly usage limits dashboard in dark mode. Shows "97%
+    used" with a nearly full blue progress bar and "Resets in 10 hr 7 min" text.
+    Minimal UI, dark background with white/gray text. Tightly cropped to just the
+    usage meter section.
 ---
 
 # March 06, 2026

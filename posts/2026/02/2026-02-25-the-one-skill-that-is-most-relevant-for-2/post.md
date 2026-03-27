@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74225619185587691
 post_type: original
 archived_at: 2026-03-27
 tags: [curiosity, Ai, softwaredevelopment]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated surreal landscape showing dozens of closed dark doors standing
+    in a misty open field, with one door in the center glowing with warm golden
+    light. Moody, atmospheric, dark tones with a single bright focal point.
+    Visual metaphor for curiosity and finding the right path among many options.
 ---
 
 # February 25, 2026

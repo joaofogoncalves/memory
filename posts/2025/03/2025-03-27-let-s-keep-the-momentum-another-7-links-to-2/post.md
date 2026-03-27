@@ -3,6 +3,11 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7299713920913620992/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Futuristic 3D illustration of floating translucent screens displaying code
+    against deep blue background with glowing orange and gold gear icons.
+    Polished stock-style tech graphic, image-heavy with no readable text.
 ---
 
 # March 27, 2025

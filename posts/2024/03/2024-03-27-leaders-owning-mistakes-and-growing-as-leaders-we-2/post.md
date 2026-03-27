@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71282762754371420
 post_type: original
 archived_at: 2026-03-27
 tags: [apology, leadership, mistakes]
+media_descriptions:
+  image-1.jpg: >-
+    Split-layout with bold black serif "LEADERS: OWNING MISTAKES AND GROWING" on
+    white with brushstroke texture (left), and AI-generated illustration of
+    professionals around a circular puzzle-piece table with floating pieces
+    (right). Editorial typography with teal/blue-green digital illustration.
 ---
 
 # March 27, 2024

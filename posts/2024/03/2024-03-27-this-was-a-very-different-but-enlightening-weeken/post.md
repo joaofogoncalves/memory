@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71245213605417656
 post_type: original
 archived_at: 2026-03-27
 tags: [productmanagement, product]
+media_descriptions:
+  image-1.jpg: >-
+    Group photograph of approximately 40-50 people posing together in a modern conference space with
+    "Product Circle" event branding on blue banner in background. Standard event group photo with
+    indoor lighting, casual dress, and lanyards visible. Relaxed tech community meetup atmosphere.
 ---
 
 # March 27, 2024

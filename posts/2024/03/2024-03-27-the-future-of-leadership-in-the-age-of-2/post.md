@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71301619331098542
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, ai]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated promotional banner with title "The Future of Leadership in the Age of AI" in white text on blue
+    background alongside a collage of diverse professionals with holographic interfaces. Corporate blue color scheme,
+    mixed text-and-image, split 50/50 layout.
 ---
 
 # March 27, 2024

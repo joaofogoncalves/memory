@@ -3,6 +3,11 @@ date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7140687321749770240/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated header with "TALENT TANGO - SMALL TEAMS, BIG DECISIONS" in white uppercase on dark navy background
+    alongside hexagonal frame with surrealist intertwined abstract figures in blue and red. Dramatic sculptural
+    quality with contrasting cool-warm tones, mixed text-and-artwork layout.
 ---
 
 # March 27, 2024

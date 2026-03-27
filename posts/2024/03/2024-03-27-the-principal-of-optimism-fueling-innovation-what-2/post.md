@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71374333639837941
 post_type: original
 archived_at: 2026-03-27
 tags: [optimism, leadership, rapidIteration]
+media_descriptions:
+  image-1.jpg: >-
+    Mixed-media graphic with muted blue/teal background featuring a businessman reaching toward a
+    glowing light bulb connected to a jerrycan labeled "OPTIMISM." Right side has large white serif
+    text "THE PRINCIPAL OF OPTIMISM - FUELING INNOVATION." LinkedIn-style content card, somewhat
+    generic stock-art aesthetic.
 ---
 
 # March 27, 2024

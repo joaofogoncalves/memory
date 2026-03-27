@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71157417641618759
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, chess, innovation, strategy]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated chess board with pieces in neon-lit futuristic environment with blue and pink
+    lighting. Text below: "BALANCING INNOVATION AND STABILITY - LESSONS FROM THE GAME OF CHESS."
+    Image-heavy top with text banner bottom, tech-forward aesthetic.
 ---
 
 # March 27, 2024

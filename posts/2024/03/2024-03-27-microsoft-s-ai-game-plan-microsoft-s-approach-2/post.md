@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71231960464190586
 post_type: original
 archived_at: 2026-03-27
 tags: [microsoft, ai, chatGPT, openai, strategy]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated illustration of a glowing blue humanoid head profile with
+    Microsoft Windows logo, surrounded by tech icons (robotic hand, Xbox
+    controller, circuit patterns). Deep blue with neon/electric blue glows,
+    image-heavy futuristic aesthetic, no text.
 ---
 
 # March 27, 2024

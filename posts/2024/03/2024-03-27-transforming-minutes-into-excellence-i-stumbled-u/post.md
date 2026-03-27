@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71377031414744678
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, excellence]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated whimsical illustration of a large analog alarm clock topped with a golden trophy,
+    surrounded by floating pencils, notebooks, coffee cup, and confetti on pink-to-magenta gradient
+    background. Bold pink text reads "TURNING MINUTES INTO EXCELLENCE!" Playful cartoon-like style.
 ---
 
 # March 27, 2024

@@ -3,6 +3,12 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7297528521562710016/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated 3D illustration of colorful stacked books in ascending stair
+    formation on a surface with faint technical blueprints. Vivid colors against
+    soft pink-to-lavender gradient background, decorative image for weekly tech
+    links post.
 ---
 
 # March 27, 2025

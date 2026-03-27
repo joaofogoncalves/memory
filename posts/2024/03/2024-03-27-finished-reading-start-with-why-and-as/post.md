@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71038490089089105
 post_type: original
 archived_at: 2026-03-27
 tags: [BookReview, StartWithWhy, Leadership]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of "Start with Why" book cover by Simon Sinek. White cover with
+    bold red/magenta typography, black "More Than One Million Copies Sold" badge.
+    Clean minimalist publishing design, text-heavy.
 ---
 
 # March 27, 2024

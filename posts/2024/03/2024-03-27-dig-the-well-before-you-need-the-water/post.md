@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71558253032468234
 post_type: original
 archived_at: 2026-03-27
 tags: [bestadvice, personalgrowth, takeactionnow]
+media_descriptions:
+  image-1.jpg: >-
+    Split-layout with black-and-white illustration of a woman with shovel at a
+    stone well in desert landscape (left) and bold white text "DIG THE WELL BEFORE
+    YOU NEED THE WATER" on black (right). Pencil/ink sketch quality, motivational
+    quote format.
 ---
 
 # March 27, 2024

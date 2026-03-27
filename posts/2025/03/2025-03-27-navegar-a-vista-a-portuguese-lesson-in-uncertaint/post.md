@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72023196331844689
 post_type: original
 archived_at: 2026-03-27
 tags: [uncertainty, professionaldevelopment, leadership, portugal]
+media_descriptions:
+  image-1.jpg: >-
+    Digitally illustrated artwork of a sailboat navigating ocean waves with
+    dark overlay banner containing "A PORTUGUESE LESSON IN UNCERTAINTY" in
+    orange and "NAVEGAR A VISTA" in white. Mixed composition combining
+    artistic painted aesthetic with bold typography.
 ---
 
 # March 27, 2025

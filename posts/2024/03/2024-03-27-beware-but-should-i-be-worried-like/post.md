@@ -3,6 +3,11 @@ date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7098369544762605568/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Venn diagram from The Pragmatic Engineer newsletter showing tech roles across "Building
+    software," "Strategy & alignment," and "People management." Roles positioned in respective areas
+    with red "Beware!!" at center. Hand-drawn whiteboard sketch with blue text on white background.
 ---
 
 # March 27, 2024

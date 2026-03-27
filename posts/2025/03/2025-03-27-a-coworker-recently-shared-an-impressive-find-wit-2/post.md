@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72982480124541091
 post_type: original
 archived_at: 2026-03-27
 tags: [ContinuousLearning, SoftwareEngineering, TechTalks]
+media_descriptions:
+  image-1.jpg: >-
+    Banner graphic for "Tech Talks Weekly" featuring an illustrated theater scene in blue/teal
+    tones with text "100 Most Watched Talks Of 2024" and a trophy emoji. Link preview card style
+    on light background.
 ---
 
 # March 27, 2025

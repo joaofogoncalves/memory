@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71083852086969999
 post_type: original
 archived_at: 2026-03-27
 tags: [TechLeadership, Timezones, SoftwareDevelopment, ShareYourWisdom]
+media_descriptions:
+  image-1.jpg: >-
+    Internet meme in "What people think I do" 2x2 grid format titled "A
+    programmer," showing four panels ending with "What I really do: Googling
+    How to use dates in Javascript." Hand-drawn cartoon/comic style with
+    lighthearted humor and muted pastel colors.
 ---
 
 # March 27, 2024

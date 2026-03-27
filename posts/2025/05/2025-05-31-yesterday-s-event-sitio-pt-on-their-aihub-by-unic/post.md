@@ -3,6 +3,11 @@ date: 2025-05-31
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7331582395403399168/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of a large screen displaying "The Lisbon AI Conference 2025" title slide with a
+    wireframe map of Portugal in blue/cyan on dark background. Real-world event photo with
+    purple/pink ambient lighting, sponsor logos visible.
 ---
 
 # May 31, 2025

@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71214075154891079
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, transparency, leadershipdevelopment]
+media_descriptions:
+  image-1.jpg: >-
+    Split-layout with white text "ELEVATING LEADERSHIP: THE ART OF BUILDING ON
+    TRANSPARENT FOUNDATIONS" on dark background (left), and 3D glass cube labeled
+    "TRANSPARENCY" with silhouetted figure on top and crowds at base (right).
+    Monochromatic gray-and-white conceptual art.
 ---
 
 # March 27, 2024

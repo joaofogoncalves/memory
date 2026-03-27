@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71074454119670415
 post_type: original
 archived_at: 2026-03-27
 tags: [Innovation, Leadership, Nvidia]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of Jensen Huang (NVIDIA CEO) on stage at a keynote holding up a GPU/computing module,
+    wearing his signature black leather jacket. Professional event photo with warm lighting, dark stage
+    background showing partial NVIDIA product text. Image-heavy with no overlaid graphics.
 ---
 
 # March 27, 2024

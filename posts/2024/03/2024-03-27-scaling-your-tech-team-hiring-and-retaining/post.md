@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71067733395236823
 post_type: original
 archived_at: 2026-03-27
 tags: [talent, leadership, hiring]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated digital painting in realistic oil-painting style of a creative
+    studio where people work at easels and computer monitors. Warm rich tones
+    (blues, browns, golden window light), multiple collaborative figures. Visual
+    metaphor for craftsmanship in building tech teams.
 ---
 
 # March 27, 2024

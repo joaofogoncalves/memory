@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71793903289179340
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, management, stevejobs]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a social media post displaying a Steve Jobs quote about
+    management vs leadership in white text on solid black background. Text-only
+    screenshot, entirely text-heavy, dark-mode social media UI aesthetic.
 ---
 
 # March 27, 2025

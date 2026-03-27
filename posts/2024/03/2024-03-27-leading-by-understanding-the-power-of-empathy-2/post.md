@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71181055228048138
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, bestadvice, teamwork, sucess]
+media_descriptions:
+  image-1.jpg: >-
+    Dark navy blue mixed-media image of a woman surrounded by multiple reaching
+    hands with word-cloud backdrop featuring "EMPATHY" and leadership terms.
+    Banner reads "LEADING BY UNDERSTANDING" in white serif. Dramatic editorial
+    feel, moody dark color scheme.
 ---
 
 # March 27, 2024

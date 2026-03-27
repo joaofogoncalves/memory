@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72576989580455649
 post_type: original
 archived_at: 2026-03-27
 tags: [officelife, Halloween, scaryfruit]
+media_descriptions:
+  image-1.jpg: >-
+    Casual photograph of a wicker basket filled with fruit decorated with
+    hand-drawn spooky faces using marker, sitting on a Halloween-themed
+    tablecloth with pumpkin and ghost prints. Warm, candid photo with natural
+    lighting, no text overlay.
 ---
 
 # March 27, 2025

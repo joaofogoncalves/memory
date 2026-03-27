@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71049533238536724
 post_type: original
 archived_at: 2026-03-27
 tags: [TechLeadership, ProfessionalGrowth, Mentorship, CareerDevelopment, Leadership, TeamBuilding]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of a traditional brass compass on weathered wooden surface with
+    autumn leaves, overlaid with bold white text "FROM DEVELOPER TO LEADER."
+    Nature photo as banner with earthy brown tones conveying navigation and
+    career transition metaphor.
 ---
 
 # March 27, 2024

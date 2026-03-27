@@ -3,6 +3,11 @@ date: 2025-08-29
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7356051394719559680/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of the physical book "The Startup CTO's Handbook" by Zach Goldberg with red cover,
+    sitting on a woven placemat with yellow sticky tabs protruding from pages. Casual top-down
+    photo with warm natural lighting.
 ---
 
 # August 29, 2025

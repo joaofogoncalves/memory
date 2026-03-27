@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:69805391126215106
 post_type: original
 archived_at: 2026-03-27
 tags: [companyculture, jobfairs, lisbonjobs, jobfair2022, jobevent, jobfair, devopsjobs, lisbonne, jobsinlisbon, devOpsengineer, portugal, Valispace, portugaljobs, TechJobsFair, TJF]
+media_descriptions:
+  image-1.jpg: >-
+    Promotional speaker card for Lisbon's Tech Jobs Fair featuring Joao
+    Goncalves presenting "DevOps at Valispace - Building the Road to
+    Production" on September 29th. Bright orange and white branding with
+    professional headshot and event time slot details. Clean event
+    promotional graphic format.
 ---
 
 # March 28, 2023

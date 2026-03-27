@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71049536909852876
 post_type: original
 archived_at: 2026-03-27
 tags: [TechLeadership, ProfessionalGrowth, Mentorship, CareerDevelopment, Leadership, TeamBuilding]
+media_descriptions:
+  image-1.jpg: >-
+    Same brass compass photograph on weathered wood with autumn leaves and "FROM
+    DEVELOPER TO LEADER" text overlay. Reused across multiple posts in the
+    series as recurring visual identity. Earthy navigational aesthetic.
 ---
 
 # March 27, 2024

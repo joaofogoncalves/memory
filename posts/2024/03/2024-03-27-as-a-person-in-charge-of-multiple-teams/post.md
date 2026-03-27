@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71591600845293608
 post_type: original
 archived_at: 2026-03-27
 tags: [talentacquisition, leadership, hiring]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated/stock-style composite of diverse professionals holding tablets and laptops with
+    design sketches on wall behind. Dark gray/teal split with white text "BUILDING A HIGH PERFORMING
+    TEAM." Polished corporate LinkedIn banner.
 ---
 
 # March 27, 2024

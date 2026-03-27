@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71236663280658186
 post_type: original
 archived_at: 2026-03-27
 tags: [growth, ai, carrer]
+media_descriptions:
+  image-1.jpg: >-
+    Stack Overflow data chart (October 2023) titled "Reasons to stay in current job" showing line graph tracking
+    Flexibility, Opportunities to learn, and Salary from 2021-2023. Branded Stack Overflow chart with dark blue/slate
+    background and orange/blue line colors. Data-heavy with clear labels.
 ---
 
 # March 27, 2024

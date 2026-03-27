@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72171306888131584
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, teammanagement, trust]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of the book "Turn the Ship Around!" by L. David Marquet showing
+    a submarine surfacing through waves. Cream/white upper section for title,
+    blue-toned lower section for submarine photo, Fortune magazine endorsement
+    visible.
 ---
 
 # March 27, 2025

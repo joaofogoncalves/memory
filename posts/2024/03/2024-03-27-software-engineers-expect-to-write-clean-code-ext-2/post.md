@@ -3,6 +3,12 @@ date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7099376598109331456/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Venn diagram with three overlapping circles labeled "Delivery Speed"
+    (pink/red), "Number of Features" (blue), and "Feature Quality" (yellow)
+    illustrating "pick two" engineering trade-offs. Minimalist infographic on
+    light gray background with bold black text and labeled intersections.
 ---
 
 # March 27, 2024

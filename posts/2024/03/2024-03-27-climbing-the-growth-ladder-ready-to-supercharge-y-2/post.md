@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71221069427931054
 post_type: original
 archived_at: 2026-03-27
 tags: [growth, bestadvice, carrer]
+media_descriptions:
+  image-1.jpg: >-
+    Split-layout with deep teal panel reading "CLIMBING THE GROWTH LADDER - 5 TIPS FOR SOFTWARE
+    PROFESSIONALS" (left) and silhouetted person climbing ladder merging into tree trunk against
+    sunset mountains (right). Rich green, teal, and warm orange palette.
 ---
 
 # March 27, 2024

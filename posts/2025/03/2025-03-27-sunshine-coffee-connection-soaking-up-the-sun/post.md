@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72037147197722664
 post_type: original
 archived_at: 2026-03-27
 tags: [coffee, remote, office]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of a small glass espresso cup on a green-painted balcony railing
+    with a panoramic Portuguese city skyline featuring terra-cotta rooftops and
+    colorful facades under blue sky. Candid naturally lit outdoor photo with
+    warm tones and shallow depth of field.
 ---
 
 # March 27, 2025

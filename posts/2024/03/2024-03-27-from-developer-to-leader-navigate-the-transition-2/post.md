@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71291155970905456
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, professionalgrowth, careerdevelopment]
+media_descriptions:
+  image-1.jpg: >-
+    Custom banner with lavender/purple background, bold black "FROM DEVELOPER TO
+    LEADER" text and white-bordered "NAVIGATE THE TRANSITION WITH CONFIDENCE"
+    subtitle (left). Circular frame with AI-generated silhouettes walking up an
+    orange arrow toward mountain summit (right). More polished branded version
+    with purple tones.
 ---
 
 # March 27, 2024

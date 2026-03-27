@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72860431495488757
 post_type: original
 archived_at: 2026-03-27
 tags: [disruptiveinnovation, zonemanagement]
+media_descriptions:
+  image-1.jpg: >-
+    Clean 2x2 matrix diagram titled "The Four Zones: Organizing to Compete in an Age of Disruption"
+    by Geoffrey Moore. Categories along Disruptive vs Sustaining and Revenue vs Enabling axes yielding
+    four zones: Transformation, Performance, Incubation, Productivity. White background with teal
+    accent color, text-heavy business framework diagram.
 ---
 
 # March 27, 2025

@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71634537648115466
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, culture, mentoring]
+media_descriptions:
+  image-1.jpg: >-
+    Branded graphic with photo of six diverse people on a couch with
+    digital/tech overlay elements (globe, icons) on the left, and bold dark
+    "Mentoring Matters" text on light background on the right. Polished social
+    media banner, warm professional palette with soft orange/amber accent
+    lighting.
 ---
 
 # March 27, 2024

@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71439241930955857
 post_type: original
 archived_at: 2026-03-27
 tags: [growth, culture, innovation]
+media_descriptions:
+  image-1.jpg: >-
+    Landscape graphic with surreal illustration of diverse figures collaboratively building a house
+    atop a tree using tools and ladders, with gears and leaves interwoven (left). Bold dark text
+    "BUILDING A CULTURE THAT FUELS GROWTH" on light gray (right). Muted earth tones with
+    green/yellow pops.
 ---
 
 # March 27, 2024

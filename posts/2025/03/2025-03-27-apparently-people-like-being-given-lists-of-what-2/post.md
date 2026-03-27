@@ -3,6 +3,11 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7292182332881391617/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated 3D illustration (GROK watermark) showing colorful app/platform icons on stands
+    against purple/blue background. Purely visual with no text, vibrant colors, decorative
+    accompaniment to a curated links post.
 ---
 
 # March 27, 2025

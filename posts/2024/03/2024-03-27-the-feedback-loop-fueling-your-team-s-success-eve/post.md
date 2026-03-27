@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71728907765306286
 post_type: original
 archived_at: 2026-03-27
 tags: [teamculture, leadership, feedback]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated header with stylized business figures along colorful spiraling arrows and gears representing a
+    feedback loop, with title "THE FEEDBACK LOOP - FUELING YOUR TEAM'S SUCCESS" in bold serif text. Watercolor/sketch
+    textures in blues, reds, oranges, and golds.
 ---
 
 # March 27, 2024

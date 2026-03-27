@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71399710854831022
 post_type: original
 archived_at: 2026-03-27
 tags: [learning, curiosity, personaldevelopment]
+media_descriptions:
+  image-1.jpg: >-
+    Vibrant pink-themed graphic with bold black "CURIOSITY: THE UNSUNG SUPERPOWER" text (left) and
+    comic-book superhero character in pink-and-white costume holding magnifying glass and "Curiosity"
+    book (right). Hot pink color scheme, pop-art aesthetic with tilted polaroid frame.
 ---
 
 # March 27, 2024

@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71210209683863797
 post_type: original
 archived_at: 2026-03-27
 tags: [programming, ai, chatGPT, education]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated classroom with students at monitors and translucent digital human head with gears
+    hovering above, with code and lightbulb in background. White text "AI IS REVOLUTIONIZING
+    PROGRAMMING EDUCATION" on light blue. Cool blue palette, mixed LinkedIn banner.
 ---
 
 # March 27, 2024

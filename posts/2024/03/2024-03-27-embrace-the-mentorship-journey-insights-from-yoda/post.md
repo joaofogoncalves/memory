@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71577791291137064
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, yoda, mentoring]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated illustration of Yoda from Star Wars at a desk using a MacBook
+    with code on a dark screen behind him. Right panel has teal/green background
+    with white text "Embrace the Mentorship Journey - Insights from Yoda."
+    Split-layout LinkedIn graphic in green/dark tones.
 ---
 
 # March 27, 2024

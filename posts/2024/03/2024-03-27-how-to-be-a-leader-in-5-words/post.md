@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71453745438413414
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, empathy]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet by Piotr Kacala reading "Be human first, manager
+    second" dated Dec 2023. Dark-mode Twitter/X UI with white text on black
+    background, yellow-tinted circular profile photo. Entirely text-based
+    minimal tweet capture.
 ---
 
 # March 27, 2024

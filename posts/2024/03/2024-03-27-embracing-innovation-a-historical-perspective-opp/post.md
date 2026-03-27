@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71067444844150497
 post_type: original
 archived_at: 2026-03-27
 tags: [Innovation, TechnologyEvolution, EmbraceChange]
+media_descriptions:
+  image-1.jpg: >-
+    Editorial cartoon by Inkinct showing cavemen protesting the wheel invention
+    with signs reading "NO WHEELS HERE" and "NO NEW TECHNOLOGY." Classic
+    single-panel humor with black outlines, muted earth tones, volcano background.
+    Caption: "PROTESTING AGAINST NEW TECHNOLOGY - THE EARLY DAYS."
 ---
 
 # March 27, 2024

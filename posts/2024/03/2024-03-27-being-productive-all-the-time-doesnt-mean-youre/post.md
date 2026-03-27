@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71247626233377095
 post_type: original
 archived_at: 2026-03-27
 tags: [rest, productivity]
+media_descriptions:
+  image-1.jpg: >-
+    Illustrated infographic titled "Slow down" with cartoon turtle with colorful mosaic shell
+    sleeping at center, surrounded by handwritten benefits. By Sonia Sparkles, cheerful hand-drawn
+    style on cream background with yellow cloud accents. Warm calming mood.
 ---
 
 # March 27, 2024

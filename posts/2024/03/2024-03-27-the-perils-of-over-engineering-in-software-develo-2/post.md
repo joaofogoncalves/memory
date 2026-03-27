@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71072640717286031
 post_type: original
 archived_at: 2026-03-27
 tags: [SimplicityMatters, EngineeringWisdom, SoftwareDevelopment]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of a wooden artist's mannequin facing a wall covered with tangled dashed-line scribbles and question
+    marks. Large bold text "OVER ENGINEERING" superimposed in light blue with red/pink outline. Mixed visual metaphor
+    style, thumbnail social media image.
 ---
 
 # March 27, 2024

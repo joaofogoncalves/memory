@@ -3,6 +3,12 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7294715853487407105/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Digitally generated illustration with blue gradient background showing the LinkedIn logo at center
+    of a circular hub surrounded by connected technology icons (database, camera, headset, documents,
+    gear, etc.). Clean modern blue monochromatic color scheme, image-heavy and symmetrical
+    hub-and-spoke layout.
 ---
 
 # March 27, 2025

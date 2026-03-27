@@ -3,6 +3,11 @@ date: 2025-09-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7374352467699916800/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Real-world photograph of a blue card pinned to a cork board reading "you don't need an
+    inspirational quote -- you need coffee!" with a coffee cup icon. Casual, warm photo with
+    playful anti-motivational humor.
 ---
 
 # September 28, 2025

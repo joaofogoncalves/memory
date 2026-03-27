@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71188453838662656
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, culture, mentoring]
+media_descriptions:
+  image-1.jpg: >-
+    Split LinkedIn banner with AI-generated photo of six diverse people beneath
+    a futuristic network/globe graphic (left), and elegant serif "Mentoring
+    Matters - Nurturing Tomorrow's Leaders" in gold/brown on white (right).
+    Polished corporate-quality with warm neutral and gold tones.
 ---
 
 # March 27, 2024

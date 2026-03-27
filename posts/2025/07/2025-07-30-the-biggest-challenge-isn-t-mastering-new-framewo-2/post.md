@@ -3,6 +3,10 @@ date: 2025-07-30
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7346144240814436355/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a Simon Sinek tweet on dark background with the quote about 100% of customers
+    and employees being people. Minimal text-only social media format, verified badge visible.
 ---
 
 # July 30, 2025

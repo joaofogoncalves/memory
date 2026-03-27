@@ -4,6 +4,10 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71038489807526092
 post_type: original
 archived_at: 2026-03-27
 tags: [BookReview, StartWithWhy, Leadership]
+media_descriptions:
+  image-1.jpg: >-
+    Same "Start with Why" book cover by Simon Sinek. White with bold red/magenta
+    title typography and black badge. Duplicate of the other post's cover photo.
 ---
 
 # March 27, 2024

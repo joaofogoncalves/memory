@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71088034550743408
 post_type: original
 archived_at: 2026-03-27
 tags: [ChangeManagement, Google, googleanalytics, TechLeaders]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a tweet by David Petersen about Google Analytics 4 being so
+    unusable there's a "black market" for old GA3 accounts. Dark-mode Twitter/X
+    UI, white text on black, 148K views visible. Humorous supporting quote for
+    the LinkedIn post.
 ---
 
 # March 27, 2024

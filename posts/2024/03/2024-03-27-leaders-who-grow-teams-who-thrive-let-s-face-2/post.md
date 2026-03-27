@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71616985055922995
 post_type: original
 archived_at: 2026-03-27
 tags: [inspiration, leadership, effectiveleadership, personalgrowth]
+media_descriptions:
+  image-1.jpg: >-
+    Stylized vector illustration in dark navy, red, and gray showing a man at a
+    podium addressing silhouetted figures. Bold white text "LEADERS WHO GROW -
+    TEAMS WHO THRIVE" on the right. Flat modern corporate illustration with
+    geometric shapes and chevron elements.
 ---
 
 # March 27, 2024

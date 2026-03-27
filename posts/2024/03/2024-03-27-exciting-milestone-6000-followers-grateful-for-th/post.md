@@ -3,6 +3,12 @@ date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7156770105228443648/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated celebratory cartoon illustration of diverse professionals
+    cheering around a multi-tiered cake with golden "6000" balloons. Festive with
+    confetti, bunting, and colorful balloons against warm pastel sky. Vibrant,
+    optimistic palette.
 ---
 
 # March 27, 2024

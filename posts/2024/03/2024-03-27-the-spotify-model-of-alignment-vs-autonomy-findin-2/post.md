@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71160128808350228
 post_type: original
 archived_at: 2026-03-27
 tags: [accountability, autonomy, leadership, culture, alignment]
+media_descriptions:
+  image-1.jpg: >-
+    Hand-drawn sketch-style diagram of the Spotify Alignment vs Autonomy 2x2 matrix with cartoon
+    stick figures and speech bubbles. Ideal quadrant (high alignment, high autonomy) highlighted with
+    green circle. Whimsical whiteboard/doodle aesthetic, credited to Spotify Engineering Culture
+    Part 1.
 ---
 
 # March 27, 2024

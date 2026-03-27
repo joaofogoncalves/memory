@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72486771550421688
 post_type: original
 archived_at: 2026-03-27
 tags: [AI, Course, Microsoft, GenerativeAI]
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a dark-themed course curriculum table listing 12 lessons for
+    a Generative AI course with columns for Lesson Link, Description, and
+    Additional Learning. Text-heavy tabular layout on dark navy/black
+    background with blue hyperlinks.
 ---
 
 # March 27, 2025

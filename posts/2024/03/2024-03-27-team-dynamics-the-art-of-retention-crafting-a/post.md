@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71326317245800448
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, teambuilding]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated header with "Team Dynamics - The Art of Retention" in serif text on dark green/slate background
+    alongside circular illustration of diverse figures climbing among gears and charts. Watercolor/sketch hybrid
+    in muted earth tones, mixed text-and-image split layout.
 ---
 
 # March 27, 2024

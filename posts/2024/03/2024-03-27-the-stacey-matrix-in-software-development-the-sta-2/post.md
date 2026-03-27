@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71228185632659701
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, complexity, staceymatrix]
+media_descriptions:
+  image-1.jpg: >-
+    Stacey Matrix diagram with two axes (Requirements and Technology) showing four concentric zones
+    from Simple (green) through Complicated (yellow) and Complex (orange) to Anarchy (red). Clean
+    color-coded conceptual diagram on white background, text-heavy with labeled regions.
 ---
 
 # March 27, 2024

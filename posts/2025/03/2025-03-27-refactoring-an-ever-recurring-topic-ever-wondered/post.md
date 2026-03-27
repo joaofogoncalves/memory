@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72566543474873630
 post_type: original
 archived_at: 2026-03-27
 tags: [refactoring, softwaredevelopment, technicaldebt]
+media_descriptions:
+  image-1.jpg: >-
+    Split-composition LinkedIn banner with left half showing "REFACTORING -
+    AN EVER RECURRING TOPIC" text on sage/beige background, right half showing
+    a developer's hands typing on keyboard with colorful code on monitor.
+    Professional banner combining typography with workplace photography.
 ---
 
 # March 27, 2025

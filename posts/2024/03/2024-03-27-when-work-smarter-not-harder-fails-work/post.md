@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71092657360526704
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, Innovation, TechWisdom]
+media_descriptions:
+  image-1.jpg: >-
+    Full-sized banner illustration of hooded figure surrounded by tangled cables and monitors with bold
+    neon green text "WHEN 'WORK SMARTER, NOT HARDER' FAILS!" Grungy urban aesthetic with muted
+    blue-gray cityscape and bright lime green typography. Wide LinkedIn post banner format.
 ---
 
 # March 27, 2024

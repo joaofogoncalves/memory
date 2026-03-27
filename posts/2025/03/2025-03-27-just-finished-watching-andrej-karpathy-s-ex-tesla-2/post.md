@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:72475436644433346
 post_type: original
 archived_at: 2026-03-27
 tags: [ai, llm]
+media_descriptions:
+  image-1.jpg: >-
+    Bold graphic logo/banner for "CUDA MODE" in large blocky orange letters
+    against dark green/teal gradient background. Geometric stylized design with
+    mint-green square, sponsor logos (Accel, NVIDIA, PyTorch) along the bottom.
 ---
 
 # March 27, 2025

@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71195560657712906
 post_type: original
 archived_at: 2026-03-27
 tags: [growth, leadership, employeeengagement, employeeretention]
+media_descriptions:
+  image-1.jpg: >-
+    Infographic diagram of "The Passion Pyramid" by Keith E Ayers, a five-level hierarchy from "To Be Respected"
+    at base to "To Be on a Winning Team" at top. Clean white background with warm red-to-olive-green color gradient.
+    Text-heavy structured layout.
 ---
 
 # March 27, 2024

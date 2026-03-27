@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71602159605183283
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, accountability, delegation, responsibility]
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated split-layout graphic with "Accountability and Responsibility"
+    text on beige/cream (left) and 3D jigsaw puzzle pieces in coral and blue with
+    business silhouettes and labeled icons (right). Polished LinkedIn content
+    graphic, mixed composition.
 ---
 
 # March 27, 2024

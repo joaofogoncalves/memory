@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71677833476272783
 post_type: original
 archived_at: 2026-03-27
 tags: [growthmindset, professionaldevelopment, lifelonglearning]
+media_descriptions:
+  image-1.jpg: >-
+    Quote card with Brian Herbert quote "The capacity to learn is a gift; the ability to learn is a skill; the
+    willingness to learn is a choice" in bold dark navy text on light beige background. Abstract geometric shapes
+    in yellow, teal, and orange in corners. Clean modern minimalist design.
 ---
 
 # March 27, 2024

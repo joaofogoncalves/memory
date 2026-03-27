@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71525663288626831
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, prioritization, successmindset, teamwork]
+media_descriptions:
+  image-1.jpg: >-
+    Cartoon-style illustration on muted blue-gray background showing two
+    contrasting workplace scenarios with stressed vs confident woman, plus
+    manager thought bubble. Right side has bold white text '"Help Me
+    Re-Prioritize" Instead of "No"'. Professional LinkedIn banner aesthetic in
+    cool blue-gray tones.
 ---
 
 # March 27, 2024

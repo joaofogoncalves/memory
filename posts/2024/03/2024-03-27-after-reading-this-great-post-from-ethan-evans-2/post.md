@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71172425299593584
 post_type: original
 archived_at: 2026-03-27
 tags: [carrer, remotework, workfromhome]
+media_descriptions:
+  image-1.jpg: >-
+    "Types of workers" cartoon by Irina Blok with three panels labeled "REMOTE," "HYBRID," and
+    "OFFICE," each showing an identical stick-figure person sitting at a desk on a video call with
+    the same group of colleagues on screen. Minimalist line-drawing style on white background,
+    humorous punchline that all three work modes look exactly the same.
 ---
 
 # March 27, 2024

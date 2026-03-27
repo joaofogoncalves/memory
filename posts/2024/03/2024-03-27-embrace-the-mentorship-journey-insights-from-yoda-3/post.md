@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71085737155792035
 post_type: original
 archived_at: 2026-03-27
 tags: [Yoda, TechLeadership, starwars, MentorshipMatters, GrowTogether]
+media_descriptions:
+  image-1.jpg: >-
+    Wider uncropped version of the Yoda illustration without text overlay, showing
+    him at a MacBook with code monitors and stacked books. Muted green, dark blue,
+    and warm brown tones, cinematic widescreen aspect ratio.
 ---
 
 # March 27, 2024

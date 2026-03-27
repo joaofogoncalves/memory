@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71145206533612339
 post_type: original
 archived_at: 2026-03-27
 tags: [inspiration]
+media_descriptions:
+  image-1.jpg: >-
+    Real-life photograph of a white TEKA fridge door with Benjamin Franklin
+    quote handwritten in black marker, red flower doodles/magnets, and a
+    green-marker message "Do You Believe in Life After Work?" Candid office
+    kitchen photo, authentic and unpolished feel.
 ---
 
 # March 27, 2024

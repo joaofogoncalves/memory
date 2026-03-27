@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71316052605312901
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, personaldevelopment, personalgrowth]
+media_descriptions:
+  image-1.jpg: >-
+    Close-up photograph of a circular purple laptop sticker reading "IF YOU DON'T LIKE WHERE YOU ARE MOVE YOU'RE
+    NOT A TREE" in white and green text. Real-world photo on dark laptop lid with other stickers partially visible.
+    Candid, personal feel with slightly worn texture.
 ---
 
 # March 27, 2024

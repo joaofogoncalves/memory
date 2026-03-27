@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71459225185859624
 post_type: original
 archived_at: 2026-03-27
 tags: [nothingisimpossible, leadership, teamsuccess]
+media_descriptions:
+  image-1.jpg: >-
+    Motivational quote graphic with black-and-white portrait of Wernher von
+    Braun (left) and white text on dark background quoting "I have learned to
+    use the word 'impossible' with the greatest caution" (right). Mixed
+    composition, high-contrast, thin violet border on left edge.
 ---
 
 # March 27, 2024

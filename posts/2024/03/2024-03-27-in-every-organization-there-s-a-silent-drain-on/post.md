@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71482151580776529
 post_type: original
 archived_at: 2026-03-27
 tags: [growthmindset, leadership, teamempowerment]
+media_descriptions:
+  image-1.jpg: >-
+    Cartoon illustration of a stressed businessman running on a treadmill while
+    juggling objects (left), paired with dark navy text "HIDDEN DRAIN: THE
+    SECOND JOB PHENOMENON" (right). Colorful lighthearted cartoon with
+    teal/gray border, LinkedIn banner layout with bright red/yellow/teal colors.
 ---
 
 # March 27, 2024

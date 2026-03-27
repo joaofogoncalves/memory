@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71500298653358981
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, culture]
+media_descriptions:
+  image-1.jpg: >-
+    Split-layout with warm golden/tan palette. AI cartoon of business people on cascading waterfall
+    staircase under "COMPANY CULTURE" sign with clownfish and harbor (left). White serif text
+    "CULTURE IS LIKE WATER, IT FLOWS DOWNHILL" (right). Whimsical cartoon style.
 ---
 
 # March 27, 2024

@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71117120727778017
 post_type: original
 archived_at: 2026-03-27
 tags: [teammanagement, leadership, positive]
+media_descriptions:
+  image-1.jpg: >-
+    Dramatic monochrome illustration of two men in business attire facing off confrontationally, with blue banner
+    overlay reading '"YES, AND" VS "NO, BUT"' in white text. Stylized sketch with comic-book editorial feel,
+    black/white/grey with blue text accent.
 ---
 
 # March 27, 2024

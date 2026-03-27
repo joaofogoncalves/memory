@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71264978025404497
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, hypecycle, gartner]
+media_descriptions:
+  image-1.jpg: >-
+    Clean infographic of the Gartner Technology Hype Cycle showing a red curve
+    on light background through five labeled phases from Technology Trigger to
+    Plateau of Productivity. Minimalist, text-heavy educational diagram with
+    bold black block title "Technology Hype Cycle."
 ---
 
 # March 27, 2024

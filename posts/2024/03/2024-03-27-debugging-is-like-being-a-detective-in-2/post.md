@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71026342575707873
 post_type: original
 archived_at: 2026-03-27
 tags: [Debugging, CodingLife]
+media_descriptions:
+  image-1.jpg: >-
+    Identical "DEBUGGING TACTICS" scatter-plot meme by Forrest Brazeal. Same
+    hand-drawn humor chart plotting debugging strategies. Duplicate reuse of the
+    same Forrest Brazeal image.
 ---
 
 # March 27, 2024

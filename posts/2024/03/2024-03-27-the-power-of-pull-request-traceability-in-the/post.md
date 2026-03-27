@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71004684633153699
 post_type: original
 archived_at: 2026-03-27
 tags: [CodingJourney, SoftwareDevelopment, Traceability, TechInnovation, Collaboration]
+media_descriptions:
+  image-1.jpg: >-
+    Flat-design vector illustration of a line chart with colorful data points and a large magnifying glass hovering
+    over one point, symbolizing analysis and traceability. Clean white background, modern minimal flat-icon style,
+    no text. Soft pastel and muted colors.
 ---
 
 # March 27, 2024

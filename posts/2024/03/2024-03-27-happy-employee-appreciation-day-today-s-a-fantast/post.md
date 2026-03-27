@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71694009844509286
 post_type: original
 archived_at: 2026-03-27
 tags: [recognitionmatters, leadership, employeeappreciationday]
+media_descriptions:
+  image-1.jpg: >-
+    Digitally illustrated graphic celebrating Employee Appreciation Day with
+    low-poly/geometric style illustration of five diverse office workers against
+    colorful mountainous background with confetti. Peach/salmon sticky note
+    reads "Happy Employee Appreciation Day!" with grey textured
+    scrapbook-feel border.
 ---
 
 # March 27, 2024

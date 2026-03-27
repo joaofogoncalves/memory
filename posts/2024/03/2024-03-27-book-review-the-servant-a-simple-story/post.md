@@ -4,6 +4,14 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71063895367415029
 post_type: original
 archived_at: 2026-03-27
 tags: [BookReview, LoveInLeadership, Leadership]
+media_descriptions:
+  image-1.jpg: >-
+    Photograph of "The Servant" book cover by James C. Hunter. White and light blue scheme, black
+    serif title with "Leadership" in pink/magenta. "Over 3 Million Copies in Print" badge.
+  image-2.jpg: >-
+    Infographic of "Servant-Leadership Triangle" inverted pyramid with four tiers: Leader, Influence,
+    Serve + Sacrifice, Love. Hand-drawn sketch aesthetic on pale green background with pastel arrows
+    and handwritten fonts. Formulas at bottom: "intentions + actions = WILL."
 ---
 
 # March 27, 2024

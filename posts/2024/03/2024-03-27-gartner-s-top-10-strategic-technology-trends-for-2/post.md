@@ -4,6 +4,13 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71206590839714324
 post_type: original
 archived_at: 2026-03-27
 tags: [trends, ai, innovation, technology]
+media_descriptions:
+  image-1.jpg: >-
+    Professional Gartner infographic titled "Top Strategic Technology Trends
+    2024" on dark navy background with Venn-style layout organized under three
+    teal themes listing 10 trends including Platform Engineering, AI-Augmented
+    Development, and Democratized GenAI. Text-heavy corporate-styled diagram
+    with Gartner branding.
 ---
 
 # March 27, 2024

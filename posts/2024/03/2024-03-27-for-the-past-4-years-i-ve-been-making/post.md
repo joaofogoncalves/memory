@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71370747584493076
 post_type: original
 archived_at: 2026-03-27
 tags: [christmastree]
+media_descriptions:
+  image-1.jpg: >-
+    Close-up photograph of a wooden laser-cut Christmas ornament hanging on an
+    evergreen tree with warm bokeh lighting. Intricate circular design with deer,
+    trees, and woodland scene, with "VALISPACE" in red paint. Image-heavy, festive
+    green and warm gold tones.
 ---
 
 # March 27, 2024

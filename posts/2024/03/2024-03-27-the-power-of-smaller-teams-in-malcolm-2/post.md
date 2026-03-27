@@ -4,6 +4,11 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71167204017448222
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, culture, teamwork]
+media_descriptions:
+  image-1.jpg: >-
+    Black-and-white diagram illustrating Metcalfe's Law with network graphs of increasing size from 3 to 14 people,
+    showing how communication complexity explodes with team size. Clean minimalist technical illustration on white
+    background, text-light with simple labels.
 ---
 
 # March 27, 2024

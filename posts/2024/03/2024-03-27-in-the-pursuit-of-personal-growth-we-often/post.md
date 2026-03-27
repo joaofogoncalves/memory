@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71352869140219985
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, freud, personalgrowth]
+media_descriptions:
+  image-1.jpg: >-
+    Quote graphic on solid dark navy background with circular-cropped
+    black-and-white Sigmund Freud portrait (right) and white text quote about
+    comparing yourself only to your past self (left). Clean professional quote
+    card with minimal design, dark blue monochromatic palette.
 ---
 
 # March 27, 2024

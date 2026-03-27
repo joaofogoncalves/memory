@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71432183418417397
 post_type: original
 archived_at: 2026-03-27
 tags: [2024predictions, ai]
+media_descriptions:
+  image-1.jpg: >-
+    Promotional graphic with black-and-white Bill Gates photo surrounded by floating speech-bubble
+    labels listing predictions: "Lifesaving chatbots," "AI-powered innovation," "climate
+    conversation," etc. Pale yellow/green background with "2024" watermark. Editorial blog-header
+    feel.
 ---
 
 # March 27, 2024

@@ -3,6 +3,11 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7305194956137152512/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    AI-generated 3D illustration of tech/developer-themed icons and badges on
+    purple/indigo surface with blurred code in background. Glossy 3D icons
+    including GitHub Octocat, shield badges in blues, purples, and oranges.
 ---
 
 # March 27, 2025

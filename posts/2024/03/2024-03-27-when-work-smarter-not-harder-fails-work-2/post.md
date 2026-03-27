@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71092654952115568
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, Innovation, TechWisdom]
+media_descriptions:
+  image-1.jpg: >-
+    Stylized illustration of a hooded figure sitting amid tangled cables and computer equipment with
+    bold neon green text "WHEN 'WORK SMARTER, NOT HARDER' FAILS!" Grungy urban aesthetic with muted
+    blue-gray cityscape background and bright lime green typography. Smaller/cropped version of banner
+    artwork.
 ---
 
 # March 27, 2024

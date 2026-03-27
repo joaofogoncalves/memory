@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71279159008333127
 post_type: original
 archived_at: 2026-03-27
 tags: [success, leadership, teamwork]
+media_descriptions:
+  image-1.jpg: >-
+    Split-composition LinkedIn banner with bold black text "Signs of
+    Dysfunctional Leadership Teams" on red/orange background (left), and
+    AI-generated chaotic boardroom illustration with megaphone-wielding figure
+    and downward arrows (right). Warm red-orange palette conveying urgency.
 ---
 
 # March 27, 2024

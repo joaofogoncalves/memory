@@ -4,6 +4,12 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:71026342319897149
 post_type: original
 archived_at: 2026-03-27
 tags: [Debugging, CodingLife]
+media_descriptions:
+  image-1.jpg: >-
+    Humorous hand-drawn scatter-plot chart titled "DEBUGGING TACTICS" by Forrest
+    Brazeal (2018), plotting strategies on effectiveness vs frequency axes. "Take a
+    Walk" high on effectiveness but low on frequency; "Run the Same Code Again"
+    most frequent but least effective. Warm tan background, cartoon meme style.
 ---
 
 # March 27, 2024

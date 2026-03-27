@@ -3,6 +3,12 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7296071420374126592/
 post_type: original
 archived_at: 2026-03-27
+media_descriptions:
+  image-1.jpg: >-
+    Video thumbnail for "The Art of Presenting - A Course with Simon Sinek"
+    showing Sinek on stage in green shirt with arm raised, dark blue background
+    with play button overlay. Mixed composition with stage photograph and
+    branded text.
 ---
 
 # March 27, 2025

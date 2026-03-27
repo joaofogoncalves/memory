@@ -170,10 +170,6 @@ class BrowserCrawler:
             self.close()
             return []
 
-        # Load checkpoint
-        checkpoint = load_checkpoint()
-        checkpoint_id = checkpoint.get('last_post_id') if checkpoint else None
-
         posts: List[LinkedInPost] = []
         seen_urns: set = set()
         stale_count = 0
@@ -197,12 +193,6 @@ class BrowserCrawler:
                         seen_urns.add(urn)
                         new_count += 1
 
-                        # Check checkpoint - if we've seen this post before, stop
-                        if checkpoint_id and urn == checkpoint_id:
-                            logger.info("Reached previously crawled post. Stopping.")
-                            stale_count = self.max_stale_scrolls  # force exit
-                            break
-
                         # Extract post data
                         post = self._extract_post(el, urn, page)
                         if post:
@@ -224,8 +214,8 @@ class BrowserCrawler:
                 # Check stale
                 if new_count == 0:
                     stale_count += 1
-                    logger.debug(
-                        f"No new posts found (stale count: {stale_count}/{self.max_stale_scrolls})"
+                    logger.info(
+                        f"No new posts this scroll (stale {stale_count}/{self.max_stale_scrolls}, total: {len(posts)})"
                     )
                 else:
                     stale_count = 0
@@ -481,10 +471,21 @@ class BrowserCrawler:
         return commentary, original_url
 
     def _scroll_down(self, page: Page) -> None:
-        """Scroll down with human-like behavior."""
-        # Randomize scroll distance
-        scroll_distance = random.randint(600, 1200)
-        page.evaluate(f'window.scrollBy(0, {scroll_distance})')
+        """Scroll down with human-like behavior, then wait for content to load."""
+        # Multiple small scrolls to mimic human behavior
+        total = random.randint(800, 1500)
+        scrolled = 0
+        while scrolled < total:
+            chunk = random.randint(100, 300)
+            page.evaluate(f'window.scrollBy(0, {chunk})')
+            time.sleep(random.uniform(0.1, 0.4))
+            scrolled += chunk
+
+        # Wait for network to settle (new posts loading)
+        try:
+            page.wait_for_load_state('networkidle', timeout=10_000)
+        except PlaywrightTimeout:
+            pass
 
     def _random_delay(self, min_sec: float, max_sec: float) -> None:
         """Sleep for a random duration."""

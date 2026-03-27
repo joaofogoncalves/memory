@@ -19,7 +19,7 @@ Do you fit the bill?
 - Bonus points if you're a space enthusiast (but not required!).
 
 Ready to launch your career to new heights?
-Head over to our careers page and apply! ➡️ https://lnkd.in/dJ_ewNG5
+Head over to our careers page and apply! ➡️ https://www.valispace.com/jobs/?gh_jid=4292505101
 
 P.S. We also welcome applications from engineers with experience in other backend technologies. But hey, if you dream in Django, we definitely want to hear from you!
 

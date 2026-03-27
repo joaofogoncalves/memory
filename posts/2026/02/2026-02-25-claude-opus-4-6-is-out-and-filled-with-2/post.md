@@ -28,7 +28,7 @@ From Anthropic :
 
 Time to check it out, let the tokens fly
 
-https://lnkd.in/eE4FPX-Q
+https://www.anthropic.com/news/claude-opus-4-6
 
 
 **Hashtags:** #1

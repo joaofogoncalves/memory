@@ -14,7 +14,7 @@ The PR is also the first public showing of our work, specially true on a remote 
 As authors, we should take great care in it's clarity of intent (why) and solution (how), and most importantly be receptive to critique.
 There is much more to be said about PRs and the internet is full of tips, strategies, templates, etc.. but this article is a good place to start.
 
-https://lnkd.in/dzxUnAqU
+https://dev.to/karaluton/a-guide-to-perfecting-pull-requests-2b66
 
 
 ---

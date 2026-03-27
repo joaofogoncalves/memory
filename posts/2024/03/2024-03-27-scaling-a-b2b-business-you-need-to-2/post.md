@@ -33,7 +33,7 @@ Your early team shapes the future of your business. Choose wisely, and you'll be
 
 PS: Who was your most memorable early hire? Share your stories below! 🚀 
 
-https://lnkd.in/dxCg9mN8
+https://www.lennysnewsletter.com/p/hiring-your-early-team-b2b
 
 hashtag
 #startups 

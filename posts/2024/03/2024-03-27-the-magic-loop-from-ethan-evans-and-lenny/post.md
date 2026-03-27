@@ -24,7 +24,7 @@ So, if you're looking to level up your career, why not give the Magic Loop a try
 Ready to take the next step in your career journey? 
 Share your thoughts on this approach or your experiences below! Let's learn from each other and keep growing together. 📚
 
-https://lnkd.in/ghHvPF74
+https://www.lennysnewsletter.com/p/the-magic-loop
 
 
 ---

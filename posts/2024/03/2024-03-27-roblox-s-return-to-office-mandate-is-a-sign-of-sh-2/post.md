@@ -20,7 +20,7 @@ It is important for Roblox to be mindful of the concerns of its employees and to
 
 What are your thoughts on enforcing return to office policies, even if on a hybrid setting?
 
-https://lnkd.in/gmYPSvag
+https://www.cnbc.com/2023/10/17/roblox-tells-employees-they-have-to-come-to-office-three-days-a-week.html
 
 hashtag
 #workfromhome 

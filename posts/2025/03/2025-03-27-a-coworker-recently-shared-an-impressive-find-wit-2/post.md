@@ -18,7 +18,7 @@ A coworker recently shared an impressive find with me from Tech Talks Weekly: th
 It’s a goldmine for developers serious about honing their skills—full of fresh ideas, actionable solutions, and insights that really make you pause and rethink your approach. 
 
 I’ve already flagged a few to dig into over the next week or so. If you’re keen on staying sharp and pushing your work forward in this ever-evolving space, I’d highly recommend checking it out:
- https://lnkd.in/dUh_92nu
+ https://www.techtalksweekly.io/p/100-most-watched-software-engineering
 
 hashtag
 #SoftwareEngineering 

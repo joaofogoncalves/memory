@@ -17,7 +17,7 @@ Craft the future of engineering software with us.
 This opening is only for people living in Portugal, remote within the country.
 
 Apply now and help us propel engineering forward! 
-https://lnkd.in/dJNF9AzD
+https://boards.greenhouse.io/altium/jobs/4400150006
 
 hashtag
 #TechJobs 

@@ -13,7 +13,7 @@ Just read a cool article by Sean Goedecke on dealing with big, old codebases. It
 The main takeaway? 
 Don't ignore what's already there and learn from it. It's all about understanding how to make those big, messy systems work better without starting from scratch.
 
-Check it out here: https://lnkd.in/dpbtSFnT
+Check it out here: https://www.seangoedecke.com/large-established-codebases/
 
 hashtag
 #SoftwareDevelopment 

@@ -24,7 +24,7 @@ And if models keep advancing until they can handle that thinking too? Then we ha
 
 The dream of replacing developers keeps recurring because the constraint isn't mechanical, it's intellectual. Tools like AI help us express our thinking more efficiently, but they don't eliminate the need for the thinking itself.
 
-https://lnkd.in/e2Aq7pVV
+https://www.caimito.net/en/blog/2025/12/07/the-recurring-dream-of-replacing-developers.html
 
 hashtag
 #ai 

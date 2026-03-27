@@ -16,7 +16,7 @@ This choice becomes extremely expensive to change once you have real customer da
 Microsoft published a solid overview of the main tenancy patterns for Azure SQL, including pros, cons, scalability limits, operational complexity, and cost implications for each approach.
 
 Worth a read if you're in the architecture phase:
-https://lnkd.in/dYMjTRKi
+https://learn.microsoft.com/en-us/azure/azure-sql/database/saas-tenancy-app-design-patterns?view=azuresql
 
 No universal right answer; it depends entirely on your expected tenant count, isolation requirements, and cost targets.
 

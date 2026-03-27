@@ -19,25 +19,25 @@ That's the only path to success.
 Here are my 7 reads for this week:
 
 Elevate your Git game with these 5 advanced techniques. From rebasing to custom hooks, become a more efficient developer.
-https://lnkd.in/d7d4fNkF
+https://dev.to/hanzla-baig/5-advanced-git-techniques-every-developer-should-know-42hd
 
 Dive deep into the Interface Segregation Principle (ISP) with Kotlin for Android. Learn how to apply SOLID principles effectively.
-https://lnkd.in/dwX5MGfD
+https://itnext.io/the-interface-segregation-principle-isp-solid-principles-deep-dive-in-kotlin-android-a3aed6d310e3
 
 Discover the top 16 DevOps tools for 2025, perfect for Site Reliability Engineers (SREs) too. Automation, monitoring, and more.
-https://lnkd.in/d9q37j3z
+https://dev.to/statuspal/top-16-devops-tools-for-2025-excellent-for-sres-too-1l4c?context=digest
 
 VS Code introduces Next Edit Suggestions, enhancing your coding experience with AI-powered code completion and suggestions.
-https://lnkd.in/dRd-aGSx
+https://code.visualstudio.com/blogs/2025/02/12/next-edit-suggestions
 
 Master the art of technical documentation in 2025 with this step-by-step guide. Learn to communicate your tech work effectively.
-https://lnkd.in/dwK7h6A9
+https://dev.to/auden/how-to-write-technical-documentation-in-2025-a-step-by-step-guide-1hh1
 
 Explore how Netflix ingeniously built a distributed counter system to handle millions of simultaneous requests. A lesson in scalability.
-https://lnkd.in/d-CJ9PCr
+https://blog.bytebytego.com/p/how-netflix-built-a-distributed-counter
 
 From zero to interview-ready, master shell scripting with this comprehensive guide. Essential for any developer's toolkit.
-https://lnkd.in/diwY7azd
+https://dev.to/harshit_rwt/master-shell-scripting-zero-to-interview-ready-379e
 
 
 ---

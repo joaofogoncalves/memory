@@ -22,7 +22,7 @@ Now one ask: Could you get 2 more women in your tech network to complete the su
 
 We’re particularly keen to hear from women in Asia-Pacific, Latin America and Africa, and from women everywhere who feel their experience may not be “typical” – if there is one stand-out message from responses so far, it is that there is often no straight line to women’s success in tech, and one of the biggest needs out there is for more diverse role-models and practical approaches to systemic realities. 
 
-Here is the survey link again https://lnkd.in/g7AVBaWd​
+Here is the survey link again https://forms.gle/BEQL4H8ETsVqbZ6h7​
 
 Note that the definition of tech in the survey is broad - women working in any function (R&D, HR, services, finance) in the tech sector (software, hardware…) or in tech-related functions (e.g. IT, cybersecurity…) in other sectors.
 

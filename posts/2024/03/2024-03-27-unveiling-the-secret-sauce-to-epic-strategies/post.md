@@ -10,7 +10,7 @@ tags: [strategy, teammanagement, innovation, leadership]
 
 🚀 Unveiling the Secret Sauce to Epic Strategies! 📚
 
-https://lnkd.in/dKk4prRv
+https://longform.asmartbear.com/great-strategy
 
 In this insightful piece, Jason Cohen breaks down what it takes to craft a truly effective strategy. Here's why you should give it a read:
 

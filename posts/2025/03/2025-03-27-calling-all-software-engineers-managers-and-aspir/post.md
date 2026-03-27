@@ -10,7 +10,7 @@ tags: [TechLeadership, CTO, CareerGrowth, SoftwareEngineering]
 
 Calling all software engineers, managers and aspiring CTOs! 🚀
 
-I came across an excellent GitHub repo called Awesome CTO (https://lnkd.in/dT8DpqST) that's packed with valuable resources to help you excel in your tech leadership journey.
+I came across an excellent GitHub repo called Awesome CTO (https://github.com/kuchin/awesome-cto) that's packed with valuable resources to help you excel in your tech leadership journey.
 
 𝗪𝗵𝗲𝘁𝗵𝗲𝗿 𝘆𝗼𝘂'𝗿𝗲 𝗹𝗼𝗼𝗸𝗶𝗻𝗴 𝘁𝗼:
 

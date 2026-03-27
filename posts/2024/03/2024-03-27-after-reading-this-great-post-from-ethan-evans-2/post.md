@@ -16,7 +16,7 @@ media_descriptions:
 
 After reading this great post from Ethan Evans I had to write something about how remote work has become the new norm.
 
-https://lnkd.in/d26NGZu7
+https://www.forbes.com/sites/bryanrobinson/2023/08/12/remote-work-might-not-be-as-productive-as-once-thought-new-studies-show/?sh=3c721d843e7a&amp;trk=public_post_comment-text
 
 Much has been said about benefits/disadvantages for the companies, but what about the people?
 

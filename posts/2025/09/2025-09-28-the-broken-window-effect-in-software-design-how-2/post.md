@@ -15,7 +15,7 @@ The main point?
 
 Prioritize fixing small issues early to maintain a healthy codebase and foster a culture of excellence. Worth a read for any dev or team lead.
 
-https://lnkd.in/dUhCscJf
+https://edwardsanchez.design/the-broken-window-effect-in-software-design-a0e90e0271c9
 
 
 ---

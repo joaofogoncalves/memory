@@ -24,7 +24,7 @@ Imagine a world where LLMs become an integral part of our daily lives, helping u
 
 So, if you're curious about LLMs and their potential to transform our world, I highly recommend checking out this video. Karpathy's engaging presentation will leave you with a deeper appreciation of this transformative technology and the exciting possibilities it holds for the future.
 
-https://lnkd.in/dgDfqS6J
+https://www.youtube.com/watch?v=zjkBMFhNj_g
 
 hashtag
 #llms 

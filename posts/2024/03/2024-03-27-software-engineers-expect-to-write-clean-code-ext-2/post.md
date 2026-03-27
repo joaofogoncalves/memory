@@ -17,7 +17,7 @@ media_descriptions:
 Their managers expect them to figure out solutions to their business problems. Many times that means clunky code, no tests and pressure to "ship fast"."
 
 From a Sergio Pereira post in X.
-https://lnkd.in/dmdGnbaZ
+https://twitter.com/SergioRocks/status/1692885208083595507
 
 The typical choose 2 but never 3, shown in the image below.
 

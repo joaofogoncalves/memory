@@ -9,7 +9,7 @@ archived_at: 2026-03-27
 
 Valispace (Acquired by Altium) is looking for a DevOps Support Engineer.
 
-https://lnkd.in/dcFBGHRM
+https://www.valispace.com/jobs/?gh_jid=4029521101
 
 
 ---

@@ -10,7 +10,7 @@ tags: [QualitySoftware, SoftwareDevelopment, TechIndustry]
 
 I recently was pointed towards this thought-provoking article that raises some crucial questions about the state of software development in today's world.
 
-https://lnkd.in/daWY35in
+https://stackoverflow.blog/2023/01/30/is-software-getting-worse/
 (thank you Alfonso Martínez de la Torre)
 
 TL DR: The article dives into the curious trend where, despite technological advancements, software often appears slower, larger, and less reliable. It explores the reasons behind this phenomenon and challenges faced by software engineers.

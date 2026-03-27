@@ -17,22 +17,22 @@ Three posts with links to read might be a trend, but let's make it at least a 1m
 Here's this week's read list:
 
 Dive into the world of caching in software development. Learn why it's crucial and how it can improve your application's performance.
-https://lnkd.in/dfZUBscR
+https://dev.to/gabriellaamah/understanding-the-concept-of-caching-in-software-developement-7e?context=digest
 
 Scaling microservices can be challenging. This guide provides actionable strategies to ensure your microservices architecture grows effectively.
-https://lnkd.in/d2f7NTp5
+https://newsletter.systemdesign.one/p/how-to-scale-microservices
 
 Choosing the right backend framework in 2025? Here's a developer's guide to the best options, comparing features, performance, and community support.
-https://lnkd.in/darPRePk
+https://dev.to/developerbishwas/best-backend-frameworks-for-2025-a-developers-guide-to-making-the-right-choice-45i0
 
 Learn how to construct a multi-tenant internal developer platform using GitOps and vCluster for enhanced DevOps efficiency.
-https://lnkd.in/d7gdTcm9
+https://itnext.io/how-to-build-a-multi-tenancy-internal-developer-platform-with-gitops-and-vcluster-d8f43bfb9c3d
 
 GitHub Copilot evolves into an agent, enhancing developer productivity with AI-driven code suggestions and automation. Discover the latest features.
-https://lnkd.in/dBMgj5JB
+https://github.blog/news-insights/product-news/github-copilot-the-agent-awakens/
 
 Explore the compilation process, starting with preprocessing. This article breaks down each step for a clearer understanding of how code is transformed.
-https://lnkd.in/dXtngmM7
+https://dev.to/rndthts/compilation-process-preprocessing-3ekk?context=digest
 
 Go read them and learn something everyday!
 

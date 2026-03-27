@@ -29,7 +29,7 @@ In it, Bezos shares some key points that he believes are important for effective
 
 I highly recommend watching the full video to get the complete picture. 
 
-https://lnkd.in/dsjxcwax
+https://www.youtube.com/watch?v=F7JMMy-yHSU
 
 hashtag
 #leadership 

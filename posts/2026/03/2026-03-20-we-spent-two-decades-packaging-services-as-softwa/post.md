@@ -20,7 +20,7 @@ An ad agency serving 1,000 clients with the quality it used to give 10. A law fi
 The technology gets commoditized. The person who knows how to use it doesn't.
 
 Wrote about this in more detail. 
-https://lnkd.in/evGsBkde
+https://medium.com/@joaofogoncalves/is-saas-dead-37c715b37d19
 
 
 ---

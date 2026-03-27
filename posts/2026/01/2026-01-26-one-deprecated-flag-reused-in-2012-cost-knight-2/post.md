@@ -21,7 +21,7 @@ what happens when the codebase is mostly AI garbage?
 
 Ruthless testing isn't a nice-to-have anymore, it's survival.
 
-Full story: https://lnkd.in/eBuNr8Jm
+Full story: https://specbranch.com/posts/knight-capital/
 
 
 ---

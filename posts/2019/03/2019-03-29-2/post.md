@@ -7,7 +7,7 @@ archived_at: 2026-03-27
 
 # March 29, 2019
 
-https://lnkd.in/eCC-cP6
+https://hacks.mozilla.org/2017/02/a-cartoon-intro-to-webassembly/
 
 
 ---

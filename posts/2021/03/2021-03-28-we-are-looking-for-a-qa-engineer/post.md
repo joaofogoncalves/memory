@@ -10,10 +10,10 @@ archived_at: 2026-03-27
 We are looking for a QA Engineer / Test Engineer to join us! You will be responsible to ensure the quality of the system as a whole. You will test Valispace applications against our customer’s user stories, system requirements, scalability and performance, working closely with our developers.
 
 For more information about the role:
-https://lnkd.in/e4X3dk3
+https://angel.co/company/valispace/jobs/1069192-qa-testing-enginee
 
 For more information about our values:
-https://lnkd.in/eNxYiDb
+https://www.valispace.com/careers/
 
 
 ---

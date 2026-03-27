@@ -23,7 +23,7 @@ The reality is that most of us got promoted because we could solve technical pro
 
 Worth a read if you're in engineering leadership or aspiring to be.
 
-https://lnkd.in/dmmiWBZA
+https://hbr.org/2025/02/the-4-types-of-thinking-leaders-need-to-practice-and-teach
 
 
 ---

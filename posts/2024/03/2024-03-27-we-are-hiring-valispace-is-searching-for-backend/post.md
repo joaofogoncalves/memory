@@ -20,7 +20,7 @@ Do you fit the bill?
 Ready to launch your career to new heights?
 Head over to our careers page and apply! ➡️
  
-https://lnkd.in/dJ_ewNG5
+https://www.valispace.com/jobs/?gh_jid=4292505101
 
 P.S. We also welcome applications from engineers with experience in other Python backend technologies. But hey, if you dream in Django, we definitely want to hear from you!
 

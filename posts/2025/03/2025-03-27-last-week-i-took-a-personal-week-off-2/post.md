@@ -17,25 +17,25 @@ Last week I took a personal week off (it's important to switch off once in a whi
 But now I'm back and here they are for this week.
 
 Prep for system design interviews with this roadmap. Packed with resources, it’s your guide to mastering software design concepts.
-https://lnkd.in/dUN8kSjt
+https://dev.to/somadevtoo/the-software-design-system-design-interview-preparation-roadmap-with-resources-1no0
 
 Explore programming and architectural paradigms in this deep dive. From OOP to functional, understand the foundations of coding.
-https://lnkd.in/dywZcYVj
+https://itnext.io/programming-and-architectural-paradigms-7acf47ad476b
 
 Build an API with background tasks using a pragmatic approach. This guide simplifies async processing for real-world applications.
-https://lnkd.in/dF88QrGU
+https://dev.to/lovestaco/implementing-an-api-with-background-tasks-a-pragmatic-approach-5fbd
 
 Kube Resource Orchestrator hits the scene in 2025. Learn how it’s revolutionizing Kubernetes resource management for developers.
-https://lnkd.in/dPZdZrCf
+https://www.infoq.com/news/2025/02/kube-resource-orchestrator/
 
 Master encapsulation in OOP and beyond. This post bridges functional paradigms and moving parts in software design.
-https://lnkd.in/d9azvSYk
+https://dev.to/lovestaco/object-oriented-programming-encapsulation-moving-parts-and-functional-paradigms-30d0
 
 Supercharge your VS Code with these must-have extensions. Productivity, debugging, and workflow boosts you can’t live without.
-https://lnkd.in/dBwFcJ_w
+https://www.howtogeek.com/vs-code-extensions-i-cant-live-without/
 
 See how Cyclops took GitOps to the next level. A fresh take on streamlining deployments and infrastructure management.
-https://lnkd.in/dZQ9Q6FX
+https://dev.to/cyclops-ui/how-we-took-gitops-a-step-further-3dbc
 
 
 ---

@@ -7,7 +7,7 @@ archived_at: 2026-03-27
 
 # March 29, 2019
 
-https://lnkd.in/emrHyWs
+https://dev.to/kttravers/how-to-work-with-developers---a-guide-for-non-developers-35hk
 
 
 ---

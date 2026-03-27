@@ -27,7 +27,7 @@ In the dynamic realm of software development, traceability is the glue that hold
 In today's fast-paced development environments, and whether you are using Github Issues, Gitlab, Trello, Jira, etc.. traceability isn't a luxury; it's a necessity. It ensures your code is not just a collection of characters but a well-documented journey of decisions and innovations. Embrace traceability, and you'll empower your team to build better, collaborate smarter, and deliver with confidence. 🚀
 
 These topics are also well covered and with clear examples in the GitHub post
-https://lnkd.in/d7K9_XEu
+https://github.blog/2023-07-11-demonstrating-end-to-end-traceability-with-pull-requests/
 
 
 hashtag

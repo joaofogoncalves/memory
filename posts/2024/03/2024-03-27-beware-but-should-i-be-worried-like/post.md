@@ -17,7 +17,7 @@ Beware, but should I be worried? 😅
 Like everything on the internet this might be right for someone but it's not for everyone. 
 On small teams splitting that many responsibilities into separate jobs/people is just not feasible.
 
-https://lnkd.in/dUHNjdSw
+https://newsletter.pragmaticengineer.com/p/engineering-leadership-skillset-overlaps
 
 
 ---

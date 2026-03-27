@@ -33,7 +33,7 @@ The technology landscape is constantly evolving, and it's essential for DevOps p
 I hope these key takeaways provide you with valuable insights into the world of DevOps. 
 If you're interested in learning more, I encourage you to watch the full interview.
 
-https://lnkd.in/dczbeJRD
+https://www.youtube.com/watch?v=kDQQJfrIrdY
 
 hashtag
 #devops 

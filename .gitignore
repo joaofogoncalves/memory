@@ -6,3 +6,4 @@ cache/
 logs/
 *.log
 .DS_Store
+web/dist/

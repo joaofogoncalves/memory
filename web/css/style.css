@@ -479,7 +479,7 @@ h4 { font-size: 1.1rem; }
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
-  margin-bottom: calc(var(--spacing-unit) * 2);
+  margin-bottom: var(--spacing-unit);
 }
 
 .search-input {

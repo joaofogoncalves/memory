@@ -709,7 +709,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
   </section>
 
   <section id="archive-section">
-    <div class="section-title">Archive</div>
+    <div class="section-title"></div>
     <div class="archive-list" id="archive-list">
       {archive_html}
     </div>

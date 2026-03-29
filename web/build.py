@@ -8,6 +8,7 @@ Usage: python web/build.py
 """
 
 import json
+import os
 import re
 import shutil
 from html import escape
@@ -15,6 +16,9 @@ from pathlib import Path
 
 import markdown
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
 # ============================================================
 # Configuration
@@ -30,10 +34,12 @@ JS_SRC = WEB_DIR / 'js'
 IMG_SRC = WEB_DIR / 'img'
 
 SITE_NAME = 'João Gonçalves'
-SITE_URL = ''  # Set to deployed URL if needed
+SITE_URL = os.environ.get('SITE_URL', '').rstrip('/')
+SITE_DESCRIPTION = 'Engineering leader & AI coding practitioner. Founding Engineer at BRIDGE IN.'
 LINKEDIN = 'https://linkedin.com/in/joaofogoncalves'
 GITHUB = 'https://github.com/joaofogoncalves'
 TWITTER = 'https://x.com/joaofogoncalves'
+TWITTER_HANDLE = '@joaofogoncalves'
 
 md_renderer = markdown.Markdown(extensions=['fenced_code', 'tables', 'smarty'], output_format='html')
 
@@ -214,6 +220,8 @@ def parse_all_posts() -> list[dict]:
         # URL path for this post
         url_path = f'/posts/{year}/{month}/{slug}/'
 
+        read_time = reading_time(content)
+
         posts.append({
             'date': date_str,
             'year': year,
@@ -221,6 +229,7 @@ def parse_all_posts() -> list[dict]:
             'slug': slug,
             'title': title,
             'preview': preview,
+            'reading_time': read_time,
             'tags': [str(t) for t in (fm.get('tags', []) or [])],
             'post_type': post_type,
             'post_url': fm.get('post_url', ''),
@@ -247,18 +256,74 @@ GOOGLE_FONTS = (
 )
 
 
-def head_html(title: str, depth: int = 0, extra_head: str = '') -> str:
+def ga_snippet() -> str:
+    """Return Google Analytics gtag.js snippet if GA_MEASUREMENT_ID is set."""
+    ga_id = os.environ.get('GA_MEASUREMENT_ID', '').strip()
+    if not ga_id:
+        return ''
+    return (
+        f'<script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>\n'
+        f'  <script>\n'
+        f'    window.dataLayer = window.dataLayer || [];\n'
+        f'    function gtag(){{dataLayer.push(arguments);}}\n'
+        f"    gtag('js', new Date());\n"
+        f"    gtag('config', '{ga_id}');\n"
+        f'  </script>'
+    )
+
+
+FAVICON_SVG = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%2244d8f1%22 font-family=%22monospace%22>%E2%96%B8</text></svg>">'
+
+
+def reading_time(text: str) -> str:
+    """Estimate reading time from word count."""
+    words = len(text.split())
+    minutes = max(1, round(words / 230))
+    return f'{minutes} min read'
+
+
+def og_tags(title: str, description: str = '', og_type: str = 'website',
+            og_image: str = '', depth: int = 0) -> str:
+    """Generate Open Graph and Twitter Card meta tags."""
+    prefix = '../' * depth
+    desc = escape(description or SITE_DESCRIPTION)
+    img = og_image or f'{prefix}img/headshot.jpg'
+    if SITE_URL and not img.startswith('http'):
+        img = f'{SITE_URL}/{img.lstrip("/")}'
+    lines = [
+        f'<meta property="og:title" content="{escape(title)}">',
+        f'<meta property="og:description" content="{desc}">',
+        f'<meta property="og:type" content="{og_type}">',
+        f'<meta property="og:image" content="{img}">',
+        f'<meta name="twitter:card" content="summary">',
+        f'<meta name="twitter:site" content="{TWITTER_HANDLE}">',
+    ]
+    if SITE_URL:
+        lines.append(f'<meta property="og:site_name" content="{SITE_NAME}">')
+    return '\n  '.join(lines)
+
+
+def head_html(title: str, depth: int = 0, extra_head: str = '',
+              description: str = '', og_type: str = 'website', og_image: str = '') -> str:
     """Generate <head> with proper relative paths."""
     prefix = '../' * depth
+    ga = ga_snippet()
+    desc = escape(description or SITE_DESCRIPTION)
+    og = og_tags(title, description, og_type, og_image, depth)
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0e131e">
   <title>{escape(title)} — {SITE_NAME}</title>
-  <meta name="description" content="Engineering leader &amp; AI coding practitioner. Founding Engineer at BRIDGE IN.">
+  <meta name="description" content="{desc}">
+  {FAVICON_SVG}
+  {og}
+  {ga}
   {GOOGLE_FONTS}
   <link rel="stylesheet" href="{prefix}css/style.css">
+  <script src="{prefix}js/posts.js" defer></script>
   {extra_head}
 </head>'''
 
@@ -278,14 +343,22 @@ def nav_html(active: str = '', depth: int = 0) -> str:
 </nav>'''
 
 
+SVG_LINKEDIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
+SVG_GITHUB = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>'
+SVG_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+
+
 def footer_html() -> str:
-    return f'''<footer class="footer">
+    return f'''<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<footer class="footer">
   <div class="footer-inner">
     <span>João Gonçalves · Lisbon</span>
     <div class="footer-links">
-      <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>
-      <a href="{TWITTER}" target="_blank" rel="noopener">X</a>
+      <a href="{LINKEDIN}" target="_blank" rel="noopener" aria-label="LinkedIn">{SVG_LINKEDIN}</a>
+      <a href="{GITHUB}" target="_blank" rel="noopener" aria-label="GitHub">{SVG_GITHUB}</a>
+      <a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>
     </div>
   </div>
 </footer>'''
@@ -317,7 +390,7 @@ def render_card(post: dict, depth: int = 0) -> str:
 
     return f'''<div class="{card_cls}">
   <div class="card-body">
-    <div class="card-date">{post['date']}</div>
+    <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
     <div class="card-title"><a href="{url}">{escape(post['title'])}</a></div>
     <div class="card-preview">{escape(post['preview'])}</div>
     <div class="card-tags">{tags_html}</div>
@@ -342,7 +415,7 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 
     return f'''<div class="card-featured">
   {image}
-  <div class="card-date">{post['date']}</div>
+  <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
   <div class="card-title"><a href="{url}">{escape(post['title'])}</a></div>
   <div class="card-preview">{escape(post['preview'])}</div>
   <div class="card-tags">{tags_html}</div>
@@ -358,7 +431,7 @@ def generate_home(posts: list[dict]) -> str:
     recent = posts[:6]
     cards = '\n'.join(render_card(p, depth=0) for p in recent)
 
-    return f'''{head_html("Home", depth=0)}
+    return f'''{head_html("Home", depth=0, description="Engineering leader & AI coding practitioner. Writing about what happens when AI changes how we build.")}
 <body>
 {nav_html(depth=0)}
 
@@ -589,7 +662,7 @@ def generate_about() -> str:
 def generate_posts_archive(posts: list[dict]) -> str:
     """Generate the posts archive page with JS-powered filtering."""
     total = len(posts)
-    featured = posts[:2]
+    featured = posts[:6]
     featured_html = '\n'.join(render_featured_card(p, depth=1) for p in featured)
 
     # Server-render the first page of the archive for no-JS fallback
@@ -607,7 +680,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
   <span class="archive-tags">{tags}</span>
 </div>\n'''
 
-    return f'''{head_html("Posts", depth=1, extra_head='<script src="../js/posts.js" defer></script>')}
+    return f'''{head_html("Posts", depth=1)}
 <body>
 {nav_html(active='posts', depth=1)}
 
@@ -659,6 +732,12 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
     body_html = autolink_urls(body_html)
 
     tags_html = render_tags_html(post['tags'])
+    read_time = reading_time(cleaned)
+
+    # OG image: use first media if available, else headshot
+    post_og_image = ''
+    if post.get('media'):
+        post_og_image = f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{post['media'][0]}"
 
     # Fix media paths — they reference media/image-1.jpg, which is correct
     # since media/ is copied into the same directory
@@ -678,13 +757,19 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
     if post.get('post_url'):
         original_link = f'<a href="{post["post_url"]}" class="post-original-link" target="_blank" rel="noopener">View original on LinkedIn →</a>'
 
-    return f'''{head_html(post['title'][:60], depth=depth)}
+    return f'''{head_html(post['title'][:60], depth=depth,
+        description=post['preview'][:160],
+        og_type='article',
+        og_image=post_og_image)}
 <body>
 {nav_html(active='posts', depth=depth)}
 
 <div class="page-container">
   <div class="post-header">
-    <div class="post-date">{post['date']}</div>
+    <div class="post-meta">
+      <span class="post-date">{post['date']}</span>
+      <span class="post-reading-time">{read_time}</span>
+    </div>
     <div class="post-tags">{tags_html}</div>
   </div>
 
@@ -693,7 +778,13 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
   </div>
 
   <div class="post-footer">
-    {original_link}
+    <div class="post-actions">
+      {original_link}
+      <button class="copy-link-btn" aria-label="Copy link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        <span>Copy link</span>
+      </button>
+    </div>
     <div class="post-nav">
       {prev_link}
       <span></span>
@@ -703,6 +794,14 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
 </div>
 
 {footer_html()}
+<script>
+document.querySelector('.copy-link-btn')?.addEventListener('click', function() {{
+  navigator.clipboard.writeText(window.location.href).then(() => {{
+    this.querySelector('span').textContent = 'Copied!';
+    setTimeout(() => this.querySelector('span').textContent = 'Copy link', 2000);
+  }});
+}});
+</script>
 </body>
 </html>'''
 
@@ -719,6 +818,7 @@ def generate_posts_json(posts: list[dict]) -> str:
             'date': p['date'],
             'title': p['title'],
             'preview': p['preview'],
+            'reading_time': p['reading_time'],
             'tags': p['tags'],
             'url': p['url'] + 'index.html',
             'type': p['post_type'],

@@ -2,23 +2,29 @@
 
 ## Project Overview
 
-This is a Python application that archives LinkedIn posts locally as clean markdown files with media downloads. It uses OAuth 2.0 authentication with the LinkedIn API to fetch posts and preserve them in an organized folder structure.
+This is a Python application that archives LinkedIn posts locally as clean markdown files with media downloads, and publishes them as a static website. It uses a **Playwright browser crawler** (primary method) or OAuth 2.0 API (legacy fallback) to fetch posts and preserve them in an organized folder structure. A static site generator converts the archive into a deployable website.
 
-**Purpose:** Create a permanent, offline archive of the user's LinkedIn content that they control - focusing on what they wrote, not engagement metrics.
+**Purpose:** Create a permanent, offline archive of the user's LinkedIn content that they control - focusing on what they wrote, not engagement metrics. Optionally publish as a personal website.
 
-**Status:** Production-ready, fully implemented and tested.
+**Status:** Production-ready. Archiving, site generation, and deployment all working.
 
 ---
 
 ## Technology Stack
 
 - **Python 3.9+** (currently running on 3.14)
-- **LinkedIn API v2** (OAuth 2.0 with OpenID Connect)
+- **Playwright** - Browser automation for crawling LinkedIn (primary method)
+- **LinkedIn API v2** - OAuth 2.0 (legacy fallback, limited by API restrictions)
+- **Static Site** - Vanilla HTML/CSS/JS, no frameworks
 - **Core Libraries:**
-  - `requests` - HTTP client for API calls
-  - `requests-oauthlib` - OAuth 2.0 implementation
+  - `playwright` / `playwright-stealth` - Browser-based post crawling
+  - `requests` - HTTP client for API calls and media downloads
+  - `requests-oauthlib` - OAuth 2.0 implementation (legacy)
   - `PyYAML` - Configuration management
   - `Pillow` - Image validation and processing
+  - `python-slugify` - URL-safe slug generation
+  - `python-dateutil` - Date parsing
+  - `python-dotenv` - Environment variable loading
   - `tqdm` - Progress bars
   - `coloredlogs` - Enhanced console output
 
@@ -31,23 +37,42 @@ linkedin-post-archiver/  # Project root
 ├── scraper/                          # Main application package
 │   ├── __init__.py                   # Package initialization
 │   ├── main.py                       # CLI entry point & orchestration
-│   ├── auth.py                       # OAuth 2.0 authentication flow
-│   ├── linkedin_client.py            # LinkedIn API wrapper with rate limiting
+│   ├── browser_crawler.py            # Playwright browser crawler (primary)
+│   ├── auth.py                       # OAuth 2.0 authentication flow (legacy)
+│   ├── linkedin_client.py            # LinkedIn API wrapper (legacy)
 │   ├── post_fetcher.py               # Parse API responses into Post objects
+│   ├── export_parser.py              # Import from LinkedIn data export
 │   ├── media_downloader.py           # Download and validate media files
 │   ├── markdown_generator.py         # Generate markdown output
 │   ├── models.py                     # Data models (LinkedInPost, Media)
-│   └── utils.py                      # Helper functions
+│   └── utils.py                      # Helper functions + checkpoint management
+│
+├── web/                              # Static site generator
+│   ├── build.py                      # Site generator (posts → HTML)
+│   ├── resolve_links.py              # Resolve lnkd.in shortened URLs
+│   ├── deploy.sh                     # Deploy to Opalstack via rsync
+│   ├── css/
+│   │   └── style.css                 # Brutalist dark theme styles
+│   ├── js/
+│   │   └── posts.js                  # Client-side search/filter
+│   ├── img/
+│   │   └── headshot.jpg              # Author photo for About page
+│   └── dist/                         # Generated site output (git-ignored)
 │
 ├── config/
 │   └── config.yaml                   # Application configuration
 │
-├── posts/                            # Archived posts output (git-ignored media)
+├── posts/                            # Archived posts output
 │   └── YYYY/MM/post-slug/
-│       ├── post.md                   # Markdown file
-│       └── media/                    # Downloaded images/videos
+│       ├── post.md                   # Markdown file (tracked)
+│       └── media/                    # Downloaded images/videos (git-ignored)
 │
-├── cache/                            # OAuth token cache (git-ignored)
+├── .claude/
+│   └── commands/                     # Claude Code custom skills
+│       ├── profile.md                # /profile - voice profile generator
+│       └── taste.md                  # /taste - visual taste profile generator
+│
+├── cache/                            # Browser profile + token cache (git-ignored)
 ├── logs/                             # Application logs (git-ignored)
 ├── venv/                             # Virtual environment (git-ignored)
 │
@@ -56,9 +81,18 @@ linkedin-post-archiver/  # Project root
 ├── .env.example                      # Credentials template
 ├── .gitignore                        # Git exclusions
 │
+├── cv.md                             # Professional CV (used by site generator)
+├── profile.md                        # Voice profile for AI-assisted writing
+├── taste.md                          # Visual taste profile for image selection
+├── stitch-prompt.md                  # Website design spec for Stitch mockups
+│
 ├── README.md                         # Full documentation
 ├── QUICKSTART.md                     # 5-minute setup guide
 ├── PROJECT_SUMMARY.md                # Technical implementation details
+├── CONTRIBUTING.md                   # Contribution guidelines
+├── PUBLISH_CHECKLIST.md              # GitHub publishing checklist
+├── RATE_LIMITS.md                    # LinkedIn API rate limit docs
+├── LICENSE                           # MIT License
 ├── verify_setup.py                   # Setup verification script
 └── CLAUDE.md                         # This file
 ```
@@ -67,33 +101,56 @@ linkedin-post-archiver/  # Project root
 
 ## Key Design Decisions
 
-### 1. OAuth 2.0 Flow
+### 1. Browser Crawler (Primary Method)
+- Playwright-based browser automation replaces LinkedIn API as the primary crawling method
+- Uses `playwright-stealth` to avoid LinkedIn bot detection
+- Manual login with headed browser; session saved to `cache/browser_profile`
+- Intelligent scrolling with random delays (5-12s, configurable)
+- Post extraction via DOM selectors
+- Automatic checkpointing to resume interrupted crawls
+- Filters out self-reposts to avoid duplicates
+- **Why:** LinkedIn API is too restrictive (limited scopes, rate limits, restricted historical access)
+
+### 2. OAuth 2.0 Flow (Legacy Fallback)
 - Uses local HTTP server on port 8080 to catch OAuth callback
 - Token cached in `cache/token.json` for reuse
 - Browser automatically opens for user authorization
 - Supports re-authentication with `--reauth` flag
 
-### 2. Rate Limiting
+### 3. Rate Limiting (API path)
 - 1.5 second delay between API requests (configurable)
 - Exponential backoff on 429 rate limit errors: 1s → 2s → 4s → 8s
 - Max 3 retries per request
 - All rate limiting handled in `linkedin_client.py`
 
-### 3. Post Organization
+### 4. Post Organization
 - Structure: `posts/YYYY/MM/post-slug/`
 - Slug format: `YYYY-MM-DD-first-words-of-post` (max 60 chars)
 - Duplicate slugs handled with numeric suffixes (-2, -3, etc.)
 - Media stored in `media/` subdirectory per post
 
-### 4. Idempotent Operation
+### 5. Idempotent Operation
 - Safe to re-run; skips posts that already exist
 - Checks for `post.md` file before archiving
 - Media downloads skip existing files
 
-### 5. Error Handling
-- All API errors logged to `logs/scraper.log`
+### 6. Error Handling
+- All errors logged to `logs/scraper.log`
 - Failed posts logged but don't stop the entire process
 - Media download failures noted in logs but don't fail post creation
+
+### 7. Static Site Generator
+- `web/build.py` reads markdown posts and generates a complete static site
+- Brutalist dark theme ("senior engineer's personal site")
+- 3 pages: Home (hero + recent posts), About (CV timeline), Posts (searchable archive)
+- Only shows `post_type: original` or `article` (filters out reposts)
+- Client-side search and tag filtering via `web/js/posts.js`
+- Output to `web/dist/` (git-ignored)
+
+### 8. Deployment (Opalstack)
+- `web/deploy.sh` builds the site and deploys via rsync over SSH
+- Credentials loaded from `.env` (OPAL_* variables)
+- Deletes stale files on remote
 
 ---
 
@@ -145,12 +202,12 @@ which python  # Should point to venv/bin/python
 
 ### Running the Application
 
-**Authentication:**
+**Browser login (first time):**
 ```bash
-python scraper/main.py --auth
+python scraper/main.py --browser-login
 ```
 
-**Archive all posts:**
+**Archive all posts (browser crawler):**
 ```bash
 python scraper/main.py --fetch
 ```
@@ -160,9 +217,45 @@ python scraper/main.py --fetch
 python scraper/main.py --limit 10
 ```
 
-**Force re-authentication:**
+**Legacy API authentication:**
+```bash
+python scraper/main.py --auth
+```
+
+**Force re-authentication (API):**
 ```bash
 python scraper/main.py --reauth --fetch
+```
+
+### Static Site Workflow
+
+**Build the website:**
+```bash
+python web/build.py
+```
+
+**Resolve lnkd.in shortened URLs in posts:**
+```bash
+python web/resolve_links.py          # apply changes
+python web/resolve_links.py --dry-run  # preview only
+```
+
+**Deploy to Opalstack:**
+```bash
+bash web/deploy.sh
+```
+
+### Full Pipeline
+
+```bash
+# 1. Crawl new posts
+python scraper/main.py --fetch
+
+# 2. Resolve shortened URLs
+python web/resolve_links.py
+
+# 3. Build and deploy website
+bash web/deploy.sh
 ```
 
 ### Development Workflow
@@ -196,7 +289,7 @@ python scraper/main.py --reauth --fetch
 
 ### config/config.yaml
 
-**LinkedIn API Settings:**
+**LinkedIn API Settings (legacy):**
 ```yaml
 linkedin:
   api_version: v2
@@ -205,11 +298,22 @@ linkedin:
   timeout: 30              # HTTP request timeout
 ```
 
+**Browser Crawler Settings:**
+```yaml
+browser:
+  profile_dir: cache/browser_profile
+  scroll_delay_min: 5.0    # Min seconds between scrolls
+  scroll_delay_max: 12.0   # Max seconds between scrolls
+  action_delay_min: 1.5    # Min seconds between actions
+  action_delay_max: 4.0    # Max seconds between actions
+  max_stale_scrolls: 10    # Stop after N scrolls with no new posts
+```
+
 **Output Settings:**
 ```yaml
 output:
-  base_dir: /path/to/posts  # Archive output directory
-  date_format: "%Y/%m"      # Directory structure format
+  base_dir: posts          # Relative to project root, or absolute path
+  date_format: "%Y/%m"     # Directory structure format
 ```
 
 **Media Settings:**
@@ -237,11 +341,19 @@ LINKEDIN_CLIENT_SECRET=your_client_secret
 LINKEDIN_REDIRECT_URI=http://localhost:8080/callback
 ```
 
+**Opalstack deployment (optional):**
+```env
+OPAL_SSH_USER=your_opalstack_username
+OPAL_SSH_HOST=opal1.opalstack.com
+OPAL_SSH_PORT=22
+OPAL_APP_PATH=/home/your_user/apps/your_app_name
+```
+
 **Important:** Never commit `.env` file. It's git-ignored.
 
 ---
 
-## LinkedIn API Integration
+## LinkedIn API Integration (Legacy)
 
 ### Authentication Endpoints
 
@@ -312,6 +424,24 @@ class Media:
 
 ---
 
+## Claude Code Custom Skills
+
+### /profile - Voice Profile Generator
+- Analyzes recent LinkedIn posts (60-day window by default)
+- Filters to `post_type: original` or `article` only
+- Extracts writing patterns: opening hooks, sentence rhythm, vocabulary, rhetorical devices
+- Generates `profile.md` - a voice profile system prompt for AI-assisted writing
+- Uses tiered recency weighting (recent posts weighted higher)
+
+### /taste - Visual Taste Profile Generator
+- Analyzes images attached to posts
+- Batch processes uncached images (describes them, stores descriptions in post frontmatter)
+- Generates `taste.md` - a visual taste profile for image selection
+- Requires 80%+ of images described before generating
+- Uses tiered recency weighting for visual patterns
+
+---
+
 ## Testing & Debugging
 
 ### Setup Verification
@@ -341,7 +471,20 @@ export LOG_LEVEL=DEBUG
 python scraper/main.py --fetch
 ```
 
-### Testing Authentication
+### Testing Browser Crawler
+
+```bash
+# Login (opens headed browser)
+python scraper/main.py --browser-login
+
+# Crawl with limit
+python scraper/main.py --limit 5
+
+# Check logs for errors
+tail -f logs/scraper.log
+```
+
+### Testing API Authentication (Legacy)
 
 ```bash
 # Test OAuth flow
@@ -354,41 +497,38 @@ cat cache/token.json
 python scraper/main.py --reauth
 ```
 
-### Testing Post Fetching
-
-```bash
-# Fetch only 5 posts for testing
-python scraper/main.py --limit 5
-
-# Check logs for errors
-tail -f logs/scraper.log
-
-# Verify output structure
-ls -R posts/
-```
-
 ### Common Issues
 
-**Port 8080 in use:**
+**Browser crawler hangs or gets detected:**
+- Increase scroll delays in `config.yaml` (`scroll_delay_min`/`scroll_delay_max`)
+- Clear browser profile: `rm -rf cache/browser_profile` and re-login
+- Check if LinkedIn UI has changed (DOM selectors may need updating)
+
+**Port 8080 in use (API auth):**
 - Check: `lsof -i :8080`
 - Kill process: `kill -9 <PID>`
 - Or change port in auth.py (also update .env redirect URI)
 
-**Authentication fails:**
+**Authentication fails (API):**
 - Verify credentials in `.env`
 - Check redirect URI matches app settings exactly
 - Ensure app has required permissions approved
 
 **No posts fetched:**
 - Check logs: `cat logs/scraper.log`
-- Verify API permissions in LinkedIn app
-- Try re-authentication: `--reauth`
+- For browser crawler: verify login session is still valid
+- For API: verify permissions, try `--reauth`
 
 **Media downloads fail:**
 - Check internet connection
 - LinkedIn media URLs may expire (temporary signed URLs)
 - Increase timeout in config.yaml
 - Check disk space
+
+**Site build fails:**
+- Ensure posts exist in `posts/` directory
+- Check that `cv.md` exists (used for About page)
+- Run with Python 3.9+ from venv
 
 ---
 
@@ -397,39 +537,36 @@ ls -R posts/
 ### Security Considerations
 
 1. **Never commit `.env` file** - Contains sensitive credentials
-2. **Token cache** - Stored in `cache/token.json` (git-ignored)
+2. **Token/browser cache** - Stored in `cache/` (git-ignored)
 3. **API credentials** - Keep Client ID and Secret secure
-4. **Access tokens** - Expire after ~60 days (varies)
-
-### LinkedIn API Limitations
-
-1. **Rate limits** - Respect 1.5s delay between requests
-2. **Data access** - Can only fetch your own posts
-3. **Historical data** - Depends on when app was created
-4. **Media URLs** - May be temporary/signed, download immediately
+4. **Browser profile** - Contains LinkedIn session cookies (git-ignored)
+5. **SSH credentials** - Opalstack deploy vars in `.env` only
 
 ### Git Strategy
 
 **Tracked:**
-- All Python code
+- All Python code (scraper + web)
 - Documentation files
 - Configuration templates
-- Markdown output files
+- Markdown post files
+- Post images in `posts/**/media/`
+- Website source (CSS, JS, images)
 
 **Ignored:**
 - `.env` file
 - `venv/` directory
-- `cache/` directory
+- `cache/` directory (browser profile + tokens)
 - `logs/` directory
-- Media files in `posts/**/media/`
+- `web/dist/` (generated site output)
 - Large video files (*.mp4, *.mov)
 
 ### Performance Considerations
 
-1. **Initial archive** - May take 10-30 minutes depending on post count
-2. **Rate limiting** - Adds 1.5s per request (necessary)
+1. **Browser crawl** - Takes 10-30+ minutes depending on post count and scroll delays
+2. **Rate limiting (API)** - Adds 1.5s per request
 3. **Video downloads** - Can be slow for large files
-4. **Disk space** - Videos can be 500MB+ each
+4. **Site build** - Fast (seconds), reads markdown files
+5. **Deploy** - Depends on rsync delta size
 
 ---
 
@@ -443,11 +580,23 @@ pip install --upgrade -r requirements.txt
 pip list --outdated
 ```
 
+### Update Playwright Browsers
+
+```bash
+python -m playwright install
+```
+
 ### Clear Cache
 
 ```bash
+# Clear API token
 rm -rf cache/token.json
-python scraper/main.py --auth
+
+# Clear browser session (will need to re-login)
+rm -rf cache/browser_profile
+
+# Re-login
+python scraper/main.py --browser-login
 ```
 
 ### Clean Logs
@@ -464,14 +613,10 @@ rm logs/scraper.log
 python scraper/main.py --fetch
 ```
 
-### Backup Archive
+### Rebuild & Deploy Website
 
 ```bash
-# Backup posts (markdown only)
-tar -czf posts-backup-$(date +%Y%m%d).tar.gz posts/**/*.md posts/**/INDEX.md
-
-# Include media (large!)
-tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
+bash web/deploy.sh
 ```
 
 ---
@@ -483,11 +628,9 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 1. **Incremental updates** - Track last fetch date, only get new posts
 2. **Comment archiving** - Preserve comment threads on posts
 3. **Engagement metrics** - Store likes/comments/shares over time
-4. **HTML export** - Generate browsable HTML version
-5. **Search functionality** - Full-text search across archive
-6. **Analytics** - Post frequency, popular topics, etc.
-7. **Scheduled archiving** - Cron job for automatic updates
-8. **Multi-user support** - Archive multiple LinkedIn accounts
+4. **Analytics** - Post frequency, popular topics, etc.
+5. **Scheduled archiving** - Cron job for automatic updates
+6. **Multi-user support** - Archive multiple LinkedIn accounts
 
 ### Implementation Guidelines for Additions
 
@@ -517,7 +660,7 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 ### Common Requests
 
 **"Add support for X feature":**
-1. Check if feature aligns with project scope (post archiving)
+1. Check if feature aligns with project scope (post archiving + publishing)
 2. Identify affected modules (usually 2-3)
 3. Update data models if needed
 4. Add configuration options
@@ -540,7 +683,7 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 - **Simplicity:** Keep it simple and maintainable
 - **Reliability:** Prefer robustness over features
 - **User control:** User owns their data completely
-- **Privacy:** Everything stored locally
+- **Privacy:** Everything stored locally (publishing is opt-in)
 - **Idempotent:** Safe to re-run operations
 - **Fail gracefully:** One error shouldn't stop entire process
 
@@ -548,53 +691,84 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 
 ## Module Responsibilities
 
-### main.py
+### scraper/main.py
 - CLI argument parsing
-- Application orchestration
+- Application orchestration (browser crawler or API path)
 - User-facing output and statistics
 - Error handling at top level
 
-### auth.py
-- OAuth 2.0 authorization flow
+### scraper/browser_crawler.py
+- Playwright browser automation
+- LinkedIn feed scrolling and post extraction
+- DOM parsing for post content, media, links
+- Session management (login, profile persistence)
+- Checkpoint save/resume for interrupted crawls
+- Repost detection and filtering
+
+### scraper/auth.py
+- OAuth 2.0 authorization flow (legacy)
 - Browser-based authentication
 - Token caching and retrieval
 - Re-authentication handling
 
-### linkedin_client.py
-- Low-level LinkedIn API wrapper
+### scraper/linkedin_client.py
+- Low-level LinkedIn API wrapper (legacy)
 - HTTP request handling
 - Rate limiting implementation
 - Retry logic and error handling
 
-### post_fetcher.py
+### scraper/post_fetcher.py
 - Parse LinkedIn API responses
 - Convert raw data to LinkedInPost objects
 - Extract media URLs from posts
 - Determine post types
 
-### media_downloader.py
+### scraper/export_parser.py
+- Import posts from LinkedIn data export files
+- Parse exported data format into LinkedInPost objects
+
+### scraper/media_downloader.py
 - Download images, videos, documents
 - File validation (especially images)
 - Progress bars for large downloads
 - Size limit enforcement
 
-### markdown_generator.py
+### scraper/markdown_generator.py
 - Generate markdown from LinkedInPost
 - Format reposts specially
 - Embed media references
 - Create index files
 
-### models.py
+### scraper/models.py
 - Data class definitions
 - Input validation
 - Type safety
 
-### utils.py
+### scraper/utils.py
 - Slug generation
 - Filename sanitization
 - Hashtag extraction
 - Configuration loading
 - Logging setup
+- Checkpoint save/load for crawler resume
+
+### web/build.py
+- Static site generator
+- Reads markdown posts from `posts/` and `cv.md`
+- Generates HTML pages (Home, About, Posts)
+- Markdown-to-HTML conversion with frontmatter parsing
+- Outputs to `web/dist/`
+
+### web/resolve_links.py
+- Resolves `lnkd.in` shortened URLs in archived posts
+- Fetches real destination URLs
+- Updates post.md files in-place
+- Supports `--dry-run` mode
+
+### web/deploy.sh
+- Builds site via `build.py`
+- Deploys to Opalstack via rsync over SSH
+- Loads credentials from `.env`
 
 ---
 
@@ -604,6 +778,8 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 - README.md - Comprehensive guide
 - QUICKSTART.md - Quick setup
 - PROJECT_SUMMARY.md - Technical details
+- CONTRIBUTING.md - Contribution guidelines
+- RATE_LIMITS.md - API rate limit details
 
 **Debugging:**
 - Check `logs/scraper.log` first
@@ -616,5 +792,5 @@ tar -czf posts-full-backup-$(date +%Y%m%d).tar.gz posts/
 
 ---
 
-_Last updated: 2026-02-16_
-_Project version: 1.0.0_
+_Last updated: 2026-03-27_
+_Project version: 2.0.0_

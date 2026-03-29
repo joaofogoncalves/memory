@@ -24,6 +24,7 @@ set +a
 : "${OPAL_SSH_USER:?Set OPAL_SSH_USER in .env (e.g. myuser)}"
 : "${OPAL_SSH_HOST:?Set OPAL_SSH_HOST in .env (e.g. opal1.opalstack.com)}"
 : "${OPAL_APP_PATH:?Set OPAL_APP_PATH in .env (e.g. /home/myuser/apps/mysite)}"
+OPAL_SSH_PORT="${OPAL_SSH_PORT:-22}"
 
 # Build first
 echo "Building site..."
@@ -32,9 +33,10 @@ python "$SCRIPT_DIR/build.py"
 
 # Deploy via rsync
 echo ""
-echo "Deploying to $OPAL_SSH_HOST:$OPAL_APP_PATH..."
+echo "Deploying to $OPAL_SSH_HOST:$OPAL_APP_PATH (port $OPAL_SSH_PORT)..."
 rsync -avz --delete \
   --exclude='.DS_Store' \
+  -e "ssh -p $OPAL_SSH_PORT" \
   "$DIST_DIR/" \
   "${OPAL_SSH_USER}@${OPAL_SSH_HOST}:${OPAL_APP_PATH}/"
 

@@ -197,6 +197,9 @@
 
     archiveList.innerHTML = html;
 
+    // Observe new rows for scroll reveal
+    observeNewElements(archiveList);
+
     // Load more button
     if (loadMoreContainer) {
       if (postsToShow.length < filteredPosts.length) {
@@ -213,8 +216,11 @@
       .map(t => '<span class="tag">' + escapeHtml(t) + '</span>')
       .join('');
 
-    return '<div class="archive-row">' +
+    const readTime = post.reading_time ? '<span class="archive-reading-time">' + post.reading_time + '</span>' : '';
+
+    return '<div class="archive-row reveal">' +
       '<span class="archive-date">' + post.date + '</span>' +
+      readTime +
       '<span class="archive-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></span>' +
       '<span class="archive-tags">' + tags + '</span>' +
       '</div>';
@@ -272,8 +278,15 @@
     // Load more
     if (loadMoreBtn) {
       loadMoreBtn.addEventListener('click', () => {
-        currentPage++;
-        renderArchive();
+        loadMoreBtn.classList.add('loading');
+        loadMoreBtn.textContent = 'Loading...';
+        // Small delay for visual feedback
+        setTimeout(() => {
+          currentPage++;
+          renderArchive();
+          loadMoreBtn.classList.remove('loading');
+          loadMoreBtn.textContent = 'Load more';
+        }, 150);
       });
     }
   }
@@ -283,5 +296,111 @@
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+})();
+
+
+/* ============================================================
+   Global: scroll reveal, scroll-to-top, nav shadow
+   Runs on all pages
+   ============================================================ */
+
+(function () {
+  'use strict';
+
+  // --- Intersection Observer for scroll reveal ---
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  // Observe all existing .reveal elements and cards/sections
+  function initReveal() {
+    // Add .reveal class to cards, featured cards, timeline nodes, etc.
+    const selectors = [
+      '.card',
+      '.card-featured',
+      '.hero',
+      '.about-teaser',
+      '.section',
+      '.timeline-node',
+      '.skill-row',
+      '.speaking-cta',
+      '.about-intro-row',
+      '.post-content',
+    ];
+    document.querySelectorAll(selectors.join(',')).forEach(el => {
+      if (!el.classList.contains('reveal')) {
+        el.classList.add('reveal');
+      }
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+  }
+
+  // Expose for dynamically added elements (posts.js archive rows)
+  window.observeNewElements = function (container) {
+    container.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      revealObserver.observe(el);
+    });
+  };
+
+  // --- Nav shadow on scroll ---
+  const nav = document.querySelector('.nav');
+  let lastScrollY = 0;
+
+  function updateNav() {
+    const y = window.scrollY;
+    if (nav) {
+      nav.classList.toggle('scrolled', y > 20);
+    }
+    lastScrollY = y;
+  }
+
+  // --- Scroll to top button ---
+  const scrollTopBtn = document.getElementById('scroll-top');
+
+  function updateScrollTop() {
+    if (scrollTopBtn) {
+      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+    }
+  }
+
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // --- Scroll handler (throttled via rAF) ---
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateNav();
+        updateScrollTop();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // --- Init ---
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initReveal();
+      updateNav();
+      updateScrollTop();
+    });
+  } else {
+    initReveal();
+    updateNav();
+    updateScrollTop();
   }
 })();

@@ -272,7 +272,11 @@ def ga_snippet() -> str:
     )
 
 
-FAVICON_SVG = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22 fill=%2244d8f1%22 font-family=%22monospace%22>%E2%96%B8</text></svg>">'
+FAVICON = (
+    '<link rel="icon" type="image/x-icon" href="{prefix}img/favicon.ico">\n'
+    '  <link rel="icon" type="image/png" sizes="192x192" href="{prefix}img/favicon-192.png">\n'
+    '  <link rel="apple-touch-icon" href="{prefix}img/apple-touch-icon.png">'
+)
 
 
 def reading_time(text: str) -> str:
@@ -318,7 +322,7 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   <meta name="theme-color" content="#0e131e">
   <title>{escape(title)} — {SITE_NAME}</title>
   <meta name="description" content="{desc}">
-  {FAVICON_SVG}
+  {FAVICON.format(prefix=prefix)}
   {og}
   {ga}
   {GOOGLE_FONTS}
@@ -334,10 +338,10 @@ def nav_html(active: str = '', depth: int = 0) -> str:
     posts_cls = ' active' if active == 'posts' else ''
     return f'''<nav class="nav">
   <div class="nav-inner">
-    <a href="{prefix}index.html" class="nav-name">João Gonçalves</a>
+    <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.png" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
-      <a href="{prefix}about/index.html" class="{about_cls}">About</a>
-      <a href="{prefix}posts/index.html" class="{posts_cls}">Posts</a>
+      <a href="{prefix}about/" class="{about_cls}">About</a>
+      <a href="{prefix}posts/" class="{posts_cls}">Posts</a>
     </div>
   </div>
 </nav>'''
@@ -378,7 +382,6 @@ def render_card(post: dict, depth: int = 0) -> str:
     url = prefix + post['url'].lstrip('/')
     if not url.endswith('/'):
         url += '/'
-    url += 'index.html'
     tags_html = render_tags_html(post['tags'])
 
     thumb = ''
@@ -405,7 +408,6 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
     url = prefix + post['url'].lstrip('/')
     if not url.endswith('/'):
         url += '/'
-    url += 'index.html'
     tags_html = render_tags_html(post['tags'])
 
     image = ''
@@ -455,7 +457,7 @@ def generate_home(posts: list[dict]) -> str:
     <div class="about-teaser-inner">
       <p>15+ years building software and teams. Steered an engineering org through a $20M acquisition.
          Now building from scratch again. Currently writing about what happens when AI changes how we build.</p>
-      <a href="about/index.html" class="view-all">More about me →</a>
+      <a href="about/" class="view-all">More about me →</a>
     </div>
   </div>
 
@@ -464,7 +466,7 @@ def generate_home(posts: list[dict]) -> str:
     <div class="cards-grid">
       {cards}
     </div>
-    <a href="posts/index.html" class="view-all">All posts →</a>
+    <a href="posts/" class="view-all">All posts →</a>
   </section>
 </div>
 
@@ -673,7 +675,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
             current_year = p['year']
             archive_html += f'<div class="archive-year-header">{current_year}</div>\n'
         tags = render_tags_html(p['tags'], limit=3)
-        url = f"{p['year']}/{p['month']}/{p['slug']}/index.html"
+        url = f"{p['year']}/{p['month']}/{p['slug']}/"
         archive_html += f'''<div class="archive-row">
   <span class="archive-date">{p['date']}</span>
   <span class="archive-title"><a href="{url}">{escape(p['title'])}</a></span>
@@ -747,10 +749,10 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
     prev_link = ''
     next_link = ''
     if prev_post:
-        prev_url = prefix + prev_post['url'].lstrip('/') + 'index.html'
+        prev_url = prefix + prev_post['url'].lstrip('/')
         prev_link = f'<a href="{prev_url}">← Previous</a>'
     if next_post:
-        next_url = prefix + next_post['url'].lstrip('/') + 'index.html'
+        next_url = prefix + next_post['url'].lstrip('/')
         next_link = f'<a href="{next_url}">Next →</a>'
 
     original_link = ''
@@ -820,7 +822,7 @@ def generate_posts_json(posts: list[dict]) -> str:
             'preview': p['preview'],
             'reading_time': p['reading_time'],
             'tags': p['tags'],
-            'url': p['url'] + 'index.html',
+            'url': p['url'],
             'type': p['post_type'],
             'media': bool(p['media']),
         })

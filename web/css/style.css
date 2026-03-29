@@ -149,17 +149,20 @@ h4 { font-size: 1.1rem; }
   justify-content: space-between;
 }
 
-.nav-name {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--on-surface);
-  text-decoration: none;
-  letter-spacing: -0.01em;
+.nav-logo-link {
+  display: flex;
+  align-items: center;
 }
 
-.nav-name:hover {
-  color: var(--primary);
-  text-decoration: none;
+.nav-logo {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+  transition: filter 0.2s ease;
+}
+
+.nav-logo-link:hover .nav-logo {
+  filter: brightness(0) saturate(100%) invert(78%) sepia(50%) saturate(1000%) hue-rotate(155deg) brightness(101%) contrast(92%);
 }
 
 .nav-links {
@@ -188,7 +191,7 @@ h4 { font-size: 1.1rem; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: 3rem;
 }
 
@@ -594,7 +597,7 @@ h4 { font-size: 1.1rem; }
 
 /* --- About Page --- */
 .about-header {
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: var(--spacing-unit);
 }
 
@@ -782,7 +785,7 @@ h4 { font-size: 1.1rem; }
 
 /* --- Individual Post Page --- */
 .post-header {
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: var(--spacing-unit);
   max-width: 680px;
 }
@@ -971,7 +974,7 @@ h4 { font-size: 1.1rem; }
 
 /* --- Posts Page Header --- */
 .posts-header {
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: var(--spacing-unit);
 }
 
@@ -1132,7 +1135,7 @@ h4 { font-size: 1.1rem; }
   .footer-inner { padding: 0 1.25rem; }
 
   .hero h1 { font-size: 2.5rem; }
-  .hero { padding-top: calc(60px + 2.5rem); padding-bottom: 2rem; }
+  .hero { padding-top: calc(40px + 2.5rem); padding-bottom: 2rem; }
   .hero-subline { font-size: 1rem; }
 
   .cards-grid,

@@ -1,10 +1,29 @@
+# Credentials and secrets
 .env
+
+# Python
 venv/
 __pycache__/
 *.pyc
+.mypy_cache/
+
+# Runtime data
 cache/
 logs/
 *.log
-.DS_Store
+
+# Personal content (generated per-user)
+posts/
+cv.md
+profile.md
+taste.md
+stitch-prompt.md
+web/img/headshot.jpg
+config/site.yaml
+
+# Build output
 web/dist/
 drafts/
+
+# OS
+.DS_Store

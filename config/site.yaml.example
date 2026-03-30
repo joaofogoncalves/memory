@@ -1,0 +1,20 @@
+# Site personalization — copy to site.yaml and fill in your details.
+# All fields are optional; empty values produce a generic site.
+
+# Identity
+site_name: "Your Name"
+site_description: "A short bio or tagline."
+
+# Social links (leave empty to hide)
+linkedin: ""
+github: ""
+twitter: ""
+twitter_handle: ""
+
+# Home page
+hero_title: "Your Name"
+hero_subline: "Your tagline or one-liner bio."
+about_teaser: "A brief paragraph about yourself for the home page."
+
+# Footer
+footer_text: "Your Name · Your City"

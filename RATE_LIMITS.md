@@ -1,5 +1,10 @@
 # Rate Limits & Automation Guide
 
+> **Note:** This document covers the **LinkedIn API** path (`--auth`). The browser
+> crawler (`--fetch`) does not use the API and is not subject to these rate limits.
+> Browser crawling has its own considerations — primarily LinkedIn bot detection and
+> scroll throttling — which are configured in `config/config.yaml` under the `browser:` section.
+
 ## Understanding LinkedIn API Rate Limits
 
 ### The Numbers

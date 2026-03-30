@@ -16,7 +16,7 @@ Thank you for your interest in contributing! This document provides guidelines f
 
 ```bash
 # Fork the repository on GitHub, then clone your fork
-git clone https://github.com/joaofogoncalves/linkedin-post-archiver.git
+git clone https://github.com/YOUR_USERNAME/linkedin-post-archiver.git
 cd linkedin-post-archiver
 ```
 

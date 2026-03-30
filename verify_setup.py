@@ -25,7 +25,8 @@ def check_dependencies():
         'slugify',
         'dateutil',
         'tqdm',
-        'coloredlogs'
+        'coloredlogs',
+        'markdown',
     ]
 
     all_installed = True
@@ -45,6 +46,14 @@ def check_dependencies():
         except ImportError:
             print(f"✗ {package} not installed")
             all_installed = False
+
+    # Optional: check Playwright (needed for browser crawler)
+    try:
+        __import__('playwright')
+        print("✓ playwright (browser crawler)")
+    except ImportError:
+        print("⚠ playwright not installed (needed for browser crawler)")
+        print("  Install with: pip install playwright && python -m playwright install")
 
     return all_installed
 
@@ -145,9 +154,13 @@ def main():
 
     if all(results):
         print("✓ Setup verification complete! Ready to use.")
-        print("\nNext steps:")
-        print("  1. Run: python scraper/main.py --auth")
-        print("  2. Then: python scraper/main.py --fetch")
+        print("\nNext steps (browser crawler — recommended):")
+        print("  1. python -m playwright install")
+        print("  2. python scraper/main.py --browser-login")
+        print("  3. python scraper/main.py --fetch")
+        print("\nAlternative (API path):")
+        print("  1. python scraper/main.py --auth")
+        print("  2. python scraper/main.py --fetch")
     else:
         print("✗ Setup incomplete. Please fix the issues above.")
         print("\nTo install dependencies:")

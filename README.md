@@ -3,77 +3,46 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Python tool to archive your LinkedIn posts locally as clean, readable markdown files with media downloads. Keep a permanent, offline backup of your content that you control.
+Archive your LinkedIn posts as clean markdown files with media downloads, and optionally publish them as a static website. Keep a permanent, offline backup of your content that you control.
 
 ## Features
 
-- **OAuth 2.0 Authentication** - Secure authentication with LinkedIn API
-- **Complete Post Archive** - Fetch all your LinkedIn posts (original, reposts, articles, polls)
-- **Media Downloads** - Download images, videos, and documents locally
-- **Clean Markdown** - Generate readable markdown files organized by date
-- **Organized Structure** - Posts organized in `YYYY/MM/post-slug/` folders
-- **Rate Limiting** - Respectful API usage with automatic rate limiting
-- **Idempotent** - Safe to re-run; skips already archived posts
+- **Browser Crawler** (primary) — Playwright-based automation, no API limits
+- **LinkedIn API** (fallback) — OAuth 2.0 for programmatic access
+- **Media Downloads** — Images, videos, and documents saved locally
+- **Clean Markdown** — Readable files with YAML frontmatter, organized by date
+- **Static Site Generator** — Dark-themed personal website from your archive
+- **Idempotent** — Safe to re-run; skips already archived posts
+- **Resume Support** — Automatic checkpointing to resume interrupted crawls
 
-## Prerequisites
+## Quick Start
 
-### 1. Create a LinkedIn Developer App
+### Prerequisites
 
-Before using this tool, you need to create a LinkedIn Developer App:
+- Python 3.9+
+- A LinkedIn account
 
-1. Go to [LinkedIn Developers](https://www.linkedin.com/developers/apps)
-2. Click **"Create app"**
-3. Fill in the required details:
-   - App name: "LinkedIn Post Archiver" (or any name)
-   - LinkedIn Page: Select or create a page
-   - App logo: Upload any image
-4. Click **"Create app"**
-
-### 2. Configure OAuth Settings
-
-1. In your app settings, go to **"Auth"** tab
-2. Under **"OAuth 2.0 settings"**:
-   - Add redirect URL: `http://localhost:8080/callback`
-3. Under **"Products"**, request access to:
-   - **"Sign In with LinkedIn using OpenID Connect"**
-   - **"Share on LinkedIn"**
-4. Copy your **Client ID** and **Client Secret**
-
-## Installation
-
-### 1. Clone the Repository
+### 1. Clone and install
 
 ```bash
-git clone https://github.com/joaofogoncalves/linkedin-post-archiver.git
+git clone https://github.com/YOUR_USERNAME/linkedin-post-archiver.git
 cd linkedin-post-archiver
-```
 
-Or download and extract the ZIP file from GitHub.
-
-### 2. Create Virtual Environment
-
-```bash
 python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-# OR
-venv\Scripts\activate  # On Windows
-```
+source venv/bin/activate  # macOS/Linux
+# venv\Scripts\activate   # Windows
 
-### 3. Install Dependencies
-
-```bash
 pip install -r requirements.txt
+python -m playwright install
 ```
 
-### 4. Configure Credentials
-
-Create a `.env` file in the project root:
+### 2. Configure credentials
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your credentials:
+Edit `.env` and add your LinkedIn API credentials (only needed for the API path):
 
 ```env
 LINKEDIN_CLIENT_ID=your_client_id_here
@@ -81,299 +50,176 @@ LINKEDIN_CLIENT_SECRET=your_client_secret_here
 LINKEDIN_REDIRECT_URI=http://localhost:8080/callback
 ```
 
-## Usage
+> **API credentials are optional** if you only use the browser crawler. To create
+> them, go to [LinkedIn Developers](https://www.linkedin.com/developers/apps),
+> create an app, enable "Sign In with LinkedIn using OpenID Connect" and
+> "Share on LinkedIn", then copy the Client ID and Secret.
 
-### Authenticate
+### 3. Archive your posts
 
-Run authentication first to get an access token:
-
-```bash
-python scraper/main.py --auth
-```
-
-This will:
-1. Open your browser to LinkedIn login
-2. Ask you to authorize the app
-3. Redirect back to localhost and save the token
-
-### Archive All Posts
-
-After authentication, fetch and archive all your posts:
+**Browser crawler (recommended):**
 
 ```bash
+# First time — opens a browser window to log in
+python scraper/main.py --browser-login
+
+# Fetch all posts
 python scraper/main.py --fetch
-```
 
-### Archive Recent Posts
-
-Fetch only the last N posts (e.g., 50):
-
-```bash
+# Or limit to the most recent N posts
 python scraper/main.py --limit 50
 ```
 
-### Force Re-authentication
-
-If your token expires or you want to re-authenticate:
+**API path (alternative):**
 
 ```bash
-python scraper/main.py --reauth --fetch
+python scraper/main.py --auth    # authenticate via OAuth
+python scraper/main.py --fetch   # fetch posts
 ```
+
+### 4. Verify setup (optional)
+
+```bash
+python verify_setup.py
+```
+
+## Publishing a Website (Optional)
+
+The site generator turns your archive into a static personal website with a dark, brutalist theme.
+
+### 1. Configure your site
+
+```bash
+cp config/site.yaml.example config/site.yaml
+```
+
+Edit `config/site.yaml` with your name, bio, and social links.
+
+### 2. Add your CV (optional)
+
+Create a `cv.md` in the project root for the About page (see `cv.md.example` for the format). If omitted, the About page shows a placeholder.
+
+### 3. Add a headshot (optional)
+
+Place a `headshot.jpg` in `web/img/` to display on the About page.
+
+### 4. Build
+
+```bash
+python web/build.py
+```
+
+Output goes to `web/dist/`. Open `web/dist/index.html` to preview locally.
+
+### 5. Deploy
+
+The included deploy script uses rsync over SSH (configured for Opalstack):
+
+```bash
+bash web/deploy.sh
+```
+
+For other hosts (GitHub Pages, Netlify, Vercel), point the build to `python web/build.py` and publish the `web/dist/` directory. See comments in `web/deploy.sh` for details.
 
 ## Output Structure
 
-Posts are organized in the following structure:
-
 ```
 posts/
-├── 2024/
-│   ├── 01/
-│   │   ├── 2024-01-15-first-post-about-ai/
-│   │   │   ├── post.md
-│   │   │   └── media/
-│   │   │       ├── image-1.jpg
-│   │   │       └── image-2.jpg
-│   │   └── 2024-01-20-thoughts-on-web-development/
-│   │       └── post.md
-│   └── 02/
-│       └── 2024-02-10-exciting-project-launch/
-│           ├── post.md
-│           └── media/
-│               └── video-1.mp4
-└── INDEX.md  # Generated index of all posts
+└── 2024/
+    └── 01/
+        └── 2024-01-15-first-post-about-ai/
+            ├── post.md          # Markdown with YAML frontmatter
+            └── media/
+                ├── image-1.jpg
+                └── image-2.jpg
 ```
 
-## Markdown Format
-
-Each post is saved as a clean markdown file:
-
-```markdown
----
-date: 2024-01-15
-post_url: https://linkedin.com/posts/...
-post_type: original
-archived_at: 2024-02-16
-tags: [AI, technology, innovation]
----
-
-# January 15, 2024
-
-This is the content of my LinkedIn post. It preserves
-all the original formatting and line breaks.
-
-Multiple paragraphs are maintained properly.
-
-**Hashtags:** #AI #technology #innovation
-
----
-
-## Media
-
-![image-1.jpg](media/image-1.jpg)
-![image-2.jpg](media/image-2.jpg)
-
----
-
-[View original post on LinkedIn](https://linkedin.com/posts/...)
-```
+See `examples/sample-post/post.md` for the full format.
 
 ## Configuration
 
-Edit `config/config.yaml` to customize behavior:
+### `config/config.yaml` — Scraper settings
 
-```yaml
-linkedin:
-  rate_limit_delay: 1.5  # Seconds between API requests
-  max_retries: 3         # Max retry attempts
-  timeout: 30            # Request timeout in seconds
+Controls crawl behavior, rate limiting, media downloads, and logging. All options are commented inline.
 
-media:
-  download_images: true
-  download_videos: true
-  download_documents: true
-  max_video_size_mb: 500
+### `config/site.yaml` — Website personalization
 
-logging:
-  level: INFO
-  file: logs/scraper.log
-```
+Your name, bio, social links, and footer text. Copy from `config/site.yaml.example`.
 
-## Understanding Rate Limits
+### `.env` — Credentials
 
-### Quick Facts
+LinkedIn API keys, Google Analytics ID, and deployment credentials. Copy from `.env.example`.
 
-- **Daily Limit:** ~500 API requests per day
-- **Per Request:** Up to 50 posts
-- **Your Capacity:** 25,000 posts per day
+## Rate Limits
 
-**Bottom Line:** Most users can archive all their posts in one run!
-- 1,000 posts = ~20 requests (4% of daily limit)
-- The script is **idempotent** - safe to run daily for updates
+The browser crawler is not subject to API rate limits (it scrolls the feed like a regular user). It uses configurable delays between actions to avoid detection.
 
-**📖 See [RATE_LIMITS.md](RATE_LIMITS.md) for detailed information about:**
-- Automated daily updates
-- Setting up cron jobs / Task Scheduler
-- Batch processing strategies
-- Request tracking and monitoring
-
-### What If I Have Many Posts?
-
-**Option 1: Run in batches** (recommended for 10,000+ posts)
-```bash
-# Day 1: First 5,000 posts (~100 requests)
-python scraper/main.py --limit 5000
-
-# Day 2: Next batch (automatically skips existing)
-python scraper/main.py --fetch
-```
-
-**Option 2: Single run** (works for most users)
-```bash
-# Fetches everything (idempotent - safe to re-run)
-python scraper/main.py --fetch
-```
-
-### Automated Daily Updates
-
-Set up a cron job to automatically archive new posts:
-
-**macOS/Linux:**
-```bash
-# Edit crontab
-crontab -e
-
-# Add this line (runs daily at 2 AM)
-0 2 * * * cd /path/to/linkedin-post-archiver && source venv/bin/activate && python scraper/main.py --fetch >> logs/cron.log 2>&1
-```
-
-**Windows Task Scheduler:**
-1. Open Task Scheduler
-2. Create Basic Task
-3. Trigger: Daily at 2:00 AM
-4. Action: Start a program
-   - Program: `C:\path\to\venv\Scripts\python.exe`
-   - Arguments: `scraper/main.py --fetch`
-   - Start in: `C:\path\to\linkedin-post-archiver`
-
-### Rate Limit Monitoring
-
-The script shows request count after completion:
-```
-Archival Complete!
-Total posts: 150
-Successfully archived: 150
-API requests made: 3
-Media files downloaded: 45
-```
-
-If you hit rate limits (rare), wait 24 hours and re-run - the script will resume where it left off.
+The API path has a ~500 requests/day limit. Most users can archive everything in one run. See [RATE_LIMITS.md](RATE_LIMITS.md) for detailed information on batching, automation, and monitoring.
 
 ## Troubleshooting
 
-### Authentication Failed
+### Browser crawler
 
-- Verify your Client ID and Client Secret in `.env`
-- Check that the redirect URI matches: `http://localhost:8080/callback`
-- Ensure port 8080 is not in use by another application
+- **Hangs or gets detected:** Increase `scroll_delay_min`/`scroll_delay_max` in `config/config.yaml`
+- **Session expired:** Clear the browser profile with `rm -rf cache/browser_profile` and re-login with `--browser-login`
+- **No posts found:** Verify login worked, check `logs/scraper.log`
 
-### No Posts Fetched
+### API path
 
-- Check logs in `logs/scraper.log`
-- Verify your LinkedIn app has the required permissions
-- Try re-authenticating with `--reauth`
+- **Authentication failed:** Verify Client ID and Secret in `.env`, check redirect URI matches exactly
+- **Port 8080 in use:** Run `lsof -i :8080` and free the port
+- **No posts fetched:** Re-authenticate with `--reauth`, check app permissions
 
-### Media Download Failed
+### General
 
-- Some media URLs may be temporary or expired
-- Check your internet connection
-- Large videos may fail due to size limits (adjust in config)
+- **Media download failed:** URLs may be temporary; check internet connection and disk space
+- **Logs:** Always check `logs/scraper.log` for detailed error messages
 
-### Rate Limiting
-
-If you see rate limit warnings:
-- The tool automatically handles this with exponential backoff
-- Increase `rate_limit_delay` in config if needed
-- LinkedIn API has daily request limits
-
-## Important Notes
-
-### LinkedIn API Limitations
-
-- **Rate Limits**: LinkedIn has rate limits on API requests (~500/day for developer apps)
-- **Data Access**: You can only access your own posts, not others'
-- **Historical Data**: Access depends on when you created your developer app
-- **Media URLs**: Some media URLs may be temporary and should be downloaded immediately
-
-### Privacy & Security
-
-- Never commit your `.env` file with credentials
-- The `.gitignore` is configured to exclude sensitive files
-- Access tokens are cached in `cache/token.json` (git-ignored)
-- Media files are excluded from git by default
-
-### Storage Considerations
-
-- Videos can be large (500MB+ each)
-- Consider available disk space before archiving
-- You can disable video downloads in `config.yaml`
-
-## Development
-
-### Project Structure
+## Project Structure
 
 ```
-scraper/
-├── __init__.py              # Package initialization
-├── main.py                  # Main entry point
-├── auth.py                  # OAuth 2.0 authentication
-├── linkedin_client.py       # LinkedIn API wrapper
-├── post_fetcher.py          # Post parsing logic
-├── media_downloader.py      # Media download handling
-├── markdown_generator.py    # Markdown generation
-├── models.py                # Data models
-└── utils.py                 # Helper functions
+├── scraper/                    # Post archiver
+│   ├── main.py                 # CLI entry point
+│   ├── browser_crawler.py      # Playwright crawler (primary)
+│   ├── auth.py                 # OAuth 2.0 (API fallback)
+│   ├── linkedin_client.py      # API wrapper
+│   ├── post_fetcher.py         # API response parsing
+│   ├── export_parser.py        # LinkedIn data export parser
+│   ├── media_downloader.py     # Media downloads
+│   ├── markdown_generator.py   # Markdown output
+│   ├── models.py               # Data models
+│   └── utils.py                # Helpers + checkpointing
+│
+├── web/                        # Static site generator
+│   ├── build.py                # Markdown → HTML
+│   ├── deploy.sh               # Rsync deployment
+│   ├── resolve_links.py        # Resolve lnkd.in URLs
+│   ├── css/, js/, img/         # Site assets
+│   └── dist/                   # Build output (gitignored)
+│
+├── config/
+│   ├── config.yaml             # Scraper config
+│   └── site.yaml.example       # Site identity template
+│
+├── examples/
+│   └── sample-post/post.md     # Example archived post
+│
+├── .env.example                # Credentials template
+├── cv.md.example               # CV template for About page
+├── requirements.txt            # Python dependencies
+├── verify_setup.py             # Setup checker
+├── CONTRIBUTING.md             # Contribution guidelines
+├── RATE_LIMITS.md              # API rate limit details
+├── LICENSE                     # MIT
+└── CLAUDE.md                   # Claude Code instructions
 ```
-
-### Running Tests
-
-```bash
-# Install dev dependencies
-pip install pytest pytest-cov
-
-# Run tests (when available)
-pytest tests/
-```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-**Note:** This tool is for personal use to archive your own content. LinkedIn's Terms of Service apply to API usage.
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
-- Reporting bugs
-- Suggesting features
-- Submitting pull requests
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## Support
+## License
 
-For issues or questions:
-1. Check `logs/scraper.log` for detailed error messages
-2. Review LinkedIn API documentation: https://docs.microsoft.com/en-us/linkedin/
-3. Search [existing issues](https://github.com/YOUR_USERNAME/linkedin-post-archiver/issues)
-4. Open a new issue with detailed information
+MIT License. See [LICENSE](LICENSE).
 
-## Roadmap
-
-Future improvements:
-- [ ] Incremental updates (fetch only new posts)
-- [ ] Comment thread archiving
-- [ ] Export to HTML/PDF formats
-- [ ] Search functionality
-- [ ] Engagement metrics tracking
-
----
-
-**Note**: This tool is designed for personal archiving of your own content. Respect LinkedIn's Terms of Service and API usage policies.
+This tool is for personal archiving of your own content. Respect LinkedIn's Terms of Service.

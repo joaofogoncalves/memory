@@ -60,17 +60,23 @@ linkedin-post-archiver/  # Project root
 │   └── dist/                         # Generated site output (git-ignored)
 │
 ├── config/
-│   └── config.yaml                   # Application configuration
+│   ├── config.yaml                   # Scraper configuration (tracked)
+│   ├── site.yaml                     # Site personalization (git-ignored)
+│   └── site.yaml.example             # Site config template (tracked)
 │
-├── posts/                            # Archived posts output
+├── examples/
+│   └── sample-post/post.md           # Example archived post format
+│
+├── posts/                            # Archived posts output (git-ignored)
 │   └── YYYY/MM/post-slug/
-│       ├── post.md                   # Markdown file (tracked)
-│       └── media/                    # Downloaded images/videos (git-ignored)
+│       ├── post.md                   # Markdown file
+│       └── media/                    # Downloaded images/videos
 │
 ├── .claude/
 │   └── commands/                     # Claude Code custom skills
 │       ├── profile.md                # /profile - voice profile generator
-│       └── taste.md                  # /taste - visual taste profile generator
+│       ├── taste.md                  # /taste - visual taste profile generator
+│       └── write.md                  # /write - LinkedIn post writer
 │
 ├── cache/                            # Browser profile + token cache (git-ignored)
 ├── logs/                             # Application logs (git-ignored)
@@ -81,16 +87,13 @@ linkedin-post-archiver/  # Project root
 ├── .env.example                      # Credentials template
 ├── .gitignore                        # Git exclusions
 │
-├── cv.md                             # Professional CV (used by site generator)
-├── profile.md                        # Voice profile for AI-assisted writing
-├── taste.md                          # Visual taste profile for image selection
-├── stitch-prompt.md                  # Website design spec for Stitch mockups
+├── cv.md                             # Professional CV — About page (git-ignored)
+├── cv.md.example                     # CV template (tracked)
+├── profile.md                        # Voice profile for AI writing (git-ignored)
+├── taste.md                          # Visual taste profile (git-ignored)
 │
 ├── README.md                         # Full documentation
-├── QUICKSTART.md                     # 5-minute setup guide
-├── PROJECT_SUMMARY.md                # Technical implementation details
 ├── CONTRIBUTING.md                   # Contribution guidelines
-├── PUBLISH_CHECKLIST.md              # GitHub publishing checklist
 ├── RATE_LIMITS.md                    # LinkedIn API rate limit docs
 ├── LICENSE                           # MIT License
 ├── verify_setup.py                   # Setup verification script
@@ -141,8 +144,10 @@ linkedin-post-archiver/  # Project root
 
 ### 7. Static Site Generator
 - `web/build.py` reads markdown posts and generates a complete static site
+- Site identity (name, bio, social links) loaded from `config/site.yaml`
+- About page rendered from `cv.md` (markdown → HTML), with placeholder if missing
 - Brutalist dark theme ("senior engineer's personal site")
-- 3 pages: Home (hero + recent posts), About (CV timeline), Posts (searchable archive)
+- 3 pages: Home (hero + recent posts), About (from cv.md), Posts (searchable archive)
 - Only shows `post_type: original` or `article` (filters out reposts)
 - Client-side search and tag filtering via `web/js/posts.js`
 - Output to `web/dist/` (git-ignored)
@@ -332,13 +337,36 @@ logging:
   file: logs/scraper.log
 ```
 
+### config/site.yaml (git-ignored)
+
+Site identity for the static site generator. Copy from `config/site.yaml.example`:
+
+```yaml
+site_name: "Your Name"
+site_description: "Your tagline."
+linkedin: "https://linkedin.com/in/your-profile"
+github: "https://github.com/your-username"
+twitter: "https://x.com/your-handle"
+twitter_handle: "@your-handle"
+hero_title: "Your Name"
+hero_subline: "Your tagline here."
+about_teaser: "A brief bio for the home page."
+footer_text: "Your Name · Your City"
+```
+
 ### .env File
 
-**Required environment variables:**
+**LinkedIn API credentials (required for API path, optional for browser crawler):**
 ```env
 LINKEDIN_CLIENT_ID=your_client_id
 LINKEDIN_CLIENT_SECRET=your_client_secret
 LINKEDIN_REDIRECT_URI=http://localhost:8080/callback
+```
+
+**Website (optional):**
+```env
+SITE_URL=https://yoursite.com
+GA_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
 **Opalstack deployment (optional):**
@@ -546,19 +574,19 @@ python scraper/main.py --reauth
 
 **Tracked:**
 - All Python code (scraper + web)
-- Documentation files
-- Configuration templates
-- Markdown post files
-- Post images in `posts/**/media/`
-- Website source (CSS, JS, images)
+- Documentation (README, CONTRIBUTING, RATE_LIMITS, CLAUDE.md)
+- Configuration templates (`config/config.yaml`, `config/site.yaml.example`)
+- Example files (`cv.md.example`, `examples/`)
+- Website source (CSS, JS, favicons)
+- Claude Code skills (`.claude/commands/`)
 
-**Ignored:**
-- `.env` file
-- `venv/` directory
-- `cache/` directory (browser profile + tokens)
-- `logs/` directory
-- `web/dist/` (generated site output)
-- Large video files (*.mp4, *.mov)
+**Ignored (personal content + runtime):**
+- `posts/` directory (user's archived posts)
+- `cv.md`, `profile.md`, `taste.md`, `stitch-prompt.md` (personal content)
+- `config/site.yaml` (site identity)
+- `web/img/headshot.jpg` (personal photo)
+- `.env` file (credentials)
+- `venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
 
 ### Performance Considerations
 
@@ -754,8 +782,10 @@ bash web/deploy.sh
 
 ### web/build.py
 - Static site generator
-- Reads markdown posts from `posts/` and `cv.md`
+- Loads site identity from `config/site.yaml` (name, bio, social links, footer)
+- Reads markdown posts from `posts/` and About page content from `cv.md`
 - Generates HTML pages (Home, About, Posts)
+- About page gracefully handles missing `cv.md` with placeholder
 - Markdown-to-HTML conversion with frontmatter parsing
 - Outputs to `web/dist/`
 

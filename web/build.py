@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Static site builder for João Gonçalves' personal website.
+"""Static site builder for a LinkedIn post archive.
 
-Reads markdown posts from posts/ and cv.md, generates static HTML
-following the 'Brutalist Compiler' design system.
+Reads markdown posts from posts/ and optional cv.md, generates a static HTML
+site following the 'Brutalist Compiler' design system.
+
+Site identity is configured in config/site.yaml (see config/site.yaml.example).
 
 Usage: python web/build.py
 """
@@ -33,13 +35,34 @@ CSS_SRC = WEB_DIR / 'css'
 JS_SRC = WEB_DIR / 'js'
 IMG_SRC = WEB_DIR / 'img'
 
-SITE_NAME = 'João Gonçalves'
+SITE_CONFIG_FILE = ROOT / 'config' / 'site.yaml'
+
+def _load_site_config() -> dict:
+    """Load site identity from config/site.yaml, falling back to env vars."""
+    cfg = {}
+    if SITE_CONFIG_FILE.exists():
+        cfg = yaml.safe_load(SITE_CONFIG_FILE.read_text(encoding='utf-8')) or {}
+    return {
+        'site_name': cfg.get('site_name', os.environ.get('SITE_NAME', 'My Site')),
+        'site_description': cfg.get('site_description', os.environ.get('SITE_DESCRIPTION', '')),
+        'linkedin': cfg.get('linkedin', ''),
+        'github': cfg.get('github', ''),
+        'twitter': cfg.get('twitter', ''),
+        'twitter_handle': cfg.get('twitter_handle', ''),
+        'hero_title': cfg.get('hero_title', cfg.get('site_name', 'My Site')),
+        'hero_subline': cfg.get('hero_subline', ''),
+        'about_teaser': cfg.get('about_teaser', ''),
+        'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
+    }
+
+SITE = _load_site_config()
+SITE_NAME = SITE['site_name']
 SITE_URL = os.environ.get('SITE_URL', '').rstrip('/')
-SITE_DESCRIPTION = 'Engineering leader & AI coding practitioner. Founding Engineer at BRIDGE IN.'
-LINKEDIN = 'https://linkedin.com/in/joaofogoncalves'
-GITHUB = 'https://github.com/joaofogoncalves'
-TWITTER = 'https://x.com/joaofogoncalves'
-TWITTER_HANDLE = '@joaofogoncalves'
+SITE_DESCRIPTION = SITE['site_description']
+LINKEDIN = SITE['linkedin']
+GITHUB = SITE['github']
+TWITTER = SITE['twitter']
+TWITTER_HANDLE = SITE['twitter_handle']
 
 md_renderer = markdown.Markdown(extensions=['fenced_code', 'tables', 'smarty'], output_format='html')
 
@@ -353,17 +376,21 @@ SVG_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><pa
 
 
 def footer_html() -> str:
+    social_links = ''
+    if LINKEDIN:
+        social_links += f'<a href="{LINKEDIN}" target="_blank" rel="noopener" aria-label="LinkedIn">{SVG_LINKEDIN}</a>'
+    if GITHUB:
+        social_links += f'<a href="{GITHUB}" target="_blank" rel="noopener" aria-label="GitHub">{SVG_GITHUB}</a>'
+    if TWITTER:
+        social_links += f'<a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>'
+    links_div = f'<div class="footer-links">{social_links}</div>' if social_links else ''
     return f'''<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 <footer class="footer">
   <div class="footer-inner">
-    <span>João Gonçalves · Lisbon</span>
-    <div class="footer-links">
-      <a href="{LINKEDIN}" target="_blank" rel="noopener" aria-label="LinkedIn">{SVG_LINKEDIN}</a>
-      <a href="{GITHUB}" target="_blank" rel="noopener" aria-label="GitHub">{SVG_GITHUB}</a>
-      <a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>
-    </div>
+    <span>{escape(SITE['footer_text'])}</span>
+    {links_div}
   </div>
 </footer>'''
 
@@ -428,45 +455,58 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 # Page Generators
 # ============================================================
 
+def _hero_links_html() -> str:
+    """Build social links for the hero section."""
+    links = []
+    if LINKEDIN:
+        links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
+    if GITHUB:
+        links.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
+    if TWITTER:
+        links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    if not links:
+        return ''
+    sep = '<span class="sep">·</span>'
+    return f'<div class="hero-links">{sep.join(links)}</div>'
+
+
 def generate_home(posts: list[dict]) -> str:
     """Generate the home page HTML."""
     recent = posts[:6]
     cards = '\n'.join(render_card(p, depth=0) for p in recent)
 
-    return f'''{head_html("Home", depth=0, description="Engineering leader & AI coding practitioner. Writing about what happens when AI changes how we build.")}
+    hero_subline = ''
+    if SITE['hero_subline']:
+        hero_subline = f'<p class="hero-subline">{SITE["hero_subline"]}</p>'
+
+    about_teaser = ''
+    if SITE['about_teaser']:
+        about_teaser = f'''<div class="about-teaser">
+    <div class="about-teaser-inner">
+      <p>{escape(SITE['about_teaser'])}</p>
+      <a href="about/" class="view-all">More about me &rarr;</a>
+    </div>
+  </div>'''
+
+    return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION)}
 <body>
 {nav_html(depth=0)}
 
 <div class="page-container">
   <section class="hero">
-    <h1>João Gonçalves</h1>
-    <p class="hero-subline">
-      Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a>. Previously Director of Engineering at
-      Altium/Valispace. Building things with AI, not just talking about it.
-    </p>
-    <div class="hero-links">
-      <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-      <span class="sep">·</span>
-      <a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>
-      <span class="sep">·</span>
-      <a href="{TWITTER}" target="_blank" rel="noopener">X</a>
-    </div>
+    <h1>{escape(SITE['hero_title'])}</h1>
+    {hero_subline}
+    {_hero_links_html()}
   </section>
 
-  <div class="about-teaser">
-    <div class="about-teaser-inner">
-      <p>15+ years building software and teams. Steered an engineering org through a $20M acquisition.
-         Now building from scratch again. Currently writing about what happens when AI changes how we build.</p>
-      <a href="about/" class="view-all">More about me →</a>
-    </div>
-  </div>
+  {about_teaser}
 
   <section class="section">
     <div class="section-title">Recent</div>
     <div class="cards-grid">
       {cards}
     </div>
-    <a href="posts/" class="view-all">All posts →</a>
+    <a href="posts/" class="view-all">All posts &rarr;</a>
   </section>
 </div>
 
@@ -476,7 +516,39 @@ def generate_home(posts: list[dict]) -> str:
 
 
 def generate_about() -> str:
-    """Generate the about page HTML."""
+    """Generate the about page HTML from cv.md (if present)."""
+    about_body = ''
+    headshot = ''
+
+    if CV_FILE.exists():
+        cv_text = CV_FILE.read_text(encoding='utf-8')
+        _, cv_content = parse_frontmatter(cv_text)
+        md_renderer.reset()
+        about_body = md_renderer.convert(cv_content)
+        about_body = autolink_urls(about_body)
+    else:
+        about_body = (
+            '<p class="muted">Add a <code>cv.md</code> file in the project root '
+            'to populate this page. See <code>cv.md.example</code> for the expected format.</p>'
+        )
+
+    headshot_path = IMG_SRC / 'headshot.jpg'
+    if headshot_path.exists():
+        headshot = f'<img src="../img/headshot.jpg" alt="{escape(SITE_NAME)}" class="headshot">'
+
+    # Build social links for the about page
+    social_links = []
+    if LINKEDIN:
+        social_links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
+    if GITHUB:
+        social_links.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
+    if TWITTER:
+        social_links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    social_html = ''
+    if social_links:
+        sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
+        social_html = f'<div class="speaking-cta">{sep.join(social_links)}</div>'
+
     return f'''{head_html("About", depth=1)}
 <body>
 {nav_html(active='about', depth=1)}
@@ -487,173 +559,13 @@ def generate_about() -> str:
   </div>
 
   <div class="about-intro-row">
-    <div class="about-intro">
-      I'm an engineering leader who still writes code daily. 15+ years of building teams and shipping
-      products across SaaS, engineering software, and IoT — from a 4-person startup to a 25-person
-      department through a $20M acquisition. Based in Lisbon, currently building <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" style="color:#cc0000;text-decoration:none">BRIDGE IN</a> from scratch.
-      I write about AI tooling, software craft, and what it actually takes to lead engineering teams.
+    <div class="about-content">
+      {about_body}
     </div>
-    <img src="../img/headshot.jpg" alt="João Gonçalves" class="headshot">
+    {headshot}
   </div>
 
-  <div class="section-title">Experience</div>
-
-  <div class="timeline">
-
-    <div class="timeline-node">
-      <div class="timeline-date">NOV 2025 — PRESENT</div>
-      <div class="timeline-company"><a href="https://www.bridgein.pt/" target="_blank" rel="noopener" style="color:#cc0000;text-decoration:none">BRIDGE IN</a></div>
-      <div class="timeline-role">Founding Engineer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">JAN 2024 — NOV 2025</div>
-      <div class="timeline-company">Altium</div>
-      <div class="timeline-role">Director of Software Engineering</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Integrated Valispace as an Altium 365 app, ensuring continuity and merging capabilities in the aftermath of a high-profile $20M acquisition</li>
-        <li>Doubled the engineering department's size and coached new team leads to own all operations — project management, system architecture, and software development</li>
-        <li>Interfaced cross-departmentally to identify and implement technology solutions that directly impact business growth, notably equipping DevOps with improved Kubernetes infrastructure to accommodate a surge in demand</li>
-        <li>Cultivated a healthy, productive, and meritocratic department culture that retained 90% of staff post-merger, despite the temptation of a generous shareholder payout</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">AUG 2022 — FEB 2024</div>
-      <div class="timeline-company">Valispace</div>
-      <div class="timeline-role">Head of Technology &amp; Interim CTO</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Positioned Valispace, a fast-growing startup, as an attractive asset for a $20M acquisition by Altium, and directed all due diligence to ensure a frictionless transaction and transition to new ownership</li>
-        <li>Partnered with the CEO &amp; CPO to orient the company's strategic direction and pioneered AI's early adoption</li>
-        <li>Orchestrated an engineering department of 25+ staff across three teams to implement cloud computing and emerging technologies, operating a complex global cloud environment with only three engineers</li>
-        <li>Implemented ISO-27001 to access highly regulated opportunities in aerospace — Airbus, Clearspace, and iSpace</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">OCT 2020 — AUG 2022</div>
-      <div class="timeline-company">Valispace</div>
-      <div class="timeline-role">Head of DevOps</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Oversaw an operations team of four responsible for 100+ cloud-based &amp; on-premise deployments with maintenance and support</li>
-        <li>Owned a robust CI/CD pipeline that accelerated time-to-market for software releases by 89%</li>
-        <li>Established and maintained strong relationships with external vendors and stakeholders to ensure successful integration of third-party tools and services</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">AUG 2018 — OCT 2020</div>
-      <div class="timeline-company">Valispace</div>
-      <div class="timeline-role">Senior Developer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Performed in-depth code reviews, amplified team productivity, reduced software defects, and streamlined development processes by introducing Agile and automated testing frameworks</li>
-        <li>Developed, maintained, and improved both the backend REST API and the frontend application</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">JAN 2016 — AUG 2018</div>
-      <div class="timeline-company">Quidgest</div>
-      <div class="timeline-role">R&amp;D Software Engineer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Built and continuously improved a low-code tool ahead of its time — enabling non-technical users to assemble complex software solutions like ERPs, HR portals, and document management systems</li>
-        <li>Clients included Portugal's government &amp; armed forces</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">JAN 2015 — OCT 2017</div>
-      <div class="timeline-company">Sources.pt</div>
-      <div class="timeline-role">Co-Founder &amp; Lead Developer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Conceived an IoT modular platform, built its working prototype, and marketed its unique merits as a cost-saving sensor solution accessible to the consumer market</li>
-        <li>Pitched the project to a bigger tech company to secure stable financing and merge capabilities</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">APR 2013 — JAN 2015</div>
-      <div class="timeline-company">Inova Software</div>
-      <div class="timeline-role">Senior Mobile Developer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Project management of the app "Partnering Place Mobile"</li>
-        <li>Architecture design of UI render engine based on descriptive models, built with Phonegap and JavaScript frameworks (Underscore.js, Backbone.js, Angular.js)</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">MAY 2011 — APR 2013</div>
-      <div class="timeline-company">Quidgest</div>
-      <div class="timeline-role">R&amp;D Software Engineer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Built and improved a low-code platform enabling non-technical users to assemble complex software solutions; clients included Portugal's government &amp; armed forces</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">JAN 2011 — MAY 2011</div>
-      <div class="timeline-company">EmergeIT</div>
-      <div class="timeline-role">Developer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Development of remote management applications for mobile devices and web-based administration tools</li>
-      </ul>
-    </div>
-
-    <div class="timeline-node">
-      <div class="timeline-date">SEP 2009 — DEC 2010</div>
-      <div class="timeline-company">NAD / Design Solutions</div>
-      <div class="timeline-role">Developer</div>
-      <div class="timeline-location">Lisbon, Portugal</div>
-      <ul class="timeline-highlights">
-        <li>Websites, intranets, database systems, and multimedia applications using HTML, CSS, JavaScript, Python, Django, SQL, and ActionScript</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="section-title">Skills &amp; Domains</div>
-
-  <div class="skills-section">
-    <div class="skill-row">
-      <span class="skill-label">Engineering Leadership</span>
-      <span class="skill-desc">Scaling teams from 4 to 25+, coaching leads, M&amp;A integration</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-label">AI &amp; Tooling</span>
-      <span class="skill-desc">Claude Code, AI-assisted development, GenAI strategy</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-label">Infrastructure</span>
-      <span class="skill-desc">Kubernetes, cloud architecture, CI/CD, ISO-27001</span>
-    </div>
-    <div class="skill-row">
-      <span class="skill-label">Languages</span>
-      <span class="skill-desc">Python, JavaScript/TypeScript, full-stack SaaS</span>
-    </div>
-  </div>
-
-  <div class="speaking-cta">
-    <p>Available for speaking, podcasts, and conversations about engineering leadership and AI in practice.</p>
-    <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-    <span class="muted" style="margin:0 0.75rem">·</span>
-    <a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>
-    <span class="muted" style="margin:0 0.75rem">·</span>
-    <a href="{TWITTER}" target="_blank" rel="noopener">X</a>
-  </div>
-
-  <div class="education">
-    Universidade de Évora — Computer Science
-  </div>
+  {social_html}
 </div>
 
 {footer_html()}

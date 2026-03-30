@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Deploy static site to Opalstack via rsync over SSH.
+# Deploy static site to a remote host via rsync over SSH.
+#
+# This script is configured for Opalstack hosting by default.
+# To adapt for other providers:
+#   - GitHub Pages: run `python web/build.py`, then push web/dist/ to gh-pages
+#   - Netlify / Vercel: point the build command to `python web/build.py`
+#     and set the publish directory to web/dist/
+#   - Any SSH host: set the OPAL_* variables in .env to match your server
+#
 # All config lives in .env — copy .env.example and fill in your values.
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

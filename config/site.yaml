@@ -18,5 +18,32 @@ about_teaser: >-
   15+ years building software and teams. Steered an engineering org through a $20M acquisition.
   Now building from scratch again. Currently writing about what happens when AI changes how we build.
 
+# Thesis / POV statement (shown on home page as a callout block)
+thesis: Everyone's optimizing for speed. The more interesting question is what gets lost when you do. I write about the engineering judgment AI can't replace — and the parts it already has.
+
+# Newsletter signup URL (Substack, Beehiiv, Buttondown, etc.)
+# newsletter_url: ""
+
+# Curated "Start Here" posts — auto-updated by scraper from LinkedIn top performers.
+# Override by listing slugs manually; set to [] to disable the section.
+featured_posts:
+  - "2026-03-26-everyone-s-dunking-on-this-ceo-i-get-it-2"
+  - "2026-01-26-for-a-bit-of-less-serious-post-we-2"
+  - "2026-02-25-people-are-dunking-on-this-post-but-i-2"
+
+topics:
+  - name: "AI in Engineering"
+    slug: ai-engineering
+    description: "What changes when AI becomes part of the team, not just a tool."
+    tags: [ai, openai, generativeai, llm, claudecode, chatgpt, assistedengineering, technology, innovation, future]
+  - name: "Engineering Leadership"
+    slug: leadership
+    description: "Building teams, managing up, and making decisions under uncertainty."
+    tags: [leadership, empoweringengineers, teammanagement, techleadership, teamwork, teambuilding, management, hiring, mentoring, culture, bestadvice, feedback]
+  - name: "Building Software"
+    slug: building-software
+    description: "The craft of shipping — architecture, trade-offs, and the realities of getting things done."
+    tags: [softwaredevelopment, engineering, softwareengineering, devops, agile, systemsengineering, productmanagement, strategy, startups, startup]
+
 # Footer
 footer_text: "João Gonçalves · Lisbon"

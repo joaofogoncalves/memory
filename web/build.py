@@ -9,6 +9,7 @@ Site identity is configured in config/site.yaml (see config/site.yaml.example).
 Usage: python web/build.py
 """
 
+import hashlib
 import json
 import os
 import re
@@ -21,6 +22,19 @@ import yaml
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / '.env')
+
+# ============================================================
+# Brand constants
+# ============================================================
+
+# BRIDGE IN always renders in brand red — never changes without explicit consent
+_BRIDGE_IN_HTML = '<span style="color:#cc0000;font-weight:600">BRIDGE IN</span>'
+
+
+def style_bridge_in(html: str) -> str:
+    """Apply red brand styling to every occurrence of 'BRIDGE IN' in HTML."""
+    return html.replace('BRIDGE IN', _BRIDGE_IN_HTML)
+
 
 # ============================================================
 # Configuration
@@ -53,6 +67,7 @@ def _load_site_config() -> dict:
         'hero_subline': cfg.get('hero_subline', ''),
         'about_teaser': cfg.get('about_teaser', ''),
         'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
+        'speaking_text': cfg.get('speaking_text', ''),
     }
 
 SITE = _load_site_config()
@@ -65,6 +80,18 @@ TWITTER = SITE['twitter']
 TWITTER_HANDLE = SITE['twitter_handle']
 
 md_renderer = markdown.Markdown(extensions=['fenced_code', 'tables', 'smarty'], output_format='html')
+
+
+def _asset_hash(path: Path, length: int = 8) -> str:
+    """Return a short SHA-256 hash of a file's contents for cache-busting."""
+    if not path.exists():
+        return '0'
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:length]
+
+
+# Compute once at build time so every page gets the same version strings
+_CSS_VER = _asset_hash(CSS_SRC / 'style.css')
+_JS_VER = _asset_hash(JS_SRC / 'posts.js')
 
 
 def autolink_urls(html: str) -> str:
@@ -349,8 +376,8 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   {og}
   {ga}
   {GOOGLE_FONTS}
-  <link rel="stylesheet" href="{prefix}css/style.css">
-  <script src="{prefix}js/posts.js" defer></script>
+  <link rel="stylesheet" href="{prefix}css/style.css?v={_CSS_VER}">
+  <script src="{prefix}js/posts.js?v={_JS_VER}" defer></script>
   {extra_head}
 </head>'''
 
@@ -477,6 +504,7 @@ def generate_home(posts: list[dict]) -> str:
 
     hero_subline = ''
     if SITE['hero_subline']:
+        # hero_subline from site.yaml may already contain styled BRIDGE IN markup
         hero_subline = f'<p class="hero-subline">{SITE["hero_subline"]}</p>'
 
     about_teaser = ''
@@ -490,6 +518,7 @@ def generate_home(posts: list[dict]) -> str:
 
     return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION)}
 <body>
+<div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(depth=0)}
 
 <div class="page-container">
@@ -515,42 +544,201 @@ def generate_home(posts: list[dict]) -> str:
 </html>'''
 
 
+def _fmt_date_range(date_str: str) -> str:
+    """Convert 'January 2024 – November 2025' → 'JAN 2024 — NOV 2025'."""
+    parts = re.split(r'\s*[–—]\s*', date_str.strip())
+    out = []
+    for p in parts:
+        p = p.strip()
+        if p.lower() == 'present':
+            out.append('PRESENT')
+        else:
+            m = re.match(r'^(\w+)\s+(\d{4})$', p)
+            if m:
+                out.append(f'{m.group(1)[:3].upper()} {m.group(2)}')
+            else:
+                out.append(p.upper())
+    return ' — '.join(out)
+
+
+def _parse_cv_sections(content: str) -> dict:
+    """Split cv.md body into a dict of section_name → section_text."""
+    sections: dict = {}
+    current: str | None = None
+    buf: list = []
+
+    for line in content.split('\n'):
+        if line.startswith('## '):
+            if current is not None:
+                sections[current] = '\n'.join(buf).strip()
+            current = line[3:].strip()
+            buf = []
+        elif current is None:
+            # Pre-section content (title, tagline…) goes under '_intro'
+            sections.setdefault('_intro', [])
+            sections['_intro'].append(line)  # type: ignore[union-attr]
+        else:
+            buf.append(line)
+
+    if current is not None:
+        sections[current] = '\n'.join(buf).strip()
+    if '_intro' in sections and isinstance(sections['_intro'], list):
+        sections['_intro'] = '\n'.join(sections['_intro']).strip()
+    return sections
+
+
+def _parse_experience_entries(text: str) -> list[dict]:
+    """Parse the Experience section text into a list of entry dicts."""
+    entries = []
+    for raw in re.split(r'\n---\n', text):
+        raw = raw.strip()
+        if not raw:
+            continue
+        lines = raw.split('\n')
+
+        # Header line: ### Company — Role
+        m = re.match(r'^###\s+(.+?)\s+[—–]\s+(.+)$', lines[0])
+        if not m:
+            continue
+        company = m.group(1).strip()
+        role = m.group(2).strip()
+
+        date_str = location = ''
+        for line in lines[1:]:
+            line = line.strip()
+            if not line:
+                continue
+            dm = re.match(r'^\*\*(.+?)\*\*\s*[·•]\s*(.+)$', line)
+            if dm:
+                date_str = _fmt_date_range(dm.group(1))
+                location = dm.group(2).strip()
+            break
+
+        bullets = [ln[2:].strip() for ln in lines if ln.startswith('- ')]
+
+        entries.append({
+            'company': company,
+            'role': role,
+            'date': date_str,
+            'location': location,
+            'bullets': bullets,
+        })
+    return entries
+
+
+def _render_timeline(entries: list[dict]) -> str:
+    """Render .timeline HTML from parsed experience entries."""
+    nodes = []
+    for e in entries:
+        company_html = style_bridge_in(escape(e['company']))
+        bullets_html = ''
+        if e['bullets']:
+            items = ''.join(f'<li>{escape(b)}</li>' for b in e['bullets'])
+            bullets_html = f'\n      <ul class="timeline-highlights">{items}</ul>'
+        nodes.append(
+            f'    <div class="timeline-node">\n'
+            f'      <div class="timeline-date">{escape(e["date"])}</div>\n'
+            f'      <div class="timeline-company">{company_html}</div>\n'
+            f'      <div class="timeline-role">{escape(e["role"])}</div>\n'
+            f'      <div class="timeline-location">{escape(e["location"])}</div>'
+            f'{bullets_html}\n'
+            f'    </div>'
+        )
+    return '<div class="timeline">\n\n' + '\n\n'.join(nodes) + '\n\n  </div>'
+
+
+def _render_skills(text: str) -> str:
+    """Render .skills-section HTML from the Top Skills list."""
+    rows = []
+    for line in text.split('\n'):
+        line = line.strip()
+        if line.startswith('- '):
+            skill = escape(line[2:].strip())
+            rows.append(
+                f'<div class="skill-row"><span class="skill-label">{skill}</span></div>'
+            )
+    if not rows:
+        return ''
+    return '<div class="skills-section">\n    ' + '\n    '.join(rows) + '\n  </div>'
+
+
 def generate_about() -> str:
     """Generate the about page HTML from cv.md (if present)."""
-    about_body = ''
     headshot = ''
-
-    if CV_FILE.exists():
-        cv_text = CV_FILE.read_text(encoding='utf-8')
-        _, cv_content = parse_frontmatter(cv_text)
-        md_renderer.reset()
-        about_body = md_renderer.convert(cv_content)
-        about_body = autolink_urls(about_body)
-    else:
-        about_body = (
-            '<p class="muted">Add a <code>cv.md</code> file in the project root '
-            'to populate this page. See <code>cv.md.example</code> for the expected format.</p>'
-        )
-
     headshot_path = IMG_SRC / 'headshot.jpg'
     if headshot_path.exists():
         headshot = f'<img src="../img/headshot.jpg" alt="{escape(SITE_NAME)}" class="headshot">'
 
-    # Build social links for the about page
-    social_links = []
+    # Social links
+    social_parts = []
     if LINKEDIN:
-        social_links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
+        social_parts.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
     if GITHUB:
-        social_links.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
+        social_parts.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
     if TWITTER:
-        social_links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
-    social_html = ''
-    if social_links:
-        sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
-        social_html = f'<div class="speaking-cta">{sep.join(social_links)}</div>'
+        social_parts.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
+    social_html = sep.join(social_parts)
+
+    speaking_text = SITE.get('speaking_text', '')
+    speaking_p = f'<p>{escape(speaking_text)}</p>\n    ' if speaking_text else ''
+
+    if not CV_FILE.exists():
+        intro_html = (
+            '<p class="muted">Add a <code>cv.md</code> file in the project root '
+            'to populate this page.</p>'
+        )
+        timeline_html = skills_html = education_html = ''
+    else:
+        cv_text = CV_FILE.read_text(encoding='utf-8')
+        _, cv_content = parse_frontmatter(cv_text)
+        sections = _parse_cv_sections(cv_content)
+
+        # Intro from Summary section
+        summary_md = sections.get('Summary', '')
+        md_renderer.reset()
+        intro_html = style_bridge_in(autolink_urls(md_renderer.convert(summary_md))) if summary_md else ''
+
+        # Experience timeline
+        experience_text = sections.get('Experience', '')
+        entries = _parse_experience_entries(experience_text)
+        timeline_html = _render_timeline(entries) if entries else ''
+
+        # Skills
+        skills_text = sections.get('Top Skills', '')
+        skills_html = _render_skills(skills_text)
+
+        # Education — "### University\nDegree · Date"
+        edu_raw = sections.get('Education', '').strip()
+        edu_html_inner = ''
+        if edu_raw:
+            edu_lines = [l for l in edu_raw.split('\n') if l.strip()]
+            uni = edu_lines[0].lstrip('#').strip()
+            degree = ''
+            if len(edu_lines) > 1:
+                degree = edu_lines[1].split('·')[0].split('(')[0].strip()
+            edu_html_inner = escape(uni) + (f' — {escape(degree)}' if degree else '')
+        education_html = f'<div class="education">{edu_html_inner}</div>' if edu_html_inner else ''
+
+    experience_block = ''
+    if timeline_html:
+        experience_block = f'''
+  <div class="section-title">Experience</div>
+
+  {timeline_html}
+'''
+
+    skills_block = ''
+    if skills_html:
+        skills_block = f'''
+  <div class="section-title">Skills</div>
+
+  {skills_html}
+'''
 
     return f'''{head_html("About", depth=1)}
 <body>
+<div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='about', depth=1)}
 
 <div class="page-container">
@@ -559,13 +747,17 @@ def generate_about() -> str:
   </div>
 
   <div class="about-intro-row">
-    <div class="about-content">
-      {about_body}
+    <div class="about-intro">
+      {intro_html}
     </div>
     {headshot}
   </div>
+{experience_block}{skills_block}
+  <div class="speaking-cta">
+    {speaking_p}{social_html}
+  </div>
 
-  {social_html}
+  {education_html}
 </div>
 
 {footer_html()}
@@ -596,6 +788,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
 
     return f'''{head_html("Posts", depth=1)}
 <body>
+<div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='posts', depth=1)}
 
 <div class="page-container">
@@ -676,6 +869,8 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
         og_type='article',
         og_image=post_og_image)}
 <body>
+<div class="noise-overlay" aria-hidden="true"></div>
+<div id="reading-progress" class="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-hidden="true"></div>
 {nav_html(active='posts', depth=depth)}
 
 <div class="page-container">

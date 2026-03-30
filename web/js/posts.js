@@ -324,7 +324,6 @@
     const selectors = [
       '.card',
       '.card-featured',
-      '.hero',
       '.about-teaser',
       '.section',
       '.timeline-node',
@@ -363,6 +362,16 @@
     lastScrollY = y;
   }
 
+  // --- Reading progress bar ---
+  const progressBar = document.getElementById('reading-progress');
+
+  function updateProgress() {
+    if (!progressBar) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+
   // --- Scroll to top button ---
   const scrollTopBtn = document.getElementById('scroll-top');
 
@@ -385,6 +394,7 @@
       requestAnimationFrame(() => {
         updateNav();
         updateScrollTop();
+        updateProgress();
         ticking = false;
       });
       ticking = true;
@@ -397,10 +407,12 @@
       initReveal();
       updateNav();
       updateScrollTop();
+      updateProgress();
     });
   } else {
     initReveal();
     updateNav();
     updateScrollTop();
+    updateProgress();
   }
 })();

@@ -86,6 +86,11 @@ class MarkdownGenerator:
             tags = ', '.join(post.hashtags)
             header.append(f'tags: [{tags}]')
 
+        if post.reactions:
+            header.append(f'reactions: {post.reactions}')
+        if post.comments:
+            header.append(f'comments: {post.comments}')
+
         header.append('---\n')
 
         return '\n'.join(header)

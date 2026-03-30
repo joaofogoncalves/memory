@@ -279,6 +279,8 @@ class BrowserCrawler:
             if post_type == 'repost':
                 repost_commentary, original_post_url = self._extract_repost_info(el)
 
+            reactions, comments = self._extract_engagement(el)
+
             return LinkedInPost(
                 id=urn,
                 post_url=post_url,
@@ -289,10 +291,69 @@ class BrowserCrawler:
                 hashtags=hashtags,
                 original_post_url=original_post_url,
                 repost_commentary=repost_commentary,
+                reactions=reactions,
+                comments=comments,
             )
         except Exception as e:
             logger.warning(f"Failed to parse post {urn}: {e}")
             return None
+
+    def _extract_engagement(self, el: Locator) -> tuple[int, int]:
+        """Extract reaction and comment counts from a post element.
+
+        Returns:
+            Tuple of (reactions, comments) as integers.
+        """
+        def _parse_count(text: str) -> int:
+            """Parse '1,234' or '1K' style counts into an integer."""
+            text = text.strip().replace(',', '').replace('\u202f', '').replace('\xa0', '')
+            if text.endswith('K'):
+                try:
+                    return int(float(text[:-1]) * 1000)
+                except ValueError:
+                    return 0
+            try:
+                return int(text)
+            except ValueError:
+                return 0
+
+        reactions = 0
+        comments = 0
+
+        # Reaction count — LinkedIn renders as e.g. "482" or "1,234" in the social counts bar
+        reaction_selectors = [
+            'button[aria-label*="reaction"] span.social-details-social-counts__reactions-count',
+            'span.social-details-social-counts__reactions-count',
+            'button.social-details-social-counts__count-value',
+        ]
+        for sel in reaction_selectors:
+            try:
+                react_el = el.locator(sel).first
+                if react_el.count() and react_el.is_visible(timeout=300):
+                    reactions = _parse_count(react_el.inner_text(timeout=500))
+                    break
+            except Exception:
+                continue
+
+        # Comment count
+        comment_selectors = [
+            'button[aria-label*="comment"] span.social-details-social-counts__comments',
+            'span.social-details-social-counts__comments',
+            'li.social-details-social-counts__item--right-aligned button',
+        ]
+        for sel in comment_selectors:
+            try:
+                comment_el = el.locator(sel).first
+                if comment_el.count() and comment_el.is_visible(timeout=300):
+                    text = comment_el.inner_text(timeout=500)
+                    # Strip trailing word e.g. "193 comments" → "193"
+                    text = text.split()[0] if text.split() else text
+                    comments = _parse_count(text)
+                    break
+            except Exception:
+                continue
+
+        return reactions, comments
 
     def _expand_post_text(self, el: Locator) -> None:
         """Click 'see more' button if present to expand truncated text."""

@@ -37,6 +37,8 @@ class LinkedInPost:
     slug: Optional[str] = None
     author_name: Optional[str] = None
     author_headline: Optional[str] = None
+    reactions: int = 0    # LinkedIn reaction count at time of scrape
+    comments: int = 0     # LinkedIn comment count at time of scrape
 
     def __post_init__(self):
         """Validate post type."""

@@ -4,7 +4,7 @@
 
 This is a Python application that archives LinkedIn posts locally as clean markdown files with media downloads, and publishes them as a static website. It uses a **Playwright browser crawler** (primary method) or OAuth 2.0 API (legacy fallback) to fetch posts and preserve them in an organized folder structure. A static site generator converts the archive into a deployable website.
 
-**Purpose:** Create a permanent, offline archive of the user's LinkedIn content that they control - focusing on what they wrote, not engagement metrics. Optionally publish as a personal website.
+**Purpose:** Create a permanent, offline archive of the user's LinkedIn content that they control - focusing on what they wrote, not engagement metrics. Optionally publish as a personal website positioned for thought leadership.
 
 **Status:** Production-ready. Archiving, site generation, and deployment all working.
 
@@ -82,6 +82,7 @@ linkedin-post-archiver/  # Project root
 ├── logs/                             # Application logs (git-ignored)
 ├── venv/                             # Virtual environment (git-ignored)
 │
+├── pipeline.sh                       # Full pipeline: scrape → resolve → build → deploy
 ├── requirements.txt                  # Python dependencies
 ├── .env                              # Credentials (git-ignored, created by user)
 ├── .env.example                      # Credentials template
@@ -89,6 +90,8 @@ linkedin-post-archiver/  # Project root
 │
 ├── cv.md                             # Professional CV — About page (git-ignored)
 ├── cv.md.example                     # CV template (tracked)
+├── now.md                            # /now page content (git-ignored)
+├── now.md.example                    # /now template (tracked)
 ├── profile.md                        # Voice profile for AI writing (git-ignored)
 ├── taste.md                          # Visual taste profile (git-ignored)
 │
@@ -147,15 +150,37 @@ linkedin-post-archiver/  # Project root
 - Site identity (name, bio, social links) loaded from `config/site.yaml`
 - About page rendered from `cv.md` (markdown → HTML), with placeholder if missing
 - Brutalist dark theme ("senior engineer's personal site")
-- 3 pages: Home (hero + recent posts), About (from cv.md), Posts (searchable archive)
+- Pages: Home, About, Posts (searchable), /topics index, /topics/{slug}, /now
 - Only shows `post_type: original` or `article` (filters out reposts)
 - Client-side search and tag filtering via `web/js/posts.js`
 - Output to `web/dist/` (git-ignored)
+- Also generates: `feed.xml` (RSS 2.0), `sitemap.xml`, `robots.txt`
+- JSON-LD structured data on every post page (Article schema) and About page (Person schema)
+- RSS autodiscovery `<link>` in every page `<head>`
 
-### 8. Deployment (Opalstack)
+### 8. Thought Leadership Features
+- **Thesis block**: optional POV statement on home page (`thesis` in site.yaml)
+- **Featured posts ("Start Here")**: configured slugs or auto-computed from engagement
+  - Auto-computation: `reactions + comments×3` score, top 3 from last 90 days
+  - Auto-updates `featured_posts` in `site.yaml` after each scrape via `_refresh_featured_posts()`
+- **Topics**: tag-to-theme mapping generates `/topics/` index and `/topics/{slug}/` pages
+  - Topic badges shown on individual post pages
+  - Topics nav link appears automatically when `topics:` is configured in `site.yaml`
+- **Now page**: `/now/` generated from `now.md` (git-ignored personal content)
+  - Nav link appears automatically when `now.md` exists
+- **Newsletter CTA**: optional subscribe prompt on home + post pages (`newsletter_url` in site.yaml)
+- **Engagement capture**: browser crawler extracts reaction/comment counts into post frontmatter
+
+### 9. Deployment (Opalstack)
 - `web/deploy.sh` builds the site and deploys via rsync over SSH
 - Credentials loaded from `.env` (OPAL_* variables)
 - Deletes stale files on remote
+
+### 10. Full Pipeline Automation
+- `pipeline.sh` runs the complete workflow: scrape → resolve links → build → deploy
+- Requires `LINKEDIN_PROFILE_URL` in `.env`
+- Flags: `--skip-scrape` (rebuild/deploy only), `--dry-run` (no deploy)
+- After scrape, `featured_posts` in `site.yaml` is auto-updated with top performers
 
 ---
 
@@ -250,11 +275,24 @@ python web/resolve_links.py --dry-run  # preview only
 bash web/deploy.sh
 ```
 
-### Full Pipeline
+### Full Pipeline (automated)
 
 ```bash
-# 1. Crawl new posts
-python scraper/main.py --fetch
+# One command — scrape + resolve + build + deploy
+bash pipeline.sh
+
+# Rebuild and deploy without scraping (e.g. after editing now.md or site.yaml)
+bash pipeline.sh --skip-scrape
+
+# Scrape and resolve but don't deploy (safe for testing)
+bash pipeline.sh --dry-run
+```
+
+### Manual Pipeline (step by step)
+
+```bash
+# 1. Crawl new posts (also auto-updates featured_posts in site.yaml)
+python scraper/main.py --crawl --profile-url https://www.linkedin.com/in/yourprofile
 
 # 2. Resolve shortened URLs
 python web/resolve_links.py
@@ -342,19 +380,57 @@ logging:
 Site identity for the static site generator. Copy from `config/site.yaml.example`:
 
 ```yaml
+# Identity
 site_name: "Your Name"
 site_description: "Your tagline."
 linkedin: "https://linkedin.com/in/your-profile"
 github: "https://github.com/your-username"
 twitter: "https://x.com/your-handle"
 twitter_handle: "@your-handle"
+
+# Home page
 hero_title: "Your Name"
 hero_subline: "Your tagline here."
-about_teaser: "A brief bio for the home page."
 footer_text: "Your Name · Your City"
+
+# Thought leadership features (all optional)
+thesis: "Your 2-3 sentence POV statement shown as a callout on the home page."
+newsletter_url: ""              # Substack/Beehiiv URL — shows subscribe CTA if set
+speaking_text: ""               # Short blurb shown on About page
+
+# Featured posts — auto-updated after each scrape from top engagement (last 90 days)
+# Override with explicit slugs to pin specific posts
+featured_posts:
+  - "YYYY-MM-DD-post-slug"
+
+# Topics — generates /topics/ index and /topics/{slug}/ pages
+# Nav link appears automatically when this is configured
+# Tags must match post frontmatter tags (lowercase)
+topics:
+  - name: "Theme Name"
+    slug: theme-slug
+    description: "One sentence description."
+    tags: [tag1, tag2, tag3]
 ```
 
+**Do not remove `about_teaser` from old configs** — it's still loaded but no longer rendered on the home page (thesis replaced it). The About page link now appears in the hero social links row.
+
+### now.md (git-ignored)
+
+Content for the `/now` page. Copy from `now.md.example` and fill in:
+- What you're currently building
+- What you're thinking about
+- What you're reading
+- What changed recently
+
+The `/now` nav link appears automatically when `now.md` exists.
+
 ### .env File
+
+**Pipeline (required for `bash pipeline.sh`):**
+```env
+LINKEDIN_PROFILE_URL=https://www.linkedin.com/in/yourprofile
+```
 
 **LinkedIn API credentials (required for API path, optional for browser crawler):**
 ```env
@@ -437,7 +513,11 @@ class LinkedInPost:
     original_post_url: Optional[str]     # For reposts
     repost_commentary: Optional[str]     # User's repost comment
     slug: Optional[str]                  # URL-safe identifier
+    reactions: int                       # LinkedIn reaction count at scrape time
+    comments: int                        # LinkedIn comment count at scrape time
 ```
+
+Engagement fields (`reactions`, `comments`) are captured by the browser crawler from the LinkedIn feed DOM and written to post frontmatter. They drive the auto-featured posts computation.
 
 ### Media
 
@@ -782,11 +862,16 @@ bash web/deploy.sh
 
 ### web/build.py
 - Static site generator
-- Loads site identity from `config/site.yaml` (name, bio, social links, footer)
-- Reads markdown posts from `posts/` and About page content from `cv.md`
-- Generates HTML pages (Home, About, Posts)
+- Loads site identity from `config/site.yaml` (name, bio, social links, footer, topics, thesis, etc.)
+- Reads markdown posts from `posts/`, About content from `cv.md`, Now content from `now.md`
+- Generates HTML pages: Home, About, Posts archive, /topics index, /topics/{slug}, /now, individual posts
+- Also generates: `feed.xml` (RSS 2.0, last 20 posts), `sitemap.xml`, `robots.txt`
+- JSON-LD structured data: Person schema on About, Article schema on each post
+- Topics are assigned at build time by matching post tags against `topics[].tags` in site.yaml
+- `compute_featured_posts(posts, days=90, top_n=3)` — engagement-ranked featured posts
+- `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
+- Nav links for Topics and Now appear automatically when configured/present; no dead links
 - About page gracefully handles missing `cv.md` with placeholder
-- Markdown-to-HTML conversion with frontmatter parsing
 - Outputs to `web/dist/`
 
 ### web/resolve_links.py
@@ -796,9 +881,13 @@ bash web/deploy.sh
 - Supports `--dry-run` mode
 
 ### web/deploy.sh
-- Builds site via `build.py`
-- Deploys to Opalstack via rsync over SSH
+- Builds site via `build.py` then deploys via rsync over SSH
 - Loads credentials from `.env`
+
+### pipeline.sh
+- Full automation: scrape → resolve links → build → deploy
+- `--skip-scrape`: rebuild/deploy only (use after editing `now.md` or `site.yaml`)
+- `--dry-run`: scrape + resolve but do not deploy
 
 ---
 

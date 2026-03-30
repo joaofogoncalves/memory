@@ -275,7 +275,28 @@ class LinkedInArchiver:
             return {'total_posts': 0}
 
         logger.info(f"Crawled {len(posts)} posts, archiving...")
-        return self._archive_posts(posts, desc="Archiving crawled posts")
+        stats = self._archive_posts(posts, desc="Archiving crawled posts")
+        self._refresh_featured_posts()
+        return stats
+
+    def _refresh_featured_posts(self) -> None:
+        """Re-compute and persist the featured_posts list in site.yaml.
+
+        Reads the full post archive (engagement data from frontmatter), picks
+        the top performers from the last 90 days, and overwrites featured_posts
+        in config/site.yaml so the next build picks them up automatically.
+        """
+        try:
+            from web.build import parse_all_posts, compute_featured_posts, update_site_yaml_featured
+            all_posts = parse_all_posts()
+            slugs = compute_featured_posts(all_posts, days=90, top_n=3)
+            if slugs:
+                update_site_yaml_featured(slugs)
+                logger.info(f"Updated featured posts: {slugs}")
+            else:
+                logger.debug("No engagement data yet — featured_posts not updated.")
+        except Exception as e:
+            logger.warning(f"Could not refresh featured posts: {e}")
 
     def _print_stats(self, stats: dict, label: str = "Archival") -> None:
         """Print summary statistics."""

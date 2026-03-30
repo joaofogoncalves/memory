@@ -14,6 +14,8 @@ import json
 import os
 import re
 import shutil
+from datetime import datetime, timezone
+from email.utils import format_datetime as _fmt_rfc2822
 from html import escape
 from pathlib import Path
 
@@ -43,6 +45,7 @@ def style_bridge_in(html: str) -> str:
 ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / 'posts'
 CV_FILE = ROOT / 'cv.md'
+NOW_FILE = ROOT / 'now.md'
 WEB_DIR = Path(__file__).resolve().parent
 DIST_DIR = WEB_DIR / 'dist'
 CSS_SRC = WEB_DIR / 'css'
@@ -68,6 +71,10 @@ def _load_site_config() -> dict:
         'about_teaser': cfg.get('about_teaser', ''),
         'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
         'speaking_text': cfg.get('speaking_text', ''),
+        'thesis': cfg.get('thesis', ''),
+        'newsletter_url': cfg.get('newsletter_url', ''),
+        'featured_posts': cfg.get('featured_posts', []) or [],
+        'topics': cfg.get('topics', []) or [],
     }
 
 SITE = _load_site_config()
@@ -287,6 +294,8 @@ def parse_all_posts() -> list[dict]:
             'media': media_files,
             'source_dir': str(post_dir),
             'content': content,
+            'reactions': int(fm.get('reactions', 0) or 0),
+            'comments': int(fm.get('comments', 0) or 0),
         })
 
     # Sort by date descending
@@ -358,12 +367,14 @@ def og_tags(title: str, description: str = '', og_type: str = 'website',
 
 
 def head_html(title: str, depth: int = 0, extra_head: str = '',
-              description: str = '', og_type: str = 'website', og_image: str = '') -> str:
+              description: str = '', og_type: str = 'website', og_image: str = '',
+              jsonld: str = '') -> str:
     """Generate <head> with proper relative paths."""
     prefix = '../' * depth
     ga = ga_snippet()
     desc = escape(description or SITE_DESCRIPTION)
     og = og_tags(title, description, og_type, og_image, depth)
+    rss_link = f'<link rel="alternate" type="application/rss+xml" title="{escape(SITE_NAME)}" href="{prefix}feed.xml">'
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -373,25 +384,36 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   <title>{escape(title)} — {SITE_NAME}</title>
   <meta name="description" content="{desc}">
   {FAVICON.format(prefix=prefix)}
+  {rss_link}
   {og}
   {ga}
   {GOOGLE_FONTS}
   <link rel="stylesheet" href="{prefix}css/style.css?v={_CSS_VER}">
   <script src="{prefix}js/posts.js?v={_JS_VER}" defer></script>
   {extra_head}
+  {jsonld}
 </head>'''
 
 
 def nav_html(active: str = '', depth: int = 0) -> str:
     prefix = '../' * depth
-    about_cls = ' active' if active == 'about' else ''
-    posts_cls = ' active' if active == 'posts' else ''
+    cls = lambda name: ' active' if active == name else ''
+    topics_link = (
+        f'<a href="{prefix}topics/"{cls("topics")}>Topics</a>'
+        if SITE.get('topics') else ''
+    )
+    now_link = (
+        f'<a href="{prefix}now/"{cls("now")}>Now</a>'
+        if NOW_FILE.exists() else ''
+    )
     return f'''<nav class="nav">
   <div class="nav-inner">
     <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.png" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
-      <a href="{prefix}about/" class="{about_cls}">About</a>
-      <a href="{prefix}posts/" class="{posts_cls}">Posts</a>
+      <a href="{prefix}about/"{cls("about")}>About</a>
+      {topics_link}
+      <a href="{prefix}posts/"{cls("posts")}>Posts</a>
+      {now_link}
     </div>
   </div>
 </nav>'''
@@ -400,6 +422,7 @@ def nav_html(active: str = '', depth: int = 0) -> str:
 SVG_LINKEDIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
 SVG_GITHUB = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>'
 SVG_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+SVG_RSS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 010 4.36 2.18 2.18 0 010-4.36M4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44m0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/></svg>'
 
 
 def footer_html() -> str:
@@ -410,6 +433,7 @@ def footer_html() -> str:
         social_links += f'<a href="{GITHUB}" target="_blank" rel="noopener" aria-label="GitHub">{SVG_GITHUB}</a>'
     if TWITTER:
         social_links += f'<a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>'
+    social_links += f'<a href="/feed.xml" aria-label="RSS feed">{SVG_RSS}</a>'
     links_div = f'<div class="footer-links">{social_links}</div>' if social_links else ''
     return f'''<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
@@ -427,6 +451,163 @@ def render_tags_html(tags: list, limit: int = 5) -> str:
     return ''.join(
         f'<span class="tag">{escape(str(t))}</span>'
         for t in tags[:limit]
+    )
+
+
+def compute_featured_posts(posts: list[dict], days: int = 90, top_n: int = 3) -> list[str]:
+    """Rank posts by engagement score in the last `days` days, return top slug list.
+
+    Score = reactions + (comments * 3). Comments weighted higher as a stronger signal.
+    Only considers posts with at least some engagement data captured.
+    """
+    from datetime import date as _date, timedelta
+    cutoff = (_date.today() - timedelta(days=days)).isoformat()
+    candidates = [
+        p for p in posts
+        if p['date'] >= cutoff and (p['reactions'] > 0 or p['comments'] > 0)
+    ]
+    candidates.sort(key=lambda p: p['reactions'] + p['comments'] * 3, reverse=True)
+    return [p['slug'] for p in candidates[:top_n]]
+
+
+def update_site_yaml_featured(slugs: list[str]) -> None:
+    """Overwrite the featured_posts list in config/site.yaml in-place."""
+    if not SITE_CONFIG_FILE.exists():
+        return
+    text = SITE_CONFIG_FILE.read_text(encoding='utf-8')
+    slug_lines = '\n'.join(f'  - "{s}"' for s in slugs)
+    new_block = f'featured_posts:\n{slug_lines}'
+    # Replace existing featured_posts block (handles both populated and empty list)
+    text = re.sub(
+        r'featured_posts:.*?(?=\n\S|\Z)',
+        new_block,
+        text,
+        flags=re.DOTALL,
+    )
+    SITE_CONFIG_FILE.write_text(text, encoding='utf-8')
+
+
+def newsletter_cta_html() -> str:
+    """Render a minimal newsletter subscription prompt if configured."""
+    url = SITE.get('newsletter_url', '')
+    if not url:
+        return ''
+    return (
+        f'<div class="newsletter-cta">'
+        f'<span class="newsletter-cta-text">If this resonates →</span>'
+        f'<a href="{url}" target="_blank" rel="noopener" class="newsletter-cta-link">Subscribe for more</a>'
+        f'</div>'
+    )
+
+
+def jsonld_person() -> str:
+    """Generate JSON-LD Person schema for the About page."""
+    same_as = [u for u in [LINKEDIN, GITHUB, TWITTER] if u]
+    data: dict = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        'name': SITE_NAME,
+        'description': SITE_DESCRIPTION,
+        'url': SITE_URL or '/',
+    }
+    if same_as:
+        data['sameAs'] = same_as
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
+
+def jsonld_article(post: dict) -> str:
+    """Generate JSON-LD Article schema for a post page."""
+    url = f'{SITE_URL}{post["url"]}' if SITE_URL else post['url']
+    data = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': post['title'][:110],
+        'datePublished': post['date'],
+        'description': post['preview'][:200],
+        'url': url,
+        'author': {
+            '@type': 'Person',
+            'name': SITE_NAME,
+            'url': SITE_URL or '/',
+        },
+    }
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
+
+def generate_rss(posts: list[dict]) -> str:
+    """Generate RSS 2.0 feed XML for the last 20 posts."""
+    base = SITE_URL or ''
+    items = []
+    for p in posts[:20]:
+        url = f'{base}{p["url"]}'
+        try:
+            dt = datetime.strptime(p['date'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
+            pub_date = _fmt_rfc2822(dt)
+        except Exception:
+            pub_date = p['date']
+
+        cleaned = clean_content(p['content'])
+        md_renderer.reset()
+        content_html = md_renderer.convert(cleaned)
+        # Escape CDATA end sequence within content
+        content_html = content_html.replace(']]>', ']]]]><![CDATA[>')
+
+        items.append(
+            f'  <item>\n'
+            f'    <title>{escape(p["title"])}</title>\n'
+            f'    <link>{url}</link>\n'
+            f'    <guid isPermaLink="true">{url}</guid>\n'
+            f'    <pubDate>{pub_date}</pubDate>\n'
+            f'    <description><![CDATA[{content_html}]]></description>\n'
+            f'  </item>'
+        )
+
+    site_url = base or '/'
+    feed_url = f'{base}/feed.xml' if base else '/feed.xml'
+    items_xml = '\n'.join(items)
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        '  <channel>\n'
+        f'    <title>{escape(SITE_NAME)}</title>\n'
+        f'    <link>{site_url}/</link>\n'
+        f'    <description>{escape(SITE_DESCRIPTION)}</description>\n'
+        '    <language>en</language>\n'
+        f'    <atom:link href="{feed_url}" rel="self" type="application/rss+xml"/>\n'
+        f'{items_xml}\n'
+        '  </channel>\n'
+        '</rss>'
+    )
+
+
+def generate_sitemap(posts: list[dict]) -> str:
+    """Generate sitemap.xml with all pages."""
+    base = SITE_URL or ''
+    static_pages = [
+        (f'{base}/', '1.0', ''),
+        (f'{base}/about/', '0.7', ''),
+        (f'{base}/posts/', '0.8', ''),
+    ]
+    url_entries = []
+    for loc, priority, lastmod in static_pages:
+        entry = f'  <url>\n    <loc>{loc}</loc>\n    <priority>{priority}</priority>\n  </url>'
+        url_entries.append(entry)
+    for p in posts:
+        loc = f'{base}{p["url"]}'
+        entry = (
+            f'  <url>\n'
+            f'    <loc>{loc}</loc>\n'
+            f'    <lastmod>{p["date"]}</lastmod>\n'
+            f'    <priority>0.8</priority>\n'
+            f'  </url>'
+        )
+        url_entries.append(entry)
+    body = '\n'.join(url_entries)
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'{body}\n'
+        '</urlset>'
     )
 
 
@@ -485,36 +666,178 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 def _hero_links_html() -> str:
     """Build social links for the hero section."""
     links = []
+    links.append('<a href="about/">About</a>')
     if LINKEDIN:
         links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
     if GITHUB:
         links.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
     if TWITTER:
         links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
-    if not links:
-        return ''
     sep = '<span class="sep">·</span>'
     return f'<div class="hero-links">{sep.join(links)}</div>'
 
 
+def assign_post_topics(post: dict, topics: list[dict]) -> list[dict]:
+    """Return topics that match this post's tags."""
+    post_tags = {t.lower() for t in post.get('tags', [])}
+    return [
+        t for t in topics
+        if post_tags & {tag.lower() for tag in (t.get('tags') or [])}
+    ]
+
+
+def generate_now() -> str:
+    """Generate the /now page from now.md."""
+    if NOW_FILE.exists():
+        _, content = parse_frontmatter(NOW_FILE.read_text(encoding='utf-8'))
+        md_renderer.reset()
+        body_html = style_bridge_in(autolink_urls(md_renderer.convert(content)))
+        last_mod = ''
+        # Extract "last updated" line if present
+        m = re.search(r'_[Ll]ast updated[^_]*_', content)
+        if m:
+            last_mod = f'<p class="post-stats">{escape(m.group(0).strip("_"))}</p>'
+    else:
+        body_html = '<p class="muted">Add a <code>now.md</code> file in the project root to populate this page.</p>'
+        last_mod = ''
+
+    return f'''{head_html("Now", depth=1, description=f"What {SITE_NAME} is doing now.")}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='now', depth=1)}
+
+<div class="page-container">
+  <div class="about-header">
+    <h1>Now</h1>
+    {last_mod}
+  </div>
+  <div class="post-content now-content">
+    {body_html}
+  </div>
+</div>
+
+{footer_html()}
+</body>
+</html>'''
+
+
+def generate_topics_index(posts: list[dict], topics: list[dict]) -> str:
+    """Generate the /topics/ index page."""
+    cards_html = ''
+    for topic in topics:
+        topic_posts = [p for p in posts if any(t['slug'] == topic['slug'] for t in p.get('topics', []))]
+        count = len(topic_posts)
+        if count == 0:
+            continue
+        url = f'topics/{topic["slug"]}/'
+        desc = escape(topic.get('description', ''))
+        cards_html += f'''<a href="{url}" class="topic-card reveal">
+  <div class="topic-card-name">{escape(topic["name"])}</div>
+  <div class="topic-card-desc">{desc}</div>
+  <div class="topic-card-count">{count} posts</div>
+</a>\n'''
+
+    return f'''{head_html("Topics", depth=1, description=f"Writing themes by {SITE_NAME}.")}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='topics', depth=1)}
+
+<div class="page-container">
+  <div class="about-header">
+    <h1>Topics</h1>
+  </div>
+  <div class="topics-grid">
+    {cards_html}
+  </div>
+</div>
+
+{footer_html()}
+</body>
+</html>'''
+
+
+def generate_topic_page(topic: dict, posts: list[dict]) -> str:
+    """Generate a /topics/{slug}/ page listing all posts in that topic."""
+    topic_posts = [p for p in posts if any(t['slug'] == topic['slug'] for t in p.get('topics', []))]
+    total = len(topic_posts)
+
+    archive_html = ''
+    current_year = ''
+    for p in topic_posts:
+        if p['year'] != current_year:
+            current_year = p['year']
+            archive_html += f'<div class="archive-year-header">{current_year}</div>\n'
+        tags = render_tags_html(p['tags'], limit=3)
+        url = f"../../posts/{p['year']}/{p['month']}/{p['slug']}/"
+        archive_html += f'''<div class="archive-row reveal">
+  <span class="archive-date">{p['date']}</span>
+  <span class="archive-title"><a href="{url}">{escape(p['title'])}</a></span>
+  <span class="archive-tags">{tags}</span>
+</div>\n'''
+
+    desc = escape(topic.get('description', ''))
+    return f'''{head_html(topic["name"], depth=2, description=topic.get("description", ""))}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='topics', depth=2)}
+
+<div class="page-container">
+  <div class="about-header">
+    <div class="topic-breadcrumb"><a href="../../topics/">Topics</a> /</div>
+    <h1>{escape(topic["name"])}</h1>
+    <p class="muted">{desc}</p>
+    <p class="post-stats">{total} posts</p>
+  </div>
+  <div class="archive-list">
+    {archive_html}
+  </div>
+</div>
+
+{footer_html()}
+</body>
+</html>'''
+
+
 def generate_home(posts: list[dict]) -> str:
     """Generate the home page HTML."""
-    recent = posts[:6]
-    cards = '\n'.join(render_card(p, depth=0) for p in recent)
-
     hero_subline = ''
     if SITE['hero_subline']:
         # hero_subline from site.yaml may already contain styled BRIDGE IN markup
         hero_subline = f'<p class="hero-subline">{SITE["hero_subline"]}</p>'
 
-    about_teaser = ''
-    if SITE['about_teaser']:
-        about_teaser = f'''<div class="about-teaser">
-    <div class="about-teaser-inner">
-      <p>{escape(SITE['about_teaser'])}</p>
-      <a href="about/" class="view-all">More about me &rarr;</a>
+    thesis_block = ''
+    if SITE.get('thesis'):
+        thesis_block = f'<div class="thesis-block reveal"><p>{escape(SITE["thesis"])}</p></div>'
+
+    # Build "Start Here" section: use configured slugs, or auto-compute from engagement
+    featured_slugs = SITE.get('featured_posts', [])
+    slug_to_post = {p['slug']: p for p in posts}
+    if not featured_slugs:
+        featured_slugs = compute_featured_posts(posts)
+    featured_posts_list = [slug_to_post[s] for s in featured_slugs if s in slug_to_post]
+
+    start_here_section = ''
+    if featured_posts_list:
+        featured_cards = '\n'.join(render_card(p, depth=0) for p in featured_posts_list)
+        start_here_section = f'''<section class="section">
+    <div class="section-title">Start Here</div>
+    <div class="cards-grid">
+      {featured_cards}
     </div>
-  </div>'''
+  </section>'''
+
+    # Post statistics
+    if posts:
+        earliest_year = posts[-1]['date'][:4]
+        total_posts = len(posts)
+        post_stats = f'<p class="post-stats">{earliest_year} – present &middot; {total_posts} posts</p>'
+    else:
+        post_stats = ''
+
+    recent = posts[:6]
+    cards = '\n'.join(render_card(p, depth=0) for p in recent)
+
+    newsletter = newsletter_cta_html()
 
     return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION)}
 <body>
@@ -528,14 +851,18 @@ def generate_home(posts: list[dict]) -> str:
     {_hero_links_html()}
   </section>
 
-  {about_teaser}
+  {thesis_block}
+
+  {start_here_section}
 
   <section class="section">
     <div class="section-title">Recent</div>
+    {post_stats}
     <div class="cards-grid">
       {cards}
     </div>
     <a href="posts/" class="view-all">All posts &rarr;</a>
+    {newsletter}
   </section>
 </div>
 
@@ -736,7 +1063,7 @@ def generate_about() -> str:
   {skills_html}
 '''
 
-    return f'''{head_html("About", depth=1)}
+    return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='about', depth=1)}
@@ -841,6 +1168,17 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
     tags_html = render_tags_html(post['tags'])
     read_time = reading_time(cleaned)
 
+    # Topic badges
+    post_topics = post.get('topics', [])
+    topics_html = ''
+    if post_topics:
+        prefix_topics = '../../../../'
+        topics_html = ''.join(
+            f'<a href="{prefix_topics}topics/{t["slug"]}/" class="topic-badge">{escape(t["name"])}</a>'
+            for t in post_topics
+        )
+        topics_html = f'<div class="post-topics">{topics_html}</div>'
+
     # OG image: use first media if available, else headshot
     post_og_image = ''
     if post.get('media'):
@@ -867,7 +1205,8 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
     return f'''{head_html(post['title'][:60], depth=depth,
         description=post['preview'][:160],
         og_type='article',
-        og_image=post_og_image)}
+        og_image=post_og_image,
+        jsonld=jsonld_article(post))}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 <div id="reading-progress" class="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-hidden="true"></div>
@@ -875,6 +1214,7 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
 
 <div class="page-container">
   <div class="post-header">
+    {topics_html}
     <div class="post-meta">
       <span class="post-date">{post['date']}</span>
       <span class="post-reading-time">{read_time}</span>
@@ -894,6 +1234,7 @@ def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | Non
         <span>Copy link</span>
       </button>
     </div>
+    {newsletter_cta_html()}
     <div class="post-nav">
       {prev_link}
       <span></span>
@@ -959,6 +1300,11 @@ def build():
     posts = parse_all_posts()
     print(f'  Found {len(posts)} original/article posts')
 
+    # Assign topics to each post (requires SITE['topics'] to be configured)
+    topics = SITE.get('topics', [])
+    for post in posts:
+        post['topics'] = assign_post_topics(post, topics)
+
     # Clean dist
     if DIST_DIR.exists():
         shutil.rmtree(DIST_DIR)
@@ -980,6 +1326,24 @@ def build():
     about_dir = DIST_DIR / 'about'
     about_dir.mkdir(parents=True)
     (about_dir / 'index.html').write_text(generate_about(), encoding='utf-8')
+
+    # Generate /now page
+    if NOW_FILE.exists():
+        print('Generating /now page...')
+        now_dir = DIST_DIR / 'now'
+        now_dir.mkdir(parents=True)
+        (now_dir / 'index.html').write_text(generate_now(), encoding='utf-8')
+
+    # Generate /topics pages
+    if topics:
+        print(f'Generating /topics pages ({len(topics)} topics)...')
+        topics_dir = DIST_DIR / 'topics'
+        topics_dir.mkdir(parents=True)
+        (topics_dir / 'index.html').write_text(generate_topics_index(posts, topics), encoding='utf-8')
+        for topic in topics:
+            topic_dir = topics_dir / topic['slug']
+            topic_dir.mkdir(parents=True)
+            (topic_dir / 'index.html').write_text(generate_topic_page(topic, posts), encoding='utf-8')
 
     # Generate posts archive
     print('Generating posts archive...')
@@ -1005,9 +1369,23 @@ def build():
     print('Copying media...')
     copy_media(posts)
 
+    # Generate RSS feed
+    print('Generating RSS feed...')
+    (DIST_DIR / 'feed.xml').write_text(generate_rss(posts), encoding='utf-8')
+
+    # Generate sitemap
+    print('Generating sitemap...')
+    (DIST_DIR / 'sitemap.xml').write_text(generate_sitemap(posts), encoding='utf-8')
+
+    # Generate robots.txt
+    robots = 'User-agent: *\nAllow: /\n'
+    if SITE_URL:
+        robots += f'Sitemap: {SITE_URL}/sitemap.xml\n'
+    (DIST_DIR / 'robots.txt').write_text(robots, encoding='utf-8')
+
     print(f'\nBuild complete! Output in {DIST_DIR}')
     print(f'  {len(posts)} post pages')
-    print(f'  4 main pages (home, about, posts archive, posts.json)')
+    print(f'  6 global files (home, about, posts, posts.json, feed.xml, sitemap.xml)')
 
 
 if __name__ == '__main__':

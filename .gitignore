@@ -12,15 +12,6 @@ cache/
 logs/
 *.log
 
-# Personal content (generated per-user)
-posts/
-cv.md
-profile.md
-taste.md
-stitch-prompt.md
-web/img/headshot.jpg
-config/site.yaml
-
 # Build output
 web/dist/
 drafts/

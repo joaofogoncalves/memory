@@ -1,0 +1,22 @@
+# Site personalization
+site_name: "João Gonçalves"
+site_description: "Engineering leader & AI coding practitioner. Founding Engineer at BRIDGE IN."
+
+# Social links
+linkedin: "https://linkedin.com/in/joaofogoncalves"
+github: "https://github.com/joaofogoncalves"
+twitter: "https://x.com/joaofogoncalves"
+twitter_handle: "@joaofogoncalves"
+
+# Home page
+hero_title: "João Gonçalves"
+hero_subline: >-
+  Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
+  style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a>. Previously Director
+  of Engineering at Altium/Valispace. Building things with AI, not just talking about it.
+about_teaser: >-
+  15+ years building software and teams. Steered an engineering org through a $20M acquisition.
+  Now building from scratch again. Currently writing about what happens when AI changes how we build.
+
+# Footer
+footer_text: "João Gonçalves · Lisbon"

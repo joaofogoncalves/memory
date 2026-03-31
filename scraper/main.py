@@ -292,7 +292,7 @@ class LinkedInArchiver:
         try:
             from web.build import parse_all_posts, compute_featured_posts, update_site_yaml_featured
             all_posts = parse_all_posts()
-            slugs = compute_featured_posts(all_posts, days=90, top_n=3)
+            slugs = compute_featured_posts(all_posts, days=90, top_n=6)
             if slugs:
                 update_site_yaml_featured(slugs)
                 logger.info(f"Updated featured posts: {slugs}")

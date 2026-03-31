@@ -454,7 +454,7 @@ def render_tags_html(tags: list, limit: int = 5) -> str:
     )
 
 
-def compute_featured_posts(posts: list[dict], days: int = 90, top_n: int = 3) -> list[str]:
+def compute_featured_posts(posts: list[dict], days: int = 90, top_n: int = 6) -> list[str]:
     """Rank posts by engagement score in the last `days` days, return top slug list.
 
     Score = reactions + (comments * 3). Comments weighted higher as a stronger signal.

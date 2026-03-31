@@ -1,6 +1,6 @@
 ---
 argument-hint: [urls and/or notes about what to write]
-description: Write a LinkedIn post in your voice and generate 3 AI image prompts
+description: Write a LinkedIn post using your style guide and voice profile, and generate 3 AI image prompts
 allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob
 ---
 
@@ -16,19 +16,20 @@ If `$ARGUMENTS` is empty, use AskUserQuestion to ask what they want to write abo
 
 ## Step 1: Gather source material
 
-1. Read `profile.md` from the project root. This is the voice profile — you MUST follow it precisely when drafting.
-2. Read `taste.md` from the project root. This is the visual taste profile — you MUST follow it when generating image prompts.
-3. If URLs were found in the arguments:
+1. Read `writing_style.md` from the project root. This is the authoritative style guide — it defines structure, tone, language rules, length targets, and anti-patterns. Always follow it as the primary reference when drafting.
+2. Read `profile.md` from the project root. This is the auto-generated voice profile — it provides vocabulary, topic expertise, and deeper voice patterns. Where it conflicts with `writing_style.md`, defer to `writing_style.md`.
+3. Read `taste.md` from the project root. This is the visual taste profile — follow it when generating image prompts.
+4. If URLs were found in the arguments:
    - Fetch each URL using WebFetch
    - Extract the key content: headline, author, main argument, notable quotes, data points
    - Identify the source type: tweet/X post, LinkedIn post, article, blog post, research paper, other
-4. Summarize all source material in a brief internal note (do not show to user yet).
+5. Summarize all source material in a brief internal note (do not show to user yet).
 
 ## Step 2: Propose angles
 
 Based on the source material and text notes, propose **2-3 angles** for the post. Each angle should:
 - Be 1-2 sentences describing the take
-- Map to one of the recurring topics from profile.md (AI coding tools, build vs buy, AI adoption gap, organizational identity crisis, engineering leadership, European tech, software quality, career growth)
+- Map to one of the recurring topics from profile.md
 - Represent a genuinely different perspective, not just rewordings
 
 If the user already provided a clear angle/thesis in their text notes, still propose it as the first option but offer 1-2 alternatives.
@@ -42,24 +43,27 @@ Use AskUserQuestion to present the angles. Format:
 ### Auto-detect post template
 
 Based on input type and chosen angle, select the template:
-- **Source is a tweet, LinkedIn post, or someone's hot take** → Short-form commentary (100-250 words)
+- **Source is a tweet, LinkedIn post, or someone's hot take** → Short-form commentary (150-250 words)
 - **Source is an article the user wrote or wants to promote** → Article promotion (100-200 words)
-- **Source is an article/data + user has a thesis** → Long-form thought piece (300-500 words)
-- **No URL, just text notes with a thesis** → Long-form thought piece (300-500 words)
-- **No URL, brief reaction to an event/trend** → Short-form commentary (100-250 words)
+- **Source is an article/data + user has a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
+- **No URL, just text notes with a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
+- **No URL, brief reaction to an event/trend** → Short-form commentary (150-250 words)
 
 ### Write the draft
 
-Follow the voice profile from `profile.md` EXACTLY. In particular:
-- Opening hook: reaction, declarative claim, data point, or casual personal reference. NEVER a formatted title.
-- Sentence rhythm: alternate long analytical sentences with punchy fragments
-- Single-line paragraphs as emphasis beats
-- Paragraphs: 1-3 sentences max
+Follow `writing_style.md` as the primary style authority — its rules on voice, tone, structure, signature moves, language, length, and anti-patterns are all mandatory.
+
+Supplement with `profile.md` for:
 - Vocabulary: use the "Use naturally" words, avoid the "Avoid" words
-- Rhetorical devices: "both things are probably true," implicit comparison, explanatory cascade
+- Recurring topics and the specific angles taken on each
+- Rhetorical devices and deeper voice patterns not covered by `writing_style.md`
+
+Where `profile.md` and `writing_style.md` conflict, `writing_style.md` wins.
+
+Additional rules:
 - Emoji: zero by default
 - Hashtags: 2-4 at the very end
-- No engagement asks, no inspirational closers, no formal connectors, no self-promotion
+- No engagement asks, no self-promotion
 - If using the "ps:" aside device, keep it lowercase and casual
 
 ### Show draft and iterate

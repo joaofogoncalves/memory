@@ -1,3 +1,9 @@
+---
+argument-hint: [days] [--batch N]
+description: Analyze LinkedIn post images and generate a visual taste profile
+allowed-tools: Glob, Read, Edit, Write
+---
+
 Analyze the user's LinkedIn post images and generate a visual taste profile. Uses batch processing with cached descriptions to handle large image sets efficiently.
 
 ## Arguments

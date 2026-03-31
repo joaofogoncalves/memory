@@ -1,4 +1,10 @@
-Generate a PDF version of the user's CV, styled to match the site's brutalist dark theme.
+---
+argument-hint: [job description URL or text] (optional, for tailored CV)
+description: Generate a styled PDF of the CV matching the site's brutalist dark theme
+allowed-tools: Read, Skill, WebFetch
+---
+
+Generate a PDF version of the user's CV, styled to match the site's brutalist dark theme. Uses native PDF creation via `document-skills:pdf` — no HTML-to-PDF conversion.
 
 ## Arguments
 
@@ -14,18 +20,17 @@ If `$ARGUMENTS` starts with `http`, fetch the job description via WebFetch first
 Read these files in parallel:
 
 1. `cv.md` — the CV content (required; abort if missing)
-2. `config/site.yaml` — site identity (name, LinkedIn, GitHub, etc.)
-3. `web/css/style.css` — theme reference for colors, fonts, spacing
+2. `config/site.yaml` — site identity (name, LinkedIn, GitHub, site URL, etc.)
 
 If in **tailored mode**, also read:
-4. `profile.md` — voice profile (if exists, for tone reference)
-5. The job description (fetched from URL or from `$ARGUMENTS` text)
+3. `profile.md` — voice profile (if exists, for tone reference)
+4. The job description (fetched from URL or from `$ARGUMENTS` text)
 
 ## Step 2: Prepare CV content
 
 ### Generic mode (no arguments)
 
-Parse `cv.md` into sections: intro (pre-`##`), Summary, Experience, Education, Top Skills/Skills. Use the content as-is.
+Parse `cv.md` into sections: header (pre-`##`), Summary, Experience, Education, Top Skills/Skills, Languages, Certifications. Use the content as-is.
 
 ### Tailored mode (JD provided)
 
@@ -39,119 +44,74 @@ Parse `cv.md` into sections: intro (pre-`##`), Summary, Experience, Education, T
 4. **Maintain factual integrity** — reframe and emphasize, never fabricate
 5. Extract a company slug (lowercase, hyphenated) for the output filename
 
-## Step 3: Generate self-contained HTML
+## Step 3: Generate PDF natively
 
-Write a single HTML file with all CSS inlined. This is the source for the PDF.
+Invoke the `document-skills:pdf` skill via `Skill("document-skills:pdf")` to create the PDF.
 
-**Design system — "The Brutalist Compiler" adapted for print:**
+Pass the prepared CV content and the complete design specification below. The PDF must be created natively — **no HTML, no browser rendering, no Playwright**.
 
-```
-Fonts:
-  - Headlines: 'Space Grotesk', sans-serif (bold, tight letter-spacing)
-  - Body: 'Inter', sans-serif (1.5 line-height for print)
-  - Metadata: 'JetBrains Mono', monospace (dates, locations, skills)
+### Design system — "The Brutalist Compiler" (print edition)
 
-Colors (dark theme):
-  - Background: #0e131e (dark navy)
-  - Text: #dee2f2 (light gray)
-  - Accent: #44d8f1 (teal — used for section dividers, name)
-  - Muted: #bbc9cc (secondary text — dates, locations)
-  - Outline: #3c494c (subtle borders)
-  - BRIDGE IN: #cc0000 (brand red, always)
+**Page setup:**
+- A4 (210 × 297 mm)
+- Margins: 18mm all sides
+- Background: `#0e131e` (dark navy) — full page fill on every page
+- Target: 1–2 pages maximum. Dense layout.
+- Force background color on every page (this is critical for the dark theme look)
 
-Layout:
-  - A4 page size, 18mm margins
-  - Zero border-radius (brutalist)
-  - No decorative elements — clean, dense, functional
-  - Section titles: uppercase, letter-spaced, teal accent underline
-  - Experience: company bold, role normal, date/location in mono muted
-  - Skills: horizontal flow, monospace, separated by middots
-  - Contact: name large + social links in header
-```
+**Color palette:**
 
-**HTML structure:**
+| Token | Hex | Usage |
+|-------|------|-------|
+| Background | `#0e131e` | Page fill |
+| Text | `#dee2f2` | Primary body text |
+| Accent | `#44d8f1` | Name, section titles, section underlines |
+| Muted | `#bbc9cc` | Dates, locations, contact links, skill tags |
+| Outline | `#3c494c` | Subtle separators between experience entries |
+| BRIDGE IN | `#cc0000` | Brand name — always this color, always bold |
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <style>
-    /* Full inline CSS here — page setup, typography, layout */
-    @page { size: A4; margin: 18mm; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    body { background: #0e131e; color: #dee2f2; font-family: 'Inter', sans-serif; font-size: 10pt; line-height: 1.5; }
-    /* ... all theme styles ... */
-  </style>
-</head>
-<body>
-  <header><!-- Name + contact links --></header>
-  <section class="summary"><!-- Summary text --></section>
-  <section class="experience"><!-- Timeline entries --></section>
-  <section class="skills"><!-- Skill tags --></section>
-  <section class="education"><!-- Education --></section>
-</body>
-</html>
-```
+**Typography:**
 
-**Important styling details:**
-- Every occurrence of "BRIDGE IN" must be wrapped in `<span style="color:#cc0000;font-weight:600">BRIDGE IN</span>`
-- Section titles use Space Grotesk, uppercase, with a thin teal bottom border
-- Experience entries: company name bold, em-dash, role. Date range in JetBrains Mono muted. Bullets as a compact list
-- The header should include the person's name (large, teal) and social links (LinkedIn, GitHub, site URL) in monospace
-- Keep it dense — aim for 1-2 pages maximum
-- No images, no headshot — text only
+| Element | Font | Size | Weight | Color |
+|---------|------|------|--------|-------|
+| Name | Space Grotesk | 22pt | Bold | `#44d8f1` |
+| Section titles | Space Grotesk | 11pt | Bold | `#44d8f1` |
+| Body text | Inter | 9.5pt | Regular (400) | `#dee2f2` |
+| Company names | Inter | 9.5pt | SemiBold (600) | `#dee2f2` |
+| Dates, locations | JetBrains Mono | 8.5pt | Regular | `#bbc9cc` |
+| Skills, tags | JetBrains Mono | 8.5pt | Regular | `#bbc9cc` |
+| Contact links | JetBrains Mono | 8pt | Regular | `#bbc9cc` |
 
-**Output path for HTML (temporary, written to project root):**
-- Generic mode: `_cv_temp.html` (deleted after PDF generation)
-- Tailored mode: `_cv_temp.html` (deleted after PDF generation)
+Font fallbacks (if Google Fonts unavailable): Space Grotesk → Helvetica Bold, Inter → Helvetica, JetBrains Mono → Courier
 
-## Step 4: Convert HTML to PDF with Playwright
+Line height: 1.5 for body text, 1.2 for headings.
 
-Write and execute a small Python script that uses Playwright to render the HTML to PDF:
+**Layout rules:**
 
-```python
-import sys
-from pathlib import Path
-from playwright.sync_api import sync_playwright
+- **Zero border-radius** everywhere (brutalist aesthetic)
+- **Header**: Name left-aligned (large, teal). Contact links right-aligned in mono muted, separated by ` · ` (middots). Include LinkedIn, GitHub, and site URL from `site.yaml`. One line.
+- **Section titles**: UPPERCASE, letter-spacing +0.08em, with a thin (0.5pt) teal (`#44d8f1`) horizontal line underneath spanning content width. 16pt space before each section.
+- **Experience entries**: Company name in Inter SemiBold followed by ` — ` (em-dash) and role in Inter Regular, same line. Date range right-aligned in JetBrains Mono muted. Bullets as compact list below (4pt between bullets). 10pt between entries. Subtle `#3c494c` separator line between entries.
+- **Skills**: Horizontal flow, JetBrains Mono, items separated by ` · ` (middots)
+- **Education**: Same format as experience but more compact
+- **BRIDGE IN** must always be rendered in `#cc0000` with bold/semibold weight — scan all text for this string and apply the color
+- No images, no headshot, no decorative elements — text only
+- No page numbers
 
-html_path = Path(sys.argv[1]).resolve()
-pdf_path = Path(sys.argv[2]).resolve()
+**Page break rules:**
+- Never break in the middle of an experience entry (company + role + all bullets stay together)
+- If content exceeds one page, break between experience entries or between sections
+- Prefer breaking before a section title rather than after one
 
-with sync_playwright() as p:
-    browser = p.chromium.launch()
-    page = browser.new_page()
-    page.goto(f'file://{html_path}')
-    page.wait_for_load_state('networkidle')
-    # Wait for Google Fonts to load
-    page.evaluate('() => document.fonts.ready')
-    page.pdf(
-        path=str(pdf_path),
-        format='A4',
-        margin={'top': '18mm', 'right': '18mm', 'bottom': '18mm', 'left': '18mm'},
-        print_background=True,
-    )
-    browser.close()
-    print(f'PDF saved: {pdf_path} ({pdf_path.stat().st_size / 1024:.0f} KB)')
-```
+### Output path
 
-Save this script as a temp file, run it with the venv Python, then clean up.
-
-**PDF output paths:**
-- Generic mode: `cv.pdf` in project root (build.py copies it to `web/dist/about/cv.pdf` during build)
+- Generic mode: `cv.pdf` in project root
 - Tailored mode: `cv-{company-slug}.pdf` in project root
 
-## Step 5: Clean up
-
-- Delete the temp Python script
-- Delete the temp HTML file
-
-## Step 6: Confirm completion
+## Step 4: Confirm completion
 
 Tell the user:
 - Which mode was used (generic or tailored)
 - Output file path and size
 - If tailored: which aspects were reframed for the target role
-- If generic: remind them that `build.py` will copy `cv.pdf` to `dist/about/` and the About page will show the download link automatically
+- If generic: remind them that `build.py` will copy `cv.pdf` to `dist/about/` and the About page download link picks it up automatically

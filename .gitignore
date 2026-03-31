@@ -16,9 +16,6 @@ logs/
 web/dist/
 drafts/
 
-# Personal content (git-ignored, copy from *.example templates)
-now.md
-cv.pdf
 
 # OS
 .DS_Store

@@ -1,3 +1,9 @@
+---
+argument-hint: [days] (default: 60)
+description: Analyze LinkedIn post archive and generate a voice profile system prompt
+allowed-tools: Glob, Read, Agent, Write
+---
+
 Analyze the user's LinkedIn post archive and generate a voice profile system prompt.
 
 ## Arguments

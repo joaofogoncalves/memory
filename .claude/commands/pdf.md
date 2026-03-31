@@ -104,11 +104,9 @@ Layout:
 - Keep it dense — aim for 1-2 pages maximum
 - No images, no headshot — text only
 
-**Output path for HTML:**
-- Generic mode: `web/dist/about/cv.html`
-- Tailored mode: `cv-{company-slug}.html` in project root
-
-Make sure `web/dist/about/` directory exists (create with mkdir -p if needed).
+**Output path for HTML (temporary, written to project root):**
+- Generic mode: `_cv_temp.html` (deleted after PDF generation)
+- Tailored mode: `_cv_temp.html` (deleted after PDF generation)
 
 ## Step 4: Convert HTML to PDF with Playwright
 
@@ -142,13 +140,13 @@ with sync_playwright() as p:
 Save this script as a temp file, run it with the venv Python, then clean up.
 
 **PDF output paths:**
-- Generic mode: `web/dist/about/cv.pdf`
+- Generic mode: `cv.pdf` in project root (build.py copies it to `web/dist/about/cv.pdf` during build)
 - Tailored mode: `cv-{company-slug}.pdf` in project root
 
 ## Step 5: Clean up
 
 - Delete the temp Python script
-- Keep the HTML file (useful for debugging/iteration)
+- Delete the temp HTML file
 
 ## Step 6: Confirm completion
 
@@ -156,4 +154,4 @@ Tell the user:
 - Which mode was used (generic or tailored)
 - Output file path and size
 - If tailored: which aspects were reframed for the target role
-- If generic: remind them to run `python web/build.py` and deploy to make it available on the About page
+- If generic: remind them that `build.py` will copy `cv.pdf` to `dist/about/` and the About page will show the download link automatically

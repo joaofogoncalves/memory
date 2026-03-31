@@ -1004,6 +1004,11 @@ def generate_about() -> str:
         social_parts.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
     if TWITTER:
         social_parts.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    # CV download link (shown if cv.pdf exists in the about output dir)
+    cv_pdf = DIST_DIR / 'about' / 'cv.pdf'
+    if cv_pdf.exists():
+        social_parts.append('<a href="cv.pdf" download>Download CV</a>')
+
     sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
     social_html = sep.join(social_parts)
 

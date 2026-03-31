@@ -12,6 +12,12 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 ### BRIDGE IN — Founding Engineer
 **November 2025 – Present** · Lisbon, Portugal
 
+- Building the BRIDGE IN Operating System from the ground up. A full-stack platform (Django, React) centralizing payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
+- Designing and operating a 14-agent AI orchestration system where specialized agents coordinate through a 4-phase workflow to plan, implement, test, and deliver full-stack features end-to-end with minimal human intervention.
+- Authoring 27 custom development skills that automate the entire engineering pipeline: from Sentry error triage and Slack feedback processing to autonomous issue creation, CI failure resolution, implementation, and production deployment.
+- Operating AI agents that autonomously monitor production errors, triage user feedback, implement high-priority fixes, and generate release reports, functioning as a permanent member of the engineering team.
+- Establishing the entire product development function from zero — CI/CD, quality gates, error monitoring, and release cadence in under 3 months
+
 ---
 
 ### Altium — Director of Software Engineering
@@ -108,10 +114,10 @@ Computer Science (incomplete) · September 2001 – May 2009
 ## Top Skills
 
 - Python
-- Engineering Leadership (Director level)
-- Product Discovery
+- AI-Augmented Engineering
+- Engineering Leadership
 - Cloud Infrastructure & DevOps
-- AI/ML Adoption & Strategy
+- Product Discovery
 
 ## Certifications
 

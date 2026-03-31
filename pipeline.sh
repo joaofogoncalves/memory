@@ -20,8 +20,9 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 set -a; source "$ENV_FILE"; set +a
 
-# Activate venv
+# Activate venv and set Python path so scraper/ imports resolve
 source "$SCRIPT_DIR/venv/bin/activate"
+export PYTHONPATH="$SCRIPT_DIR"
 
 SKIP_SCRAPE=false
 DRY_RUN=false

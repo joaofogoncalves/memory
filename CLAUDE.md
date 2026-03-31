@@ -25,6 +25,7 @@ This is a Python application that archives LinkedIn posts locally as clean markd
   - `python-slugify` - URL-safe slug generation
   - `python-dateutil` - Date parsing
   - `python-dotenv` - Environment variable loading
+  - `reportlab` - Native PDF generation (CV PDF)
   - `tqdm` - Progress bars
   - `coloredlogs` - Enhanced console output
 
@@ -72,8 +73,14 @@ linkedin-post-archiver/  # Project root
 │       ├── post.md                   # Markdown file
 │       └── media/                    # Downloaded images/videos
 │
+├── cv/                               # CV PDF generator (self-contained)
+│   ├── generate.py                   # reportlab-based PDF builder
+│   └── fonts/                        # Bundled fonts (Inter, JetBrains Mono)
+│
 ├── .claude/
+│   ├── settings.json                 # Plugin configuration
 │   └── commands/                     # Claude Code custom skills
+│       ├── pdf.md                    # /pdf - CV PDF generator
 │       ├── profile.md                # /profile - voice profile generator
 │       ├── taste.md                  # /taste - visual taste profile generator
 │       └── write.md                  # /write - LinkedIn post writer
@@ -89,9 +96,10 @@ linkedin-post-archiver/  # Project root
 ├── .gitignore                        # Git exclusions
 │
 ├── cv.md                             # Professional CV — About page (git-ignored)
-├── cv.md.example                     # CV template (tracked)
-├── now.md                            # /now page content (git-ignored)
+├── cv.pdf                            # Generated CV PDF (tracked, persistent asset)
+├── now.md                            # /now page content (tracked)
 ├── now.md.example                    # /now template (tracked)
+├── writing_style.md                  # LinkedIn writing style guide (tracked)
 ├── profile.md                        # Voice profile for AI writing (git-ignored)
 ├── taste.md                          # Visual taste profile (git-ignored)
 │
@@ -181,6 +189,22 @@ linkedin-post-archiver/  # Project root
 - Requires `LINKEDIN_PROFILE_URL` in `.env`
 - Flags: `--skip-scrape` (rebuild/deploy only), `--dry-run` (no deploy)
 - After scrape, `featured_posts` in `site.yaml` is auto-updated with top performers
+
+### 11. CV PDF Generator
+- `cv/generate.py` — self-contained reportlab script that generates `cv.pdf` from `cv.md`
+- Brutalist dark theme matching the website: `#0e131e` background, `#44d8f1` teal accents, `#dee2f2` text
+- Fonts bundled in `cv/fonts/` (Inter, JetBrains Mono); Helvetica-Bold as fallback for Space Grotesk (OTF not supported by reportlab)
+- A4 layout, 18mm margins, targets 2 pages max
+- Recent roles get full bullet detail; older roles ("Earlier Career") are compact single-line descriptions
+- The `/pdf` skill supports tailored mode: pass a job description URL/text and the CV is reframed for that role
+- `cv.pdf` is tracked in git as a persistent asset; `build.py` copies it to `dist/about/` during build
+- **Why:** Native PDF generation avoids Playwright/browser dependency and is faster and more portable
+
+### 12. Writing Style Guide
+- `writing_style.md` — authoritative style guide for LinkedIn post writing
+- Defines structure, tone, language rules, length targets, and anti-patterns
+- The `/write` skill uses it as primary reference (takes precedence over `profile.md` where they conflict)
+- `profile.md` supplements with vocabulary, topic expertise, and deeper voice patterns
 
 ---
 
@@ -534,19 +558,33 @@ class Media:
 
 ## Claude Code Custom Skills
 
+### /pdf - CV PDF Generator
+- Generates a styled PDF version of the CV matching the site's brutalist dark theme
+- Generic mode (no args): renders `cv.md` as-is → `cv.pdf`
+- Tailored mode (JD URL or text): reframes CV for a specific role → `cv-{company-slug}.pdf`
+- Uses `document-skills:pdf` skill for native PDF creation (no HTML/browser)
+- Design spec defined in `.claude/commands/pdf.md`
+
 ### /profile - Voice Profile Generator
 - Analyzes recent LinkedIn posts (60-day window by default)
 - Filters to `post_type: original` or `article` only
 - Extracts writing patterns: opening hooks, sentence rhythm, vocabulary, rhetorical devices
-- Generates `profile.md` - a voice profile system prompt for AI-assisted writing
+- Generates `profile.md` — a voice profile system prompt for AI-assisted writing
 - Uses tiered recency weighting (recent posts weighted higher)
 
 ### /taste - Visual Taste Profile Generator
 - Analyzes images attached to posts
 - Batch processes uncached images (describes them, stores descriptions in post frontmatter)
-- Generates `taste.md` - a visual taste profile for image selection
+- Generates `taste.md` — a visual taste profile for image selection
 - Requires 80%+ of images described before generating
 - Uses tiered recency weighting for visual patterns
+
+### /write - LinkedIn Post Writer
+- Writes LinkedIn posts using `writing_style.md` (primary) and `profile.md` (supplementary)
+- Fetches source material from URLs, proposes 2-3 angles, drafts after user picks one
+- Auto-detects post template: short-form commentary, article promotion, or long-form thought piece
+- Generates 3 AI image prompts based on `taste.md` visual profile
+- Iterates on drafts via user feedback
 
 ---
 
@@ -653,16 +691,19 @@ python scraper/main.py --reauth
 ### Git Strategy
 
 **Tracked:**
-- All Python code (scraper + web)
+- All Python code (scraper + web + cv generator)
 - Documentation (README, CONTRIBUTING, RATE_LIMITS, CLAUDE.md)
 - Configuration templates (`config/config.yaml`, `config/site.yaml.example`)
-- Example files (`cv.md.example`, `examples/`)
+- Example files (`now.md.example`, `examples/`)
 - Website source (CSS, JS, favicons)
-- Claude Code skills (`.claude/commands/`)
+- Claude Code skills (`.claude/commands/`) and settings (`.claude/settings.json`)
+- CV PDF generator (`cv/generate.py`, `cv/fonts/`)
+- `cv.pdf` (persistent generated asset)
+- `now.md`, `writing_style.md` (content that feeds the site/skills)
 
 **Ignored (personal content + runtime):**
 - `posts/` directory (user's archived posts)
-- `cv.md`, `profile.md`, `taste.md`, `stitch-prompt.md` (personal content)
+- `cv.md`, `profile.md`, `taste.md` (personal content generated by skills)
 - `config/site.yaml` (site identity)
 - `web/img/headshot.jpg` (personal photo)
 - `.env` file (credentials)
@@ -889,6 +930,12 @@ bash web/deploy.sh
 - `--skip-scrape`: rebuild/deploy only (use after editing `now.md` or `site.yaml`)
 - `--dry-run`: scrape + resolve but do not deploy
 
+### cv/generate.py
+- Self-contained reportlab script that generates `cv.pdf` from hardcoded CV content
+- Brutalist dark theme: `#0e131e` background, `#44d8f1` teal accents, Inter + JetBrains Mono fonts
+- Fonts bundled in `cv/fonts/` — no external downloads needed at runtime
+- Run: `python cv/generate.py` → outputs `cv.pdf` in project root
+
 ---
 
 ## Contact & Support
@@ -911,5 +958,5 @@ bash web/deploy.sh
 
 ---
 
-_Last updated: 2026-03-27_
+_Last updated: 2026-03-31_
 _Project version: 2.0.0_

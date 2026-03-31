@@ -3,6 +3,7 @@ date: 2025-08-29
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7356051394719559680/
 post_type: original
 archived_at: 2026-03-27
+tags: [bookreview, leadership]
 media_descriptions:
   image-1.jpg: >-
     Photograph of the physical book "The Startup CTO's Handbook" by Zach Goldberg with red cover,

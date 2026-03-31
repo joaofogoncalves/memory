@@ -3,6 +3,7 @@ date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7096510681440559104/
 post_type: original
 archived_at: 2026-03-27
+tags: [bookreview, reading]
 media_descriptions:
   image-1.jpg: >-
     Photograph of three physical books on a striped fabric surface: "The Master

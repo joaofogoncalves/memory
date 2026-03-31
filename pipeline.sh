@@ -26,18 +26,22 @@ export PYTHONPATH="$SCRIPT_DIR"
 
 SKIP_SCRAPE=false
 DRY_RUN=false
+LIMIT=""
 for arg in "$@"; do
   case $arg in
     --skip-scrape) SKIP_SCRAPE=true ;;
     --dry-run)     DRY_RUN=true ;;
+    --limit=*)     LIMIT="${arg#*=}" ;;
   esac
 done
 
 # ── 1. Scrape new posts ──────────────────────────────────────────────────────
 if [ "$SKIP_SCRAPE" = false ]; then
   : "${LINKEDIN_PROFILE_URL:?Set LINKEDIN_PROFILE_URL in .env}"
+  LIMIT_FLAG=""
+  [ -n "$LIMIT" ] && LIMIT_FLAG="--limit $LIMIT"
   echo "=== Scraping LinkedIn posts ==="
-  python "$SCRIPT_DIR/scraper/main.py" --crawl --profile-url "$LINKEDIN_PROFILE_URL"
+  python "$SCRIPT_DIR/scraper/main.py" --crawl --profile-url "$LINKEDIN_PROFILE_URL" $LIMIT_FLAG
   echo ""
 fi
 

@@ -211,6 +211,11 @@ class BrowserCrawler:
                         logger.warning(f"Failed to extract post {urn}: {e}")
                         continue
 
+                # Stop immediately if limit reached
+                if limit and len(posts) >= limit:
+                    logger.info(f"Reached limit of {limit} posts. Done.")
+                    break
+
                 # Show progress with oldest post date
                 oldest_date = ''
                 if posts:

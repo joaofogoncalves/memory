@@ -15,7 +15,7 @@ Discover modern books that are essential for software engineering managers. Thes
 https://dev.to/sibprogrammer/modern-books-for-software-engineering-managers-199p
 
 In the tech world, speed is key, but so is documentation. Learn how to balance both for better outcomes in your projects.
-https://lnkd.in/dvcgjCUb
+https://olshansky.substack.com/p/move-fast-and-document-things
 
 Equip yourself with the ultimate toolkit for modern developers. From IDEs to version control, this guide has it all covered.
 https://dev.to/kiraaziz/the-ultimate-toolkit-for-modern-developers-p2j

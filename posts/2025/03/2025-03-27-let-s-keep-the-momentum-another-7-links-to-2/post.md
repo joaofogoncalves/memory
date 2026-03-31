@@ -22,7 +22,7 @@ Embrace imperfection in coding. This thoughtful piece reflects on why striving f
 https://jazco.dev/2025/02/19/imperfection/
 
 Learn how Role-Based Access Control (RBAC) simplifies API permission management, enhancing security and organization in your projects.
-https://lnkd.in/dEA9JCyw
+https://dev.to/zuplo/how-rbac-improves-api-permission-management-2cbn
 
 Debug smarter with GitHub Copilot. This guide shows how to leverage AI assistance to find and fix bugs faster in your codebase.
 https://github.blog/ai-and-ml/github-copilot/how-to-debug-code-with-github-copilot/

@@ -118,7 +118,10 @@ class LinkedInArchiver:
             'media_downloaded': 0,
         }
 
+        # Pre-populate with slugs already on disk to prevent duplicates
         existing_slugs = []
+        for d in self.base_dir.rglob('post.md'):
+            existing_slugs.append(d.parent.name)
         # Track content fingerprints to detect self-reposts
         content_fingerprints: set = set()
 

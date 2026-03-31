@@ -3,7 +3,7 @@ date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7217130688813158402/
 post_type: original
 archived_at: 2026-03-27
-tags: [leadership, teammanagement, trust]
+tags: [leadership, teammanagement, trust, bookreview]
 media_descriptions:
   image-1.jpg: >-
     Photograph of the book "Turn the Ship Around!" by L. David Marquet showing

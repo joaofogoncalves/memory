@@ -729,7 +729,7 @@ def generate_topics_index(posts: list[dict], topics: list[dict]) -> str:
         count = len(topic_posts)
         if count == 0:
             continue
-        url = f'topics/{topic["slug"]}/'
+        url = f'{topic["slug"]}/'
         desc = escape(topic.get('description', ''))
         cards_html += f'''<a href="{url}" class="topic-card reveal">
   <div class="topic-card-name">{escape(topic["name"])}</div>

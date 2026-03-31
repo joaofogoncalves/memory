@@ -45,7 +45,7 @@ def style_bridge_in(html: str) -> str:
 ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / 'posts'
 CV_FILE = ROOT / 'cv.md'
-CV_PDF = ROOT / 'cv.pdf'
+CV_PDF = ROOT / 'cv_joaofogoncalves.pdf'
 NOW_FILE = ROOT / 'now.md'
 WEB_DIR = Path(__file__).resolve().parent
 DIST_DIR = WEB_DIR / 'dist'
@@ -1007,7 +1007,7 @@ def generate_about() -> str:
         social_parts.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
     # CV download link (shown if cv.pdf exists in project root)
     if CV_PDF.exists():
-        social_parts.append('<a href="cv.pdf" download>Download CV</a>')
+        social_parts.append('<a href="cv_joaofogoncalves.pdf" download>Download CV</a>')
 
     sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
     social_html = sep.join(social_parts)
@@ -1332,7 +1332,7 @@ def build():
     about_dir.mkdir(parents=True)
     (about_dir / 'index.html').write_text(generate_about(), encoding='utf-8')
     if CV_PDF.exists():
-        shutil.copy2(CV_PDF, about_dir / 'cv.pdf')
+        shutil.copy2(CV_PDF, about_dir / 'cv_joaofogoncalves.pdf')
 
     # Generate /now page
     if NOW_FILE.exists():

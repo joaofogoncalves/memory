@@ -105,7 +105,7 @@ Line height: 1.5 for body text, 1.2 for headings.
 
 ### Output path
 
-- Generic mode: `cv.pdf` in project root
+- Generic mode: `cv_joaofogoncalves.pdf` in project root
 - Tailored mode: `cv-{company-slug}.pdf` in project root
 
 ## Step 4: Confirm completion
@@ -114,4 +114,4 @@ Tell the user:
 - Which mode was used (generic or tailored)
 - Output file path and size
 - If tailored: which aspects were reframed for the target role
-- If generic: remind them that `build.py` will copy `cv.pdf` to `dist/about/` and the About page download link picks it up automatically
+- If generic: remind them that `build.py` will copy `cv_joaofogoncalves.pdf` to `dist/about/` and the About page download link picks it up automatically

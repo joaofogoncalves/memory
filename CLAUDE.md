@@ -96,7 +96,7 @@ linkedin-post-archiver/  # Project root
 ├── .gitignore                        # Git exclusions
 │
 ├── cv.md                             # Professional CV — About page (git-ignored)
-├── cv.pdf                            # Generated CV PDF (tracked, persistent asset)
+├── cv_joaofogoncalves.pdf                            # Generated CV PDF (tracked, persistent asset)
 ├── now.md                            # /now page content (tracked)
 ├── now.md.example                    # /now template (tracked)
 ├── writing_style.md                  # LinkedIn writing style guide (tracked)
@@ -191,13 +191,13 @@ linkedin-post-archiver/  # Project root
 - After scrape, `featured_posts` in `site.yaml` is auto-updated with top performers
 
 ### 11. CV PDF Generator
-- `cv/generate.py` — self-contained reportlab script that generates `cv.pdf` from `cv.md`
+- `cv/generate.py` — self-contained reportlab script that generates `cv_joaofogoncalves.pdf` from `cv.md`
 - Brutalist dark theme matching the website: `#0e131e` background, `#44d8f1` teal accents, `#dee2f2` text
 - Fonts bundled in `cv/fonts/` (Inter, JetBrains Mono); Helvetica-Bold as fallback for Space Grotesk (OTF not supported by reportlab)
 - A4 layout, 18mm margins, targets 2 pages max
 - Recent roles get full bullet detail; older roles ("Earlier Career") are compact single-line descriptions
 - The `/pdf` skill supports tailored mode: pass a job description URL/text and the CV is reframed for that role
-- `cv.pdf` is tracked in git as a persistent asset; `build.py` copies it to `dist/about/` during build
+- `cv_joaofogoncalves.pdf` is tracked in git as a persistent asset; `build.py` copies it to `dist/about/` during build
 - **Why:** Native PDF generation avoids Playwright/browser dependency and is faster and more portable
 
 ### 12. Writing Style Guide
@@ -560,7 +560,7 @@ class Media:
 
 ### /pdf - CV PDF Generator
 - Generates a styled PDF version of the CV matching the site's brutalist dark theme
-- Generic mode (no args): renders `cv.md` as-is → `cv.pdf`
+- Generic mode (no args): renders `cv.md` as-is → `cv_joaofogoncalves.pdf`
 - Tailored mode (JD URL or text): reframes CV for a specific role → `cv-{company-slug}.pdf`
 - Uses `document-skills:pdf` skill for native PDF creation (no HTML/browser)
 - Design spec defined in `.claude/commands/pdf.md`
@@ -698,7 +698,7 @@ python scraper/main.py --reauth
 - Website source (CSS, JS, favicons)
 - Claude Code skills (`.claude/commands/`) and settings (`.claude/settings.json`)
 - CV PDF generator (`cv/generate.py`, `cv/fonts/`)
-- `cv.pdf` (persistent generated asset)
+- `cv_joaofogoncalves.pdf` (persistent generated asset)
 - `now.md`, `writing_style.md` (content that feeds the site/skills)
 
 **Ignored (personal content + runtime):**
@@ -931,10 +931,10 @@ bash web/deploy.sh
 - `--dry-run`: scrape + resolve but do not deploy
 
 ### cv/generate.py
-- Self-contained reportlab script that generates `cv.pdf` from hardcoded CV content
+- Self-contained reportlab script that generates `cv_joaofogoncalves.pdf` from hardcoded CV content
 - Brutalist dark theme: `#0e131e` background, `#44d8f1` teal accents, Inter + JetBrains Mono fonts
 - Fonts bundled in `cv/fonts/` — no external downloads needed at runtime
-- Run: `python cv/generate.py` → outputs `cv.pdf` in project root
+- Run: `python cv/generate.py` → outputs `cv_joaofogoncalves.pdf` in project root
 
 ---
 

@@ -76,9 +76,28 @@ Present the draft to the user using AskUserQuestion with options:
 
 If the user selects "Needs changes," revise the draft based on their feedback and show it again. Continue iterating until they approve.
 
-## Step 4: Generate image prompts
+## Step 4: Decide whether the post needs an image
 
-After the post is approved, generate **3 image prompts** following the visual taste profile from `taste.md`.
+Before generating prompts, make a judgement call: does this post actually benefit from an image?
+
+**Skip images when:**
+- The post is a short, punchy take that stands on its own (the text IS the content)
+- Adding an image would feel like decoration, not evidence
+- The post is a personal story or admission where an image would dilute the rawness
+- There's no natural visual (no source to screenshot, no framework to diagram, no concept that needs illustration)
+
+**Include images when:**
+- The source material is a tweet/post worth screenshotting (the screenshot IS the hook)
+- The argument has a visual structure (comparison, framework, data) that a diagram would clarify
+- The concept is abstract enough that an illustration gives the reader an anchor
+
+If you decide the post doesn't need an image, tell the user: "This post works better without an image — the text carries itself." Offer to generate prompts anyway if they want, then skip to Step 5.
+
+If the post does benefit from an image, proceed below.
+
+## Step 4b: Generate image prompts
+
+Generate **3 image prompts** following the visual taste profile from `taste.md`.
 
 ### Screenshot suggestion
 
@@ -104,6 +123,16 @@ Write each prompt as detailed natural language (for Nano Banana or similar gener
 - Color palette
 - What text (if any) should appear in the image
 - What to avoid (reference taste.md anti-patterns)
+
+End each prompt with a **specs line** in this format:
+`Format: [width]x[height]px ([aspect ratio]) · [file type]`
+
+Use these LinkedIn-optimized defaults:
+- **Diagrams/infographics**: 1200x1200px (1:1) · PNG (sharp text, no compression artifacts)
+- **AI illustrations**: 1200x627px (1.91:1) · PNG or JPG (landscape fills the feed well)
+- **Screenshots**: capture at native resolution, crop to content · PNG (lossless)
+
+Override the defaults when the content demands it (e.g., a tall flowchart might need 1080x1350 portrait).
 
 ### Show prompts and iterate
 

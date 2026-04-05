@@ -1,7 +1,7 @@
 # LinkedIn Posts Archive
 
 **Total posts:** 10
-**Generated:** 2026-03-31 11:21:45
+**Generated:** 2026-04-05 22:39:45
 
 ---
 
@@ -9,25 +9,29 @@
 
 ### 2026
 
+- **April 03**: [Glass half full or half empty kind of situation. 
+
+I've long standed in the belief that there is no ...](2026/04/2026-04-03-glass-half-full-or-half-empty-kind-of/post.md)
+- **April 02**: [Last Friday at 11pm I deleted three client websites.
+
+Not a rogue AI agent. Not a hallucinating copi...](2026/04/2026-04-02-last-friday-at-11pm-i-deleted-three-client-2/post.md)
+- **April 02**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
+
+I build software for a...](2026/04/2026-04-02-artemis-ii-lifted-off-yesterday-first-humans-head-2/post.md)
+- **April 02**: [Last Friday at 11pm I deleted three client websites.
+
+Not a rogue AI agent. Not a hallucinating copi...](2026/04/2026-04-02-last-friday-at-11pm-i-deleted-three-client/post.md)
+- **April 02**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
+
+I build software for a...](2026/04/2026-04-02-artemis-ii-lifted-off-yesterday-first-humans-head/post.md)
+- **April 01**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/2026-04-01-derek-sivers-has-this-idea-called-a-now-2/post.md)
+- **April 01**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/2026-04-01-derek-sivers-has-this-idea-called-a-now/post.md)
 - **March 30**: [I have 230+ posts on LinkedIn and don't own a single one of them.
 
 That thought hit me harder than i...](2026/03/2026-03-30-i-have-230-posts-on-linkedin-and-don-t-4/post.md)
 - **March 30**: [I have 230+ posts on LinkedIn and don't own a single one of them.
 
-That thought hit me harder than i...](2026/03/2026-03-30-i-have-230-posts-on-linkedin-and-don-t-3/post.md)
-- **March 28**: [Yesterday's post about the AI-obsessed CEO clearly hit a nerve.
+That thought hit me harder than i...](2026/03/2026-03-30-i-have-230-posts-on-linkedin-and-don-t/post.md)
+- **March 29**: [Yesterday's post about the AI-obsessed CEO clearly hit a nerve.
 
-A lot of people agreed. Some pushed...](2026/03/2026-03-28-yesterday-s-post-about-the-ai-obsessed-ceo-clearl-4/post.md)
-- **March 28**: [Yesterday's post about the AI-obsessed CEO clearly hit a nerve.
-
-A lot of people agreed. Some pushed...](2026/03/2026-03-28-yesterday-s-post-about-the-ai-obsessed-ceo-clearl-3/post.md)
-- **March 27**: [Everyone's dunking on this CEO.
-I get it. "Have you asked AI?" is a strange thing to hear after pres...](2026/03/2026-03-27-everyone-s-dunking-on-this-ceo-i-get-it-4/post.md)
-- **March 27**: [Everyone's dunking on this CEO.
-I get it. "Have you asked AI?" is a strange thing to hear after pres...](2026/03/2026-03-27-everyone-s-dunking-on-this-ceo-i-get-it-3/post.md)
-- **March 26**: [Lenny Rachitsky just dropped his latest job market data and the numbers are worth sitting with for a...](2026/03/2026-03-26-lenny-rachitsky-just-dropped-his-latest-job-marke-4/post.md)
-- **March 26**: [Lenny Rachitsky just dropped his latest job market data and the numbers are worth sitting with for a...](2026/03/2026-03-26-lenny-rachitsky-just-dropped-his-latest-job-marke-3/post.md)
-- **March 24**: [There's an AI benchmark called BullshitBench by Peter Gostev 
-It feeds models false premises disguis...](2026/03/2026-03-24-there-s-an-ai-benchmark-called-bullshitbench-by-p-4/post.md)
-- **March 24**: [There's an AI benchmark called BullshitBench by Peter Gostev 
-It feeds models false premises disguis...](2026/03/2026-03-24-there-s-an-ai-benchmark-called-bullshitbench-by-p-3/post.md)
+A lot of people agreed. Some pushed...](2026/03/2026-03-29-yesterday-s-post-about-the-ai-obsessed-ceo-clearl/post.md)

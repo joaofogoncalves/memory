@@ -132,10 +132,15 @@ class LinkedInArchiver:
             try:
                 fingerprint = self._content_fingerprint(post.content)
 
-                # If this is a repost and we already have the original content, skip it
-                if post.is_repost() and fingerprint in content_fingerprints:
-                    logger.debug(f"Skipping self-repost: {post.content[:60]}...")
+                # Skip all reposts — only archive originals and articles
+                if post.is_repost():
+                    logger.debug(f"Skipping repost: {post.content[:60]}...")
                     stats['skipped_self_reposts'] += 1
+                    continue
+
+                # Skip duplicate content (same post seen twice in feed)
+                if fingerprint in content_fingerprints:
+                    logger.debug(f"Skipping duplicate: {post.content[:60]}...")
                     continue
 
                 content_fingerprints.add(fingerprint)

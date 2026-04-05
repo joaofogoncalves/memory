@@ -18,6 +18,7 @@ from datetime import datetime, timezone
 from email.utils import format_datetime as _fmt_rfc2822
 from html import escape
 from pathlib import Path
+from typing import Optional
 
 import markdown
 import yaml
@@ -892,7 +893,7 @@ def _fmt_date_range(date_str: str) -> str:
 def _parse_cv_sections(content: str) -> dict:
     """Split cv.md body into a dict of section_name → section_text."""
     sections: dict = {}
-    current: str | None = None
+    current: Optional[str] = None
     buf: list = []
 
     for line in content.split('\n'):
@@ -1162,7 +1163,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
 </html>'''
 
 
-def generate_post_page(post: dict, prev_post: dict | None, next_post: dict | None, depth: int = 4) -> str:
+def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optional[dict], depth: int = 4) -> str:
     """Generate an individual post page."""
     # Clean and render content
     cleaned = clean_content(post['content'])

@@ -123,6 +123,7 @@ linkedin-post-archiver/  # Project root
 - Post extraction via DOM selectors
 - Automatic checkpointing to resume interrupted crawls
 - Filters out self-reposts to avoid duplicates
+- `--profile-url` falls back to `LINKEDIN_PROFILE_URL` from `.env` if not passed
 - **Why:** LinkedIn API is too restrictive (limited scopes, rate limits, restricted historical access)
 
 ### 2. OAuth 2.0 Flow (Legacy Fallback)
@@ -258,27 +259,29 @@ which python  # Should point to venv/bin/python
 
 **Browser login (first time):**
 ```bash
-python scraper/main.py --browser-login
+python -m scraper.main --browser-login
 ```
 
 **Archive all posts (browser crawler):**
 ```bash
-python scraper/main.py --fetch
+python -m scraper.main --crawl
+# Uses LINKEDIN_PROFILE_URL from .env automatically
+# Or pass explicitly: --profile-url https://www.linkedin.com/in/username
 ```
 
 **Test with limited posts:**
 ```bash
-python scraper/main.py --limit 10
+python -m scraper.main --crawl --limit 10
 ```
 
 **Legacy API authentication:**
 ```bash
-python scraper/main.py --auth
+python -m scraper.main --auth
 ```
 
 **Force re-authentication (API):**
 ```bash
-python scraper/main.py --reauth --fetch
+python -m scraper.main --reauth --fetch
 ```
 
 ### Static Site Workflow
@@ -316,7 +319,7 @@ bash pipeline.sh --dry-run
 
 ```bash
 # 1. Crawl new posts (also auto-updates featured_posts in site.yaml)
-python scraper/main.py --crawl --profile-url https://www.linkedin.com/in/yourprofile
+python -m scraper.main --crawl --profile-url https://www.linkedin.com/in/yourprofile
 
 # 2. Resolve shortened URLs
 python web/resolve_links.py
@@ -614,17 +617,17 @@ logging:
 Or set environment variable:
 ```bash
 export LOG_LEVEL=DEBUG
-python scraper/main.py --fetch
+python -m scraper.main --fetch
 ```
 
 ### Testing Browser Crawler
 
 ```bash
 # Login (opens headed browser)
-python scraper/main.py --browser-login
+python -m scraper.main --browser-login
 
 # Crawl with limit
-python scraper/main.py --limit 5
+python -m scraper.main --limit 5
 
 # Check logs for errors
 tail -f logs/scraper.log
@@ -634,13 +637,13 @@ tail -f logs/scraper.log
 
 ```bash
 # Test OAuth flow
-python scraper/main.py --auth
+python -m scraper.main --auth
 
 # Check token cache
 cat cache/token.json
 
 # Force re-authentication
-python scraper/main.py --reauth
+python -m scraper.main --reauth
 ```
 
 ### Common Issues
@@ -745,7 +748,7 @@ rm -rf cache/token.json
 rm -rf cache/browser_profile
 
 # Re-login
-python scraper/main.py --browser-login
+python -m scraper.main --browser-login
 ```
 
 ### Clean Logs
@@ -759,7 +762,7 @@ rm logs/scraper.log
 
 ```bash
 # Safe to re-run, skips existing
-python scraper/main.py --fetch
+python -m scraper.main --fetch
 ```
 
 ### Rebuild & Deploy Website

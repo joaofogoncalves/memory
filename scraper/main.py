@@ -2,7 +2,9 @@
 
 import argparse
 import logging
+import os
 import sys
+from dotenv import load_dotenv
 from pathlib import Path
 from datetime import datetime
 from tqdm import tqdm
@@ -35,6 +37,7 @@ class LinkedInArchiver:
         Args:
             config_path: Path to configuration file
         """
+        load_dotenv()
         self.config = load_config(config_path)
         self.logger = setup_logging(self.config)
 
@@ -351,7 +354,9 @@ class LinkedInArchiver:
         # Handle crawl mode (browser-based, no API needed)
         if args.crawl:
             if not args.profile_url:
-                logger.error("--profile-url is required with --crawl")
+                args.profile_url = os.environ.get('LINKEDIN_PROFILE_URL')
+            if not args.profile_url:
+                logger.error("--profile-url is required with --crawl (or set LINKEDIN_PROFILE_URL in .env)")
                 logger.error("Example: --crawl --profile-url https://www.linkedin.com/in/username")
                 sys.exit(1)
 

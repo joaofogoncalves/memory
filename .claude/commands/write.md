@@ -68,13 +68,15 @@ Additional rules:
 
 ### Show draft and iterate
 
-Present the draft to the user using AskUserQuestion with options:
+IMPORTANT: Always output the full draft as regular text in your response BEFORE asking for feedback. Never put the draft inside the `preview` field of AskUserQuestion — previews don't render reliably. The user must be able to read the draft directly in the conversation.
+
+Format: output the draft text between horizontal rules (`---`) so it's visually distinct, then use AskUserQuestion with options:
 - "Looks good" — proceed to image prompts
 - "Needs changes" — user provides feedback in the notes field
 - "Try a different angle" — go back to Step 2
 - "Scrap and start over" — ask for new input
 
-If the user selects "Needs changes," revise the draft based on their feedback and show it again. Continue iterating until they approve.
+If the user selects "Needs changes," revise the draft, output the full revised text again, and ask once more. Continue iterating until they approve.
 
 ## Step 4: Decide whether the post needs an image
 

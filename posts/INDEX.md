@@ -1,7 +1,7 @@
 # LinkedIn Posts Archive
 
 **Total posts:** 10
-**Generated:** 2026-04-05 22:39:45
+**Generated:** 2026-04-08 13:26:44
 
 ---
 
@@ -9,29 +9,27 @@
 
 ### 2026
 
+- **April 08**: [I've been running prompting sessions with people on my team.
+
+The format is dead simple. I ask them:...](2026/04/2026-04-08-i-ve-been-running-prompting-sessions-with-people/post.md)
+- **April 08**: [I've been running prompting sessions with people on my team.
+
+The format is dead simple. I ask them:...](2026/04/None/post.md)
+- **April 07**: [From the most recent episode Lenny Rachitsky shared Anthropic numbers: a five-engineer team with Cla...](2026/04/2026-04-07-from-the-most-recent-episode-lenny-rachitsky-shar/post.md)
+- **April 07**: [From the most recent episode Lenny Rachitsky shared Anthropic numbers: a five-engineer team with Cla...](2026/04/None/post.md)
+- **April 06**: [This chart has been going around and it's the most accurate map of AI adoption I've seen.
+Not becaus...](2026/04/2026-04-06-this-chart-has-been-going-around-and-it-s/post.md)
+- **April 06**: [This chart has been going around and it's the most accurate map of AI adoption I've seen.
+Not becaus...](2026/04/None/post.md)
 - **April 03**: [Glass half full or half empty kind of situation. 
 
-I've long standed in the belief that there is no ...](2026/04/2026-04-03-glass-half-full-or-half-empty-kind-of/post.md)
-- **April 02**: [Last Friday at 11pm I deleted three client websites.
-
-Not a rogue AI agent. Not a hallucinating copi...](2026/04/2026-04-02-last-friday-at-11pm-i-deleted-three-client-2/post.md)
-- **April 02**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
-
-I build software for a...](2026/04/2026-04-02-artemis-ii-lifted-off-yesterday-first-humans-head-2/post.md)
-- **April 02**: [Last Friday at 11pm I deleted three client websites.
-
-Not a rogue AI agent. Not a hallucinating copi...](2026/04/2026-04-02-last-friday-at-11pm-i-deleted-three-client/post.md)
+I've long standed in the belief that there is no ...](2026/04/None/post.md)
 - **April 02**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
 
 I build software for a...](2026/04/2026-04-02-artemis-ii-lifted-off-yesterday-first-humans-head/post.md)
-- **April 01**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/2026-04-01-derek-sivers-has-this-idea-called-a-now-2/post.md)
-- **April 01**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/2026-04-01-derek-sivers-has-this-idea-called-a-now/post.md)
-- **March 30**: [I have 230+ posts on LinkedIn and don't own a single one of them.
+- **April 02**: [Last Friday at 11pm I deleted three client websites.
 
-That thought hit me harder than i...](2026/03/2026-03-30-i-have-230-posts-on-linkedin-and-don-t-4/post.md)
-- **March 30**: [I have 230+ posts on LinkedIn and don't own a single one of them.
+Not a rogue AI agent. Not a hallucinating copi...](2026/04/None/post.md)
+- **April 02**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
 
-That thought hit me harder than i...](2026/03/2026-03-30-i-have-230-posts-on-linkedin-and-don-t/post.md)
-- **March 29**: [Yesterday's post about the AI-obsessed CEO clearly hit a nerve.
-
-A lot of people agreed. Some pushed...](2026/03/2026-03-29-yesterday-s-post-about-the-ai-obsessed-ceo-clearl/post.md)
+I build software for a...](2026/04/None/post.md)

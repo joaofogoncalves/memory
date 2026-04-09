@@ -48,6 +48,7 @@ POSTS_DIR = ROOT / 'posts'
 CV_FILE = ROOT / 'cv.md'
 CV_PDF = ROOT / 'cv_joaofogoncalves.pdf'
 NOW_FILE = ROOT / 'now.md'
+ARTICLES_DIR = ROOT / 'articles'
 WEB_DIR = Path(__file__).resolve().parent
 DIST_DIR = WEB_DIR / 'dist'
 CSS_SRC = WEB_DIR / 'css'
@@ -305,6 +306,73 @@ def parse_all_posts() -> list[dict]:
     return posts
 
 
+def parse_all_articles() -> list[dict]:
+    """Scan articles/ directory, parse article.md files."""
+    if not ARTICLES_DIR.exists():
+        return []
+    articles = []
+
+    for article_file in ARTICLES_DIR.rglob('article.md'):
+        text = article_file.read_text(encoding='utf-8')
+        fm, content = parse_frontmatter(text)
+
+        title = fm.get('title', 'Untitled')
+        subtitle = fm.get('subtitle', '')
+
+        date_val = fm.get('date', '')
+        if hasattr(date_val, 'strftime'):
+            date_str = date_val.strftime('%Y-%m-%d')
+        else:
+            date_str = str(date_val)
+
+        article_dir = article_file.parent
+        slug = article_dir.name
+        year = date_str[:4]
+        month = date_str[5:7]
+
+        # Preview from first paragraph of content
+        preview = ''
+        for line in content.split('\n'):
+            line = line.strip()
+            if not line or line.startswith('#') or line.startswith('!'):
+                continue
+            preview = re.sub(r'[*_`\[\]]', '', line)[:250]
+            break
+
+        media_files = has_media(article_dir)
+        hero_image = fm.get('hero_image', '')
+
+        # Reading time from frontmatter or computed
+        rt = fm.get('reading_time')
+        if rt:
+            read_time = f'{rt} min read'
+        else:
+            read_time = reading_time(content)
+
+        url_path = f'/articles/{year}/{month}/{slug}/'
+
+        articles.append({
+            'date': date_str,
+            'year': year,
+            'month': month,
+            'slug': slug,
+            'title': title,
+            'subtitle': subtitle,
+            'preview': preview,
+            'reading_time': read_time,
+            'tags': [str(t) for t in (fm.get('tags', []) or [])],
+            'medium_url': fm.get('medium_url', ''),
+            'hero_image': hero_image,
+            'url': url_path,
+            'media': media_files,
+            'source_dir': str(article_dir),
+            'content': content,
+        })
+
+    articles.sort(key=lambda a: a['date'], reverse=True)
+    return articles
+
+
 # ============================================================
 # HTML Templates
 # ============================================================
@@ -400,6 +468,10 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
 def nav_html(active: str = '', depth: int = 0) -> str:
     prefix = '../' * depth
     cls = lambda name: ' active' if active == name else ''
+    articles_link = (
+        f'<a href="{prefix}articles/"{cls("articles")}>Articles</a>'
+        if ARTICLES_DIR.exists() and any(ARTICLES_DIR.rglob('article.md')) else ''
+    )
     topics_link = (
         f'<a href="{prefix}topics/"{cls("topics")}>Topics</a>'
         if SITE.get('topics') else ''
@@ -413,6 +485,7 @@ def nav_html(active: str = '', depth: int = 0) -> str:
     <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.png" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
       <a href="{prefix}about/"{cls("about")}>About</a>
+      {articles_link}
       {topics_link}
       <a href="{prefix}posts/"{cls("posts")}>Posts</a>
       {now_link}
@@ -536,11 +609,16 @@ def jsonld_article(post: dict) -> str:
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
 
 
-def generate_rss(posts: list[dict]) -> str:
-    """Generate RSS 2.0 feed XML for the last 20 posts."""
+def generate_rss(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
+    """Generate RSS 2.0 feed XML for the last 20 items (posts + articles)."""
+    # Merge posts and articles, sorted by date
+    all_items = list(posts)
+    for a in (articles or []):
+        all_items.append({**a, 'content': a['content'], 'title': a['title'], 'preview': a.get('subtitle', a['preview'])})
+    all_items.sort(key=lambda p: p['date'], reverse=True)
     base = SITE_URL or ''
     items = []
-    for p in posts[:20]:
+    for p in all_items[:20]:
         url = f'{base}{p["url"]}'
         try:
             dt = datetime.strptime(p['date'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
@@ -582,7 +660,7 @@ def generate_rss(posts: list[dict]) -> str:
     )
 
 
-def generate_sitemap(posts: list[dict]) -> str:
+def generate_sitemap(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
     """Generate sitemap.xml with all pages."""
     base = SITE_URL or ''
     static_pages = [
@@ -590,6 +668,8 @@ def generate_sitemap(posts: list[dict]) -> str:
         (f'{base}/about/', '0.7', ''),
         (f'{base}/posts/', '0.8', ''),
     ]
+    if articles:
+        static_pages.append((f'{base}/articles/', '0.8', ''))
     url_entries = []
     for loc, priority, lastmod in static_pages:
         entry = f'  <url>\n    <loc>{loc}</loc>\n    <priority>{priority}</priority>\n  </url>'
@@ -601,6 +681,16 @@ def generate_sitemap(posts: list[dict]) -> str:
             f'    <loc>{loc}</loc>\n'
             f'    <lastmod>{p["date"]}</lastmod>\n'
             f'    <priority>0.8</priority>\n'
+            f'  </url>'
+        )
+        url_entries.append(entry)
+    for a in (articles or []):
+        loc = f'{base}{a["url"]}'
+        entry = (
+            f'  <url>\n'
+            f'    <loc>{loc}</loc>\n'
+            f'    <lastmod>{a["date"]}</lastmod>\n'
+            f'    <priority>0.9</priority>\n'
             f'  </url>'
         )
         url_entries.append(entry)
@@ -800,7 +890,168 @@ def generate_topic_page(topic: dict, posts: list[dict]) -> str:
 </html>'''
 
 
-def generate_home(posts: list[dict]) -> str:
+def render_article_card(article: dict, depth: int = 0) -> str:
+    """Render an article card with hero image, title, and subtitle."""
+    prefix = '../' * depth
+    url = prefix + article['url'].lstrip('/')
+    if not url.endswith('/'):
+        url += '/'
+    tags_html = render_tags_html(article['tags'])
+
+    hero = ''
+    if article.get('hero_image'):
+        hero_src = prefix + f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
+        hero = f'<img class="article-card-hero" src="{hero_src}" alt="" loading="lazy">'
+
+    subtitle_html = ''
+    if article.get('subtitle'):
+        subtitle_html = f'<div class="article-card-subtitle">{escape(article["subtitle"])}</div>'
+
+    return f'''<div class="article-card">
+  {hero}
+  <div class="article-card-body">
+    <div class="card-meta"><span class="card-date">{article['date']}</span><span class="card-reading-time">{article['reading_time']}</span></div>
+    <div class="article-card-title"><a href="{url}">{escape(article['title'])}</a></div>
+    {subtitle_html}
+    <div class="card-tags">{tags_html}</div>
+  </div>
+</div>'''
+
+
+def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
+    """Generate the /articles/ archive page."""
+    total = len(articles)
+
+    cards_html = '\n'.join(render_article_card(a, depth=1) for a in articles)
+
+    return f'''{head_html("Articles", depth=1, description=f"Long-form writing by {SITE_NAME}.")}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='articles', depth=1)}
+
+<div class="page-container">
+  <div class="posts-header">
+    <h1>Articles</h1>
+    <span class="posts-count">{total} articles</span>
+    <p class="posts-description">Long-form writing. Originally published on Medium.</p>
+  </div>
+
+  <div class="articles-grid">
+    {cards_html}
+  </div>
+</div>
+
+{footer_html()}
+</body>
+</html>'''
+
+
+def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> str:
+    """Generate an individual article page."""
+    md_renderer.reset()
+    body_html = style_bridge_in(autolink_urls(md_renderer.convert(article['content'])))
+
+    tags_html = render_tags_html(article['tags'])
+
+    # Topic badges
+    article_topics = article.get('topics', [])
+    topics_html = ''
+    if article_topics:
+        prefix_topics = '../../../../'
+        topics_html = ''.join(
+            f'<a href="{prefix_topics}topics/{t["slug"]}/" class="topic-badge">{escape(t["name"])}</a>'
+            for t in article_topics
+        )
+        topics_html = f'<div class="post-topics">{topics_html}</div>'
+
+    # Hero image
+    hero_html = ''
+    if article.get('hero_image'):
+        hero_html = f'<img class="article-hero" src="{article["hero_image"]}" alt="" loading="lazy">'
+
+    # Medium link
+    medium_link = ''
+    if article.get('medium_url'):
+        medium_link = f'<a href="{article["medium_url"]}" class="post-original-link" target="_blank" rel="noopener">Originally published on Medium →</a>'
+
+    # Subtitle
+    subtitle_html = ''
+    if article.get('subtitle'):
+        subtitle_html = f'<p class="article-subtitle">{escape(article["subtitle"])}</p>'
+
+    # OG image
+    og_image = ''
+    if article.get('hero_image'):
+        og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
+
+    return f'''{head_html(article['title'][:60], depth=depth,
+        description=article.get('subtitle', article['preview'])[:160],
+        og_type='article',
+        og_image=og_image,
+        jsonld=jsonld_article(article))}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+<div id="reading-progress" class="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-hidden="true"></div>
+{nav_html(active='articles', depth=depth)}
+
+<div class="page-container article-page">
+  <div class="post-header">
+    {topics_html}
+    <h1 class="article-title">{escape(article['title'])}</h1>
+    {subtitle_html}
+    <div class="post-meta">
+      <span class="post-date">{article['date']}</span>
+      <span class="post-reading-time">{article['reading_time']}</span>
+    </div>
+    <div class="post-tags">{tags_html}</div>
+  </div>
+
+  {hero_html}
+
+  <div class="post-content article-content">
+    {body_html}
+  </div>
+
+  <div class="post-footer">
+    <div class="post-actions">
+      {medium_link}
+      <button class="copy-link-btn" aria-label="Copy link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        <span>Copy link</span>
+      </button>
+    </div>
+    {newsletter_cta_html()}
+  </div>
+</div>
+
+{footer_html()}
+<script>
+document.querySelector('.copy-link-btn')?.addEventListener('click', function() {{
+  navigator.clipboard.writeText(window.location.href).then(() => {{
+    this.querySelector('span').textContent = 'Copied!';
+    setTimeout(() => this.querySelector('span').textContent = 'Copy link', 2000);
+  }});
+}});
+</script>
+</body>
+</html>'''
+
+
+def _articles_home_section(articles: list[dict]) -> str:
+    """Render a 'Latest Articles' section for the home page."""
+    if not articles:
+        return ''
+    cards = '\n'.join(render_article_card(a, depth=0) for a in articles[:3])
+    return f'''<section class="section">
+    <div class="section-title">Articles</div>
+    <div class="articles-grid">
+      {cards}
+    </div>
+    <a href="articles/" class="view-all">All articles &rarr;</a>
+  </section>'''
+
+
+def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
     """Generate the home page HTML."""
     hero_subline = ''
     if SITE['hero_subline']:
@@ -857,8 +1108,10 @@ def generate_home(posts: list[dict]) -> str:
 
   {start_here_section}
 
+  {''.join(_articles_home_section(articles or []))}
+
   <section class="section">
-    <div class="section-title">Recent</div>
+    <div class="section-title">Recent Posts</div>
     {post_stats}
     <div class="cards-grid">
       {cards}
@@ -1300,16 +1553,39 @@ def copy_media(posts: list[dict]):
                 shutil.copy2(src, dst)
 
 
+def copy_article_media(articles: list[dict]):
+    """Copy media directories from source articles into dist."""
+    for a in articles:
+        if not a['media']:
+            continue
+        src_media = Path(a['source_dir']) / 'media'
+        dst_media = DIST_DIR / 'articles' / a['year'] / a['month'] / a['slug'] / 'media'
+        if dst_media.exists():
+            continue
+        dst_media.mkdir(parents=True, exist_ok=True)
+        for fname in a['media']:
+            src = src_media / fname
+            dst = dst_media / fname
+            if src.exists() and not dst.exists():
+                shutil.copy2(src, dst)
+
+
 def build():
     """Main build function."""
     print('Parsing posts...')
     posts = parse_all_posts()
     print(f'  Found {len(posts)} original/article posts')
 
-    # Assign topics to each post (requires SITE['topics'] to be configured)
+    print('Parsing articles...')
+    articles = parse_all_articles()
+    print(f'  Found {len(articles)} articles')
+
+    # Assign topics to each post and article
     topics = SITE.get('topics', [])
     for post in posts:
         post['topics'] = assign_post_topics(post, topics)
+    for article in articles:
+        article['topics'] = assign_post_topics(article, topics)
 
     # Clean dist
     if DIST_DIR.exists():
@@ -1325,7 +1601,7 @@ def build():
 
     # Generate home page
     print('Generating home page...')
-    (DIST_DIR / 'index.html').write_text(generate_home(posts), encoding='utf-8')
+    (DIST_DIR / 'index.html').write_text(generate_home(posts, articles), encoding='utf-8')
 
     # Generate about page
     print('Generating about page...')
@@ -1353,6 +1629,23 @@ def build():
             topic_dir.mkdir(parents=True)
             (topic_dir / 'index.html').write_text(generate_topic_page(topic, posts), encoding='utf-8')
 
+    # Generate articles section
+    if articles:
+        print(f'Generating articles section ({len(articles)} articles)...')
+        articles_dir = DIST_DIR / 'articles'
+        articles_dir.mkdir(parents=True)
+        (articles_dir / 'index.html').write_text(
+            generate_articles_archive(articles, topics), encoding='utf-8')
+
+        for article in articles:
+            article_dir = articles_dir / article['year'] / article['month'] / article['slug']
+            article_dir.mkdir(parents=True, exist_ok=True)
+            html = generate_article_page(article, topics)
+            (article_dir / 'index.html').write_text(html, encoding='utf-8')
+
+        print('Copying article media...')
+        copy_article_media(articles)
+
     # Generate posts archive
     print('Generating posts archive...')
     posts_dir = DIST_DIR / 'posts'
@@ -1379,11 +1672,11 @@ def build():
 
     # Generate RSS feed
     print('Generating RSS feed...')
-    (DIST_DIR / 'feed.xml').write_text(generate_rss(posts), encoding='utf-8')
+    (DIST_DIR / 'feed.xml').write_text(generate_rss(posts, articles), encoding='utf-8')
 
     # Generate sitemap
     print('Generating sitemap...')
-    (DIST_DIR / 'sitemap.xml').write_text(generate_sitemap(posts), encoding='utf-8')
+    (DIST_DIR / 'sitemap.xml').write_text(generate_sitemap(posts, articles), encoding='utf-8')
 
     # Generate robots.txt
     robots = 'User-agent: *\nAllow: /\n'
@@ -1393,7 +1686,8 @@ def build():
 
     print(f'\nBuild complete! Output in {DIST_DIR}')
     print(f'  {len(posts)} post pages')
-    print(f'  6 global files (home, about, posts, posts.json, feed.xml, sitemap.xml)')
+    print(f'  {len(articles)} article pages')
+    print(f'  Global files: home, about, posts, articles, posts.json, feed.xml, sitemap.xml')
 
 
 if __name__ == '__main__':

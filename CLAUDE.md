@@ -73,6 +73,12 @@ linkedin-post-archiver/  # Project root
 │       ├── post.md                   # Markdown file
 │       └── media/                    # Downloaded images/videos
 │
+├── articles/                         # Long-form articles (tracked in git)
+│   └── YYYY/MM/YYYY-MM-DD-slug/
+│       ├── article.md                # Article markdown with frontmatter
+│       ├── image-prompts.md          # AI image generation prompts (optional)
+│       └── media/                    # Article images (hero, diagrams)
+│
 ├── cv/                               # CV PDF generator (self-contained)
 │   ├── generate.py                   # reportlab-based PDF builder
 │   └── fonts/                        # Bundled fonts (Inter, JetBrains Mono)
@@ -80,6 +86,7 @@ linkedin-post-archiver/  # Project root
 ├── .claude/
 │   ├── settings.json                 # Plugin configuration
 │   └── commands/                     # Claude Code custom skills
+│       ├── article.md                # /article - long-form article writer
 │       ├── pdf.md                    # /pdf - CV PDF generator
 │       ├── profile.md                # /profile - voice profile generator
 │       ├── taste.md                  # /taste - visual taste profile generator
@@ -99,6 +106,7 @@ linkedin-post-archiver/  # Project root
 ├── cv_joaofogoncalves.pdf                            # Generated CV PDF (tracked, persistent asset)
 ├── now.md                            # /now page content (tracked)
 ├── now.md.example                    # /now template (tracked)
+├── article_style.md                  # Long-form article style supplement (tracked)
 ├── writing_style.md                  # LinkedIn writing style guide (tracked)
 ├── profile.md                        # Voice profile for AI writing (git-ignored)
 ├── taste.md                          # Visual taste profile (git-ignored)
@@ -206,6 +214,17 @@ linkedin-post-archiver/  # Project root
 - Defines structure, tone, language rules, length targets, and anti-patterns
 - The `/write` skill uses it as primary reference (takes precedence over `profile.md` where they conflict)
 - `profile.md` supplements with vocabulary, topic expertise, and deeper voice patterns
+
+### 13. Articles Section
+- `articles/` directory stores original long-form content (tracked in git, unlike `posts/`)
+- Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
+- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`
+- `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
+- Same core voice as LinkedIn posts, scaled up for longer format
+- Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`
+- The `/article` skill handles drafting; `/write` handles the LinkedIn promotion post (decoupled)
+- Articles appear on: home page (Latest Articles section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
+- **Why separate from posts:** articles are authored content, not archived LinkedIn posts. Different workflow, different frontmatter, different content type.
 
 ---
 
@@ -561,6 +580,15 @@ class Media:
 
 ## Claude Code Custom Skills
 
+### /article - Long-Form Article Writer
+- Writes long-form articles (1,000-3,500 words) for the website's articles section
+- Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
+- Workflow: gather input → research sources → propose angles → outline → draft → image prompts → save
+- Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
+- Generates image prompts (hero + section diagrams) following `taste.md`
+- Decoupled from LinkedIn: reminds user to run `/write` for promotion post after article is finalized
+- Article frontmatter: title, subtitle, date, tags, medium_url, hero_image, reading_time
+
 ### /pdf - CV PDF Generator
 - Generates a styled PDF version of the CV matching the site's brutalist dark theme
 - Generic mode (no args): renders `cv.md` as-is → `cv_joaofogoncalves.pdf`
@@ -702,7 +730,8 @@ python -m scraper.main --reauth
 - Claude Code skills (`.claude/commands/`) and settings (`.claude/settings.json`)
 - CV PDF generator (`cv/generate.py`, `cv/fonts/`)
 - `cv_joaofogoncalves.pdf` (persistent generated asset)
-- `now.md`, `writing_style.md` (content that feeds the site/skills)
+- `now.md`, `writing_style.md`, `article_style.md` (content that feeds the site/skills)
+- `articles/` directory (original long-form articles — authored content, not scraped)
 
 **Ignored (personal content + runtime):**
 - `posts/` directory (user's archived posts)
@@ -907,14 +936,17 @@ bash web/deploy.sh
 ### web/build.py
 - Static site generator
 - Loads site identity from `config/site.yaml` (name, bio, social links, footer, topics, thesis, etc.)
-- Reads markdown posts from `posts/`, About content from `cv.md`, Now content from `now.md`
-- Generates HTML pages: Home, About, Posts archive, /topics index, /topics/{slug}, /now, individual posts
-- Also generates: `feed.xml` (RSS 2.0, last 20 posts), `sitemap.xml`, `robots.txt`
-- JSON-LD structured data: Person schema on About, Article schema on each post
-- Topics are assigned at build time by matching post tags against `topics[].tags` in site.yaml
+- Reads markdown posts from `posts/`, articles from `articles/`, About content from `cv.md`, Now content from `now.md`
+- Generates HTML pages: Home, About, Articles archive, Posts archive, /topics index, /topics/{slug}, /now, individual posts, individual articles
+- Also generates: `feed.xml` (RSS 2.0, last 20 items — posts + articles interleaved by date), `sitemap.xml`, `robots.txt`
+- JSON-LD structured data: Person schema on About, Article schema on each post and article
+- Topics are assigned at build time by matching post/article tags against `topics[].tags` in site.yaml
 - `compute_featured_posts(posts, days=90, top_n=3)` — engagement-ranked featured posts
 - `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
-- Nav links for Topics and Now appear automatically when configured/present; no dead links
+- `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, medium_url, reading_time)
+- Nav links for Articles, Topics, and Now appear automatically when content exists; no dead links
+- Articles section: `/articles/` archive with hero image cards, `/articles/YYYY/MM/slug/` individual pages with wider content area
+- Home page shows "Articles" section (latest 3) between "Start Here" and "Recent Posts"
 - About page gracefully handles missing `cv.md` with placeholder
 - Outputs to `web/dist/`
 

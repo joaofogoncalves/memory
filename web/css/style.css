@@ -1475,6 +1475,128 @@ h4 { font-size: 1.1rem; }
   letter-spacing: 0.03em;
 }
 
+/* --- Articles --- */
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(var(--spacing-unit) * 1.5);
+}
+
+.article-card {
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.article-card:hover {
+  border-color: var(--primary);
+}
+
+.article-card-hero {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.article-card-body {
+  padding: calc(var(--spacing-unit) * 1.25);
+}
+
+.article-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+}
+
+.article-card-title a {
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.article-card-title a:hover {
+  color: var(--primary);
+}
+
+.article-card-subtitle {
+  font-size: 0.88rem;
+  color: var(--on-surface-variant);
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+}
+
+/* Article page */
+
+.article-page .post-header {
+  text-align: left;
+}
+
+.article-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--on-surface);
+  margin: 0.5rem 0 0.4rem;
+}
+
+.article-subtitle {
+  font-size: 1.05rem;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.article-hero {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  margin: calc(var(--spacing-unit) * 1.5) 0;
+  display: block;
+}
+
+.article-content {
+  max-width: 720px;
+}
+
+.article-content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-top: calc(var(--spacing-unit) * 2.5);
+  margin-bottom: calc(var(--spacing-unit) * 0.75);
+}
+
+.article-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin-top: calc(var(--spacing-unit) * 2);
+  margin-bottom: calc(var(--spacing-unit) * 0.5);
+}
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  margin: calc(var(--spacing-unit) * 1.5) 0;
+  display: block;
+}
+
+@media (min-width: 769px) {
+  .articles-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .article-title {
+    font-size: 2.6rem;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .hero h1 { font-size: 3.5rem; }
   .cards-grid { grid-template-columns: 1fr; }

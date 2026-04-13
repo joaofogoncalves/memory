@@ -157,6 +157,7 @@ tags: [tag1, tag2, tag3]
 medium_url:
 hero_image:
 reading_time: [computed from word count]
+# draft: true   # optional — uncomment to publish at obfuscated /articles/drafts/<token>/ URL only
 ---
 
 [Full article content as approved]
@@ -178,6 +179,7 @@ reading_time: [computed from word count]
 - `medium_url` is left empty — fill in after publishing to Medium
 - `hero_image` is left empty — fill in after generating and saving the image
 - `reading_time` is computed: word count / 230, rounded to nearest minute
+- `draft: true` (optional) builds the article at `/articles/drafts/<stable-token>/` only — not listed on home, archive, topics, RSS, or sitemap. Page is served with `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`. Use this to share review links. To publish, remove the `draft` line and rebuild — the URL will change to the standard `/articles/YYYY/MM/slug/` path.
 
 ## Step 7: Wrap up
 

@@ -218,7 +218,8 @@ linkedin-post-archiver/  # Project root
 ### 13. Articles Section
 - `articles/` directory stores original long-form content (tracked in git, unlike `posts/`)
 - Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
-- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`
+- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`, `draft` (optional)
+- Draft mode: set `draft: true` in frontmatter to publish the article at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars). Drafts are excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`. Remove the `draft` line to promote to a public URL.
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`

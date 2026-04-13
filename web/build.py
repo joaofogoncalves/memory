@@ -349,7 +349,20 @@ def parse_all_articles() -> list[dict]:
         else:
             read_time = reading_time(content)
 
-        url_path = f'/articles/{year}/{month}/{slug}/'
+        # Draft handling: drafts get an obfuscated URL and are excluded from
+        # listings, feeds, sitemap, and topics. The token is stable per article
+        # so review links don't change between builds.
+        is_draft = bool(fm.get('draft', False))
+        draft_token = ''
+        if is_draft:
+            explicit = fm.get('draft_token', '')
+            if explicit:
+                draft_token = str(explicit).strip()
+            else:
+                draft_token = hashlib.sha256(slug.encode('utf-8')).hexdigest()[:16]
+            url_path = f'/articles/drafts/{draft_token}/'
+        else:
+            url_path = f'/articles/{year}/{month}/{slug}/'
 
         articles.append({
             'date': date_str,
@@ -367,6 +380,8 @@ def parse_all_articles() -> list[dict]:
             'media': media_files,
             'source_dir': str(article_dir),
             'content': content,
+            'draft': is_draft,
+            'draft_token': draft_token,
         })
 
     articles.sort(key=lambda a: a['date'], reverse=True)
@@ -439,13 +454,14 @@ def og_tags(title: str, description: str = '', og_type: str = 'website',
 
 def head_html(title: str, depth: int = 0, extra_head: str = '',
               description: str = '', og_type: str = 'website', og_image: str = '',
-              jsonld: str = '') -> str:
+              jsonld: str = '', noindex: bool = False) -> str:
     """Generate <head> with proper relative paths."""
     prefix = '../' * depth
     ga = ga_snippet()
     desc = escape(description or SITE_DESCRIPTION)
     og = og_tags(title, description, og_type, og_image, depth)
     rss_link = f'<link rel="alternate" type="application/rss+xml" title="{escape(SITE_NAME)}" href="{prefix}feed.xml">'
+    robots = '<meta name="robots" content="noindex, nofollow">' if noindex else ''
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -454,6 +470,7 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   <meta name="theme-color" content="#0e131e">
   <title>{escape(title)} — {SITE_NAME}</title>
   <meta name="description" content="{desc}">
+  {robots}
   {FAVICON.format(prefix=prefix)}
   {rss_link}
   {og}
@@ -466,12 +483,26 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
 </head>'''
 
 
+def _has_public_articles() -> bool:
+    """True if at least one non-draft article.md exists."""
+    if not ARTICLES_DIR.exists():
+        return False
+    for f in ARTICLES_DIR.rglob('article.md'):
+        try:
+            fm, _ = parse_frontmatter(f.read_text(encoding='utf-8'))
+            if not fm.get('draft', False):
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def nav_html(active: str = '', depth: int = 0) -> str:
     prefix = '../' * depth
     cls = lambda name: ' active' if active == name else ''
     articles_link = (
         f'<a href="{prefix}articles/"{cls("articles")}>Articles</a>'
-        if ARTICLES_DIR.exists() and any(ARTICLES_DIR.rglob('article.md')) else ''
+        if _has_public_articles() else ''
     )
     topics_link = (
         f'<a href="{prefix}topics/"{cls("topics")}>Topics</a>'
@@ -970,8 +1001,14 @@ def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
 </html>'''
 
 
-def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> str:
+def generate_article_page(article: dict, topics: list[dict], depth: Optional[int] = None) -> str:
     """Generate an individual article page."""
+    is_draft = bool(article.get('draft'))
+    # Public articles live at /articles/YYYY/MM/slug/ (depth=4).
+    # Drafts live at /articles/drafts/{token}/ (depth=3).
+    if depth is None:
+        depth = 3 if is_draft else 4
+
     md_renderer.reset()
     body_html = style_bridge_in(autolink_urls(md_renderer.convert(article['content'])))
 
@@ -981,7 +1018,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> 
     article_topics = article.get('topics', [])
     topics_html = ''
     if article_topics:
-        prefix_topics = '../../../../'
+        prefix_topics = '../' * depth
         topics_html = ''.join(
             f'<a href="{prefix_topics}topics/{t["slug"]}/" class="topic-badge">{escape(t["name"])}</a>'
             for t in article_topics
@@ -1003,22 +1040,38 @@ def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> 
     if article.get('subtitle'):
         subtitle_html = f'<p class="article-subtitle">{escape(article["subtitle"])}</p>'
 
+    # Draft banner — visual reminder that the page is unlisted
+    draft_banner = ''
+    if is_draft:
+        draft_banner = (
+            '<div class="draft-banner" style="background:#2a1a1a;border:1px solid #cc0000;'
+            'color:#ffb3b3;padding:12px 16px;margin-bottom:24px;font-family:JetBrains Mono,monospace;'
+            'font-size:13px;border-radius:2px;">'
+            'DRAFT — unlisted review link. Do not share publicly.'
+            '</div>'
+        )
+
     # OG image
     og_image = ''
     if article.get('hero_image'):
-        og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
+        if is_draft:
+            og_image = f"articles/drafts/{article['draft_token']}/{article['hero_image']}"
+        else:
+            og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
 
     return f'''{head_html(article['title'][:60], depth=depth,
         description=article.get('subtitle', article['preview'])[:160],
         og_type='article',
         og_image=og_image,
-        jsonld=jsonld_article(article))}
+        jsonld='' if is_draft else jsonld_article(article),
+        noindex=is_draft)}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 <div id="reading-progress" class="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-hidden="true"></div>
 {nav_html(active='articles', depth=depth)}
 
 <div class="page-container article-page">
+  {draft_banner}
   <div class="post-header">
     <h1 class="article-title">{escape(article['title'])}</h1>
     {subtitle_html}
@@ -1577,7 +1630,10 @@ def copy_article_media(articles: list[dict]):
         if not a['media']:
             continue
         src_media = Path(a['source_dir']) / 'media'
-        dst_media = DIST_DIR / 'articles' / a['year'] / a['month'] / a['slug'] / 'media'
+        if a.get('draft'):
+            dst_media = DIST_DIR / 'articles' / 'drafts' / a['draft_token'] / 'media'
+        else:
+            dst_media = DIST_DIR / 'articles' / a['year'] / a['month'] / a['slug'] / 'media'
         if dst_media.exists():
             continue
         dst_media.mkdir(parents=True, exist_ok=True)
@@ -1595,14 +1651,16 @@ def build():
     print(f'  Found {len(posts)} original/article posts')
 
     print('Parsing articles...')
-    articles = parse_all_articles()
-    print(f'  Found {len(articles)} articles')
+    all_articles = parse_all_articles()
+    articles = [a for a in all_articles if not a.get('draft')]
+    draft_articles = [a for a in all_articles if a.get('draft')]
+    print(f'  Found {len(articles)} articles ({len(draft_articles)} drafts)')
 
     # Assign topics to each post and article
     topics = SITE.get('topics', [])
     for post in posts:
         post['topics'] = assign_post_topics(post, topics)
-    for article in articles:
+    for article in all_articles:
         article['topics'] = assign_post_topics(article, topics)
 
     # Clean dist
@@ -1648,21 +1706,34 @@ def build():
             (topic_dir / 'index.html').write_text(generate_topic_page(topic, posts), encoding='utf-8')
 
     # Generate articles section
-    if articles:
-        print(f'Generating articles section ({len(articles)} articles)...')
+    if articles or draft_articles:
         articles_dir = DIST_DIR / 'articles'
-        articles_dir.mkdir(parents=True)
-        (articles_dir / 'index.html').write_text(
-            generate_articles_archive(articles, topics), encoding='utf-8')
+        articles_dir.mkdir(parents=True, exist_ok=True)
 
-        for article in articles:
-            article_dir = articles_dir / article['year'] / article['month'] / article['slug']
-            article_dir.mkdir(parents=True, exist_ok=True)
-            html = generate_article_page(article, topics)
-            (article_dir / 'index.html').write_text(html, encoding='utf-8')
+        if articles:
+            print(f'Generating articles section ({len(articles)} articles)...')
+            (articles_dir / 'index.html').write_text(
+                generate_articles_archive(articles, topics), encoding='utf-8')
+
+            for article in articles:
+                article_dir = articles_dir / article['year'] / article['month'] / article['slug']
+                article_dir.mkdir(parents=True, exist_ok=True)
+                html = generate_article_page(article, topics)
+                (article_dir / 'index.html').write_text(html, encoding='utf-8')
+
+        if draft_articles:
+            print(f'Generating draft articles ({len(draft_articles)} drafts, unlisted)...')
+            drafts_root = articles_dir / 'drafts'
+            drafts_root.mkdir(parents=True, exist_ok=True)
+            for article in draft_articles:
+                draft_dir = drafts_root / article['draft_token']
+                draft_dir.mkdir(parents=True, exist_ok=True)
+                html = generate_article_page(article, topics)
+                (draft_dir / 'index.html').write_text(html, encoding='utf-8')
+                print(f'  Draft: /articles/drafts/{article["draft_token"]}/  ({article["slug"]})')
 
         print('Copying article media...')
-        copy_article_media(articles)
+        copy_article_media(articles + draft_articles)
 
     # Generate posts archive
     print('Generating posts archive...')
@@ -1696,8 +1767,8 @@ def build():
     print('Generating sitemap...')
     (DIST_DIR / 'sitemap.xml').write_text(generate_sitemap(posts, articles), encoding='utf-8')
 
-    # Generate robots.txt
-    robots = 'User-agent: *\nAllow: /\n'
+    # Generate robots.txt — disallow drafts tree (noindex meta also set per-page)
+    robots = 'User-agent: *\nAllow: /\nDisallow: /articles/drafts/\n'
     if SITE_URL:
         robots += f'Sitemap: {SITE_URL}/sitemap.xml\n'
     (DIST_DIR / 'robots.txt').write_text(robots, encoding='utf-8')

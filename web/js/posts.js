@@ -401,16 +401,41 @@
     }
   }, { passive: true });
 
+  // --- Code block copy buttons ---
+  function initCodeCopy() {
+    document.querySelectorAll('.post-content pre, .article-content pre').forEach(pre => {
+      if (pre.parentElement.classList.contains('code-block-wrapper')) return;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const btn = document.createElement('button');
+      btn.className = 'code-copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        const code = pre.querySelector('code') || pre;
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        });
+      });
+      wrapper.appendChild(btn);
+    });
+  }
+
   // --- Init ---
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initReveal();
+      initCodeCopy();
       updateNav();
       updateScrollTop();
       updateProgress();
     });
   } else {
     initReveal();
+    initCodeCopy();
     updateNav();
     updateScrollTop();
     updateProgress();

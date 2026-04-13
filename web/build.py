@@ -381,7 +381,8 @@ GOOGLE_FONTS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
     '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&'
-    'family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">'
+    'family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&'
+    'family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">'
 )
 
 
@@ -758,7 +759,6 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 def _hero_links_html() -> str:
     """Build social links for the hero section."""
     links = []
-    links.append('<a href="about/">About</a>')
     if LINKEDIN:
         links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
     if GITHUB:
@@ -766,7 +766,16 @@ def _hero_links_html() -> str:
     if TWITTER:
         links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
     sep = '<span class="sep">·</span>'
-    return f'<div class="hero-links">{sep.join(links)}</div>'
+    social = sep.join(links)
+    return (
+        f'<div class="hero-links">{social}'
+        f'<span class="sep">·</span>'
+        f'Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
+        f'<span class="sep">·</span>'
+        f'Previously at: <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
+        f' and <a href="https://www.valispace.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--valispace">Valispace</a>'
+        f'</div>'
+    )
 
 
 def assign_post_topics(post: dict, topics: list[dict]) -> list[dict]:
@@ -778,12 +787,25 @@ def assign_post_topics(post: dict, topics: list[dict]) -> list[dict]:
     ]
 
 
+def _now_badges(content: str) -> str:
+    """Extract h2 section titles from now.md and render as status badges."""
+    headings = re.findall(r'^## (.+)$', content, re.MULTILINE)
+    if not headings:
+        return ''
+    badges = ''.join(
+        f'<span class="now-badge"><span class="now-badge-value">{escape(h)}</span></span>'
+        for h in headings
+    )
+    return f'<div class="now-badges">{badges}</div>'
+
+
 def generate_now() -> str:
     """Generate the /now page from now.md."""
     if NOW_FILE.exists():
         _, content = parse_frontmatter(NOW_FILE.read_text(encoding='utf-8'))
         md_renderer.reset()
         body_html = style_bridge_in(autolink_urls(md_renderer.convert(content)))
+        badges_html = _now_badges(content)
         last_mod = ''
         # Extract "last updated" line if present
         m = re.search(r'_[Ll]ast updated[^_]*_', content)
@@ -791,6 +813,7 @@ def generate_now() -> str:
             last_mod = f'<p class="post-stats">{escape(m.group(0).strip("_"))}</p>'
     else:
         body_html = '<p class="muted">Add a <code>now.md</code> file in the project root to populate this page.</p>'
+        badges_html = ''
         last_mod = ''
 
     return f'''{head_html("Now", depth=1, description=f"What {SITE_NAME} is doing now.")}
@@ -802,6 +825,7 @@ def generate_now() -> str:
   <div class="about-header">
     <h1>Now</h1>
     {last_mod}
+    {badges_html}
   </div>
   <div class="post-content now-content">
     {body_html}
@@ -996,7 +1020,6 @@ def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> 
 
 <div class="page-container article-page">
   <div class="post-header">
-    {topics_html}
     <h1 class="article-title">{escape(article['title'])}</h1>
     {subtitle_html}
     <div class="post-meta">
@@ -1013,6 +1036,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: int = 4) -> 
   </div>
 
   <div class="post-footer">
+    {topics_html}
     <div class="post-actions">
       {medium_link}
       <button class="copy-link-btn" aria-label="Copy link">
@@ -1053,11 +1077,6 @@ def _articles_home_section(articles: list[dict]) -> str:
 
 def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
     """Generate the home page HTML."""
-    hero_subline = ''
-    if SITE['hero_subline']:
-        # hero_subline from site.yaml may already contain styled BRIDGE IN markup
-        hero_subline = f'<p class="hero-subline">{SITE["hero_subline"]}</p>'
-
     thesis_block = ''
     if SITE.get('thesis'):
         thesis_block = f'<div class="thesis-block reveal"><p>{escape(SITE["thesis"])}</p></div>'
@@ -1100,7 +1119,6 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
 <div class="page-container">
   <section class="hero">
     <h1>{escape(SITE['hero_title'])}</h1>
-    {hero_subline}
     {_hero_links_html()}
   </section>
 
@@ -1473,7 +1491,6 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
 
 <div class="page-container">
   <div class="post-header">
-    {topics_html}
     <div class="post-meta">
       <span class="post-date">{post['date']}</span>
       <span class="post-reading-time">{read_time}</span>
@@ -1486,6 +1503,7 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
   </div>
 
   <div class="post-footer">
+    {topics_html}
     <div class="post-actions">
       {original_link}
       <button class="copy-link-btn" aria-label="Copy link">

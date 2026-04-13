@@ -3,8 +3,8 @@ title: "Every Company Is Three Things. AI Just Made That Obvious."
 subtitle: "Expert knowledge, tribal knowledge, and the software that stitches them together. Document the first two and you can rebuild how you work from scratch."
 date: 2026-04-12
 tags: [ai-adoption, knowledge-management, organizational-design, leadership]
-medium_url:
-hero_image: media/3_layers_building.jpg
+medium_url: https://medium.com/p/f3fd570d3a05
+hero_image: media/3_layers_building_trans.jpg
 reading_time: 8
 ---
 

@@ -1045,8 +1045,8 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
     if is_draft:
         draft_banner = (
             '<div class="draft-banner" style="background:#2a1a1a;border:1px solid #cc0000;'
-            'color:#ffb3b3;padding:12px 16px;margin-bottom:24px;font-family:JetBrains Mono,monospace;'
-            'font-size:13px;border-radius:2px;">'
+            'color:#ffb3b3;padding:12px 16px;margin-top:80px;margin-bottom:24px;'
+            'font-family:JetBrains Mono,monospace;font-size:13px;border-radius:2px;">'
             'DRAFT — unlisted review link. Do not share publicly.'
             '</div>'
         )
@@ -1072,7 +1072,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
 
 <div class="page-container article-page">
   {draft_banner}
-  <div class="post-header">
+  <div class="post-header"{ ' style="padding-top:0"' if is_draft else ''}>
     <h1 class="article-title">{escape(article['title'])}</h1>
     {subtitle_html}
     <div class="post-meta">

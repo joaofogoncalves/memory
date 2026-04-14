@@ -53,11 +53,14 @@ linkedin-post-archiver/  # Project root
 │   ├── resolve_links.py              # Resolve lnkd.in shortened URLs
 │   ├── deploy.sh                     # Deploy to Opalstack via rsync
 │   ├── css/
-│   │   └── style.css                 # Brutalist dark theme styles
+│   │   ├── style.css                 # Brutalist dark theme styles
+│   │   └── critical.css              # Inlined above-the-fold CSS
 │   ├── js/
-│   │   └── posts.js                  # Client-side search/filter
+│   │   ├── posts.js                  # Client-side search/filter (posts page)
+│   │   └── home.js                   # Homepage: particle canvas, spotlight, tabs
 │   ├── img/
-│   │   └── headshot.jpg              # Author photo for About page
+│   │   ├── headshot.jpg              # Author photo for About page
+│   │   └── logo.webp                 # Site logo for nav bar
 │   └── dist/                         # Generated site output (git-ignored)
 │
 ├── config/
@@ -167,19 +170,29 @@ linkedin-post-archiver/  # Project root
 - Site identity (name, bio, social links) loaded from `config/site.yaml`
 - About page rendered from `cv.md` (markdown → HTML), with placeholder if missing
 - Brutalist dark theme ("senior engineer's personal site")
-- Pages: Home, About, Posts (searchable), /topics index, /topics/{slug}, /now
+- **Layout**: `--max-page: 1280px` (page container), `--max-content: 720px` (readable text width for posts/articles, centered)
+- Pages: Home, About, Posts (searchable), Articles, /topics index, /topics/{slug}, /now
 - Only shows `post_type: original` or `article` (filters out reposts)
 - Client-side search and tag filtering via `web/js/posts.js`
+- Homepage interactivity via `web/js/home.js` (particle canvas, spotlight rotation, tabs)
+- Critical CSS (`web/css/critical.css`) inlined in `<head>` for fast above-the-fold rendering
 - Output to `web/dist/` (git-ignored)
 - Also generates: `feed.xml` (RSS 2.0), `sitemap.xml`, `robots.txt`
 - JSON-LD structured data on every post page (Article schema) and About page (Person schema)
 - RSS autodiscovery `<link>` in every page `<head>`
 
-### 8. Thought Leadership Features
-- **Thesis block**: optional POV statement on home page (`thesis` in site.yaml)
+### 8. Homepage Design
+- **Hero section**: Compact hero (not full-viewport) with animated particle network canvas background (`web/js/home.js`). Teal-colored nodes drift, form connections, and react to mouse movement. Name with glitch animation + blinking cursor, thesis statement with teal left border, social links.
+- **Transparent nav**: On the homepage, the nav bar starts fully transparent so particles flow behind it, then gains a frosted-glass background on scroll (`.nav--transparent` class).
+- **Featured Spotlight ("Start Here")**: Auto-rotating display of featured posts — one at a time with text on left and image on right. Crossfades every 12s with dot indicators. Pauses on hover for accessibility.
+- **Tabbed Content ("Latest / Top")**: Two-tab content section. "Latest" shows 8 most recent posts/articles by date. "Top" shows 8 highest-engagement posts by `reactions + comments×3` score. Uses 2-column card grid (`tab-grid`).
+- **Topics section**: Topic cards with post counts (if topics configured in `site.yaml`)
+- **Newsletter CTA**: Centered section with teal glow button (if `newsletter_url` configured)
+
+### 9. Thought Leadership Features
 - **Featured posts ("Start Here")**: configured slugs or auto-computed from engagement
   - Auto-computation: `reactions + comments×3` score, top 3 from last 90 days
-  - Auto-updates `featured_posts` in `site.yaml` after each scrape via `_refresh_featured_posts()`
+  - Auto-updates `featured_posts` in `site.yaml` after each scrape
 - **Topics**: tag-to-theme mapping generates `/topics/` index and `/topics/{slug}/` pages
   - Topic badges shown on individual post pages
   - Topics nav link appears automatically when `topics:` is configured in `site.yaml`
@@ -224,8 +237,24 @@ linkedin-post-archiver/  # Project root
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`
 - The `/article` skill handles drafting; `/write` handles the LinkedIn promotion post (decoupled)
-- Articles appear on: home page (Latest Articles section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
+- Articles appear on: home page (tabbed Latest section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
 - **Why separate from posts:** articles are authored content, not archived LinkedIn posts. Different workflow, different frontmatter, different content type.
+
+### 14. Image Specs
+All images display on the site at **720px content width** (2x retina = 1440px source). Thumbnails are cropped via `object-fit: cover` at various aspect ratios. **Keep subjects centered with breathing room** for safe cropping.
+
+| Context | Display Size | Crop |
+|---------|-------------|------|
+| Homepage card thumb (tab grid) | 140 × 100px | cover |
+| Homepage spotlight | full-width, max-h 220px | cover, 16:10 |
+| Posts page list card | 300 × 175px | cover |
+| Article archive card | full-width × 220px | cover |
+| Article/post hero (inline) | 720px × auto | no crop |
+
+**Standard source sizes** (used by `/write` and `/article` skills):
+- **Hero/illustration**: 1440×900px (16:10) · PNG or JPG — works everywhere
+- **Square diagram**: 1200×1200px (1:1) · PNG — sharp text
+- **Screenshots**: native resolution, crop to content · PNG
 
 ---
 
@@ -460,7 +489,7 @@ topics:
     tags: [tag1, tag2, tag3]
 ```
 
-**Do not remove `about_teaser` from old configs** — it's still loaded but no longer rendered on the home page (thesis replaced it). The About page link now appears in the hero social links row.
+**Note:** `about_teaser` in old site.yaml configs is ignored — the homepage now uses `thesis` (rendered in the hero section). The About page link appears in the hero social links row.
 
 ### now.md (git-ignored)
 
@@ -946,9 +975,12 @@ bash web/deploy.sh
 - `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
 - `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, medium_url, reading_time)
 - Nav links for Articles, Topics, and Now appear automatically when content exists; no dead links
-- Articles section: `/articles/` archive with hero image cards, `/articles/YYYY/MM/slug/` individual pages with wider content area
-- Home page shows "Articles" section (latest 3) between "Start Here" and "Recent Posts"
+- **Homepage helpers**: `_featured_spotlight_html()` (auto-rotating spotlight), `_tabbed_content_html()` (Latest/Top tabs with card grid), `_topics_home_html()` (topic cards), `_newsletter_section_html()` (CTA section), `_render_mixed_card()` (handles both posts and articles in grids)
+- **Posts page**: Single continuous list of spotlight-style row cards (`_render_list_card()` + `.list-card` CSS). Full-width rows with text left, thumbnail right (300×175). JS renders same format dynamically via `posts.js`.
+- Articles section: `/articles/` archive with hero image cards, `/articles/YYYY/MM/slug/` individual pages
+- Post/article content: 720px (`--max-content`) centered with `margin: 0 auto` within the 1280px page container
 - About page gracefully handles missing `cv.md` with placeholder
+- `nav_html()` accepts `transparent=True` for homepage (particles visible behind nav)
 - Outputs to `web/dist/`
 
 ### web/resolve_links.py
@@ -994,5 +1026,5 @@ bash web/deploy.sh
 
 ---
 
-_Last updated: 2026-03-31_
+_Last updated: 2026-04-14_
 _Project version: 2.0.0_

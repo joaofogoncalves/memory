@@ -7,7 +7,6 @@
   'use strict';
 
   const POSTS_PER_PAGE = 20;
-  const FEATURED_COUNT = 10;
 
   let allPosts = [];
   let filteredPosts = [];
@@ -17,7 +16,6 @@
   let searchQuery = '';
 
   // --- DOM refs ---
-  const recentSection = document.getElementById('recent-section');
   const archiveSection = document.getElementById('archive-section');
   const archiveList = document.getElementById('archive-list');
   const searchInput = document.getElementById('search-input');
@@ -148,8 +146,6 @@
   function render() {
     const filtering = isFiltering();
 
-    // Toggle sections
-    if (recentSection) recentSection.style.display = filtering ? 'none' : '';
     if (archiveSection) archiveSection.style.display = '';
 
     // Filter status
@@ -184,20 +180,13 @@
 
     const postsToShow = filteredPosts.slice(0, currentPage * POSTS_PER_PAGE);
     let html = '';
-    let currentYear = '';
-
     postsToShow.forEach(p => {
-      const year = p.date.slice(0, 4);
-      if (year !== currentYear) {
-        currentYear = year;
-        html += '<div class="archive-year-header">' + year + '</div>';
-      }
-      html += renderArchiveRow(p);
+      html += renderListCard(p);
     });
 
     archiveList.innerHTML = html;
 
-    // Observe new rows for scroll reveal
+    // Observe new elements for scroll reveal
     observeNewElements(archiveList);
 
     // Load more button
@@ -210,20 +199,27 @@
     }
   }
 
-  function renderArchiveRow(post) {
+  function renderListCard(post) {
     const tags = (post.tags || [])
-      .slice(0, 3)
       .map(t => '<span class="tag">' + escapeHtml(t) + '</span>')
       .join('');
 
-    const readTime = post.reading_time ? '<span class="archive-reading-time">' + post.reading_time + '</span>' : '';
+    var thumb = '';
+    if (post.media) {
+      var thumbSrc = '../posts/' + post.year + '/' + post.month + '/' + post.slug + '/media/' + post.media;
+      thumb = '<div class="list-card-image"><img src="' + thumbSrc + '" alt="" loading="lazy"></div>';
+    }
 
-    return '<div class="archive-row reveal">' +
-      '<span class="archive-date">' + post.date + '</span>' +
-      readTime +
-      '<span class="archive-title"><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></span>' +
-      '<span class="archive-tags">' + tags + '</span>' +
-      '</div>';
+    return '<a href="' + post.url + '" class="list-card">' +
+      '<div class="list-card-body">' +
+      '<div class="card-meta"><span class="card-date">' + post.date + '</span>' +
+      '<span class="card-reading-time">' + (post.reading_time || '') + '</span></div>' +
+      '<div class="list-card-title">' + escapeHtml(post.title) + '</div>' +
+      '<div class="list-card-preview">' + escapeHtml(post.preview) + '</div>' +
+      '<div class="card-tags">' + tags + '</div>' +
+      '</div>' +
+      thumb +
+      '</a>';
   }
 
   function escapeHtml(str) {
@@ -323,7 +319,7 @@
     // Add .reveal class to cards, featured cards, timeline nodes, etc.
     const selectors = [
       '.card',
-      '.card-featured',
+      '.list-card',
       '.about-teaser',
       '.section',
       '.timeline-node',

@@ -113,6 +113,7 @@ def _asset_hash(path: Path, length: int = 8) -> str:
 # Compute once at build time so every page gets the same version strings
 _CSS_VER = _asset_hash(CSS_SRC / 'style.css')
 _JS_VER = _asset_hash(JS_SRC / 'posts.js')
+_HOME_JS_VER = _asset_hash(JS_SRC / 'home.js')
 
 # Read critical CSS for inlining (above-the-fold styles)
 _CRITICAL_CSS_PATH = CSS_SRC / 'critical.css'
@@ -536,7 +537,7 @@ def _has_public_articles() -> bool:
     return False
 
 
-def nav_html(active: str = '', depth: int = 0) -> str:
+def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str:
     prefix = '../' * depth
     cls = lambda name: ' active' if active == name else ''
     articles_link = (
@@ -551,7 +552,8 @@ def nav_html(active: str = '', depth: int = 0) -> str:
         f'<a href="{prefix}now/"{cls("now")}>Now</a>'
         if NOW_FILE.exists() else ''
     )
-    return f'''<nav class="nav">
+    nav_cls = 'nav nav--transparent' if transparent else 'nav'
+    return f'''<nav class="{nav_cls}">
   <div class="nav-inner">
     <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
@@ -1172,68 +1174,226 @@ def _articles_home_section(articles: list[dict]) -> str:
   </section>'''
 
 
+def _featured_spotlight_html(featured_posts: list[dict]) -> str:
+    """Render the featured spotlight section with auto-rotating slides."""
+    if not featured_posts:
+        return ''
+    # Limit to 5 to keep dots manageable
+    items = featured_posts[:5]
+
+    slides_html = ''
+    for i, p in enumerate(items):
+        url = p['url'].lstrip('/')
+        if not url.endswith('/'):
+            url += '/'
+        tags_html = render_tags_html(p['tags'])
+        active = ' active' if i == 0 else ''
+
+        image_html = ''
+        text_only = ' spotlight-slide--text-only'
+        if p.get('media'):
+            thumb_fname = _webp_name(p['media'][0])
+            img_src = f"posts/{p['year']}/{p['month']}/{p['slug']}/media/{thumb_fname}"
+            image_html = f'<div class="spotlight-image"><img src="{img_src}" alt="" loading="lazy"></div>'
+            text_only = ''
+
+        slides_html += f'''<div class="spotlight-slide{active}{text_only}" data-index="{i}">
+      <div class="spotlight-content">
+        <div class="spotlight-meta">
+          <span class="card-date">{p['date']}</span>
+          <span class="card-reading-time">{p['reading_time']}</span>
+        </div>
+        <h2 class="spotlight-title"><a href="{url}">{escape(p['title'])}</a></h2>
+        <p class="spotlight-preview">{escape(p['preview'])}</p>
+        <div class="card-tags">{tags_html}</div>
+      </div>
+      {image_html}
+    </div>\n'''
+
+    dots_html = ''
+    if len(items) > 1:
+        dots = ''.join(
+            f'<button class="spotlight-dot{" active" if i == 0 else ""}" data-index="{i}" aria-label="Slide {i+1}"></button>'
+            for i in range(len(items))
+        )
+        dots_html = f'<div class="spotlight-dots">{dots}</div>'
+
+    return f'''<section class="section" aria-label="Featured writing">
+    <div class="section-title">Start Here</div>
+    <div class="spotlight-viewport">
+      <div class="spotlight-slides">
+        {slides_html}
+      </div>
+      {dots_html}
+    </div>
+  </section>'''
+
+
+def _tabbed_content_html(posts: list[dict], articles: list[dict]) -> str:
+    """Render a tabbed Latest / Top content section with card grids."""
+    if not posts and not articles:
+        return ''
+
+    def _render_mixed_card(item: dict) -> str:
+        """Render a post or article as a card, handling different image paths."""
+        if not item.get('_is_article'):
+            return render_card(item, depth=0)
+        # Article card: build thumb from hero_image with article path
+        url = item['url'].lstrip('/')
+        if not url.endswith('/'):
+            url += '/'
+        tags_html = render_tags_html(item['tags'])
+        thumb = ''
+        if item.get('hero_image'):
+            hero_fname = _webp_name(item['hero_image'])
+            thumb_src = f"articles/{item['year']}/{item['month']}/{item['slug']}/{hero_fname}"
+            thumb = f'<img class="card-thumb" src="{thumb_src}" alt="" loading="lazy">'
+        card_cls = 'card card-with-thumb' if thumb else 'card'
+        return f'''<div class="{card_cls}">
+  <div class="card-body">
+    <div class="card-meta"><span class="card-date">{item['date']}</span><span class="card-reading-time">{item['reading_time']}</span></div>
+    <div class="card-title"><a href="{url}">{escape(item['title'])}</a></div>
+    <div class="card-preview">{escape(item['preview'])}</div>
+    <div class="card-tags">{tags_html}</div>
+  </div>
+  {thumb}
+</div>'''
+
+    def _render_grid_cards(items: list[dict], limit: int = 8) -> str:
+        """Render a list of post/article dicts as card HTML."""
+        cards = '\n'.join(_render_mixed_card(p) for p in items[:limit])
+        return cards
+
+    # Latest: merge posts + articles, sort by date
+    merged = []
+    for p in posts:
+        merged.append({**p, '_sort_date': p['date']})
+    for a in articles:
+        merged.append({
+            **a,
+            '_sort_date': a['date'],
+            '_is_article': True,
+        })
+    merged.sort(key=lambda x: x['_sort_date'], reverse=True)
+    latest_items = merged[:8]
+
+    # Top: sort posts by engagement score (reactions + comments * 3)
+    scored = sorted(
+        posts,
+        key=lambda p: p.get('reactions', 0) + p.get('comments', 0) * 3,
+        reverse=True,
+    )
+    top_items = scored[:8]
+
+    latest_cards = _render_grid_cards(latest_items)
+    top_cards = _render_grid_cards(top_items)
+
+    return f'''<section class="section" aria-label="Writing">
+    <div class="content-tabs">
+      <button class="content-tab active" data-tab="latest">Latest</button>
+      <button class="content-tab" data-tab="top">Top</button>
+    </div>
+    <div class="tab-panel active" id="tab-latest">
+      <div class="tab-grid">
+        {latest_cards}
+      </div>
+    </div>
+    <div class="tab-panel" id="tab-top">
+      <div class="tab-grid">
+        {top_cards}
+      </div>
+    </div>
+    <a href="posts/" class="view-all" style="margin-top:calc(var(--spacing-unit)*0.75);display:inline-block">All writing &rarr;</a>
+  </section>'''
+
+
+def _topics_home_html(posts: list[dict], topics: list[dict]) -> str:
+    """Render topic cards on the home page (if configured)."""
+    if not topics:
+        return ''
+    cards_html = ''
+    for topic in topics:
+        topic_posts = [p for p in posts if any(t['slug'] == topic['slug'] for t in p.get('topics', []))]
+        count = len(topic_posts)
+        if count == 0:
+            continue
+        url = f'topics/{topic["slug"]}/'
+        desc = escape(topic.get('description', ''))
+        cards_html += f'''<a href="{url}" class="topic-card reveal">
+      <div class="topic-card-name">{escape(topic["name"])}</div>
+      <div class="topic-card-desc">{desc}</div>
+      <div class="topic-card-count">{count} posts</div>
+    </a>\n'''
+
+    if not cards_html:
+        return ''
+
+    return f'''<section class="section" aria-label="Topics">
+    <div class="section-title">Topics</div>
+    <div class="topics-grid">
+      {cards_html}
+    </div>
+  </section>'''
+
+
+def _newsletter_section_html() -> str:
+    """Render a full-width newsletter CTA section for the home page."""
+    url = SITE.get('newsletter_url', '')
+    if not url:
+        return ''
+    return f'''<section class="newsletter-section section">
+    <div class="newsletter-section-inner">
+      <p class="newsletter-section-heading">Stay in the loop</p>
+      <p class="newsletter-section-text">Writing about engineering leadership, AI, and the craft of building software.</p>
+      <a href="{url}" target="_blank" rel="noopener" class="newsletter-section-btn">Subscribe &rarr;</a>
+    </div>
+  </section>'''
+
+
 def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
     """Generate the home page HTML."""
-    thesis_block = ''
-    if SITE.get('thesis'):
-        thesis_block = f'<div class="thesis-block reveal"><p>{escape(SITE["thesis"])}</p></div>'
-
-    # Build "Start Here" section: use configured slugs, or auto-compute from engagement
+    # Build featured posts list
     featured_slugs = SITE.get('featured_posts', [])
     slug_to_post = {p['slug']: p for p in posts}
     if not featured_slugs:
         featured_slugs = compute_featured_posts(posts)
     featured_posts_list = [slug_to_post[s] for s in featured_slugs if s in slug_to_post]
 
-    start_here_section = ''
-    if featured_posts_list:
-        featured_cards = '\n'.join(render_card(p, depth=0) for p in featured_posts_list)
-        start_here_section = f'''<section class="section">
-    <div class="section-title">Start Here</div>
-    <div class="cards-grid">
-      {featured_cards}
-    </div>
-  </section>'''
+    # Thesis text for the hero
+    thesis_html = ''
+    thesis_text = SITE.get('thesis', '')
+    if thesis_text:
+        # Allow natural line break after first sentence for readability
+        thesis_escaped = escape(thesis_text)
+        thesis_escaped = thesis_escaped.replace('when you do.', 'when you do.<br>', 1)
+        thesis_html = f'<p class="hero-thesis">{thesis_escaped}</p>'
 
-    # Post statistics
-    if posts:
-        earliest_year = posts[-1]['date'][:4]
-        total_posts = len(posts)
-        post_stats = f'<p class="post-stats">{earliest_year} – present &middot; {total_posts} posts</p>'
-    else:
-        post_stats = ''
+    all_articles = articles or []
 
-    recent = posts[:6]
-    cards = '\n'.join(render_card(p, depth=0) for p in recent)
+    home_script = f'<script src="js/home.js?v={_HOME_JS_VER}" defer></script>'
 
-    newsletter = newsletter_cta_html()
-
-    return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION)}
+    return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION, extra_head=home_script)}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
-{nav_html(depth=0)}
+{nav_html(depth=0, transparent=True)}
+
+<div class="hero-fullscreen">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-fullscreen-content page-container">
+    <h1>{escape(SITE['hero_title'])}</h1>
+    {thesis_html}
+    {_hero_links_html()}
+  </div>
+</div>
 
 <div class="page-container">
-  <section class="hero">
-    <h1>{escape(SITE['hero_title'])}</h1>
-    {_hero_links_html()}
-  </section>
+  {_featured_spotlight_html(featured_posts_list)}
 
-  {thesis_block}
+  {_tabbed_content_html(posts, all_articles)}
 
-  {start_here_section}
+  {_topics_home_html(posts, SITE.get('topics', []))}
 
-  {''.join(_articles_home_section(articles or []))}
-
-  <section class="section">
-    <div class="section-title">Recent Posts</div>
-    {post_stats}
-    <div class="cards-grid">
-      {cards}
-    </div>
-    <a href="posts/" class="view-all">All posts &rarr;</a>
-    {newsletter}
-  </section>
+  {_newsletter_section_html()}
 </div>
 
 {footer_html()}
@@ -1466,26 +1626,37 @@ def generate_about() -> str:
 </html>'''
 
 
+def _render_list_card(post: dict, depth: int = 0) -> str:
+    """Render a post as a full-width list row (spotlight-style)."""
+    prefix = '../' * depth
+    url = prefix + post['url'].lstrip('/')
+    if not url.endswith('/'):
+        url += '/'
+    tags_html = render_tags_html(post['tags'])
+
+    thumb = ''
+    if post.get('media'):
+        thumb_fname = _webp_name(post['media'][0])
+        thumb_src = prefix + f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{thumb_fname}"
+        thumb = f'<div class="list-card-image"><img src="{thumb_src}" alt="" loading="lazy"></div>'
+
+    return f'''<a href="{url}" class="list-card">
+  <div class="list-card-body">
+    <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
+    <div class="list-card-title">{escape(post['title'])}</div>
+    <div class="list-card-preview">{escape(post['preview'])}</div>
+    <div class="card-tags">{tags_html}</div>
+  </div>
+  {thumb}
+</a>'''
+
+
 def generate_posts_archive(posts: list[dict]) -> str:
     """Generate the posts archive page with JS-powered filtering."""
     total = len(posts)
-    featured = posts[:6]
-    featured_html = '\n'.join(render_featured_card(p, depth=1) for p in featured)
 
-    # Server-render the first page of the archive for no-JS fallback
-    archive_html = ''
-    current_year = ''
-    for p in posts[:20]:
-        if p['year'] != current_year:
-            current_year = p['year']
-            archive_html += f'<div class="archive-year-header">{current_year}</div>\n'
-        tags = render_tags_html(p['tags'], limit=3)
-        url = f"{p['year']}/{p['month']}/{p['slug']}/"
-        archive_html += f'''<div class="archive-row">
-  <span class="archive-date">{p['date']}</span>
-  <span class="archive-title"><a href="{url}">{escape(p['title'])}</a></span>
-  <span class="archive-tags">{tags}</span>
-</div>\n'''
+    # Server-render the first page for no-JS fallback
+    fallback_cards = '\n'.join(_render_list_card(p, depth=1) for p in posts[:20])
 
     return f'''{head_html("Posts", depth=1)}
 <body>
@@ -1506,18 +1677,9 @@ def generate_posts_archive(posts: list[dict]) -> str:
     <div class="filter-status" id="filter-status"></div>
   </div>
 
-  <section id="recent-section">
-    <div class="section-title">Recent</div>
-    <div class="featured-grid">
-      {featured_html}
-    </div>
-    <div style="height:calc(var(--spacing-unit)*2)"></div>
-  </section>
-
   <section id="archive-section">
-    <div class="section-title"></div>
-    <div class="archive-list" id="archive-list">
-      {archive_html}
+    <div class="posts-list" id="archive-list">
+      {fallback_cards}
     </div>
     <div class="empty-state" id="empty-state">No posts match that filter.</div>
     <div class="load-more-container" id="load-more-container">
@@ -1645,8 +1807,11 @@ def generate_posts_json(posts: list[dict]) -> str:
             'reading_time': p['reading_time'],
             'tags': p['tags'],
             'url': p['url'],
+            'slug': p['slug'],
+            'year': p['year'],
+            'month': p['month'],
             'type': p['post_type'],
-            'media': bool(p['media']),
+            'media': _webp_name(p['media'][0]) if p['media'] else '',
         })
     return json.dumps(entries, ensure_ascii=False, indent=None)
 

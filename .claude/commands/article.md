@@ -116,19 +116,29 @@ Make a judgement call. Most articles benefit from at least a hero image.
 
 Generate prompts following the visual taste profile from `taste.md`.
 
+### Website image specs
+
+All article images display on the site at **720px content width** (2x retina = 1440px). Thumbnails are cropped via `object-fit: cover` at various ratios (16:10 spotlight, full-width × 220px archive cards). To work everywhere, **keep subjects centered with breathing room for cropping**.
+
+| Image type | Dimensions | Ratio | Format | Usage |
+|-----------|-----------|-------|--------|-------|
+| Hero image | **1440×900px** | 16:10 | PNG or JPG | Article page hero, archive card thumbnail, homepage spotlight |
+| Section diagram | **1440×900px** | 16:10 | PNG | Inline content image, sharp text |
+| Square diagram | **1200×1200px** | 1:1 | PNG | When content demands square (flowcharts, comparisons) |
+
 ### Hero image prompt
 - Should capture the article's core tension or theme
-- Dimensions: 1500x750px (works for both Medium and site)
+- Dimensions: **1440×900px (16:10)** — 2x retina for 720px display, crops cleanly for all thumbnail contexts
 - Style: follow taste.md patterns (dark palette, conceptual, non-generic)
 
 ### Section image prompts (1-2, if needed)
 - Diagrams, infographics, or conceptual illustrations
-- Dimensions: 1200x1200px (1:1) for diagrams, 1200x627px for illustrations
+- Dimensions: **1440×900px (16:10)** for illustrations, **1200×1200px (1:1)** for square diagrams
 - Reference the specific section content they accompany
 
 ### Prompt format
 Write each prompt as 2-4 sentences covering:
-- Subject and composition
+- Subject and composition (**keep subject centered** — thumbnails crop edges)
 - Visual style and mood
 - Color palette
 - What text (if any) should appear

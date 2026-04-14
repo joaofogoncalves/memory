@@ -129,10 +129,17 @@ Write each prompt as detailed natural language (for Nano Banana or similar gener
 End each prompt with a **specs line** in this format:
 `Format: [width]x[height]px ([aspect ratio]) · [file type]`
 
-Use these LinkedIn-optimized defaults:
-- **Diagrams/infographics**: 1200x1200px (1:1) · PNG (sharp text, no compression artifacts)
-- **AI illustrations**: 1200x627px (1.91:1) · PNG or JPG (landscape fills the feed well)
-- **Screenshots**: capture at native resolution, crop to content · PNG (lossless)
+### Image dimensions
+
+Posts appear on both LinkedIn and the personal website. Use these defaults:
+
+| Image type | Dimensions | Ratio | Format | Notes |
+|-----------|-----------|-------|--------|-------|
+| **AI illustrations** | **1440×900px** | 16:10 | PNG or JPG | Works on both LinkedIn (landscape) and the website (2x retina at 720px, crops cleanly for all thumbnail contexts: spotlight 16:10, list cards 300×175, card thumbs 140×100) |
+| **Diagrams/infographics** | **1200×1200px** | 1:1 | PNG | Sharp text, no compression artifacts. Square works on LinkedIn and website. |
+| **Screenshots** | native resolution, crop to content | — | PNG | Lossless |
+
+**Important**: Keep the main subject **centered with breathing room** — the website crops images via `object-fit: cover` at different ratios depending on context (homepage spotlight, post list thumbnails, card grids).
 
 Override the defaults when the content demands it (e.g., a tall flowchart might need 1080x1350 portrait).
 

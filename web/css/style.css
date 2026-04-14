@@ -411,7 +411,7 @@ h4 { font-size: 1.1rem; }
 .card-reading-time {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--outline-variant);
+  color: var(--outline);
 }
 
 .card-title {
@@ -561,7 +561,7 @@ h4 { font-size: 1.1rem; }
 .archive-reading-time {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--outline-variant);
+  color: var(--outline);
   flex-shrink: 0;
   width: 70px;
 }

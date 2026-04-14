@@ -23,6 +23,7 @@ from typing import Optional
 import markdown
 import yaml
 from dotenv import load_dotenv
+from PIL import Image
 
 load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
@@ -112,6 +113,19 @@ def _asset_hash(path: Path, length: int = 8) -> str:
 # Compute once at build time so every page gets the same version strings
 _CSS_VER = _asset_hash(CSS_SRC / 'style.css')
 _JS_VER = _asset_hash(JS_SRC / 'posts.js')
+
+# Read critical CSS for inlining (above-the-fold styles)
+_CRITICAL_CSS_PATH = CSS_SRC / 'critical.css'
+_CRITICAL_CSS = _CRITICAL_CSS_PATH.read_text(encoding='utf-8') if _CRITICAL_CSS_PATH.exists() else ''
+
+
+def minify_css(text: str) -> str:
+    """Lightweight CSS minifier — strip comments and collapse whitespace."""
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
+    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r'\s*([{}:;,])\s*', r'\1', text)
+    text = text.replace(';}', '}')
+    return text.strip()
 
 
 def autolink_urls(html: str) -> str:
@@ -402,27 +416,40 @@ def parse_all_articles() -> list[dict]:
 # HTML Templates
 # ============================================================
 
+_GFONTS_URL = (
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&'
+    'family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&'
+    'family=Space+Grotesk:wght@400;500;600&display=swap'
+)
+
 GOOGLE_FONTS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-    '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&'
-    'family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&'
-    'family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">'
+    f'<link rel="stylesheet" href="{_GFONTS_URL}" media="print" onload="this.media=\'all\'">'
+    f'<noscript><link rel="stylesheet" href="{_GFONTS_URL}"></noscript>'
 )
 
 
 def ga_snippet() -> str:
-    """Return Google Analytics gtag.js snippet if GA_MEASUREMENT_ID is set."""
+    """Return deferred Google Analytics snippet (loads after page is interactive)."""
     ga_id = os.environ.get('GA_MEASUREMENT_ID', '').strip()
     if not ga_id:
         return ''
     return (
-        f'<script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>\n'
-        f'  <script>\n'
-        f'    window.dataLayer = window.dataLayer || [];\n'
-        f'    function gtag(){{dataLayer.push(arguments);}}\n'
-        f"    gtag('js', new Date());\n"
-        f"    gtag('config', '{ga_id}');\n"
+        f'<script>\n'
+        f'  window.addEventListener("load", function() {{\n'
+        f'    setTimeout(function() {{\n'
+        f'      var s = document.createElement("script");\n'
+        f'      s.src = "https://www.googletagmanager.com/gtag/js?id={ga_id}";\n'
+        f'      document.head.appendChild(s);\n'
+        f'      s.onload = function() {{\n'
+        f'        window.dataLayer = window.dataLayer || [];\n'
+        f'        function gtag(){{dataLayer.push(arguments);}}\n'
+        f"        gtag('js', new Date());\n"
+        f"        gtag('config', '{ga_id}');\n"
+        f'      }};\n'
+        f'    }}, 100);\n'
+        f'  }});\n'
         f'  </script>'
     )
 
@@ -485,8 +512,10 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   {rss_link}
   {og}
   {ga}
+  <style>{minify_css(_CRITICAL_CSS)}</style>
   {GOOGLE_FONTS}
-  <link rel="stylesheet" href="{prefix}css/style.css?v={_CSS_VER}">
+  <link rel="stylesheet" href="{prefix}css/style.css?v={_CSS_VER}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{prefix}css/style.css?v={_CSS_VER}"></noscript>
   <script src="{prefix}js/posts.js?v={_JS_VER}" defer></script>
   {extra_head}
   {jsonld}
@@ -524,7 +553,7 @@ def nav_html(active: str = '', depth: int = 0) -> str:
     )
     return f'''<nav class="nav">
   <div class="nav-inner">
-    <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.png" alt="JG" class="nav-logo" width="24" height="24"></a>
+    <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
       <a href="{prefix}about/"{cls("about")}>About</a>
       {articles_link}
@@ -533,7 +562,8 @@ def nav_html(active: str = '', depth: int = 0) -> str:
       {now_link}
     </div>
   </div>
-</nav>'''
+</nav>
+<main>'''
 
 
 SVG_LINKEDIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
@@ -552,7 +582,8 @@ def footer_html() -> str:
         social_links += f'<a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>'
     social_links += f'<a href="/feed.xml" aria-label="RSS feed">{SVG_RSS}</a>'
     links_div = f'<div class="footer-links">{social_links}</div>' if social_links else ''
-    return f'''<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+    return f'''</main>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 <footer class="footer">
@@ -755,7 +786,8 @@ def render_card(post: dict, depth: int = 0) -> str:
 
     thumb = ''
     if post.get('media'):
-        thumb_src = prefix + f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{post['media'][0]}"
+        thumb_fname = _webp_name(post['media'][0])
+        thumb_src = prefix + f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{thumb_fname}"
         thumb = f'<img class="card-thumb" src="{thumb_src}" alt="" loading="lazy">'
 
     card_cls = 'card card-with-thumb' if thumb else 'card'
@@ -781,7 +813,8 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 
     image = ''
     if post.get('media'):
-        img_src = prefix + f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{post['media'][0]}"
+        img_fname = _webp_name(post['media'][0])
+        img_src = prefix + f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{img_fname}"
         image = f'<img class="card-image" src="{img_src}" alt="" loading="lazy">'
 
     return f'''<div class="card-featured">
@@ -965,7 +998,8 @@ def render_article_card(article: dict, depth: int = 0) -> str:
 
     hero = ''
     if article.get('hero_image'):
-        hero_src = prefix + f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
+        hero_fname = _webp_name(article['hero_image'])
+        hero_src = prefix + f"articles/{article['year']}/{article['month']}/{article['slug']}/{hero_fname}"
         hero = f'<img class="article-card-hero" src="{hero_src}" alt="" loading="lazy">'
 
     subtitle_html = ''
@@ -1020,7 +1054,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
         depth = 3 if is_draft else 4
 
     md_renderer.reset()
-    body_html = style_bridge_in(autolink_urls(md_renderer.convert(article['content'])))
+    body_html = _rewrite_img_to_webp(style_bridge_in(autolink_urls(md_renderer.convert(article['content']))))
 
     tags_html = render_tags_html(article['tags'])
 
@@ -1038,7 +1072,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
     # Hero image
     hero_html = ''
     if article.get('hero_image'):
-        hero_html = f'<img class="article-hero" src="{article["hero_image"]}" alt="" loading="lazy">'
+        hero_html = f'<img class="article-hero" src="{_webp_name(article["hero_image"])}" alt="" loading="lazy">'
 
     # Medium link
     medium_link = ''
@@ -1503,7 +1537,7 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
     cleaned = clean_content(post['content'])
     md_renderer.reset()
     body_html = md_renderer.convert(cleaned)
-    body_html = autolink_urls(body_html)
+    body_html = _rewrite_img_to_webp(autolink_urls(body_html))
 
     tags_html = render_tags_html(post['tags'])
     read_time = reading_time(cleaned)
@@ -1617,8 +1651,51 @@ def generate_posts_json(posts: list[dict]) -> str:
     return json.dumps(entries, ensure_ascii=False, indent=None)
 
 
+def _webp_name(fname: str) -> str:
+    """Return the WebP filename for a given image, or the original if not convertible."""
+    stem, suffix = os.path.splitext(fname)
+    if suffix.lower() in ('.jpg', '.jpeg', '.png'):
+        return stem + '.webp'
+    return fname
+
+
+def _rewrite_img_to_webp(html: str) -> str:
+    """Rewrite img src references from .jpg/.png to .webp in rendered HTML."""
+    def _replace(m):
+        prefix = m.group(1)
+        stem = m.group(2)
+        return f'{prefix}{stem}.webp"'
+    return re.sub(
+        r'(<img[^>]+src="[^"]*?)([^"/]+)\.(jpg|jpeg|png)"',
+        _replace,
+        html,
+    )
+
+
+def _optimize_image(src: Path, dst_dir: Path) -> None:
+    """Copy image to dst_dir, converting JPG/PNG to WebP when beneficial."""
+    suffix = src.suffix.lower()
+    if suffix in ('.jpg', '.jpeg', '.png'):
+        webp_dst = dst_dir / (src.stem + '.webp')
+        if not webp_dst.exists():
+            try:
+                img = Image.open(src)
+                img.save(webp_dst, 'WEBP', quality=82)
+                # Only keep WebP if it's actually smaller
+                if webp_dst.stat().st_size >= src.stat().st_size:
+                    webp_dst.unlink()
+                    shutil.copy2(src, dst_dir / src.name)
+            except Exception:
+                # Fall back to plain copy on any image error
+                if webp_dst.exists():
+                    webp_dst.unlink()
+                shutil.copy2(src, dst_dir / src.name)
+    else:
+        shutil.copy2(src, dst_dir / src.name)
+
+
 def copy_media(posts: list[dict]):
-    """Copy media directories from source posts into dist."""
+    """Copy media directories from source posts into dist, optimizing images."""
     for p in posts:
         if not p['media']:
             continue
@@ -1629,13 +1706,12 @@ def copy_media(posts: list[dict]):
         dst_media.mkdir(parents=True, exist_ok=True)
         for fname in p['media']:
             src = src_media / fname
-            dst = dst_media / fname
-            if src.exists() and not dst.exists():
-                shutil.copy2(src, dst)
+            if src.exists():
+                _optimize_image(src, dst_media)
 
 
 def copy_article_media(articles: list[dict]):
-    """Copy media directories from source articles into dist."""
+    """Copy media directories from source articles into dist, optimizing images."""
     for a in articles:
         if not a['media']:
             continue
@@ -1649,9 +1725,8 @@ def copy_article_media(articles: list[dict]):
         dst_media.mkdir(parents=True, exist_ok=True)
         for fname in a['media']:
             src = src_media / fname
-            dst = dst_media / fname
-            if src.exists() and not dst.exists():
-                shutil.copy2(src, dst)
+            if src.exists():
+                _optimize_image(src, dst_media)
 
 
 def build():
@@ -1678,9 +1753,11 @@ def build():
         shutil.rmtree(DIST_DIR)
     DIST_DIR.mkdir(parents=True)
 
-    # Copy static assets
+    # Copy static assets (minify CSS)
     print('Copying assets...')
-    shutil.copytree(CSS_SRC, DIST_DIR / 'css')
+    (DIST_DIR / 'css').mkdir(parents=True)
+    css_text = (CSS_SRC / 'style.css').read_text(encoding='utf-8')
+    (DIST_DIR / 'css' / 'style.css').write_text(minify_css(css_text), encoding='utf-8')
     shutil.copytree(JS_SRC, DIST_DIR / 'js')
     if IMG_SRC.exists():
         shutil.copytree(IMG_SRC, DIST_DIR / 'img')
@@ -1782,6 +1859,32 @@ def build():
     if SITE_URL:
         robots += f'Sitemap: {SITE_URL}/sitemap.xml\n'
     (DIST_DIR / 'robots.txt').write_text(robots, encoding='utf-8')
+
+    # Generate .htaccess for cache and compression headers
+    htaccess = '''\
+# Cache static assets aggressively (CSS/JS use ?v= cache busters)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType application/pdf "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType application/json "access plus 1 hour"
+</IfModule>
+
+# Gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json application/xml text/xml image/svg+xml
+</IfModule>
+'''
+    (DIST_DIR / '.htaccess').write_text(htaccess, encoding='utf-8')
 
     print(f'\nBuild complete! Output in {DIST_DIR}')
     print(f'  {len(posts)} post pages')

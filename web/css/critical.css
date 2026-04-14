@@ -1,0 +1,41 @@
+/* Critical above-the-fold CSS — inlined by build.py */
+:root {
+  --bg: #0e131e;
+  --surface: #0e131e;
+  --surface-container-low: #171b27;
+  --surface-container: #1b1f2b;
+  --surface-container-high: #252a36;
+  --primary: #44d8f1;
+  --on-primary: #00363e;
+  --on-surface: #dee2f2;
+  --on-surface-variant: #bbc9cc;
+  --outline: #869396;
+  --outline-variant: #3c494c;
+  --font-heading: 'Newsreader', Georgia, serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --max-content: 720px;
+  --max-page: 1100px;
+  --spacing-unit: 1.75rem;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 17px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--on-surface); line-height: 1.7; min-height: 100vh; }
+a { color: var(--primary); text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; color: var(--on-surface); }
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2rem; }
+.page-container { max-width: var(--max-page); margin: 0 auto; padding: 0 2rem; }
+.content-width { max-width: var(--max-content); }
+.section { padding: calc(var(--spacing-unit) * 1) 0; }
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(14, 19, 30, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(60, 73, 76, 0.15); }
+.nav-inner { max-width: var(--max-page); margin: 0 auto; padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo-link { display: flex; align-items: center; }
+.nav-logo { height: 24px; width: 24px; object-fit: contain; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--on-surface-variant); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+.hero { min-height: auto; display: flex; flex-direction: column; justify-content: center; padding-top: 80px; padding-bottom: 1rem; position: relative; }
+.hero h1 { font-size: 4.5rem; margin-bottom: 1rem; }
+.hero-subline { font-size: 1.15rem; color: var(--on-surface-variant); max-width: 800px; line-height: 1.7; margin-bottom: 2rem; }

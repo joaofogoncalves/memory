@@ -976,17 +976,20 @@ h4 { font-size: 1.1rem; }
 }
 
 .post-content pre {
-  background: var(--surface-container-high);
+  background: var(--surface-container-low);
   padding: 1.25rem;
   overflow-x: auto;
   margin: 1.5rem 0;
-  border-radius: 8px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   position: relative;
 }
 
 .post-content code {
   background: var(--surface-container-high);
   padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  color: var(--primary);
 }
 
 .post-content pre code {
@@ -1695,8 +1698,163 @@ h4 { font-size: 1.1rem; }
 }
 
 .article-content pre {
-  border-radius: 8px;
+  border-radius: 6px;
   position: relative;
+}
+
+/* --- Syntax Highlighting (Pygments codehilite) --- */
+/* Container reset — block styles come from .post-content pre / .article-content pre */
+.post-content .highlight,
+.article-content .highlight {
+  background: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-content .highlight pre,
+.article-content .highlight pre {
+  margin: calc(var(--spacing-unit) * 1.5) 0;
+}
+
+/* Token colours — tuned to the brutalist dark-navy palette */
+.highlight .hll { background: var(--surface-container-high); }
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cp,
+.highlight .cpf,
+.highlight .c1,
+.highlight .cs   { color: var(--outline); font-style: italic; }         /* Comments */
+.highlight .k,
+.highlight .kc,
+.highlight .kd,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt   { color: var(--primary); }                              /* Keywords — teal */
+.highlight .kn   { color: #ff8a9e; }                                     /* Keyword.Namespace (import/from) */
+.highlight .o,
+.highlight .ow   { color: #ff8a9e; }                                     /* Operators */
+.highlight .p,
+.highlight .pm   { color: var(--on-surface); }                           /* Punctuation */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sx,
+.highlight .sr,
+.highlight .ss,
+.highlight .dl   { color: #e8c87a; }                                     /* Strings — warm amber */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .mb,
+.highlight .il   { color: #c4a0f5; }                                     /* Numbers — muted purple */
+.highlight .l,
+.highlight .ld   { color: #c4a0f5; }                                     /* Literals */
+.highlight .n    { color: var(--on-surface); }                            /* Names — default text */
+.highlight .na   { color: var(--secondary); }                             /* Name.Attribute */
+.highlight .nb   { color: var(--primary); }                               /* Name.Builtin */
+.highlight .nc   { color: #a6e88e; }                                      /* Name.Class — muted green */
+.highlight .nd   { color: var(--secondary); }                             /* Name.Decorator */
+.highlight .ne   { color: #a6e88e; }                                      /* Name.Exception */
+.highlight .nf,
+.highlight .fm   { color: #a6e88e; }                                      /* Name.Function — muted green */
+.highlight .ni   { color: var(--on-surface); }                            /* Name.Entity */
+.highlight .nn   { color: var(--on-surface); }                            /* Name.Namespace */
+.highlight .nt   { color: #ff8a9e; }                                      /* Name.Tag (HTML/XML) */
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi,
+.highlight .vm   { color: var(--on-surface); }                           /* Variables */
+.highlight .no   { color: var(--primary); }                               /* Name.Constant */
+.highlight .nx   { color: var(--secondary); }                             /* Name.Other */
+.highlight .err  { color: var(--error); }                                 /* Errors */
+.highlight .gd   { color: #ff8a9e; }                                     /* Diff deleted */
+.highlight .gi   { color: #a6e88e; }                                     /* Diff inserted */
+.highlight .ge   { font-style: italic; }
+.highlight .gh   { color: var(--primary); font-weight: 600; }            /* Generic.Heading */
+.highlight .gs   { font-weight: 600; color: var(--on-surface); }         /* Generic.Strong */
+.highlight .go   { color: var(--outline); }                               /* Generic.Output */
+.highlight .gp   { color: var(--primary); font-weight: bold; }           /* Generic.Prompt */
+.highlight .gu   { color: var(--primary); font-style: italic; }          /* Generic.Subheading */
+.highlight .w    { color: var(--on-surface); }                            /* Whitespace */
+
+/* --- Tables: first-class content block (same surface as images) --- */
+.post-content table,
+.article-content table {
+  width: 100%;
+  margin: calc(var(--spacing-unit) * 1.5) 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface-container-low);
+  padding: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.post-content table th,
+.article-content table th {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--outline-variant);
+}
+
+.post-content table td,
+.article-content table td {
+  padding: 0.65rem 1rem;
+  color: var(--on-surface);
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.post-content table tr:last-child td,
+.article-content table tr:last-child td {
+  border-bottom: none;
+}
+
+.post-content table td:first-child,
+.article-content table td:first-child {
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+.post-content table tbody tr:hover,
+.article-content table tbody tr:hover {
+  background: var(--surface-container);
+}
+
+@media (max-width: 768px) {
+  .post-content table,
+  .article-content table {
+    font-size: 0.82rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .post-content table th,
+  .article-content table th,
+  .post-content table td,
+  .article-content table td {
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 769px) {

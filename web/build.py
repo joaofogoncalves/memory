@@ -89,7 +89,17 @@ GITHUB = SITE['github']
 TWITTER = SITE['twitter']
 TWITTER_HANDLE = SITE['twitter_handle']
 
-md_renderer = markdown.Markdown(extensions=['fenced_code', 'tables', 'smarty'], output_format='html')
+md_renderer = markdown.Markdown(
+    extensions=['fenced_code', 'codehilite', 'tables', 'smarty'],
+    extension_configs={
+        'codehilite': {
+            'css_class': 'highlight',
+            'guess_lang': False,
+            'linenums': False,
+        },
+    },
+    output_format='html',
+)
 
 
 def _asset_hash(path: Path, length: int = 8) -> str:

@@ -68,48 +68,95 @@ The implementation isn't a custom Python framework or a wrapper around an API. E
 
 ### The Agent Roster
 
+| Tier | Agent | Role | Key Constraint |
+|---|---|---|---|
+| Executive | Project Manager | Orchestrates 4-phase workflow | Never writes code |
+| Executive | Product Manager | User-focused specs, plan validation | No technical details in specs |
+| Architecture | Architect | Blueprints, diagrams, data models | Produces blueprints, never code |
+| Architecture | UI Designer | Professional UX/UI design plans | Design-only, no implementation |
+| Development | Backend Developer | Django/API implementation | Follows architect's blueprint |
+| Development | Frontend Developer | React/TypeScript implementation | Follows architect's blueprint |
+| Development | Code Optimizer | Performance + pattern optimization | Only modified files |
+| Development | Code Simplifier | Reduce complexity, improve readability | Only modified files |
+| QA | Test Writer | Plans + implements test suites | Backend + frontend coverage |
+| QA | Quality Checker | Linting, formatting, types, tests | ENTIRE codebase, all 6 checks |
+| QA | Code Reviewer | Structured code review | Architecture, security, quality |
+| Documentation | Documentation Expert | API docs, README, changelog | Follows project conventions |
+
 The key insight: constraints define roles more than capabilities. The architect's definition doesn't just say "you are an architect." It explicitly prohibits code generation: no Python classes, no TypeScript interfaces, no function signatures, no import statements, no executable code of any kind. The output must be field tables, relationship diagrams, and API operation descriptions. The boundary between "what to build" and "how to build it" is enforced by prohibition, not suggestion.
 
-Similarly, the project manager is told it never implements code directly. It plans, delegates, tracks, and coordinates. Without this hard constraint, the agent reliably drifts into writing code itself instead of delegating to specialists.
+Similarly, the project manager is told it **never implements code directly**. It plans, delegates, tracks, and coordinates. Without this hard constraint, the agent reliably drifts into writing code itself instead of delegating to specialists.
 
 ### The 4-Phase Workflow
 
 The system operates in four phases (plus initialization), each with explicit entry conditions, agent assignments, and gates:
 
-**Phase 0: Initialization**
-- Create branch, draft PR, state tracker on GitHub Issue
-- Gate: infrastructure ready
+```yaml
+Phase 0: Initialization
+├── Create branch, draft PR, state tracker on GitHub Issue
+└── Gate: infrastructure ready
 
-**Phase 1: Planning (PARALLEL)**
-- UI Designer -> design-plan.md
-- Architect -> system-plan.md
-- Test Writer -> test-plan.md
-- Product Manager reviews all three
-- Agents revise based on PM feedback
-- Gate: all plans complete and reviewed
+Phase 1: Planning (PARALLEL)
+├── UI Designer ──────→ design-plan.md ─┐
+├── Architect ────────→ system-plan.md  ├→ Product Manager reviews all three
+├── Test Writer ──────→ test-plan.md   ─┘
+├── Agents revise based on PM feedback
+└── Gate: all plans complete and reviewed
 
-**Phase 2: Implementation (SEQUENTIAL)**
-- Backend Developer -> commit + push
-- Frontend Developer -> commit + push
-- Code Optimizer -> commit + push
-- Code Simplifier -> commit + push
-- Gate: each step committed before next begins
+Phase 2: Implementation (SEQUENTIAL)
+├── Backend Developer → commit + push
+├── Frontend Developer → commit + push
+├── Code Optimizer → commit + push
+├── Code Simplifier → commit + push
+└── Gate: each step committed before next begins
 
-**Phase 3: QA & Documentation (SEQUENTIAL)**
-- Test Writer (implements tests) -> commit + push
-- Quality Checker (ENTIRE codebase) -> commit + push
-- Code Reviewer -> review report
-- Documentation Expert -> commit + push
-- Gate: all checks pass system-wide
+Phase 3: QA & Documentation (SEQUENTIAL)
+├── Test Writer (implements tests) → commit + push
+├── Quality Checker (ENTIRE codebase) → commit + push
+├── Code Reviewer → review report
+├── Documentation Expert → commit + push
+└── Gate: all checks pass system-wide
 
-**Phase 4: Ready for Review**
-- Draft PR -> Ready for Review. Human enters the loop.
+Phase 4: Ready for Review
+└── Draft PR → Ready for Review. Human enters the loop.
+```
 
 The parallel vs. sequential decision is intentional. Planning is embarrassingly parallel. Three agents creating independent perspectives on the same spec don't need to coordinate. The architect doesn't need the UI designer's output, and vice versa. But implementation is intentionally sequential: the frontend developer needs the backend's API types, the optimizer needs the code to exist before optimizing it, and the quality checker needs everything in place before running system-wide checks.
+
+Here's what the phase structure looks like in the actual project manager definition:
+
+| Phase | Phase Label | Project Status |
+|---|---|---|
+| 0 | `phase:0-init` | Backlog |
+| 1 | `phase:1-planning` | Planning |
+| 2 | `phase:2-implementation` | Implementation |
+| 3 | `phase:3-qa-docs` | QA & Documentation |
+| 4 | `phase:4-ready-for-review` | Ready for Review |
+
+Each phase transition updates labels on the GitHub Issue, moves the item on the project board, and updates a state tracker comment via the GitHub API.
 
 ### The Communication Layer
 
 Agents don't talk to each other directly. They communicate through named artifacts stored in defined locations: planning artifacts on the GitHub Issue, implementation artifacts on the Pull Request.
+
+Here's the actual artifact mapping from the project manager's definition:
+
+| Source | File | Location |
+|---|---|---|
+| Feature spec | pm-spec.md | Issue |
+| Execution state tracker | project-state.md | Issue |
+| @product-manager output | pm-plan.md | Issue |
+| @ui-designer output | design-plan.md | Issue |
+| @architect output | system-plan.md | Issue |
+| @test-writer output | test-plan.md | Issue |
+| @backend-developer output | backend-implementation.md | Pull Request |
+| @frontend-developer output | frontend-implementation.md | Pull Request |
+| @code-optimizer output | optimization-implementation.md | Pull Request |
+| @code-simplifier output | simplification-implementation.md | Pull Request |
+| @test-writer output | tests-results.md | Pull Request |
+| @quality-checker output | quality-checks.md | Pull Request |
+| @code-reviewer output | code-review-writing.md | Pull Request |
+| @documentation-expert output | documentation-writing.md | Pull Request |
 
 Each agent reads specific inputs and writes a specific output. The project manager orchestrates sequencing; communication is asynchronous and artifact-based. This makes the entire system debuggable. You can inspect any artifact to understand exactly what an agent received as input and what it produced.
 
@@ -125,17 +172,29 @@ The project manager's core rule: "Never implements code directly — plans, dele
 
 Without these hard constraints, agents drift into each other's territory. The architect starts writing code. The project manager starts implementing instead of delegating. The boundaries blur and you end up back where you started.
 
-Define what an agent cannot do more carefully than what it can do.
+*Define what an agent cannot do more carefully than what it can do.*
 
 ### 5b. Gates Over Trust
 
 Every phase transition has an explicit gate. Planning doesn't advance to implementation until all three plans are complete and reviewed. Each implementation step must be committed before the next begins.
 
-But the most important gate is in Phase 3. The quality checker must run six checks (linting, formatting, type checking, and tests for both backend and frontend) across the entire codebase, not just the files changed in this feature. A new feature cannot silently break existing functionality.
+But the most important gate is in Phase 3. Here's what the quality checker's definition mandates:
+
+```markdown
+## Critical Rules
+1. **ENTIRE codebase** – Run on ALL files, not just changed files
+2. **NEVER use `--select`** or file-specific flags during checks
+3. **NEVER skip a check** – All 6 checks must pass
+4. **NEVER delete or skip tests** to make the suite pass
+5. **Fix pre-existing issues** – If the codebase has pre-existing failures, fix them
+6. **No partial success** – Either ALL checks pass or the task is not done
+```
+
+Six checks (linting, formatting, type checking, and tests for both backend and frontend) must pass across the entire codebase, not just the files changed in this feature. A new feature cannot silently break existing functionality.
 
 Without gates, agents optimistically advance and quality degrades silently. They'll report "looks good" when it isn't, because the default behavior of a language model is to be helpful and move forward, not to block progress.
 
-Don't trust agents to self-assess quality. Build external verification into the workflow.
+*Don't trust agents to self-assess quality. Build external verification into the workflow.*
 
 ### 5c. Artifacts Over Conversation
 
@@ -143,7 +202,7 @@ Agents communicate through named artifacts: design-plan.md, system-plan.md, back
 
 This matters because of debuggability. When something goes wrong (and it will), you can inspect any artifact to understand what an agent saw, what it produced, and where the chain broke down. Conversational context is ephemeral. Artifacts persist, and you can version them and inspect them after the fact.
 
-Treat agent outputs as contracts. Name them, store them, make them inspectable.
+*Treat agent outputs as contracts. Name them, store them, make them inspectable.*
 
 ### 5d. Scoped Changes, Global Verification
 
@@ -151,13 +210,33 @@ The code optimizer and code simplifier are scoped to "only files modified in thi
 
 This is an intentional asymmetry. Agents that change things should be scoped tightly. You don't want an optimizer "improving" code in unrelated modules. But agents that verify things should run broadly, because you need to know that your changes didn't break something elsewhere.
 
-Scope changes narrowly. Verify broadly.
+*Scope changes narrowly. Verify broadly.*
 
 ### 5e. Model Selection Is a Lever
 
-Not every agent needs the most powerful model. The architect uses the most capable model because its job is structural reasoning about system boundaries and data flows. The project manager uses a faster model because it follows a defined workflow and updates state. That's coordination, not cognition.
+Not every agent needs the most powerful model. Claude's model tiers range from Opus (most capable, slower, higher cost) to Sonnet (fast, cheaper, still strong for implementation tasks). Here's the actual assignment from the system:
 
-Match model capability to task complexity. Over-powering coordination agents wastes tokens and adds latency.
+```markdown
+## Architecture & Documentation — most capable model
+- **architect:**            `opus`
+- **documentation-expert:** `opus`
+
+## Everything else — faster model
+- **project-manager:**      `sonnet`
+- **product-manager:**      `sonnet`
+- **backend-developer:**    `sonnet`
+- **frontend-developer:**   `sonnet`
+- **test-writer:**          `sonnet`
+- **code-reviewer:**        `sonnet`
+- **code-optimizer:**       `sonnet`
+- **code-simplifier:**      `sonnet`
+- **quality-checker:**      `sonnet`
+- **ui-designer:**          `sonnet`
+```
+
+The architect uses the most capable model because its job is structural reasoning about system boundaries and data flows. The project manager uses a faster model because it follows a defined workflow and updates state. That's coordination, not cognition.
+
+*Match model capability to task complexity. Over-powering coordination agents wastes tokens and adds latency.*
 
 ## 6. The Evolution: How the System Grew
 

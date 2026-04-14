@@ -330,7 +330,6 @@
       '.skill-row',
       '.speaking-cta',
       '.about-intro-row',
-      '.post-content',
     ];
     document.querySelectorAll(selectors.join(',')).forEach(el => {
       if (!el.classList.contains('reveal')) {

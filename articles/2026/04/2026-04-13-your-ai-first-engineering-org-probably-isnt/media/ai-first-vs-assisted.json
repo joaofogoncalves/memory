@@ -1,5 +1,6 @@
 {
   "template": "feature-compare",
+  "orientation": "vertical",
   "title": "AI-assisted is not AI-first",
   "subtitle": "The difference isn't tooling. It's whether the workflow was redesigned around agents, or agents were bolted onto a workflow built for humans.",
   "arrowLabel": "Structural shift",

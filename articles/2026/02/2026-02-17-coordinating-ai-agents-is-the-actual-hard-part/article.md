@@ -68,6 +68,7 @@ The implementation isn't a custom Python framework or a wrapper around an API. E
 
 ### The Agent Roster
 
+::: wide
 | Tier | Agent | Role | Key Constraint |
 |---|---|---|---|
 | Executive | Project Manager | Orchestrates 4-phase workflow | Never writes code |
@@ -82,6 +83,7 @@ The implementation isn't a custom Python framework or a wrapper around an API. E
 | QA | Quality Checker | Linting, formatting, types, tests | ENTIRE codebase, all 6 checks |
 | QA | Code Reviewer | Structured code review | Architecture, security, quality |
 | Documentation | Documentation Expert | API docs, README, changelog | Follows project conventions |
+:::
 
 The key insight: constraints define roles more than capabilities. The architect's definition doesn't just say "you are an architect." It explicitly prohibits code generation: no Python classes, no TypeScript interfaces, no function signatures, no import statements, no executable code of any kind. The output must be field tables, relationship diagrams, and API operation descriptions. The boundary between "what to build" and "how to build it" is enforced by prohibition, not suggestion.
 

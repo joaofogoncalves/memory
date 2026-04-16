@@ -118,7 +118,9 @@ Bug fix path:
 
 Both paths use the same pipeline. One system. One standard.
 
+::: wide
 ![Feature and bug-fix paths converge at CI and Deploy](media/pipeline-flow.webp)
+:::
 
 ## The Results
 

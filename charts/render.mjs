@@ -26,6 +26,7 @@ const argv = yargs(hideBin(process.argv))
   .option('height',   { type: 'number', default: 900 })
   .option('scale',    { type: 'number', default: 2, describe: 'deviceScaleFactor (retina)' })
   .option('transparent', { type: 'boolean', default: false, describe: 'Transparent background (drops the dark surface)' })
+  .option('no-signature', { type: 'boolean', default: false, describe: 'Skip the logo + URL signature in bottom-right' })
   .strict()
   .parseSync();
 
@@ -85,6 +86,43 @@ async function main() {
       html, body { background: transparent !important; }
       #chart-container { background: transparent !important; }
     `});
+  }
+
+  if (!argv['no-signature']) {
+    const logoPath = resolve(__dirname, '..', 'web', 'img', 'logo.webp');
+    const siteUrl = (process.env.SITE_URL || 'joaofogoncalves.com').replace(/^https?:\/\//, '').replace(/\/$/, '');
+    let logoDataUrl = '';
+    if (existsSync(logoPath)) {
+      const buf = await readFile(logoPath);
+      logoDataUrl = `data:image/webp;base64,${buf.toString('base64')}`;
+    }
+    await page.evaluate(({ logoDataUrl, siteUrl }) => {
+      const container = document.getElementById('chart-container');
+      if (!container) return;
+      const cs = getComputedStyle(container);
+      if (cs.position === 'static') container.style.position = 'relative';
+      const sig = document.createElement('div');
+      sig.setAttribute('data-signature', '');
+      sig.style.cssText = [
+        'position:absolute', 'right:24px', 'bottom:16px',
+        'display:flex', 'align-items:center', 'gap:10px',
+        'font-family:"Inter",sans-serif', 'font-size:13px',
+        'color:#bbc9cc', 'opacity:0.7', 'pointer-events:none',
+        'z-index:10',
+      ].join(';');
+      if (logoDataUrl) {
+        const img = document.createElement('img');
+        img.src = logoDataUrl;
+        img.style.cssText = 'height:20px;width:auto;display:block;';
+        sig.appendChild(img);
+      }
+      const url = document.createElement('span');
+      url.textContent = siteUrl;
+      url.style.cssText = 'letter-spacing:0.02em;';
+      sig.appendChild(url);
+      container.appendChild(sig);
+    }, { logoDataUrl, siteUrl });
+    await page.waitForTimeout(100);
   }
 
   const container = await page.$('#chart-container');

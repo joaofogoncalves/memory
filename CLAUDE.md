@@ -231,8 +231,9 @@ linkedin-post-archiver/  # Project root
 ### 13. Articles Section
 - `articles/` directory stores original long-form content (tracked in git, unlike `posts/`)
 - Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
-- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`, `draft` (optional)
-- Draft mode: set `draft: true` in frontmatter to publish the article at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars). Drafts are excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`. Remove the `draft` line to promote to a public URL.
+- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`, `draft` (default true on creation)
+- Draft mode: **new articles always start with `draft: true`** (set by `/article`). Drafts publish at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars), excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`.
+- To promote a draft: run `/publish <slug>` — removes `draft: true`, updates `date:` to today, and renames the directory to match the new date so the path stays `articles/YYYY/MM/YYYY-MM-DD-slug/`.
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`
@@ -255,6 +256,8 @@ All images display on the site at **720px content width** (2x retina = 1440px so
 - **Hero/illustration**: 1440×900px (16:10) · PNG or JPG — works everywhere
 - **Square diagram**: 1200×1200px (1:1) · PNG — sharp text
 - **Screenshots**: native resolution, crop to content · PNG
+
+**Hero images are NOT bound by the site color scheme.** Heroes are mood pieces — use whatever palette, medium, and style best serves the article's concept (painterly editorial illustrations, warm tones, cinematic photography-like scenes, etc.). Think NYT Magazine / Wired long-read opener. Only inline diagrams, charts, and schematics follow `taste.md` and the dark navy + teal palette.
 
 ---
 
@@ -617,7 +620,13 @@ class Media:
 - Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
 - Decoupled from LinkedIn: reminds user to run `/write` for promotion post after article is finalized
-- Article frontmatter: title, subtitle, date, tags, medium_url, hero_image, reading_time
+- Article frontmatter: title, subtitle, date, tags, medium_url, hero_image, reading_time, draft (always true on creation)
+
+### /publish - Promote Draft to Published
+- Removes `draft: true` from an article's frontmatter and updates `date:` to today
+- Renames the directory (`articles/YYYY/MM/YYYY-MM-DD-slug/`) via `git mv` so the new date is reflected in the path
+- Pass a slug fragment as arg, or run with no args to pick from a list of drafts
+- Reminds user to rebuild after
 
 ### /pdf - CV PDF Generator
 - Generates a styled PDF version of the CV matching the site's brutalist dark theme

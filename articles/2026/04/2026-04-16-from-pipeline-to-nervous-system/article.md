@@ -4,9 +4,8 @@ subtitle: "What changed when a 12-agent feature factory grew a nervous system."
 date: 2026-04-16
 tags: [ai, software-engineering, agents, claude-code, workflows]
 medium_url:
-hero_image: media/hero-pipeline-vs-nervous-system.webp
+hero_image: media/hero-abstract.webp
 reading_time: 11
-draft: true
 ---
 
 ## 1. A different Tuesday

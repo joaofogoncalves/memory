@@ -1,0 +1,52 @@
+{
+  "template": "timeline",
+  "title": "A Tuesday, April 2026",
+  "subtitle": "How a day of agent work looks on the harness — sensors, reflexes, specialists, and the human in the loop.",
+  "caption": "Composite day drawn from the week's logs.",
+  "timeAxis": {
+    "type": "time",
+    "start": "08:00",
+    "end": "18:00",
+    "ticks": [
+      { "at": "08:00", "label": "08:00" },
+      { "at": "10:00", "label": "10:00" },
+      { "at": "12:00", "label": "12:00" },
+      { "at": "14:00", "label": "14:00" },
+      { "at": "16:00", "label": "16:00" },
+      { "at": "18:00", "label": "18:00" }
+    ]
+  },
+  "tracks": [
+    {
+      "label": "Sensors",
+      "color": "#44d8f1",
+      "events": [
+        { "at": "08:14", "label": "creates #2847",  "timeLabel": "08:14" },
+        { "at": "14:00", "label": "mentions sweep", "timeLabel": "14:00" }
+      ]
+    },
+    {
+      "label": "Reflexes",
+      "color": "#44d8f1",
+      "events": [
+        { "from": "09:02", "to": "09:43", "label": "/pick → /build --auto → PR ready" },
+        { "at": "17:30", "label": "/pick next", "timeLabel": "17:30" }
+      ]
+    },
+    {
+      "label": "Specialists",
+      "color": "#bdc2ff",
+      "events": [
+        { "from": "09:30", "to": "09:40", "label": "ci-fixer patches flaky migration" }
+      ]
+    },
+    {
+      "label": "Human",
+      "color": "#ff8a9e",
+      "events": [
+        { "at": "10:11", "label": "approve", "shape": "check", "timeLabel": "10:11" },
+        { "at": "17:55", "label": "glance", "shape": "check" }
+      ]
+    }
+  ]
+}

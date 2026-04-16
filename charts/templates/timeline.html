@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1; --lav-500: #bdc2ff; --coral: #ff8a9e;
+  --bg: #0e131e; --surface-1: #171b27; --surface-2: #1b1f2b;
+  --border: #3c494c; --border-strong: #869396;
+  --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 56px 72px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 28px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
+.tl-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+svg { width: 100%; height: 100%; max-height: 100%; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="tl-wrap"><svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const d = window.__DATA__ || {};
+document.getElementById('title').textContent = d.title || '';
+document.getElementById('subtitle').textContent = d.subtitle || '';
+document.getElementById('caption').textContent = d.caption || '';
+
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svg');
+
+const axis = d.timeAxis || { type: 'time', start: '00:00', end: '24:00' };
+const tracks = d.tracks || [];
+
+// Geometry
+const trackH = 56, trackGap = 18, padL = 200, padR = 60, padT = 60, padB = 80;
+const plotW = 1600; // logical width; scaled by svg viewBox
+const height = padT + tracks.length * (trackH + trackGap) - trackGap + padB;
+const width  = padL + plotW + padR;
+svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+const displayFont = '"Space Grotesk", "Inter", sans-serif';
+const bodyFont    = '"Inter", sans-serif';
+const monoFont    = '"JetBrains Mono", ui-monospace, monospace';
+
+// Position helpers
+function toMinutes(s) {
+  const [h, m = 0] = String(s).split(':').map(Number);
+  return h * 60 + m;
+}
+function pos(at) {
+  if (axis.type === 'time') {
+    const t = toMinutes(at), s = toMinutes(axis.start), e = toMinutes(axis.end);
+    return (t - s) / (e - s);
+  }
+  if (axis.type === 'date') {
+    const t = new Date(at).getTime();
+    const s = new Date(axis.start).getTime();
+    const e = new Date(axis.end).getTime();
+    return (t - s) / (e - s);
+  }
+  return Number(at); // 0..1
+}
+function x(at) { return padL + Math.max(0, Math.min(1, pos(at))) * plotW; }
+
+function text(tx, ty, str, opts = {}) {
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', tx); t.setAttribute('y', ty);
+  t.setAttribute('font-family', opts.font || bodyFont);
+  t.setAttribute('font-size', opts.size || '13');
+  t.setAttribute('font-weight', opts.weight || '500');
+  t.setAttribute('fill', opts.fill || '#dee2f2');
+  t.setAttribute('text-anchor', opts.anchor || 'start');
+  t.setAttribute('dominant-baseline', opts.baseline || 'middle');
+  t.textContent = str;
+  svg.appendChild(t);
+  return t;
+}
+
+// Axis baseline + ticks
+const axisY = padT + tracks.length * (trackH + trackGap) - trackGap + 16;
+const base = document.createElementNS(NS, 'line');
+base.setAttribute('x1', padL); base.setAttribute('y1', axisY);
+base.setAttribute('x2', padL + plotW); base.setAttribute('y2', axisY);
+base.setAttribute('stroke', '#3c494c'); base.setAttribute('stroke-width', '1.5');
+svg.appendChild(base);
+
+const ticks = axis.ticks || [];
+ticks.forEach(tk => {
+  const tx = x(tk.at ?? tk);
+  const label = tk.label ?? tk;
+  const ln = document.createElementNS(NS, 'line');
+  ln.setAttribute('x1', tx); ln.setAttribute('y1', padT - 8);
+  ln.setAttribute('x2', tx); ln.setAttribute('y2', axisY);
+  ln.setAttribute('stroke', 'rgba(134,147,150,0.18)');
+  ln.setAttribute('stroke-width', '1');
+  svg.appendChild(ln);
+  text(tx, axisY + 22, label, { anchor: 'middle', fill: '#bbc9cc', size: '12', font: monoFont });
+});
+
+// Tracks + events
+tracks.forEach((track, ti) => {
+  const y = padT + ti * (trackH + trackGap);
+  // track label
+  text(padL - 24, y + trackH/2, track.label || '', {
+    anchor: 'end',
+    fill: track.labelFill || '#bbc9cc',
+    weight: '600',
+    font: displayFont,
+    size: '13',
+  });
+  // faint track baseline
+  const baseLine = document.createElementNS(NS, 'line');
+  baseLine.setAttribute('x1', padL); baseLine.setAttribute('y1', y + trackH/2);
+  baseLine.setAttribute('x2', padL + plotW); baseLine.setAttribute('y2', y + trackH/2);
+  baseLine.setAttribute('stroke', 'rgba(134,147,150,0.12)');
+  baseLine.setAttribute('stroke-width', '1');
+  svg.appendChild(baseLine);
+
+  (track.events || []).forEach(ev => {
+    const color = ev.color || track.color || '#44d8f1';
+    if (ev.from && ev.to) {
+      // span
+      const x1 = x(ev.from), x2 = x(ev.to);
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', x1); r.setAttribute('y', y + 10);
+      r.setAttribute('width', Math.max(6, x2 - x1));
+      r.setAttribute('height', trackH - 20);
+      r.setAttribute('rx', 6);
+      r.setAttribute('fill', color);
+      r.setAttribute('fill-opacity', '0.18');
+      r.setAttribute('stroke', color);
+      r.setAttribute('stroke-width', '1.5');
+      svg.appendChild(r);
+      if (ev.label) {
+        text((x1 + x2) / 2, y + trackH/2, ev.label, {
+          anchor: 'middle', fill: '#dee2f2', size: '12', weight: '600', font: bodyFont,
+        });
+      }
+    } else if (ev.at != null) {
+      const cx = x(ev.at);
+      if (ev.shape === 'check') {
+        // checkmark rendered as ✓ glyph
+        text(cx, y + trackH/2, '\u2713', { anchor: 'middle', fill: color, size: '20', weight: '700' });
+      } else {
+        // point event: tall pill
+        const w = 14;
+        const r = document.createElementNS(NS, 'rect');
+        r.setAttribute('x', cx - w/2); r.setAttribute('y', y + 14);
+        r.setAttribute('width', w); r.setAttribute('height', trackH - 28);
+        r.setAttribute('rx', 3);
+        r.setAttribute('fill', color);
+        svg.appendChild(r);
+      }
+      if (ev.label) {
+        text(cx + 14, y + trackH/2, ev.label, {
+          anchor: 'start', fill: '#dee2f2', size: '12', weight: '500', font: bodyFont,
+        });
+      }
+      if (ev.timeLabel) {
+        text(cx, y - 6, ev.timeLabel, {
+          anchor: 'middle', fill: '#bbc9cc', size: '11', font: monoFont,
+        });
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

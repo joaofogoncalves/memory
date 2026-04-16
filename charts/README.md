@@ -64,6 +64,52 @@ node charts/render.mjs \
 
 Data shape: `{ title, subtitle, xAxis: {low, high, title}, yAxis: {...}, quadrants: {tl, tr, bl, br} }`
 
+### `flow` — horizontal pipeline with optional parallel tracks and gate labels
+
+```bash
+node charts/render.mjs \
+  --template flow \
+  --data charts/examples/pipeline-flow.json \
+  --output charts/out/pipeline-flow.webp \
+  --width 2160 --height 900
+```
+
+Data shape: `{ title, subtitle, tracks: [{label, stages: [...]}], gates: [{afterIndex, label}], highlightStageIndex }`
+
+### `timeline` — stacked tracks with point or span events along a time or date axis
+
+```bash
+node charts/render.mjs \
+  --template timeline \
+  --data charts/examples/day-in-life.json \
+  --output charts/out/day-in-life.webp \
+  --width 2400 --height 900
+```
+
+Data shape:
+```jsonc
+{
+  "title": "...",
+  "timeAxis": {
+    "type": "time",              // or "date"
+    "start": "08:00",            // HH:MM for time, YYYY-MM-DD for date
+    "end": "18:00",
+    "ticks": [{ "at": "10:00", "label": "10:00" }, ...]
+  },
+  "tracks": [{
+    "label": "Sensors",
+    "color": "#44d8f1",
+    "events": [
+      { "at": "08:14", "label": "creates #2847", "timeLabel": "08:14" },
+      { "from": "09:02", "to": "09:43", "label": "/pick → /build" },
+      { "at": "10:11", "label": "approve", "shape": "check" }
+    ]
+  }]
+}
+```
+
+For few-track timelines, drop `--height` to ~500 to avoid large vertical whitespace.
+
 ### `line` — multi-series trend
 
 ```bash

@@ -1,0 +1,46 @@
+{
+  "template": "timeline",
+  "title": "Two months of harness changes",
+  "subtitle": "What got added between the first article and the second — specialists, reflexes, and memory.",
+  "caption": "Feb 17 – Apr 16, 2026.",
+  "timeAxis": {
+    "type": "date",
+    "start": "2026-02-15",
+    "end": "2026-04-20",
+    "ticks": [
+      { "at": "2026-02-15", "label": "Feb 15" },
+      { "at": "2026-03-01", "label": "Mar 1" },
+      { "at": "2026-03-15", "label": "Mar 15" },
+      { "at": "2026-04-01", "label": "Apr 1" },
+      { "at": "2026-04-15", "label": "Apr 15" }
+    ]
+  },
+  "tracks": [
+    {
+      "label": "Agents",
+      "color": "#44d8f1",
+      "events": [
+        { "at": "2026-02-23", "label": "agents → Opus" },
+        { "at": "2026-03-08", "label": "ci-fixer + /ci-fix" },
+        { "at": "2026-03-25", "label": "conflict-resolver" }
+      ]
+    },
+    {
+      "label": "Workflow",
+      "color": "#bdc2ff",
+      "events": [
+        { "at": "2026-02-28", "label": "parallel quality checks" },
+        { "at": "2026-04-10", "label": "research as issue type" },
+        { "at": "2026-04-15", "label": "reaction-based approvals" }
+      ]
+    },
+    {
+      "label": "Memory",
+      "color": "#ff8a9e",
+      "events": [
+        { "at": "2026-03-01", "label": "/weekly-agent-review" },
+        { "at": "2026-04-07", "label": "MCP retry + persistent gist state" }
+      ]
+    }
+  ]
+}

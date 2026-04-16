@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1; --lav-500: #bdc2ff; --coral: #ff8a9e;
+  --bg: #0e131e; --surface-1: #171b27; --surface-2: #1b1f2b;
+  --border: #3c494c; --border-strong: #869396;
+  --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 56px 72px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 28px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
+.flow-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+svg { width: 100%; height: 100%; max-height: 100%; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="flow-wrap"><svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const d = window.__DATA__ || {};
+document.getElementById('title').textContent = d.title || '';
+document.getElementById('subtitle').textContent = d.subtitle || '';
+document.getElementById('caption').textContent = d.caption || '';
+
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('svg');
+
+const tracks = d.tracks || [];
+const gates  = d.gates || []; // optional [{afterIndex, label}]
+const highlightIdx = d.highlightStageIndex ?? -1;
+
+// Geometry
+const numStages = Math.max(...tracks.map(t => t.stages.length), 1);
+const boxW = 150, boxH = 64, gapX = 56, rowGap = 120;
+const padL = 180, padR = 40;
+const padT = 60;
+const width  = padL + numStages * boxW + (numStages - 1) * gapX + padR;
+const height = padT + tracks.length * (boxH + rowGap) - rowGap + 80;
+svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+const displayFont = '"Space Grotesk", "Inter", sans-serif';
+const bodyFont = '"Inter", sans-serif';
+const monoFont = '"JetBrains Mono", ui-monospace, monospace';
+
+// Arrow marker defs
+const defs = document.createElementNS(NS, 'defs');
+defs.innerHTML = `
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#869396"/>
+  </marker>
+  <marker id="arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#44d8f1"/>
+  </marker>
+`;
+svg.appendChild(defs);
+
+function text(x, y, str, opts = {}) {
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', x); t.setAttribute('y', y);
+  t.setAttribute('font-family', opts.font || bodyFont);
+  t.setAttribute('font-size', opts.size || '14');
+  t.setAttribute('font-weight', opts.weight || '500');
+  t.setAttribute('fill', opts.fill || '#dee2f2');
+  t.setAttribute('text-anchor', opts.anchor || 'start');
+  t.setAttribute('dominant-baseline', opts.baseline || 'middle');
+  t.textContent = str;
+  svg.appendChild(t);
+  return t;
+}
+
+function box(x, y, w, h, label, opts = {}) {
+  const r = document.createElementNS(NS, 'rect');
+  r.setAttribute('x', x); r.setAttribute('y', y);
+  r.setAttribute('width', w); r.setAttribute('height', h);
+  r.setAttribute('rx', 8);
+  r.setAttribute('fill', opts.fill || '#1b1f2b');
+  r.setAttribute('stroke', opts.stroke || '#3c494c');
+  r.setAttribute('stroke-width', opts.strokeWidth || '1.5');
+  svg.appendChild(r);
+  // wrap label if it has spaces and is long
+  const words = String(label).split(' ');
+  let lines = [''], maxLen = Math.floor(w / 8.5);
+  for (const wd of words) {
+    if ((lines[lines.length-1] + ' ' + wd).trim().length > maxLen) lines.push(wd);
+    else lines[lines.length-1] = (lines[lines.length-1] + ' ' + wd).trim();
+  }
+  const totalH = lines.length * 18;
+  const startY = y + h/2 - totalH/2 + 9;
+  lines.forEach((line, i) => {
+    text(x + w/2, startY + i * 18, line, {
+      anchor: 'middle',
+      baseline: 'middle',
+      fill: opts.textFill || '#dee2f2',
+      weight: opts.textWeight || '600',
+      font: opts.font || displayFont,
+      size: '14',
+    });
+  });
+}
+
+function arrow(x1, y1, x2, y2, opts = {}) {
+  const l = document.createElementNS(NS, 'line');
+  l.setAttribute('x1', x1); l.setAttribute('y1', y1);
+  l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+  l.setAttribute('stroke', opts.stroke || '#869396');
+  l.setAttribute('stroke-width', opts.strokeWidth || '1.5');
+  l.setAttribute('marker-end', opts.marker || 'url(#arrow)');
+  svg.appendChild(l);
+}
+
+// Render tracks
+tracks.forEach((track, ti) => {
+  const y = padT + ti * (boxH + rowGap);
+  // track label (left)
+  text(padL - 20, y + boxH/2, track.label || '', {
+    anchor: 'end',
+    baseline: 'middle',
+    fill: '#bbc9cc',
+    weight: '600',
+    font: displayFont,
+    size: '13',
+  });
+  track.stages.forEach((stage, si) => {
+    const x = padL + si * (boxW + gapX);
+    const isHighlight = si === highlightIdx;
+    box(x, y, boxW, boxH, stage, {
+      fill: isHighlight ? '#17242a' : '#1b1f2b',
+      stroke: isHighlight ? '#44d8f1' : '#3c494c',
+      strokeWidth: isHighlight ? '2' : '1.5',
+      textFill: isHighlight ? '#44d8f1' : '#dee2f2',
+    });
+    if (si > 0) {
+      const prevX = padL + (si - 1) * (boxW + gapX) + boxW;
+      arrow(prevX + 4, y + boxH/2, x - 4, y + boxH/2);
+    }
+  });
+});
+
+// Gates: labels between stages (applies across all tracks, drawn between rows or above top track)
+gates.forEach(g => {
+  const afterIdx = g.afterIndex;
+  const xMid = padL + (afterIdx + 1) * boxW + (afterIdx) * gapX + gapX/2;
+  text(xMid, padT - 18, g.label, {
+    anchor: 'middle',
+    fill: '#44d8f1',
+    size: '12',
+    weight: '600',
+    font: monoFont,
+  });
+  // little tick line
+  const tick = document.createElementNS(NS, 'line');
+  tick.setAttribute('x1', xMid); tick.setAttribute('y1', padT - 8);
+  tick.setAttribute('x2', xMid); tick.setAttribute('y2', padT - 2);
+  tick.setAttribute('stroke', '#44d8f1');
+  tick.setAttribute('stroke-width', '1.5');
+  svg.appendChild(tick);
+});
+</script>
+</body>
+</html>

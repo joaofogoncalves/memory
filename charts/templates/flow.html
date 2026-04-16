@@ -19,9 +19,9 @@
 html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
 #chart-container {
   width: 100vw; min-height: 100vh;
-  padding: 56px 72px; box-sizing: border-box;
+  padding: 36px 40px; box-sizing: border-box;
   background: var(--bg);
-  display: flex; flex-direction: column; gap: 28px;
+  display: flex; flex-direction: column; gap: 20px;
 }
 .title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
 .subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
@@ -49,14 +49,24 @@ const svg = document.getElementById('svg');
 const tracks = d.tracks || [];
 const gates  = d.gates || []; // optional [{afterIndex, label}]
 const highlightIdx = d.highlightStageIndex ?? -1;
+const orientation = d.orientation === 'vertical' ? 'vertical' : 'horizontal';
 
-// Geometry
+// Geometry — compact by default
 const numStages = Math.max(...tracks.map(t => t.stages.length), 1);
-const boxW = 150, boxH = 64, gapX = 56, rowGap = 120;
-const padL = 180, padR = 40;
-const padT = 60;
-const width  = padL + numStages * boxW + (numStages - 1) * gapX + padR;
-const height = padT + tracks.length * (boxH + rowGap) - rowGap + 80;
+let boxW, boxH, gapX, rowGap, padL, padR, padT, padB, width, height;
+if (orientation === 'horizontal') {
+  boxW = 140; boxH = 60; gapX = 40; rowGap = 90;
+  padL = 150; padR = 20; padT = 48; padB = 40;
+  width  = padL + numStages * boxW + (numStages - 1) * gapX + padR;
+  height = padT + tracks.length * (boxH + rowGap) - rowGap + padB;
+} else {
+  // Vertical: stages stacked top-to-bottom; tracks become side-by-side columns
+  boxW = 220; boxH = 56; gapX = 60; rowGap = 28;
+  padL = 40; padR = 40; padT = 60; padB = 40;
+  const colW = boxW + gapX;
+  width  = padL + tracks.length * colW - gapX + padR;
+  height = padT + numStages * (boxH + rowGap) - rowGap + padB;
+}
 svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
 const displayFont = '"Space Grotesk", "Inter", sans-serif';
@@ -130,52 +140,73 @@ function arrow(x1, y1, x2, y2, opts = {}) {
 }
 
 // Render tracks
-tracks.forEach((track, ti) => {
-  const y = padT + ti * (boxH + rowGap);
-  // track label (left)
-  text(padL - 20, y + boxH/2, track.label || '', {
-    anchor: 'end',
-    baseline: 'middle',
-    fill: '#bbc9cc',
-    weight: '600',
-    font: displayFont,
-    size: '13',
-  });
-  track.stages.forEach((stage, si) => {
-    const x = padL + si * (boxW + gapX);
-    const isHighlight = si === highlightIdx;
-    box(x, y, boxW, boxH, stage, {
-      fill: isHighlight ? '#17242a' : '#1b1f2b',
-      stroke: isHighlight ? '#44d8f1' : '#3c494c',
-      strokeWidth: isHighlight ? '2' : '1.5',
-      textFill: isHighlight ? '#44d8f1' : '#dee2f2',
+if (orientation === 'horizontal') {
+  tracks.forEach((track, ti) => {
+    const y = padT + ti * (boxH + rowGap);
+    text(padL - 16, y + boxH/2, track.label || '', {
+      anchor: 'end', baseline: 'middle',
+      fill: '#bbc9cc', weight: '600', font: displayFont, size: '13',
     });
-    if (si > 0) {
-      const prevX = padL + (si - 1) * (boxW + gapX) + boxW;
-      arrow(prevX + 4, y + boxH/2, x - 4, y + boxH/2);
+    track.stages.forEach((stage, si) => {
+      const x = padL + si * (boxW + gapX);
+      const isHighlight = si === highlightIdx;
+      box(x, y, boxW, boxH, stage, {
+        fill: isHighlight ? '#17242a' : '#1b1f2b',
+        stroke: isHighlight ? '#44d8f1' : '#3c494c',
+        strokeWidth: isHighlight ? '2' : '1.5',
+        textFill: isHighlight ? '#44d8f1' : '#dee2f2',
+      });
+      if (si > 0) {
+        const prevX = padL + (si - 1) * (boxW + gapX) + boxW;
+        arrow(prevX + 4, y + boxH/2, x - 4, y + boxH/2);
+      }
+    });
+  });
+  gates.forEach(g => {
+    const afterIdx = g.afterIndex;
+    const xMid = padL + (afterIdx + 1) * boxW + (afterIdx) * gapX + gapX/2;
+    text(xMid, padT - 14, g.label, {
+      anchor: 'middle', fill: '#44d8f1', size: '11', weight: '600', font: monoFont,
+    });
+    const tick = document.createElementNS(NS, 'line');
+    tick.setAttribute('x1', xMid); tick.setAttribute('y1', padT - 6);
+    tick.setAttribute('x2', xMid); tick.setAttribute('y2', padT - 1);
+    tick.setAttribute('stroke', '#44d8f1'); tick.setAttribute('stroke-width', '1.5');
+    svg.appendChild(tick);
+  });
+} else {
+  // Vertical: each track = column, stages stacked top-to-bottom
+  tracks.forEach((track, ti) => {
+    const x = padL + ti * (boxW + gapX);
+    if (track.label) {
+      text(x + boxW/2, padT - 22, track.label, {
+        anchor: 'middle', fill: '#bbc9cc', weight: '600', font: displayFont, size: '13',
+      });
     }
+    track.stages.forEach((stage, si) => {
+      const y = padT + si * (boxH + rowGap);
+      const isHighlight = si === highlightIdx;
+      box(x, y, boxW, boxH, stage, {
+        fill: isHighlight ? '#17242a' : '#1b1f2b',
+        stroke: isHighlight ? '#44d8f1' : '#3c494c',
+        strokeWidth: isHighlight ? '2' : '1.5',
+        textFill: isHighlight ? '#44d8f1' : '#dee2f2',
+      });
+      if (si > 0) {
+        const prevY = padT + (si - 1) * (boxH + rowGap) + boxH;
+        arrow(x + boxW/2, prevY + 4, x + boxW/2, y - 4);
+      }
+    });
   });
-});
-
-// Gates: labels between stages (applies across all tracks, drawn between rows or above top track)
-gates.forEach(g => {
-  const afterIdx = g.afterIndex;
-  const xMid = padL + (afterIdx + 1) * boxW + (afterIdx) * gapX + gapX/2;
-  text(xMid, padT - 18, g.label, {
-    anchor: 'middle',
-    fill: '#44d8f1',
-    size: '12',
-    weight: '600',
-    font: monoFont,
+  gates.forEach(g => {
+    // vertical: gate label sits between stage afterIndex and afterIndex+1 in all columns, drawn at left margin
+    const afterIdx = g.afterIndex;
+    const yMid = padT + (afterIdx + 1) * boxH + afterIdx * rowGap + rowGap/2;
+    text(padL - 12, yMid, g.label, {
+      anchor: 'end', fill: '#44d8f1', size: '11', weight: '600', font: monoFont,
+    });
   });
-  // little tick line
-  const tick = document.createElementNS(NS, 'line');
-  tick.setAttribute('x1', xMid); tick.setAttribute('y1', padT - 8);
-  tick.setAttribute('x2', xMid); tick.setAttribute('y2', padT - 2);
-  tick.setAttribute('stroke', '#44d8f1');
-  tick.setAttribute('stroke-width', '1.5');
-  svg.appendChild(tick);
-});
+}
 </script>
 </body>
 </html>

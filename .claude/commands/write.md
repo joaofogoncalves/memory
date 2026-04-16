@@ -1,7 +1,7 @@
 ---
 argument-hint: [urls and/or notes about what to write]
 description: Write a LinkedIn post using your style guide and voice profile, and generate 3 AI image prompts
-allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob
+allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob, Bash
 ---
 
 Write a LinkedIn post based on the user's input and generate AI image prompts for it.
@@ -97,9 +97,36 @@ If you decide the post doesn't need an image, tell the user: "This post works be
 
 If the post does benefit from an image, proceed below.
 
-## Step 4b: Generate image prompts
+### Chart as an alternative to AI image
 
-Generate **3 image prompts** following the visual taste profile from `taste.md`.
+Some LinkedIn posts — especially ones built around a single stat, contrast, or comparison — are better served by a **chart** than a generated image. A crisp chart with the headline number often out-performs a stylized illustration for this style of post.
+
+Consider a chart (not an AI image) when:
+- The post pivots on one or two numbers ("88% have access, 1% have maturity")
+- The post contrasts two paths / before-after / pipeline vs. nervous system
+- The hook is a ranking or funnel
+- The post already cites a stat the reader should see, not just read
+
+Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `flow` (horizontal or vertical), `timeline`.
+
+If a chart fits, offer it as one of the 3 visual options in Step 4b — alongside two AI image prompts — rather than producing three AI prompts. Produce a chart **spec** (template name + sample JSON payload) and, if the user picks it, render it via the `charts/` module.
+
+**If the visual you want doesn't match any existing template,** ask the user with AskUserQuestion: "Add a new `<name>` template to `charts/`" vs. "Use an AI image prompt instead." Include a one-paragraph sketch of the proposed template.
+
+## Step 4b: Generate image prompts (or chart spec)
+
+If you decided above to offer a chart, the 3 options become: 1 chart spec + 2 AI image prompts. Otherwise produce **3 image prompts** following the visual taste profile from `taste.md`.
+
+When rendering a chart for a LinkedIn post, save the spec next to the post draft under a `media/` folder and render to `.webp`:
+
+```bash
+node charts/render.mjs --template <name> \
+  --data drafts/<slug>/media/<name>.json \
+  --output drafts/<slug>/media/<name>.webp \
+  --width <w> --height <h>
+```
+
+LinkedIn crops to ~1:1 in feed. For square-favorable charts use `--width 1200 --height 1200`; for wide editorial charts use the defaults from `charts/README.md`.
 
 ### Screenshot suggestion
 

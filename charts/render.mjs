@@ -25,6 +25,7 @@ const argv = yargs(hideBin(process.argv))
   .option('width',    { type: 'number', default: 1600 })
   .option('height',   { type: 'number', default: 900 })
   .option('scale',    { type: 'number', default: 2, describe: 'deviceScaleFactor (retina)' })
+  .option('transparent', { type: 'boolean', default: false, describe: 'Transparent background (drops the dark surface)' })
   .strict()
   .parseSync();
 
@@ -79,11 +80,18 @@ async function main() {
   // Let Chart.js complete its render pass.
   await page.waitForTimeout(250);
 
+  if (argv.transparent) {
+    await page.addStyleTag({ content: `
+      html, body { background: transparent !important; }
+      #chart-container { background: transparent !important; }
+    `});
+  }
+
   const container = await page.$('#chart-container');
   if (!container) throw new Error('#chart-container not found in template');
 
   const kind = outputKind(outPath);
-  const pngBuffer = await container.screenshot({ type: 'png', omitBackground: false });
+  const pngBuffer = await container.screenshot({ type: 'png', omitBackground: argv.transparent });
   if (kind === 'png') {
     await sharp(pngBuffer).png({ compressionLevel: 9 }).toFile(outPath);
   } else {

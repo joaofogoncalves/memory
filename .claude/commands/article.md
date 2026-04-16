@@ -1,7 +1,7 @@
 ---
 argument-hint: [topic, thesis, or source URLs]
 description: Write a long-form article for the website, with image prompts
-allowed-tools: AskUserQuestion, WebFetch, WebSearch, Write, Read, Glob, Edit
+allowed-tools: AskUserQuestion, WebFetch, WebSearch, Write, Read, Glob, Edit, Bash
 ---
 
 Write a long-form article based on the user's input, following the established article style.
@@ -96,23 +96,79 @@ Output the full draft as regular text between horizontal rules (`---`). Then use
 
 Continue iterating until approved.
 
-## Step 5: Decide whether the article needs images
+## Step 5: Decide whether the article needs images or charts
 
-Make a judgement call. Most articles benefit from at least a hero image.
+Every article visual is either a **chart** (rendered from data via `charts/`) or an **AI-generated image** (prompt for a separate diffusion pass). Choose per visual.
 
-**Always generate prompts for:**
-- A hero image (the main visual, shown at top of article and in cards)
+**Charts beat images when the visual communicates concrete structure or data:**
+- A number-heavy comparison (funnel %, before/after, two headline stats)
+- A 2×2 framing, quadrant, or ranking
+- A trend over time (single or multi-series)
+- A pipeline, workflow, or architecture (horizontal flow, vertical flow, stacked tracks)
+- A timeline of events (by time of day or by date)
 
-**Also generate prompts when:**
-- The article has a framework, comparison, or data that a diagram would clarify
-- There's an abstract concept that needs a visual anchor
-- A section would benefit from breaking up long text
+**AI images beat charts when the visual is:**
+- A hero / mood setter
+- An abstract metaphor with no structured data
+- A scene or illustration
 
-**Skip additional images when:**
+**Always generate a hero.** Hero is nearly always an AI image (it's the mood piece), but if the article's thesis is a single chart-like shape (e.g. one stat contrast that carries the whole piece), the chart can be the hero.
+
+### Available chart templates
+
+Before proposing a section visual, scan `charts/templates/` and consider if any fit:
+
+- `bar` — descending / ascending categorical comparison, funnel
+- `stat-compare` — two big numbers with an arrow (access vs maturity, before vs after)
+- `quadrant` — 2×2 framing with labeled regions
+- `line` — multi-series trend over time
+- `flow` — horizontal or vertical pipeline with optional parallel tracks, gate labels, highlighted stage (set `orientation: "vertical"` for narrow columns / vertical reading)
+- `timeline` — stacked tracks with point or span events along a time-of-day or date axis
+
+If a planned section visual maps to one of these, generate a **chart spec** (see Step 5b).
+
+**If the visual doesn't fit any existing template:** describe the diagram you want, and surface it to the user with AskUserQuestion:
+- Options: "Add a new `<name>` template to `charts/`" · "Fall back to AI image prompt" · "Drop the visual"
+- Include a one-paragraph sketch of the template (geometry, data shape, sample JSON). Do not silently fall back to an AI image without asking — the whole point of `charts/` is to grow as patterns repeat.
+
+**Skip the visual when:**
 - The article is mostly personal narrative
-- Diagrams would feel forced
+- The diagram would feel forced
 
-## Step 5b: Generate image prompts
+## Step 5b: Generate chart specs and image prompts
+
+For each visual decided in Step 5, produce **either** a chart spec (if it maps to a template) **or** an image prompt (if it's mood/metaphor).
+
+### Chart specs
+
+For each chart, save a JSON spec to `articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.json`. The JSON must set `template` to the template name and match the shape documented in `charts/README.md`.
+
+Default dimensions when rendering (documented in `charts/README.md`):
+- `flow` horizontal — `--width 1800 --height 620`
+- `flow` vertical — `--width 1200 --height 900`
+- `timeline` — `--width 1800 --height 620` (shorter if few tracks)
+- `bar` / `line` — `--width 1600 --height 900`
+- `stat-compare` — `--width 1600 --height 900`
+- `quadrant` — `--width 1600 --height 900`
+
+After saving each spec, render it:
+
+```bash
+node charts/render.mjs \
+  --template <name> \
+  --data articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.json \
+  --output articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.webp \
+  --width <w> --height <h>
+```
+
+Reference the rendered `.webp` in the article body as a standard markdown image.
+
+**If a section visual has no matching template**, do NOT silently fall back. Surface it to the user with AskUserQuestion:
+- "Add a new `<name>` template to `charts/`" — describe the proposed geometry, data shape, and sample JSON in the question body
+- "Fall back to an AI image prompt" — generate a prompt instead
+- "Drop this visual" — skip the section image entirely
+
+### AI image prompts
 
 Generate prompts following the visual taste profile from `taste.md`.
 
@@ -147,10 +203,10 @@ Write each prompt as 2-4 sentences covering:
 End each prompt with: `Format: [width]x[height]px ([aspect ratio]) · [file type]`
 
 ### Show prompts and iterate
-Present with AskUserQuestion:
+Present both chart specs and image prompts together with AskUserQuestion:
 - "All good" — proceed to save
-- "Revise prompts" — user provides feedback
-- "Skip images" — save without image prompts
+- "Revise" — user provides feedback on either
+- "Skip images" — save without images or charts
 
 ## Step 6: Save the article
 
@@ -173,7 +229,8 @@ reading_time: [computed from word count]
 [Full article content as approved]
 ```
 
-4. If image prompts were generated, save them as a separate file `articles/YYYY/MM/YYYY-MM-DD-slug/image-prompts.md`:
+4. Chart specs (`media/<name>.json`) and rendered `.webp` files are already saved from Step 5b. Include inline references (`![caption](media/<name>.webp)`) in the article body at the relevant sections.
+5. If AI image prompts were generated, save them as `articles/YYYY/MM/YYYY-MM-DD-slug/image-prompts.md`:
 
 ```markdown
 # Image Prompts

@@ -19,9 +19,9 @@
 html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
 #chart-container {
   width: 100vw; min-height: 100vh;
-  padding: 56px 72px; box-sizing: border-box;
+  padding: 36px 40px; box-sizing: border-box;
   background: var(--bg);
-  display: flex; flex-direction: column; gap: 28px;
+  display: flex; flex-direction: column; gap: 20px;
 }
 .title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
 .subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
@@ -49,8 +49,8 @@ const svg = document.getElementById('svg');
 const axis = d.timeAxis || { type: 'time', start: '00:00', end: '24:00' };
 const tracks = d.tracks || [];
 
-// Geometry
-const trackH = 56, trackGap = 18, padL = 200, padR = 60, padT = 60, padB = 80;
+// Geometry — tighter so the chart fills available width.
+const trackH = 52, trackGap = 16, padL = 130, padR = 30, padT = 40, padB = 48;
 const plotW = 1600; // logical width; scaled by svg viewBox
 const height = padT + tracks.length * (trackH + trackGap) - trackGap + padB;
 const width  = padL + plotW + padR;
@@ -137,11 +137,16 @@ tracks.forEach((track, ti) => {
   (track.events || []).forEach(ev => {
     const color = ev.color || track.color || '#44d8f1';
     if (ev.from && ev.to) {
-      // span
+      // span: box is sized to fit the label; a thin underline marks the actual time extent.
       const x1 = x(ev.from), x2 = x(ev.to);
+      const spanMid = (x1 + x2) / 2;
+      const label = ev.label || '';
+      const labelPx = Math.max(60, label.length * 7.6 + 28);
+      const boxW = Math.max(x2 - x1, labelPx);
+      const bx = spanMid - boxW / 2;
       const r = document.createElementNS(NS, 'rect');
-      r.setAttribute('x', x1); r.setAttribute('y', y + 10);
-      r.setAttribute('width', Math.max(6, x2 - x1));
+      r.setAttribute('x', bx); r.setAttribute('y', y + 10);
+      r.setAttribute('width', boxW);
       r.setAttribute('height', trackH - 20);
       r.setAttribute('rx', 6);
       r.setAttribute('fill', color);
@@ -149,11 +154,27 @@ tracks.forEach((track, ti) => {
       r.setAttribute('stroke', color);
       r.setAttribute('stroke-width', '1.5');
       svg.appendChild(r);
-      if (ev.label) {
-        text((x1 + x2) / 2, y + trackH/2, ev.label, {
+      if (label) {
+        text(spanMid, y + trackH/2, label, {
           anchor: 'middle', fill: '#dee2f2', size: '12', weight: '600', font: bodyFont,
         });
       }
+      // span extent marker (thin line under the box)
+      const ext = document.createElementNS(NS, 'line');
+      ext.setAttribute('x1', x1); ext.setAttribute('y1', y + trackH - 4);
+      ext.setAttribute('x2', x2); ext.setAttribute('y2', y + trackH - 4);
+      ext.setAttribute('stroke', color); ext.setAttribute('stroke-width', '2');
+      ext.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(ext);
+      // end-cap ticks
+      [x1, x2].forEach(tx => {
+        const tick = document.createElementNS(NS, 'line');
+        tick.setAttribute('x1', tx); tick.setAttribute('y1', y + trackH - 8);
+        tick.setAttribute('x2', tx); tick.setAttribute('y2', y + trackH);
+        tick.setAttribute('stroke', color); tick.setAttribute('stroke-width', '2');
+        tick.setAttribute('stroke-linecap', 'round');
+        svg.appendChild(tick);
+      });
     } else if (ev.at != null) {
       const cx = x(ev.at);
       if (ev.shape === 'check') {

@@ -1,0 +1,21 @@
+{
+  "template": "flow",
+  "orientation": "vertical",
+  "title": "The three organs",
+  "subtitle": "Sensors read the world, reflexes act on it, memory keeps the system coherent across runs.",
+  "caption": "Architecture of the agent harness.",
+  "tracks": [
+    {
+      "label": "Sensors",
+      "stages": ["Sentry feed", "Slack: #product", "Slack: #eng-team", "GitHub @mentions"]
+    },
+    {
+      "label": "Reflexes",
+      "stages": ["/heartbeat", "/pick", "/build", "/ship", "/ci-fix"]
+    },
+    {
+      "label": "Memory",
+      "stages": ["gist state", "/weekly-agent-review", "agent definitions"]
+    }
+  ]
+}

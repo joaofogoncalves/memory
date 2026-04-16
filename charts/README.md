@@ -131,6 +131,7 @@ Data shape: `{ title, subtitle, unit, labels: [...], series: [{label, values, co
 | `--width`    | 1600 | Viewport width |
 | `--height`   | 900 | Viewport height |
 | `--scale`    | 2 | `deviceScaleFactor` (retina) |
+| `--transparent` | false | Drops the dark surface. Charts render with transparent background (text stays light — use only over dark composites). |
 
 ## Theme
 

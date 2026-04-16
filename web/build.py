@@ -91,7 +91,7 @@ TWITTER = SITE['twitter']
 TWITTER_HANDLE = SITE['twitter_handle']
 
 md_renderer = markdown.Markdown(
-    extensions=['fenced_code', 'codehilite', 'tables', 'smarty'],
+    extensions=['fenced_code', 'codehilite', 'tables', 'smarty', 'md_in_html'],
     extension_configs={
         'codehilite': {
             'css_class': 'highlight',
@@ -144,6 +144,23 @@ def autolink_urls(html: str) -> str:
         replace_url,
         html
     )
+
+
+def expand_wide_fences(md_text: str) -> str:
+    """Convert `::: wide` / `::: full` / `:::` fences into div wrappers.
+
+    Used in articles to opt inline images or tables out of the 720px content
+    column. Inner markdown is processed via the `md_in_html` extension.
+    """
+    pattern = re.compile(
+        r'^:::[ \t]*(wide|full)[ \t]*\r?\n(.*?)\r?\n^:::[ \t]*\r?\n?',
+        re.DOTALL | re.MULTILINE,
+    )
+    def repl(m):
+        cls = m.group(1)
+        inner = m.group(2)
+        return f'<div class="breakout breakout--{cls}" markdown="1">\n\n{inner}\n\n</div>\n'
+    return pattern.sub(repl, md_text)
 
 
 # ============================================================
@@ -544,10 +561,6 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
         f'<a href="{prefix}articles/"{cls("articles")}>Articles</a>'
         if _has_public_articles() else ''
     )
-    topics_link = (
-        f'<a href="{prefix}topics/"{cls("topics")}>Topics</a>'
-        if SITE.get('topics') else ''
-    )
     now_link = (
         f'<a href="{prefix}now/"{cls("now")}>Now</a>'
         if NOW_FILE.exists() else ''
@@ -559,7 +572,6 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
     <div class="nav-links">
       <a href="{prefix}about/"{cls("about")}>About</a>
       {articles_link}
-      {topics_link}
       <a href="{prefix}posts/"{cls("posts")}>Posts</a>
       {now_link}
     </div>
@@ -584,6 +596,7 @@ def footer_html() -> str:
         social_links += f'<a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>'
     social_links += f'<a href="/feed.xml" aria-label="RSS feed">{SVG_RSS}</a>'
     links_div = f'<div class="footer-links">{social_links}</div>' if social_links else ''
+
     return f'''</main>
 <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
@@ -873,7 +886,7 @@ def _now_badges(content: str) -> str:
     return f'<div class="now-badges">{badges}</div>'
 
 
-def generate_now() -> str:
+def generate_now(posts: list[dict] = None, topics: list[dict] = None) -> str:
     """Generate the /now page from now.md."""
     if NOW_FILE.exists():
         _, content = parse_frontmatter(NOW_FILE.read_text(encoding='utf-8'))
@@ -890,6 +903,8 @@ def generate_now() -> str:
         badges_html = ''
         last_mod = ''
 
+    topics_section = _topics_home_html(posts or [], topics or [])
+
     return f'''{head_html("Now", depth=1, description=f"What {SITE_NAME} is doing now.")}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -904,6 +919,7 @@ def generate_now() -> str:
   <div class="post-content now-content">
     {body_html}
   </div>
+  {topics_section}
 </div>
 
 {footer_html()}
@@ -1053,7 +1069,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
         depth = 3 if is_draft else 4
 
     md_renderer.reset()
-    body_html = _rewrite_img_to_webp(style_bridge_in(autolink_urls(md_renderer.convert(article['content']))))
+    body_html = _rewrite_img_to_webp(style_bridge_in(autolink_urls(md_renderer.convert(expand_wide_fences(article['content'])))))
 
     tags_html = render_tags_html(article['tags'])
 
@@ -1308,7 +1324,7 @@ def _topics_home_html(posts: list[dict], topics: list[dict]) -> str:
         count = len(topic_posts)
         if count == 0:
             continue
-        url = f'topics/{topic["slug"]}/'
+        url = f'/topics/{topic["slug"]}/'
         desc = escape(topic.get('description', ''))
         cards_html += f'''<a href="{url}" class="topic-card reveal">
       <div class="topic-card-name">{escape(topic["name"])}</div>
@@ -1935,7 +1951,7 @@ def build():
         print('Generating /now page...')
         now_dir = DIST_DIR / 'now'
         now_dir.mkdir(parents=True)
-        (now_dir / 'index.html').write_text(generate_now(), encoding='utf-8')
+        (now_dir / 'index.html').write_text(generate_now(posts, topics), encoding='utf-8')
 
     # Generate /topics pages
     if topics:

@@ -134,8 +134,12 @@ Second, the CI failure at 09:33 would have stopped the February pipeline until a
 
 Third, the Friday step is the one that would have sounded like science fiction two months ago. The system audits its own output and proposes changes to itself. I approve or reject the proposal. The system applies the change. Next week's version of the system is not the version I wrote.
 
-::: full
-![A day in the life timeline](media/day-in-life.webp)
+::: wide
+![Tuesday morning: #2847 start to finish](media/day-morning.webp)
+:::
+
+::: wide
+![Tuesday afternoon: the cadence keeps going](media/day-afternoon.webp)
 :::
 
 ## 7. What the nervous system still can't do

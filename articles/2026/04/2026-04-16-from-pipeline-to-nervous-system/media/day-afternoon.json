@@ -1,0 +1,35 @@
+{
+  "template": "timeline",
+  "title": "Tuesday afternoon — the cadence keeps going",
+  "subtitle": "Heartbeat wakes again mid-afternoon. /pick grabs the next bug at end of day. No human in the loop.",
+  "caption": "Same day, same logs.",
+  "timeAxis": {
+    "type": "time",
+    "start": "13:00",
+    "end": "18:00",
+    "ticks": [
+      { "at": "13:00", "label": "13:00" },
+      { "at": "14:00", "label": "14:00" },
+      { "at": "15:00", "label": "15:00" },
+      { "at": "16:00", "label": "16:00" },
+      { "at": "17:00", "label": "17:00" },
+      { "at": "18:00", "label": "18:00" }
+    ]
+  },
+  "tracks": [
+    {
+      "label": "Sensors",
+      "color": "#44d8f1",
+      "events": [
+        { "at": "14:00", "label": "mentions sweep", "timeLabel": "14:00" }
+      ]
+    },
+    {
+      "label": "Reflexes",
+      "color": "#44d8f1",
+      "events": [
+        { "at": "17:30", "label": "/pick next", "timeLabel": "17:30" }
+      ]
+    }
+  ]
+}

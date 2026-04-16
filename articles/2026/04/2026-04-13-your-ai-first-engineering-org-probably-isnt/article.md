@@ -4,8 +4,8 @@ subtitle: "Rebuilding a business operations platform with three engineers and a 
 date: 2026-04-13
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
 medium_url:
-hero_image:
-reading_time: 10
+hero_image: media/hero-harness.webp
+reading_time: 8
 draft: true
 ---
 
@@ -61,62 +61,21 @@ I spent weeks designing the harness: the agent roster, the skills, the CI gates,
 
 BRIDGE IN is building an operations platform. We use our own harness to build the platform that will run the operations.
 
-## The Stack
+## The Shape of the Harness
 
-Here is what we run and what each piece does.
+The details of the stack matter less than the shape. A few principles hold it together.
 
-Django on the backend. React with TypeScript on the frontend. One monorepo. A single command regenerates frontend types from backend schemas, so the contract between the two is typed end to end. An agent editing a model can trace the change all the way to the component that renders it.
+One monorepo. Backend, frontend, infrastructure, design system, docs, agent definitions, all in one place. A fragmented codebase is invisible to an agent. A unified one is legible. Types regenerate from backend to frontend with a single command, so the contract between them is enforced, not documented.
 
-GitHub Actions on every pull request. One pipeline. Formatting, linting, type checking, a migration check that blocks incomplete schema changes, a background-job discovery check that blocks unregistered tasks, and two parallel test suites (API and business logic) that merge into a single coverage report. Minimum 80% coverage. No phase is optional. No manual overrides. The pipeline is deterministic, so agents can predict outcomes and reason about failures.
+One CI pipeline. Every PR runs the same gates: format, lint, types, migration checks, tests, coverage floor. No optional phases. No manual overrides. Deterministic, so agents can predict outcomes and reason about failures.
 
-A harness of roughly fifteen specialized Claude Code agents. Each one is a markdown file with a narrow remit: architect, product manager, backend developer, frontend developer, test writer, quality checker, code reviewer, code optimizer, CI fixer, documentation expert, UI designer, GitHub Actions expert, conflict resolver, skill creator, tester. Constraints define the roles. The architect is explicitly prohibited from generating code. The project manager is explicitly prohibited from implementing. Boundaries are enforced by what an agent is not allowed to do, not by what it is told to do.
+A roster of specialized agents, each with a narrow remit, each constrained by what it is *not* allowed to do. The architect cannot write code. The project manager cannot implement. Boundaries come from prohibitions, not instructions.
 
-Custom skills for every high-frequency workflow. `/build` for feature delivery: plan, implement, test, review, merge. `/ship` for fast-track single-agent work. `/pick` for bug fixes. `/ci-fix` for CI failures. `/fix-dependabot` for dependency PRs. `/heartbeat` for weekly engineering reviews. Each skill is a workflow, not a prompt. It reads the project config, picks the right agents, dispatches them in the right order, gates each phase on the last one's output.
+Skills that compose agents into workflows (feature delivery, bug triage, CI repair, dependency PRs) so that an engineer tagging an issue kicks off a sequence of planning, implementation, testing, and review without manual orchestration.
 
-MCP integrations to the tools we already run for production error tracking, team chat, and architecture docs. Agents don't just know the code. They know the running system and the conversation around it.
+Pre-commit hooks and branch protection as the last line of defense. Nothing lands on master without a human reviewer and CI both agreeing.
 
-Pre-commit hooks as the last line of defense. Format, lint, migration check, and a hard guard that blocks any attempt to push or merge directly to master. No exception. Every change goes through a PR. No AI-written code lands on master without a human reviewer and CI agreeing.
-
-A Python shim around the GitHub API. We wrap every write operation (issue creation, PR creation, label inference, project board updates, assignment routing) in a single helper. Skills call the helper instead of raw shell commands. It encapsulates the messy parts of GitHub so skills compose cleanly.
-
-Each tool handles one phase. No tool tries to do everything.
-
-## The Review Loop
-
-This is the centerpiece.
-
-When an engineer tags `@claude` in an issue, the project manager agent reads the issue, fetches context from the repo, dispatches an architect to produce a system plan, a product manager to review it, a test writer to draft the test plan. Once the plans are ready, implementation agents pick them up. Backend developer. Frontend developer. Code optimizer. Simplifier. Test writer. Quality checker.
-
-Each step runs against the whole codebase, not just the touched files. A feature cannot silently break something three modules away.
-
-When CI fails, the `/ci-fix` skill runs. It reads the failure logs, classifies the error (format, lint, types, tests, migration, build), fixes in dependency order, verifies locally, and reports. CI failures that used to take an afternoon to triage now resolve in minutes.
-
-When Dependabot opens a PR, `/fix-dependabot` takes over. It runs the local suite, fixes any breakage, merges if green. A hundred dependency PRs a year stop being a tax on the team.
-
-The loop closes back on itself. Errors detected, triaged, fixed, verified. No tool tries to do everything. The daily cycle runs with very little human intervention.
-
-## How a Feature Moves from Idea to Production
-
-Both paths use the same pipeline. One system. One standard.
-
-New feature path:
-
-- An engineer files an issue. The project manager agent is tagged.
-- Architect and product manager produce plans. Test writer drafts acceptance tests.
-- Backend and frontend developers implement against those plans. The auto-generated types keep them in sync.
-- Code optimizer and simplifier refactor what the implementers wrote.
-- Quality checker runs the full suite. Code reviewer posts a structured verdict.
-- A PR opens. The human reviewer checks for strategic risk, not line-by-line correctness.
-- CI validates. On green, the PR merges.
-
-Bug fix path:
-
-- The error tracker surfaces an exception. Triage summaries highlight what matters.
-- An engineer tags `@claude` on the issue. The agent investigates, reproduces, writes a regression test.
-- Same implement-test-review pipeline. Same merge rules.
-- After deploy, the error is verified gone. If it is, the issue auto-closes.
-
-Both paths use the same pipeline. One system. One standard.
+The shape is what matters: one repo, one pipeline, specialized agents, composable skills, enforced gates. How an issue moves through that shape (who plans, who implements, what happens when CI fails) is a longer story I'll tell separately.
 
 ::: wide
 ![Feature and bug-fix paths converge at CI and Deploy](media/pipeline-flow.webp)

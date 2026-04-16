@@ -37,15 +37,23 @@ topics:
   - name: "AI in Engineering"
     slug: ai-engineering
     description: "What changes when AI becomes part of the team, not just a tool."
-    tags: [ai, openai, generativeai, llm, claudecode, chatgpt, assistedengineering, technology, innovation, future]
+    tags: [ai, openai, generativeai, llm, claudecode, chatgpt, assistedengineering, technology, innovation, future, tech]
   - name: "Engineering Leadership"
     slug: leadership
     description: "Building teams, managing up, and making decisions under uncertainty."
-    tags: [leadership, empoweringengineers, teammanagement, techleadership, teamwork, teambuilding, management, hiring, mentoring, culture, bestadvice, feedback]
+    tags: [leadership, empoweringengineers, teammanagement, techleadership, teamwork, teambuilding, management, hiring, mentoring, culture, bestadvice, feedback, engineers]
   - name: "Building Software"
     slug: building-software
     description: "The craft of shipping — architecture, trade-offs, and the realities of getting things done."
-    tags: [softwaredevelopment, engineering, softwareengineering, devops, agile, systemsengineering, productmanagement, strategy, startups, startup]
+    tags: [softwaredevelopment, engineering, softwareengineering, betterengineering, devops, agile, systemsengineering, productmanagement, strategy, startups, startup, productivity]
+  - name: "Career Growth"
+    slug: career-growth
+    description: "Navigating your path — transitions, learning, and the things nobody tells you."
+    tags: [careergrowth, personalgrowth, growth, success, careeradvice, professionaldevelopment]
+  - name: "Space & Aerospace"
+    slug: space
+    description: "From NewSpace startups to the engineering behind getting off the planet."
+    tags: [space, aerospace, newspace, spacetechexpo, valispace]
   - name: "Reading List"
     slug: reading-list
     description: "Book reviews, recommendations, and what's on the shelf."

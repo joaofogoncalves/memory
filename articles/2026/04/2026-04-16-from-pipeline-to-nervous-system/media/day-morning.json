@@ -1,0 +1,47 @@
+{
+  "template": "timeline",
+  "title": "Tuesday morning — issue #2847, start to finish",
+  "subtitle": "Sensor finds a Sentry regression at 08:14. By 10:12 the fix is merged. One human tap in the middle.",
+  "caption": "Composite morning from the week's logs.",
+  "timeAxis": {
+    "type": "time",
+    "start": "08:00",
+    "end": "11:00",
+    "ticks": [
+      { "at": "08:00", "label": "08:00" },
+      { "at": "09:00", "label": "09:00" },
+      { "at": "10:00", "label": "10:00" },
+      { "at": "11:00", "label": "11:00" }
+    ]
+  },
+  "tracks": [
+    {
+      "label": "Sensors",
+      "color": "#44d8f1",
+      "events": [
+        { "at": "08:14", "label": "creates #2847", "timeLabel": "08:14" }
+      ]
+    },
+    {
+      "label": "Reflexes",
+      "color": "#44d8f1",
+      "events": [
+        { "from": "09:02", "to": "09:43", "label": "/pick → /build --auto → PR ready" }
+      ]
+    },
+    {
+      "label": "Specialists",
+      "color": "#bdc2ff",
+      "events": [
+        { "from": "09:30", "to": "09:40", "label": "ci-fixer patches flaky migration" }
+      ]
+    },
+    {
+      "label": "Human",
+      "color": "#ff8a9e",
+      "events": [
+        { "at": "10:11", "label": "approve → auto-merge", "shape": "check", "timeLabel": "10:11" }
+      ]
+    }
+  ]
+}

@@ -212,11 +212,11 @@
 
     return '<a href="' + post.url + '" class="list-card">' +
       '<div class="list-card-body">' +
-      '<div class="card-meta"><span class="card-date">' + post.date + '</span>' +
-      '<span class="card-reading-time">' + (post.reading_time || '') + '</span></div>' +
       '<div class="list-card-title">' + escapeHtml(post.title) + '</div>' +
       '<div class="list-card-preview">' + escapeHtml(post.preview) + '</div>' +
-      '<div class="card-tags">' + tags + '</div>' +
+      '<div class="card-footer"><div class="card-tags">' + tags + '</div>' +
+      '<div class="card-meta"><span class="card-date">' + post.date + '</span>' +
+      '<span class="card-reading-time">' + (post.reading_time || '') + '</span></div></div>' +
       '</div>' +
       thumb +
       '</a>';

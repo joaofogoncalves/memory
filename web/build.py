@@ -796,10 +796,9 @@ def render_card(post: dict, depth: int = 0) -> str:
 
     return f'''<div class="{card_cls}">
   <div class="card-body">
-    <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
     <div class="card-title"><a href="{url}">{escape(post['title'])}</a></div>
     <div class="card-preview">{escape(post['preview'])}</div>
-    <div class="card-tags">{tags_html}</div>
+    <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div></div>
   </div>
   {thumb}
 </div>'''
@@ -821,10 +820,9 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 
     return f'''<div class="card-featured">
   {image}
-  <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
   <div class="card-title"><a href="{url}">{escape(post['title'])}</a></div>
   <div class="card-preview">{escape(post['preview'])}</div>
-  <div class="card-tags">{tags_html}</div>
+  <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div></div>
 </div>'''
 
 
@@ -1008,15 +1006,14 @@ def render_article_card(article: dict, depth: int = 0) -> str:
     if article.get('subtitle'):
         subtitle_html = f'<div class="article-card-subtitle">{escape(article["subtitle"])}</div>'
 
-    return f'''<div class="article-card">
+    return f'''<a href="{url}" class="article-card">
   {hero}
   <div class="article-card-body">
-    <div class="card-meta"><span class="card-date">{article['date']}</span><span class="card-reading-time">{article['reading_time']}</span></div>
-    <div class="article-card-title"><a href="{url}">{escape(article['title'])}</a></div>
+    <div class="article-card-title">{escape(article['title'])}</div>
     {subtitle_html}
-    <div class="card-tags">{tags_html}</div>
+    <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{article['date']}</span><span class="card-reading-time">{article['reading_time']}</span></div></div>
   </div>
-</div>'''
+</a>'''
 
 
 def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
@@ -1199,13 +1196,9 @@ def _featured_spotlight_html(featured_posts: list[dict]) -> str:
 
         slides_html += f'''<div class="spotlight-slide{active}{text_only}" data-index="{i}">
       <div class="spotlight-content">
-        <div class="spotlight-meta">
-          <span class="card-date">{p['date']}</span>
-          <span class="card-reading-time">{p['reading_time']}</span>
-        </div>
         <h2 class="spotlight-title"><a href="{url}">{escape(p['title'])}</a></h2>
         <p class="spotlight-preview">{escape(p['preview'])}</p>
-        <div class="card-tags">{tags_html}</div>
+        <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{p['date']}</span><span class="card-reading-time">{p['reading_time']}</span></div></div>
       </div>
       {image_html}
     </div>\n'''
@@ -1234,11 +1227,11 @@ def _tabbed_content_html(posts: list[dict], articles: list[dict]) -> str:
     if not posts and not articles:
         return ''
 
-    def _render_mixed_card(item: dict) -> str:
-        """Render a post or article as a card, handling different image paths."""
+    def _render_mixed_list_card(item: dict) -> str:
+        """Render a post or article as a list-card row."""
         if not item.get('_is_article'):
-            return render_card(item, depth=0)
-        # Article card: build thumb from hero_image with article path
+            return _render_list_card(item, depth=0)
+        # Article: build list-card with hero as thumb
         url = item['url'].lstrip('/')
         if not url.endswith('/'):
             url += '/'
@@ -1247,21 +1240,19 @@ def _tabbed_content_html(posts: list[dict], articles: list[dict]) -> str:
         if item.get('hero_image'):
             hero_fname = _webp_name(item['hero_image'])
             thumb_src = f"articles/{item['year']}/{item['month']}/{item['slug']}/{hero_fname}"
-            thumb = f'<img class="card-thumb" src="{thumb_src}" alt="" loading="lazy">'
-        card_cls = 'card card-with-thumb' if thumb else 'card'
-        return f'''<div class="{card_cls}">
-  <div class="card-body">
-    <div class="card-meta"><span class="card-date">{item['date']}</span><span class="card-reading-time">{item['reading_time']}</span></div>
-    <div class="card-title"><a href="{url}">{escape(item['title'])}</a></div>
-    <div class="card-preview">{escape(item['preview'])}</div>
-    <div class="card-tags">{tags_html}</div>
+            thumb = f'<div class="list-card-image"><img src="{thumb_src}" alt="" loading="lazy"></div>'
+        return f'''<a href="{url}" class="list-card">
+  <div class="list-card-body">
+    <div class="list-card-title">{escape(item['title'])}</div>
+    <div class="list-card-preview">{escape(item['preview'])}</div>
+    <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{item['date']}</span><span class="card-reading-time">{item['reading_time']}</span></div></div>
   </div>
   {thumb}
-</div>'''
+</a>'''
 
-    def _render_grid_cards(items: list[dict], limit: int = 8) -> str:
-        """Render a list of post/article dicts as card HTML."""
-        cards = '\n'.join(_render_mixed_card(p) for p in items[:limit])
+    def _render_list_cards(items: list[dict], limit: int = 8) -> str:
+        """Render a list of post/article dicts as list-card HTML."""
+        cards = '\n'.join(_render_mixed_list_card(p) for p in items[:limit])
         return cards
 
     # Latest: merge posts + articles, sort by date
@@ -1285,8 +1276,8 @@ def _tabbed_content_html(posts: list[dict], articles: list[dict]) -> str:
     )
     top_items = scored[:8]
 
-    latest_cards = _render_grid_cards(latest_items)
-    top_cards = _render_grid_cards(top_items)
+    latest_cards = _render_list_cards(latest_items)
+    top_cards = _render_list_cards(top_items)
 
     return f'''<section class="section" aria-label="Writing">
     <div class="content-tabs">
@@ -1294,12 +1285,12 @@ def _tabbed_content_html(posts: list[dict], articles: list[dict]) -> str:
       <button class="content-tab" data-tab="top">Top</button>
     </div>
     <div class="tab-panel active" id="tab-latest">
-      <div class="tab-grid">
+      <div class="posts-list">
         {latest_cards}
       </div>
     </div>
     <div class="tab-panel" id="tab-top">
-      <div class="tab-grid">
+      <div class="posts-list">
         {top_cards}
       </div>
     </div>
@@ -1377,8 +1368,9 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(depth=0, transparent=True)}
 
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
+
 <div class="hero-fullscreen">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-fullscreen-content page-container">
     <h1>{escape(SITE['hero_title'])}</h1>
     {thesis_html}
@@ -1642,10 +1634,9 @@ def _render_list_card(post: dict, depth: int = 0) -> str:
 
     return f'''<a href="{url}" class="list-card">
   <div class="list-card-body">
-    <div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div>
     <div class="list-card-title">{escape(post['title'])}</div>
     <div class="list-card-preview">{escape(post['preview'])}</div>
-    <div class="card-tags">{tags_html}</div>
+    <div class="card-footer"><div class="card-tags">{tags_html}</div><div class="card-meta"><span class="card-date">{post['date']}</span><span class="card-reading-time">{post['reading_time']}</span></div></div>
   </div>
   {thumb}
 </a>'''

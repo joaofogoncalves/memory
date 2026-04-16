@@ -24,15 +24,16 @@
     var rafId = null;
 
     function resize() {
-      w = canvas.offsetWidth;
-      h = canvas.offsetHeight;
+      w = window.innerWidth;
+      h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function createParticles() {
-      var count = w < 768 ? 50 : 80;
+      var area = w * h;
+      var count = Math.max(40, Math.min(200, Math.round(area / 12000)));
       particles = [];
       for (var i = 0; i < count; i++) {
         particles.push({
@@ -99,25 +100,23 @@
       rafId = requestAnimationFrame(loop);
     }
 
-    canvas.addEventListener('mousemove', function (e) {
-      var rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
 
-    canvas.addEventListener('mouseleave', function () {
+    document.addEventListener('mouseleave', function () {
       mouseX = -9999;
       mouseY = -9999;
     });
 
-    // Click to spawn a new particle
-    canvas.addEventListener('click', function (e) {
-      var rect = canvas.getBoundingClientRect();
-      var cx = e.clientX - rect.left;
-      var cy = e.clientY - rect.top;
+    // Click on empty space to spawn a new particle
+    document.addEventListener('click', function (e) {
+      var tag = e.target.tagName.toLowerCase();
+      if (tag === 'a' || tag === 'button' || tag === 'input' || e.target.closest('a, button, input')) return;
       particles.push({
-        x: cx,
-        y: cy,
+        x: e.clientX,
+        y: e.clientY,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         r: Math.random() * 1.5 + 0.8,

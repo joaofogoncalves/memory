@@ -1,0 +1,13 @@
+{
+  "template": "line",
+  "title": "Access raced ahead. Maturity didn't move.",
+  "subtitle": "Share of organizations reporting AI access vs. mature deployment, 2022–2026.",
+  "unit": "%",
+  "caption": "Illustrative multi-year trend.",
+  "labels": ["2022", "2023", "2024", "2025", "2026"],
+  "series": [
+    { "label": "Have access",        "values": [18, 42, 68, 82, 88], "color": "#0F6E56" },
+    { "label": "In production",      "values": [4,  9,  14, 18, 22], "color": "#1D9E75" },
+    { "label": "Mature deployment",  "values": [0,  0,  1,  1,  1 ], "color": "#D85A30" }
+  ]
+}

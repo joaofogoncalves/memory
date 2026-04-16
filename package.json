@@ -1,0 +1,14 @@
+{
+  "name": "charts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "chart": "node charts/render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "sharp": "^0.33.5",
+    "yargs": "^17.7.2"
+  }
+}

@@ -16,6 +16,10 @@ logs/
 web/dist/
 drafts/
 
+# Node
+node_modules/
+charts/out/
+
 
 # OS
 .DS_Store

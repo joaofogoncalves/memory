@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Quadrant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1; --lav-500: #bdc2ff; --coral: #ff8a9e;
+  --bg: #0e131e; --surface-1: #171b27; --surface-2: #1b1f2b;
+  --border: #3c494c; --border-strong: #869396;
+  --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 56px 72px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 28px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 900px; line-height: 1.4; }
+.diagram-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+svg { max-width: 100%; max-height: 100%; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="diagram-wrap"><svg id="svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const d = window.__DATA__ || {};
+document.getElementById('title').textContent = d.title || '';
+document.getElementById('subtitle').textContent = d.subtitle || '';
+document.getElementById('caption').textContent = d.caption || '';
+
+const svg = document.getElementById('svg');
+const xLabel = d.xAxis || { low: 'Low', high: 'High', title: '' };
+const yLabel = d.yAxis || { low: 'Low', high: 'High', title: '' };
+const q = d.quadrants || { tl: {}, tr: {}, bl: {}, br: {} };
+
+const NS = 'http://www.w3.org/2000/svg';
+const ox = 120, oy = 60, w = 960, h = 540;
+const cx = ox + w / 2, cy = oy + h / 2;
+
+const displayFont = '"Space Grotesk", "Inter", sans-serif';
+const bodyFont = '"Inter", sans-serif';
+
+const fills = {
+  tl: '#171b27',
+  tr: '#17242a',  // subtle cyan tint
+  bl: '#171b27',
+  br: '#241820',  // subtle coral tint
+};
+const bgRects = [
+  { x: ox, y: oy, w: w/2, h: h/2, fill: fills.tl },
+  { x: cx, y: oy, w: w/2, h: h/2, fill: fills.tr },
+  { x: ox, y: cy, w: w/2, h: h/2, fill: fills.bl },
+  { x: cx, y: cy, w: w/2, h: h/2, fill: fills.br },
+];
+bgRects.forEach(r => {
+  const el = document.createElementNS(NS, 'rect');
+  el.setAttribute('x', r.x); el.setAttribute('y', r.y);
+  el.setAttribute('width', r.w); el.setAttribute('height', r.h);
+  el.setAttribute('fill', r.fill);
+  el.setAttribute('rx', 8);
+  svg.appendChild(el);
+});
+
+const outer = document.createElementNS(NS, 'rect');
+outer.setAttribute('x', ox); outer.setAttribute('y', oy);
+outer.setAttribute('width', w); outer.setAttribute('height', h);
+outer.setAttribute('fill', 'none');
+outer.setAttribute('stroke', '#3c494c');
+outer.setAttribute('stroke-width', '1.5');
+outer.setAttribute('rx', '8');
+svg.appendChild(outer);
+
+function line(x1, y1, x2, y2, stroke = '#3c494c', width = 1) {
+  const l = document.createElementNS(NS, 'line');
+  l.setAttribute('x1', x1); l.setAttribute('y1', y1);
+  l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+  l.setAttribute('stroke', stroke); l.setAttribute('stroke-width', width);
+  svg.appendChild(l);
+}
+line(cx, oy, cx, oy + h);
+line(ox, cy, ox + w, cy);
+
+function quadLabel(qx, qy, data, color) {
+  if (!data) return;
+  const g = document.createElementNS(NS, 'g');
+  const tLabel = document.createElementNS(NS, 'text');
+  tLabel.setAttribute('x', qx); tLabel.setAttribute('y', qy);
+  tLabel.setAttribute('font-family', displayFont);
+  tLabel.setAttribute('font-size', '22');
+  tLabel.setAttribute('font-weight', '700');
+  tLabel.setAttribute('fill', color);
+  tLabel.textContent = data.label || '';
+  g.appendChild(tLabel);
+
+  if (data.description) {
+    const tDesc = document.createElementNS(NS, 'text');
+    tDesc.setAttribute('x', qx); tDesc.setAttribute('y', qy + 28);
+    tDesc.setAttribute('font-family', bodyFont);
+    tDesc.setAttribute('font-size', '15');
+    tDesc.setAttribute('fill', '#dee2f2');
+    const words = data.description.split(' ');
+    let lines = [''], maxLen = 40;
+    for (const w of words) {
+      if ((lines[lines.length-1] + ' ' + w).trim().length > maxLen) lines.push(w);
+      else lines[lines.length-1] = (lines[lines.length-1] + ' ' + w).trim();
+    }
+    lines.forEach((line, i) => {
+      const ts = document.createElementNS(NS, 'tspan');
+      ts.setAttribute('x', qx);
+      ts.setAttribute('dy', i === 0 ? 0 : 20);
+      ts.textContent = line;
+      tDesc.appendChild(ts);
+    });
+    g.appendChild(tDesc);
+  }
+  svg.appendChild(g);
+}
+const pad = 24;
+quadLabel(ox + pad, oy + pad + 24, q.tl, '#bbc9cc');
+quadLabel(cx + pad, oy + pad + 24, q.tr, '#44d8f1');
+quadLabel(ox + pad, cy + pad + 24, q.bl, '#bbc9cc');
+quadLabel(cx + pad, cy + pad + 24, q.br, '#ff8a9e');
+
+function axisText(x, y, text, opts = {}) {
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('x', x); t.setAttribute('y', y);
+  t.setAttribute('font-family', opts.display ? displayFont : bodyFont);
+  t.setAttribute('font-size', opts.size || '13');
+  t.setAttribute('font-weight', opts.weight || '500');
+  t.setAttribute('fill', opts.fill || '#bbc9cc');
+  t.setAttribute('text-anchor', opts.anchor || 'start');
+  if (opts.transform) t.setAttribute('transform', opts.transform);
+  t.textContent = text;
+  svg.appendChild(t);
+}
+axisText(cx, oy + h + 40, xLabel.title || '', { anchor: 'middle', size: '14', weight: '600', fill: '#dee2f2', display: true });
+axisText(ox, oy + h + 40, xLabel.low || '', { anchor: 'start' });
+axisText(ox + w, oy + h + 40, xLabel.high || '', { anchor: 'end' });
+axisText(ox - 40, cy, yLabel.title || '', { anchor: 'middle', size: '14', weight: '600', fill: '#dee2f2', display: true, transform: `rotate(-90 ${ox - 40} ${cy})` });
+axisText(ox - 12, oy + 12, yLabel.high || '', { anchor: 'end' });
+axisText(ox - 12, oy + h, yLabel.low || '', { anchor: 'end' });
+</script>
+</body>
+</html>

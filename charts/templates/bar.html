@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Bar Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --cyan-500: #44d8f1; --cyan-700: #00bcd4; --cyan-200: #7ee6f5;
+  --lav-500: #bdc2ff; --lav-700: #a8afff;
+  --coral: #ff8a9e; --amber: #e8c87a;
+  --bg: #0e131e; --surface: #0e131e; --surface-1: #1b1f2b;
+  --border: #3c494c; --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 56px 72px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; color: var(--text); }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 900px; line-height: 1.4; }
+.chart-wrap { flex: 1; position: relative; min-height: 0; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="chart-wrap"><canvas id="chart"></canvas></div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const data = window.__DATA__ || {};
+document.getElementById('title').textContent = data.title || '';
+document.getElementById('subtitle').textContent = data.subtitle || '';
+document.getElementById('caption').textContent = data.caption || '';
+
+const labels = (data.bars || []).map(b => b.label);
+const values = (data.bars || []).map(b => b.value);
+const highlightIdx = data.highlightIndex ?? -1;
+
+const sequence = ['#44d8f1', '#7ee6f5', '#bdc2ff', '#a8afff', '#8891d9'];
+const bgColors = values.map((_, i) => i === highlightIdx ? '#ff8a9e' : sequence[Math.min(i, sequence.length - 1)]);
+
+const bodyFont = '"Inter", -apple-system, sans-serif';
+
+new Chart(document.getElementById('chart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data: values,
+      backgroundColor: bgColors,
+      borderRadius: 4,
+      borderSkipped: false,
+      barPercentage: 0.72,
+      categoryPercentage: 0.82,
+    }],
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    layout: { padding: { top: 24, right: 8, bottom: 0, left: 0 } },
+    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+    scales: {
+      x: {
+        grid: { display: false, drawBorder: false },
+        border: { display: false },
+        ticks: { color: '#dee2f2', font: { family: bodyFont, size: 15, weight: '500' }, maxRotation: 0, autoSkip: false },
+      },
+      y: {
+        beginAtZero: true,
+        suggestedMax: data.yMax ?? undefined,
+        grid: { color: 'rgba(134, 147, 150, 0.18)', drawBorder: false, drawTicks: false },
+        border: { display: false },
+        ticks: {
+          color: '#bbc9cc',
+          font: { family: bodyFont, size: 13 },
+          padding: 12,
+          callback: (v) => data.unit === '%' ? v + '%' : v,
+        },
+      },
+    },
+  },
+  plugins: [{
+    id: 'valueLabels',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      ctx.fillStyle = '#dee2f2';
+      ctx.font = '600 15px ' + bodyFont;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      chart.getDatasetMeta(0).data.forEach((bar, i) => {
+        const v = values[i];
+        const label = data.unit === '%' ? v + '%' : String(v);
+        ctx.fillText(label, bar.x, bar.y - 8);
+      });
+      ctx.restore();
+    }
+  }],
+});
+</script>
+</body>
+</html>

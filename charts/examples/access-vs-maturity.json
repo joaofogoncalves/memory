@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "Access is not maturity",
+  "subtitle": "Almost every company has AI in the building. Almost none have made it load-bearing.",
+  "arrowLabel": "The real gap",
+  "caption": "Illustrative figures for editorial use.",
+  "left": {
+    "label": "Have access",
+    "value": "88%",
+    "description": "of organizations report employees using AI tools at work in some form."
+  },
+  "right": {
+    "label": "Mature deployment",
+    "value": "1%",
+    "description": "describe their AI deployment as mature, with measurable business impact."
+  }
+}

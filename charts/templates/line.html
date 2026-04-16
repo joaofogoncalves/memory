@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Line Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --cyan-500: #44d8f1; --lav-500: #bdc2ff; --coral: #ff8a9e;
+  --bg: #0e131e; --border: #3c494c;
+  --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 56px 72px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 900px; line-height: 1.4; }
+.legend { display: flex; flex-wrap: wrap; gap: 20px; }
+.legend-item { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); font-weight: 500; }
+.swatch { width: 14px; height: 14px; border-radius: 3px; }
+.chart-wrap { flex: 1; position: relative; min-height: 0; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="legend" id="legend"></div>
+  <div class="chart-wrap"><canvas id="chart"></canvas></div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const data = window.__DATA__ || {};
+document.getElementById('title').textContent = data.title || '';
+document.getElementById('subtitle').textContent = data.subtitle || '';
+document.getElementById('caption').textContent = data.caption || '';
+
+const bodyFont = '"Inter", sans-serif';
+const palette = ['#44d8f1', '#bdc2ff', '#ff8a9e', '#e8c87a', '#a6e88e', '#c4a0f5'];
+const series = (data.series || []).map((s, i) => ({
+  label: s.label,
+  data: s.values,
+  borderColor: s.color || palette[i % palette.length],
+  backgroundColor: s.color || palette[i % palette.length],
+  tension: 0.28,
+  borderWidth: 2.5,
+  pointRadius: 3,
+  pointHoverRadius: 4,
+  pointBackgroundColor: s.color || palette[i % palette.length],
+  fill: false,
+}));
+
+const legendEl = document.getElementById('legend');
+series.forEach(s => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<span class="swatch" style="background:${s.borderColor}"></span>${s.label}`;
+  legendEl.appendChild(item);
+});
+
+new Chart(document.getElementById('chart'), {
+  type: 'line',
+  data: { labels: data.labels || [], datasets: series },
+  options: {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    layout: { padding: { top: 16, right: 16, bottom: 0, left: 0 } },
+    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+    scales: {
+      x: {
+        grid: { display: false, drawBorder: false },
+        border: { display: false },
+        ticks: { color: '#bbc9cc', font: { family: bodyFont, size: 13 } },
+      },
+      y: {
+        beginAtZero: data.beginAtZero ?? true,
+        grid: { color: 'rgba(134, 147, 150, 0.18)', drawBorder: false, drawTicks: false },
+        border: { display: false },
+        ticks: {
+          color: '#bbc9cc',
+          font: { family: bodyFont, size: 13 },
+          padding: 12,
+          callback: (v) => data.unit === '%' ? v + '%' : v,
+        },
+      },
+    },
+  },
+});
+</script>
+</body>
+</html>

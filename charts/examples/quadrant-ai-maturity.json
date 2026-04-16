@@ -1,0 +1,14 @@
+{
+  "template": "quadrant",
+  "title": "Where companies actually sit on AI",
+  "subtitle": "Two axes that matter: how much AI capability is in the org, and how deeply it's wired into how work gets done.",
+  "caption": "Framing for editorial use.",
+  "xAxis": { "title": "Depth of integration", "low": "Surface tools", "high": "Embedded in workflows" },
+  "yAxis": { "title": "Capability in the org", "low": "Few practitioners", "high": "Broad fluency" },
+  "quadrants": {
+    "tl": { "label": "Curious but stuck", "description": "Skilled people, no real surface area for the work to land on." },
+    "tr": { "label": "Operating differently", "description": "AI fluency plus embedded workflows. The rare combination." },
+    "bl": { "label": "Tool tourism", "description": "A license for everyone, no one changed how they work." },
+    "br": { "label": "Narrow automation", "description": "A few deep integrations, but only a handful of people can extend them." }
+  }
+}

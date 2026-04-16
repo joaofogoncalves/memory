@@ -1,0 +1,16 @@
+{
+  "template": "bar",
+  "title": "The AI adoption funnel collapses fast",
+  "subtitle": "What share of organizations make it to each stage, from having access to mature deployment.",
+  "unit": "%",
+  "yMax": 100,
+  "highlightIndex": 4,
+  "caption": "Source: illustrative funnel based on enterprise survey data.",
+  "bars": [
+    { "label": "Have access", "value": 88 },
+    { "label": "Pilot running", "value": 54 },
+    { "label": "In production", "value": 22 },
+    { "label": "Org-wide rollout", "value": 7 },
+    { "label": "Mature deployment", "value": 1 }
+  ]
+}

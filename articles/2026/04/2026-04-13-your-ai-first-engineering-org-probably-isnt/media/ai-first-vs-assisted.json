@@ -1,0 +1,25 @@
+{
+  "template": "feature-compare",
+  "title": "AI-assisted is not AI-first",
+  "subtitle": "The difference isn't tooling. It's whether the workflow was redesigned around agents, or agents were bolted onto a workflow built for humans.",
+  "arrowLabel": "Structural shift",
+  "caption": "Framing for editorial use.",
+  "left": {
+    "label": "AI-assisted",
+    "title": "Bolt AI onto the existing workflow",
+    "items": [
+      "Engineers keep doing what they did before",
+      "Typical gain: 10–20% efficiency",
+      "Org shape, process, and roles stay the same"
+    ]
+  },
+  "right": {
+    "label": "AI-first",
+    "title": "Redesign the workflow around agents",
+    "items": [
+      "Agents do the keystrokes; humans make the judgment",
+      "Multiplicative gain — small teams do what large ones used to",
+      "Roles, review, and team shape all change"
+    ]
+  }
+}

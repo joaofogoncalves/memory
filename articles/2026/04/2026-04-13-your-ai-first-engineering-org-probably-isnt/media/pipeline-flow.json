@@ -1,0 +1,23 @@
+{
+  "template": "flow",
+  "title": "How a feature moves from idea to production",
+  "subtitle": "Two tracks, same gates. Features and bug fixes share the deploy path; the work that differs sits at the front of each track.",
+  "caption": "Schematic of the harness used by a three-engineer team.",
+  "highlightStageIndex": 6,
+  "tracks": [
+    {
+      "label": "New feature",
+      "stages": ["Issue", "Architect", "Implement", "Quality check", "Code review", "PR", "CI", "Deploy"]
+    },
+    {
+      "label": "Bug fix",
+      "stages": ["Error detected", "AI triage", "Engineer validates", "Implement", "PR", "CI", "Deploy", "Verify"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 1, "label": "plan complete" },
+    { "afterIndex": 3, "label": "tests pass" },
+    { "afterIndex": 4, "label": "human review" },
+    { "afterIndex": 6, "label": "metrics monitored" }
+  ]
+}

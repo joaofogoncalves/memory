@@ -1,0 +1,45 @@
+{
+  "template": "grid-diff",
+  "title": "The roster grew 12 → 14",
+  "subtitle": "Two specialists appeared every time a generalist kept producing the same class of error. The roster is a ledger of past failures.",
+  "caption": "Agent definitions live in .claude/agents/.",
+  "columns": 3,
+  "left": {
+    "header": "February 2026",
+    "count": "12 agents",
+    "items": [
+      "project-manager",
+      "product-manager",
+      "architect",
+      "ui-designer",
+      "backend-developer",
+      "frontend-developer",
+      "code-optimizer",
+      "code-simplifier",
+      "test-writer",
+      "quality-checker",
+      "code-reviewer",
+      "documentation-expert"
+    ]
+  },
+  "right": {
+    "header": "April 2026",
+    "count": "14 agents",
+    "items": [
+      "project-manager",
+      "product-manager",
+      "architect",
+      "ui-designer",
+      "backend-developer",
+      "frontend-developer",
+      "code-optimizer",
+      "code-simplifier",
+      "test-writer",
+      "quality-checker",
+      "code-reviewer",
+      "documentation-expert",
+      { "label": "ci-fixer",          "isNew": true, "note": "CI drift" },
+      { "label": "conflict-resolver", "isNew": true, "note": "merge conflicts" }
+    ]
+  }
+}

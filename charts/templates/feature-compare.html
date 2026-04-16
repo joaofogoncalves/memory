@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Feature Compare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1; --coral: #ff8a9e;
+  --bg: #0e131e; --surface-1: #171b27; --surface-2: #1b1f2b;
+  --border: #3c494c; --text: #dee2f2; --text-muted: #bbc9cc;
+  --font-sans: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+#chart-container {
+  width: 100vw; min-height: 100vh;
+  padding: 36px 40px; box-sizing: border-box;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 24px;
+}
+.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
+.compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 28px; align-items: start; }
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px 32px;
+  display: flex; flex-direction: column; gap: 16px;
+  position: relative; overflow: hidden;
+}
+.card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+.card.left::before  { background: #869396; }
+.card.right::before { background: var(--cyan-500); }
+.card-label {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted); margin: 0;
+}
+.card.right .card-label { color: var(--cyan-500); }
+.card-title {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700; line-height: 1.15;
+  letter-spacing: -0.01em; margin: 0; color: var(--text);
+}
+.card.right .card-title { color: var(--cyan-500); }
+.card ul { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.card li {
+  font-size: 16px; color: var(--text); line-height: 1.4;
+  padding-left: 22px; position: relative;
+}
+.card li::before {
+  content: ''; position: absolute; left: 0; top: 9px;
+  width: 8px; height: 2px; background: var(--border);
+  border-radius: 1px;
+}
+.card.right li::before { background: var(--cyan-500); }
+.arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 12px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600;
+  position: relative; min-width: 80px;
+  align-self: stretch;
+}
+.arrow svg { width: 64px; height: 20px; }
+.arrow-label { position: absolute; top: calc(50% - 28px); white-space: nowrap; }
+.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <h1 class="title" id="title"></h1>
+  <p class="subtitle" id="subtitle"></p>
+  <div class="compare">
+    <div class="card left">
+      <p class="card-label" id="leftLabel"></p>
+      <h2 class="card-title" id="leftTitle"></h2>
+      <ul id="leftItems"></ul>
+    </div>
+    <div class="arrow">
+      <span class="arrow-label" id="arrowLabel"></span>
+      <svg viewBox="0 0 64 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10 H54" stroke="#bbc9cc" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M48 3 L60 10 L48 17" stroke="#bbc9cc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+    <div class="card right">
+      <p class="card-label" id="rightLabel"></p>
+      <h2 class="card-title" id="rightTitle"></h2>
+      <ul id="rightItems"></ul>
+    </div>
+  </div>
+  <p class="caption" id="caption"></p>
+</div>
+<script>
+const d = window.__DATA__ || {};
+document.getElementById('title').textContent = d.title || '';
+document.getElementById('subtitle').textContent = d.subtitle || '';
+document.getElementById('caption').textContent = d.caption || '';
+document.getElementById('arrowLabel').textContent = d.arrowLabel || '';
+const l = d.left || {}, r = d.right || {};
+document.getElementById('leftLabel').textContent = l.label || '';
+document.getElementById('leftTitle').textContent = l.title || '';
+document.getElementById('rightLabel').textContent = r.label || '';
+document.getElementById('rightTitle').textContent = r.title || '';
+(l.items || []).forEach(it => {
+  const li = document.createElement('li'); li.textContent = it;
+  document.getElementById('leftItems').appendChild(li);
+});
+(r.items || []).forEach(it => {
+  const li = document.createElement('li'); li.textContent = it;
+  document.getElementById('rightItems').appendChild(li);
+});
+</script>
+</body>
+</html>

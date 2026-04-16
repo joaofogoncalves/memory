@@ -64,6 +64,24 @@ node charts/render.mjs \
 
 Data shape: `{ title, subtitle, xAxis: {low, high, title}, yAxis: {...}, quadrants: {tl, tr, bl, br} }`
 
+### `feature-compare` — two cards with label + bullet list, optional arrow
+
+```bash
+node charts/render.mjs --template feature-compare \
+  --data <spec>.json --output <name>.webp --width 1600 --height 720
+```
+
+Data shape: `{ title, subtitle, arrowLabel, left: {label, title, items: [...]}, right: {...} }`
+
+### `grid-diff` — before/after grid of labeled cards, new items highlighted
+
+```bash
+node charts/render.mjs --template grid-diff \
+  --data <spec>.json --output <name>.webp --width 1800 --height 900
+```
+
+Data shape: `{ title, subtitle, columns, left: {header, count, items: [...]}, right: {...} }`. Items are strings or `{label, note?, isNew?}`.
+
 ### `flow` — horizontal pipeline with optional parallel tracks and gate labels
 
 ```bash

@@ -1,19 +1,18 @@
 ---
 title: "Your 'AI-First' Engineering Org Probably Isn't"
-subtitle: "Rebuilding a business operations platform with three engineers and a harness of fifteen AI agents."
-date: 2026-04-13
+subtitle: "Bolting AI onto your workflow isn't AI-first. Here's what is."
+date: 2026-04-18
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
 medium_url:
 hero_image: media/hero-harness.webp
 reading_time: 8
-draft: true
 ---
 
 Most of the production code merged at BRIDGE IN this quarter was written by AI. I opened a bug against our onboarding emails yesterday morning. Diagnosis, fix, regression test, PR, CI, merge: done before my second coffee. Three months ago that loop was a sprint.
 
 We didn't get here by adding AI to our editors. We took the engineering process apart and rebuilt it around agents. We changed how we plan, how we implement, how we review, how we ship. We changed the shape of the team.
 
-Three engineers, one monorepo, roughly fifteen specialized AI agents threaded through every phase of the workflow. I started the team earlier this year, and a couple of months in I restructured the entire build-and-review flow around the assumption that agents do the keystrokes and people do the judgment.
+Three engineers, one monorepo, roughly fifteen specialized AI agents threaded through every phase of the workflow. I started the team earlier this year, and a couple of months in, I restructured the entire build-and-review flow around the assumption that agents do the keystrokes and people do the judgment.
 
 One note before the rest. BRIDGE IN isn't public yet. The numbers here are build velocity, not customer-shipping velocity. Whether the product lands with users is a bet still in flight. What the harness has already done is collapse the time between a decision and code that reflects it. At our size and runway, that is what decides whether we launch this year or next.
 
@@ -41,11 +40,11 @@ A common version of this is what people call vibe coding. Open the editor, promp
 
 When I took over, I watched how the team worked and saw three bottlenecks that would have killed us.
 
-The spec bottleneck. Planning a feature took a week. Writing it took two hours. When build time collapses from weeks to hours, a multi-day planning cycle becomes the constraint. It doesn't make sense to think about something for a week and then build it before lunch. Product thinking had to move at the speed of iteration or step out of the build cycle.
+**The spec bottleneck.** Planning a feature took a week. Writing it took two hours. When build time collapses from weeks to hours, a multi-day planning cycle becomes the constraint. It doesn't make sense to think about something for a week and then build it before lunch. Product thinking had to move at the speed of iteration or step out of the build cycle.
 
-The review bottleneck. Agents can open a pull request faster than a human can meaningfully read one. If an engineer ships a feature in a morning, hand-review by three people becomes the new wait state. Either you compress review (dangerous) or you automate part of it alongside human judgment (harder, but survivable).
+**The review bottleneck.** Agents can open a pull request faster than a human can meaningfully read one. If an engineer ships a feature in a morning, hand-review by three people becomes the new wait state. Either you compress review (dangerous) or you automate part of it alongside human judgment (harder, but survivable).
 
-The headcount bottleneck. Competitors in our space run engineering teams many times larger than ours. We couldn't hire our way to parity. We could, maybe, redesign our way there.
+**The headcount bottleneck.** Competitors in our space run engineering teams many times larger than ours. We couldn't hire our way to parity. We could, maybe, redesign our way there.
 
 Three things needed to operate at agent speed: design, implementation, and review. If any one of them stayed manual, it would constrain the whole pipeline.
 
@@ -65,7 +64,7 @@ BRIDGE IN is building an operations platform. We use our own harness to build th
 
 The details of the stack matter less than the shape. A few principles hold it together.
 
-One monorepo. Backend, frontend, infrastructure, design system, docs, agent definitions, all in one place. A fragmented codebase is invisible to an agent. A unified one is legible. Types regenerate from backend to frontend with a single command, so the contract between them is enforced, not documented.
+One monorepo. Backend, frontend, infrastructure, design system, docs, agent definitions, all in one place. Types regenerate from backend to frontend with a single command, so the contract between them is enforced, not documented.
 
 One CI pipeline. Every PR runs the same gates: format, lint, types, migration checks, tests, coverage floor. No optional phases. No manual overrides. Deterministic, so agents can predict outcomes and reason about failures.
 
@@ -77,17 +76,13 @@ Pre-commit hooks and branch protection as the last line of defense. Nothing land
 
 The shape is what matters: one repo, one pipeline, specialized agents, composable skills, enforced gates. How an issue moves through that shape (who plans, who implements, what happens when CI fails) is a longer story I'll tell separately.
 
-::: wide
-![Feature and bug-fix paths converge at CI and Deploy](media/pipeline-flow.webp)
-:::
-
 ## The Results
 
 | Metric | Before | After |
 |---|---|---|
 | Code written by AI | Minority | Majority |
 | Time from issue to merged PR | Days to weeks | Hours |
-| PRs merged per week | A handful | Twenty plus |
+| PRs merged per week | A handful | 20+ |
 | Dependency updates processed | Manual, backlogged | Automated, green on merge |
 | Human time spent on CI failures | Hours | Minutes |
 
@@ -99,11 +94,13 @@ People assume you trade quality for speed. We didn't. We ship more tests than we
 
 Two kinds of engineers will exist.
 
+![Team shape: before and after](media/team-shape.webp)
+
 The Architect. One or two people. They design the standard operating procedures that teach AI how to work. They build the testing harness, the review skills, the triage flows, the CLAUDE.md files. They define what "good" looks like for the agents.
 
-This role requires deep critical thinking. You criticise the AI. You don't follow it. When an agent proposes a plan, the architect finds the holes. What failure mode did it miss? What security boundary did it cross? What technical debt is it quietly accumulating?
+This role requires deep critical thinking. You criticize the AI. You don't follow it. When an agent proposes a plan, the architect finds the holes. What failure mode did it miss? What security boundary did it cross? What technical debt is it quietly accumulating?
 
-The ability to criticise AI is more valuable than the ability to produce code. Producing code is the commodity. Critical judgment is the scarce skill.
+The ability to criticize AI is more valuable than the ability to produce code. Producing code is the commodity. Critical judgment is the scarce skill.
 
 This is also the hardest role to fill.
 
@@ -119,7 +116,7 @@ Junior engineers with less traditional practice felt empowered. They had access 
 
 Senior engineers with strong traditional practice had the hardest time. Two months of their best work could collapse into an hour of agent output. That is a hard thing to accept after years of building a rare skill set.
 
-Both things are probably true. Accumulated skill still matters. You cannot criticise what an agent produces without understanding what it produces. But in this transition, adaptability matters more than the skill you accumulated before it started.
+Both things are probably true. Accumulated skill still matters. You cannot criticize what an agent produces without understanding what it produces. But in this transition, adaptability matters more than the skill you accumulated before it started.
 
 ## The Human Side
 
@@ -145,9 +142,19 @@ Our weekly engineering reviews are AI-generated from repo activity, error data, 
 
 Engineering was the first domino. It is not the last one.
 
+## Three Things That Hold
+
+Three principles have survived every iteration of the harness.
+
+**Velocity is capped by the slowest function.** Once engineering ships in hours, anything still operating in days becomes the constraint. Speed is a pipeline property, not an engineering one.
+
+**Re-engineer, don't bolt on.** Adding AI to your existing process gets you ten or twenty percent. Redesigning the process around AI is multiplicative. The difference is whether you touched the shape of the work.
+
+**Adaptability beats accumulated skill.** The engineers adapting fastest are not the ones with the deepest traditional practice. They are the ones willing to let the agent do the keystrokes and redirect their judgment elsewhere.
+
 ## What This Means
 
-For engineers. Your value is moving from code output to decision quality. The ability to write code fast is worth less every month. The ability to evaluate, criticise, and direct is worth more. Product taste matters. Can you look at a generated UI and know it is wrong before the user tells you? Can you look at an architecture proposal and see the failure mode the agent missed? Those skills compound.
+For engineers. Your value is moving from code output to decision quality. The ability to write code fast is worth less every month. The ability to evaluate, criticize, and direct is worth more. Product taste matters. Can you look at a generated UI and know it is wrong before the user tells you? Can you look at an architecture proposal and see the failure mode the agent missed? Those skills compound.
 
 For engineering leaders. If your planning cycle takes longer than your build time, that is the first thing to fix. Build the testing and review harness before you scale agents. Fast AI without fast validation is fast-moving technical debt. Start with one architect: one person who builds the system and proves it works. Onboard others into operator roles after the system is running. Push AI-native into every function. Expect resistance.
 

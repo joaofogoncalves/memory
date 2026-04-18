@@ -25,8 +25,8 @@ Archive your LinkedIn posts as clean markdown files with media downloads, and op
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/linkedin-post-archiver.git
-cd linkedin-post-archiver
+git clone https://github.com/joaofogoncalves/memory.git
+cd memory
 
 python -m venv venv
 source venv/bin/activate  # macOS/Linux

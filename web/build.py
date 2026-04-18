@@ -435,7 +435,7 @@ def parse_all_articles() -> list[dict]:
 # ============================================================
 
 _GFONTS_URL = (
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&'
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&'
     'family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&'
     'family=Space+Grotesk:wght@400;500;600&display=swap'
 )

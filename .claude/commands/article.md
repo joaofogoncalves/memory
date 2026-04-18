@@ -35,12 +35,25 @@ If the topic would benefit from supporting data or citations:
 
 Articles should be grounded in evidence where possible. The voice is practitioner-first, but data strengthens the argument.
 
+## Step 2.5: Identify the target audience
+
+The audience shapes angle, depth, vocabulary, and visual choices. If the user's notes already specify an audience (e.g., "for engineering leaders", "for PMs"), use it and skip the question.
+
+Otherwise, use AskUserQuestion with these options:
+- **Engineering leaders / technical decision-makers** — CTOs, VPs Eng, staff+ engineers. Assume technical depth, skip the 101, lead with architectural tradeoffs and failure modes.
+- **Product & business leaders** — PMs, founders, execs. Frame in outcomes, use metaphors over jargon, fewer code details.
+- **Generalists / curious professionals** — mixed backgrounds. Explain more, use analogies, avoid unexplained acronyms.
+- **Mixed / broad audience** — default LinkedIn reach. Write for the smart non-specialist; technical asides in context, never as the centerpiece.
+
+Remember this choice — it informs angles (Step 3), depth (Step 4), and visuals (Step 5).
+
 ## Step 3: Propose angles and structure
 
-Based on the source material, text notes, and research, propose **2-3 angles** for the article. Each angle should:
+Based on the source material, text notes, research, and the target audience from Step 2.5, propose **2-3 angles** for the article. Each angle should:
 - Be 2-3 sentences describing the thesis and approach
 - Map to recurring topics from profile.md
 - Represent genuinely different perspectives
+- Land with the chosen audience — pick a thesis they'll care about, framed in their vocabulary
 
 Use AskUserQuestion to present the angles.
 
@@ -85,6 +98,14 @@ Follow `profile.md` for:
 - Vocabulary: use the "Use naturally" words, avoid the "Avoid" words
 - Rhetorical devices: "both things are probably true", implicit comparison, explanatory cascade
 - Topic-specific angles and framing
+
+### Calibrate depth to audience
+
+Use the audience from Step 2.5:
+- **Engineering leaders**: assume technical literacy; skip 101-level explanations; go deeper on tradeoffs, specific implementations, failure modes. Code and architecture allowed.
+- **Product & business leaders**: frame in outcomes, not implementation. Analogies for technical concepts. Jargon only when defining it. Heavier on "why it matters."
+- **Generalists**: define technical terms on first use. Prefer concrete stories over abstractions. Analogies carry the explanation.
+- **Mixed**: lead with the broadly accessible frame. One or two technical asides for specialists are fine — don't lose the generalist reader.
 
 ### Show draft and iterate
 
@@ -134,6 +155,8 @@ If a planned section visual maps to one of these, generate a **chart spec** (see
 **Skip the visual when:**
 - The article is mostly personal narrative
 - The diagram would feel forced
+
+**Match visuals to audience (Step 2.5):** engineering audiences often value technical diagrams (flow, architecture, timeline); business audiences prefer outcome-framed comparisons (stat-compare, bar, quadrant); generalists lean on narrative hero images over technical diagrams.
 
 ## Step 5b: Generate chart specs and image prompts
 
@@ -249,12 +272,58 @@ draft: true
 - `reading_time` is computed: word count / 230, rounded to nearest minute
 - `draft: true` is set by default — new articles always start as drafts. They build at `/articles/drafts/<stable-token>/` only, not listed on home, archive, topics, RSS, or sitemap. Page is served with `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`. Use this URL to share review links. To publish, run `/publish <slug-or-path>` (or remove the `draft` line manually and update the date).
 
-## Step 7: Wrap up
+## Step 7: Generate critique prompt for external review
+
+Save a copy-pasteable critique prompt the user can take to another AI (ChatGPT, Claude.ai, Gemini) for a second-opinion review. This is the main defense against the polish-after-publish loop — catching weak spots while the draft is still a draft.
+
+Write to `articles/YYYY/MM/YYYY-MM-DD-slug/critique-prompt.md`. Embed the full article text inline (read it back from `article.md` — user should be able to copy-paste the whole file into the other AI in one go, no extra steps).
+
+Template (substitute `{AUDIENCE}` with the audience from Step 2.5, and `{FULL_ARTICLE_TEXT}` with the literal article body — title, subtitle, and all sections):
+
+```markdown
+# Critique prompt
+
+Paste the prompt below into another AI (ChatGPT, Claude.ai, Gemini — whichever gives you a fresh perspective) for a sharp second-opinion review. Bring the feedback back to Claude Code and ask for targeted revisions.
+
+---
+
+You are an experienced editor and subject-matter skeptic. Below is a draft article. Your job is to give sharp, specific, unsentimental feedback that makes the piece stronger.
+
+**Target audience:** {AUDIENCE}
+
+**Article:**
+
+{FULL_ARTICLE_TEXT}
+
+---
+
+**Review criteria — give specific, quote-level feedback on each:**
+
+1. **Argument strength.** Is the thesis actually supported by the evidence and examples? Where are the gaps or unproven leaps?
+2. **Evidence.** Which claims need a citation or concrete example? Which feel assertive without grounding?
+3. **Voice consistency.** Where does the writing drift into corporate, generic, or AI-ish language? Quote specific phrases.
+4. **Weakest section.** If you had to cut or rewrite one section end-to-end, which one? Why?
+5. **Missing counterargument.** What's the strongest objection a skeptical reader would raise that the article fails to address?
+6. **Overstatements and filler.** Quote specific sentences that are overclaims, hedges, throat-clearing, or fluff.
+7. **Opening and closing.** Does the opening earn the reader's attention? Does the closing land, or fade out?
+8. **Audience fit.** Does the writing match the stated audience? Where is it too technical, not technical enough, or missing their vocabulary?
+
+**Output format:**
+
+Start with your **top 3 recommended changes** in priority order — the ones that would most improve the piece.
+
+Then go through each criterion above with specific quotes and line-level suggestions.
+
+Be direct. Don't cushion. The goal is a sharper article, not a comfortable author.
+```
+
+## Step 8: Wrap up
 
 Tell the user:
 - The article has been saved to `articles/[path]/article.md`
+- Critique prompt saved to `articles/[path]/critique-prompt.md` — paste it into another AI before publishing to catch weak spots
 - Image prompts saved to `articles/[path]/image-prompts.md` (if generated)
 - Remind: "To rebuild the site with this article: `python web/build.py`"
-- Remind: "When ready to promote on LinkedIn, run `/write [article-url]`"
+- Remind: "When ready to promote on LinkedIn, run `/post [article-url]`"
 - Remind: "After publishing to Medium, update `medium_url` in the article frontmatter"
 - Remind: "After generating images, save hero to `media/` folder and update `hero_image` in frontmatter"

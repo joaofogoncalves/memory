@@ -91,9 +91,11 @@ linkedin-post-archiver/  # Project root
 │   └── commands/                     # Claude Code custom skills
 │       ├── article.md                # /article - long-form article writer
 │       ├── pdf.md                    # /pdf - CV PDF generator
+│       ├── post.md                   # /post - LinkedIn post writer
 │       ├── profile.md                # /profile - voice profile generator
-│       ├── taste.md                  # /taste - visual taste profile generator
-│       └── write.md                  # /write - LinkedIn post writer
+│       ├── publish.md                # /publish - promote draft to published
+│       ├── sync.md                   # /sync - scrape + curate recent posts
+│       └── taste.md                  # /taste - visual taste profile generator
 │
 ├── cache/                            # Browser profile + token cache (git-ignored)
 ├── logs/                             # Application logs (git-ignored)
@@ -225,7 +227,7 @@ linkedin-post-archiver/  # Project root
 ### 12. Writing Style Guide
 - `writing_style.md` — authoritative style guide for LinkedIn post writing
 - Defines structure, tone, language rules, length targets, and anti-patterns
-- The `/write` skill uses it as primary reference (takes precedence over `profile.md` where they conflict)
+- The `/post` skill uses it as primary reference (takes precedence over `profile.md` where they conflict)
 - `profile.md` supplements with vocabulary, topic expertise, and deeper voice patterns
 
 ### 13. Articles Section
@@ -237,7 +239,7 @@ linkedin-post-archiver/  # Project root
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`
-- The `/article` skill handles drafting; `/write` handles the LinkedIn promotion post (decoupled)
+- The `/article` skill handles drafting; `/post` handles the LinkedIn promotion post (decoupled)
 - Articles appear on: home page (tabbed Latest section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
 - **Why separate from posts:** articles are authored content, not archived LinkedIn posts. Different workflow, different frontmatter, different content type.
 
@@ -252,7 +254,7 @@ All images display on the site at **720px content width** (2x retina = 1440px so
 | Article archive card | full-width × 220px | cover |
 | Article/post hero (inline) | 720px × auto | no crop |
 
-**Standard source sizes** (used by `/write` and `/article` skills):
+**Standard source sizes** (used by `/post` and `/article` skills):
 - **Hero/illustration**: 1440×900px (16:10) · PNG or JPG — works everywhere
 - **Square diagram**: 1200×1200px (1:1) · PNG — sharp text
 - **Screenshots**: native resolution, crop to content · PNG
@@ -616,10 +618,12 @@ class Media:
 ### /article - Long-Form Article Writer
 - Writes long-form articles (1,000-3,500 words) for the website's articles section
 - Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
-- Workflow: gather input → research sources → propose angles → outline → draft → image prompts → save
+- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt
+- Asks for **target audience** up front (engineering leaders, product/business, generalists, mixed) — threads through angle selection, drafting depth, and visual choices
 - Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
-- Decoupled from LinkedIn: reminds user to run `/write` for promotion post after article is finalized
+- Generates a **critique prompt** (`critique-prompt.md` in the article dir) — user pastes into another AI for a sharp second-opinion review before publishing
+- Decoupled from LinkedIn: reminds user to run `/post` for promotion post after article is finalized
 - Article frontmatter: title, subtitle, date, tags, medium_url, hero_image, reading_time, draft (always true on creation)
 
 ### /publish - Promote Draft to Published
@@ -649,12 +653,20 @@ class Media:
 - Requires 80%+ of images described before generating
 - Uses tiered recency weighting for visual patterns
 
-### /write - LinkedIn Post Writer
+### /post - LinkedIn Post Writer
 - Writes LinkedIn posts using `writing_style.md` (primary) and `profile.md` (supplementary)
 - Fetches source material from URLs, proposes 2-3 angles, drafts after user picks one
 - Auto-detects post template: short-form commentary, article promotion, or long-form thought piece
 - Generates 3 AI image prompts based on `taste.md` visual profile
 - Iterates on drafts via user feedback
+
+### /sync - Scrape and Curate Recent Posts
+- Runs the browser crawler with `--limit 10` and applies editorial judgment on newly-scraped posts
+- Flags and removes **self-article-promo posts** — when a LinkedIn post exists only to promote a local article (in `articles/`), the article is the canonical content, the promo is noise
+- Flags low-value noise: milestone posts ("1k followers!"), empty posts, pure reposts
+- Detection uses `SITE_URL` (from `.env`), local article slugs/medium_urls, and language heuristics — then the user confirms each drop via AskUserQuestion
+- Deletes confirmed post directories (destructive — posts aren't in git); articles and site.yaml untouched
+- Run before `pipeline.sh --skip-scrape` to keep the archive + site clean
 
 ---
 

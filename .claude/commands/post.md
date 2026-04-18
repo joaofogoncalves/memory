@@ -120,24 +120,24 @@ Output both variants clearly separated in the response, then use AskUserQuestion
 
 Iterate until approved.
 
-## Step 5: Decide whether the post needs an image
+## Step 5: Choose a visual (default: yes)
 
-Before generating prompts, make a judgement call: does this post actually benefit from an image?
+Archive analysis shows posts with media average ~6.5x the comment engagement of text-only posts (11.2 vs 1.7 comments). **Default to including a visual** — skipping should be the exception, and you should be able to state the reason out loud.
 
-**Skip images when:**
-- The post is a short, punchy take that stands on its own (the text IS the content)
-- Adding an image would feel like decoration, not evidence
-- The post is a personal story or admission where an image would dilute the rawness
-- There's no natural visual (no source to screenshot, no framework to diagram, no concept that needs illustration)
+**Include a visual (the default) when any of these apply — which is most posts:**
+- There's source material worth screenshotting: tweet, LinkedIn post, article, research figure. The screenshot is often the sharpest hook.
+- The argument has a visual structure (comparison, framework, funnel, timeline, stat contrast) a chart or diagram would clarify.
+- The concept is abstract and benefits from an editorial illustration as an anchor.
+- In short: if you can imagine a reasonable visual, include one.
 
-**Include images when:**
-- The source material is a tweet/post worth screenshotting (the screenshot IS the hook)
-- The argument has a visual structure (comparison, framework, data) that a diagram would clarify
-- The concept is abstract enough that an illustration gives the reader an anchor
+**Skip only when:**
+- The post is a raw personal admission and a visual would dilute the directness (e.g. "I got this wrong, here's what I learned").
+- Forcing an image would genuinely feel like decoration — there's no concept to anchor, and no external artifact to show.
+- The prose rhythm is the whole point and an image would break the read.
 
-If you decide the post doesn't need an image, tell the user: "This post works better without an image — the text carries itself." Offer to generate prompts anyway if they want, then skip to Step 7.
+These are rare cases. If you skip, state the reason explicitly in the conversation: "Skipping visual — this post is [raw personal admission / rhythm-driven / ...], and adding an image would hurt the point." Do not skip silently.
 
-If the post does benefit from an image, proceed to Step 6.
+If the post includes a visual, proceed to Step 6. If skipping, jump to Step 7.
 
 ### Chart as an alternative to AI image
 

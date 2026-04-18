@@ -306,15 +306,38 @@ class BrowserCrawler:
     def _extract_engagement(self, el: Locator) -> tuple[int, int]:
         """Extract reaction and comment counts from a post element.
 
+        Strategy: try aria-label first (stable screen-reader text like
+        "482 reactions" / "193 comments") since class names change frequently
+        when LinkedIn reships the feed DOM. Fall back to text-content
+        selectors, and never gate on is_visible — counts are sometimes
+        rendered in offscreen/lazy containers when a post is processed
+        before it fully enters the viewport.
+
         Returns:
             Tuple of (reactions, comments) as integers.
         """
         def _parse_count(text: str) -> int:
-            """Parse '1,234' or '1K' style counts into an integer."""
+            """Parse '1,234', '1K', or '1.2M' style counts into an integer."""
+            if not text:
+                return 0
             text = text.strip().replace(',', '').replace('\u202f', '').replace('\xa0', '')
-            if text.endswith('K'):
+            # Strip any trailing word the DOM may append to the raw number
+            for suffix in (
+                ' reactions', ' reaction', ' likes', ' like',
+                ' comments', ' comment', ' reposts', ' repost',
+            ):
+                if text.lower().endswith(suffix):
+                    text = text[:-len(suffix)].strip()
+            if not text:
+                return 0
+            if text.endswith('K') or text.endswith('k'):
                 try:
                     return int(float(text[:-1]) * 1000)
+                except ValueError:
+                    return 0
+            if text.endswith('M') or text.endswith('m'):
+                try:
+                    return int(float(text[:-1]) * 1_000_000)
                 except ValueError:
                     return 0
             try:
@@ -322,42 +345,75 @@ class BrowserCrawler:
             except ValueError:
                 return 0
 
-        reactions = 0
-        comments = 0
+        def _from_aria_label(aria_selector: str, keyword_pattern: str) -> int:
+            """Read a count from the aria-label of a matching element.
 
-        # Reaction count — LinkedIn renders as e.g. "482" or "1,234" in the social counts bar
-        reaction_selectors = [
-            'button[aria-label*="reaction"] span.social-details-social-counts__reactions-count',
-            'span.social-details-social-counts__reactions-count',
-            'button.social-details-social-counts__count-value',
-        ]
-        for sel in reaction_selectors:
+            LinkedIn's engagement buttons carry human-readable labels like
+            "482 reactions to this post" for screen readers. These are the
+            most durable signal because accessibility conventions outlive
+            visual DOM reshuffles.
+            """
             try:
-                react_el = el.locator(sel).first
-                if react_el.count() and react_el.is_visible(timeout=300):
-                    reactions = _parse_count(react_el.inner_text(timeout=500))
-                    break
-            except Exception:
-                continue
+                loc = el.locator(aria_selector).first
+                if not loc.count():
+                    return 0
+                aria = loc.get_attribute('aria-label') or ''
+                m = re.search(
+                    rf'(\d[\d,\.]*\s*[KkMm]?)\s*{keyword_pattern}',
+                    aria,
+                    re.IGNORECASE,
+                )
+                if m:
+                    return _parse_count(m.group(1))
+            except Exception as e:
+                logger.debug(f"aria-label read failed for {aria_selector!r}: {e}")
+            return 0
 
-        # Comment count
-        comment_selectors = [
-            'button[aria-label*="comment"] span.social-details-social-counts__comments',
-            'span.social-details-social-counts__comments',
-            'li.social-details-social-counts__item--right-aligned button',
-        ]
-        for sel in comment_selectors:
-            try:
-                comment_el = el.locator(sel).first
-                if comment_el.count() and comment_el.is_visible(timeout=300):
-                    text = comment_el.inner_text(timeout=500)
-                    # Strip trailing word e.g. "193 comments" → "193"
-                    text = text.split()[0] if text.split() else text
-                    comments = _parse_count(text)
-                    break
-            except Exception:
-                continue
+        def _from_text_selectors(selectors: list) -> int:
+            """Try each selector; return the first positive count."""
+            for sel in selectors:
+                try:
+                    loc = el.locator(sel).first
+                    if not loc.count():
+                        continue
+                    # text_content() works whether or not the element is in viewport
+                    text = loc.text_content(timeout=500) or ''
+                    if text.strip():
+                        count = _parse_count(text)
+                        if count > 0:
+                            return count
+                except Exception as e:
+                    logger.debug(f"text selector failed {sel!r}: {e}")
+                    continue
+            return 0
 
+        # Reactions — aria-label first, then DOM selectors
+        reactions = _from_aria_label(
+            'button[aria-label*="reaction" i], a[aria-label*="reaction" i]',
+            r'(?:reaction|reactions|like|likes)',
+        )
+        if reactions == 0:
+            reactions = _from_text_selectors([
+                'span.social-details-social-counts__reactions-count',
+                'span[data-test-id*="reaction-count"]',
+                'button[data-reaction-details] span[aria-hidden="true"]',
+                'button[aria-label*="reaction" i] span[aria-hidden="true"]',
+                'button.social-details-social-counts__count-value',
+            ])
+
+        # Comments — aria-label first, then DOM selectors
+        comments = _from_aria_label(
+            'button[aria-label*="comment" i], a[aria-label*="comment" i]',
+            r'(?:comment|comments)',
+        )
+        if comments == 0:
+            comments = _from_text_selectors([
+                'span.social-details-social-counts__comments',
+                'li.social-details-social-counts__item--right-aligned button',
+                'button[aria-label*="comment" i] span[aria-hidden="true"]',
+            ])
+
+        logger.debug(f"Engagement extracted: reactions={reactions} comments={comments}")
         return reactions, comments
 
     def _expand_post_text(self, el: Locator) -> None:

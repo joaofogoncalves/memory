@@ -1,9 +1,13 @@
 """Generate clean markdown files for LinkedIn posts."""
 
 import logging
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+import yaml
+
 from scraper.models import LinkedInPost
 from scraper.utils import format_datetime
 
@@ -214,6 +218,95 @@ class MarkdownGenerator:
 
         except Exception as e:
             logger.error(f"Failed to save markdown for post {post.id}: {e}")
+            return False
+
+    def update_engagement(
+        self,
+        md_path: Path,
+        reactions: int,
+        comments: int,
+        post_url: Optional[str] = None,
+    ) -> bool:
+        """Update reactions/comments (and optionally fill empty post_url) in an existing post.md.
+
+        Uses surgical line-level updates to preserve frontmatter formatting and
+        minimize git diffs. Only writes when a value actually changes. Never
+        touches the post body.
+
+        Args:
+            md_path: Path to the existing post.md file.
+            reactions: Latest reaction count from the scraper.
+            comments: Latest comment count from the scraper.
+            post_url: If provided and the existing frontmatter has an empty
+                post_url, fill it in (useful the first time an authored post
+                is seen on LinkedIn).
+
+        Returns:
+            True if the file was updated or already up-to-date; False on error.
+        """
+        try:
+            text = md_path.read_text(encoding='utf-8')
+            if not text.startswith('---'):
+                logger.warning(f"No frontmatter in {md_path}, skipping engagement update")
+                return False
+
+            parts = text.split('---', 2)
+            if len(parts) < 3:
+                logger.warning(f"Malformed frontmatter in {md_path}, skipping")
+                return False
+
+            fm_text = parts[1]
+            body = parts[2]
+            fm = yaml.safe_load(fm_text) or {}
+
+            lines = fm_text.strip('\n').split('\n')
+            new_fields = []
+            changed = False
+
+            def replace_line(key: str, new_val) -> bool:
+                pattern = re.compile(rf'^{re.escape(key)}\s*:.*$')
+                for i, line in enumerate(lines):
+                    if pattern.match(line):
+                        lines[i] = f'{key}: {new_val}'
+                        return True
+                return False
+
+            existing_reactions = int(fm.get('reactions', 0) or 0)
+            existing_comments = int(fm.get('comments', 0) or 0)
+            existing_post_url = (fm.get('post_url') or '').strip('"\' ')
+
+            if reactions and reactions != existing_reactions:
+                if not replace_line('reactions', reactions):
+                    new_fields.append(f'reactions: {reactions}')
+                changed = True
+
+            if comments and comments != existing_comments:
+                if not replace_line('comments', comments):
+                    new_fields.append(f'comments: {comments}')
+                changed = True
+
+            if post_url and not existing_post_url:
+                if not replace_line('post_url', post_url):
+                    new_fields.append(f'post_url: {post_url}')
+                changed = True
+
+            if not changed:
+                return True
+
+            if new_fields:
+                lines.extend(new_fields)
+
+            new_text = '---\n' + '\n'.join(lines) + '\n---' + body
+            md_path.write_text(new_text, encoding='utf-8')
+            logger.info(
+                f"Updated engagement for {md_path.parent.name}: "
+                f"reactions {existing_reactions}→{reactions}, "
+                f"comments {existing_comments}→{comments}"
+            )
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to update engagement for {md_path}: {e}", exc_info=True)
             return False
 
     def generate_index(self, posts: list, output_path: Path) -> bool:

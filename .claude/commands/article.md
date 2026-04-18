@@ -317,13 +317,65 @@ Then go through each criterion above with specific quotes and line-level suggest
 Be direct. Don't cushion. The goal is a sharper article, not a comfortable author.
 ```
 
-## Step 8: Wrap up
+## Step 8: Generate Substack paste artifact
+
+Substack is a distribution surface for the article — email delivery + discovery network — with the article's canonical home still on the user's site. Substack has no public API for publishing, so this step produces a paste-ready file the user can drop into Substack's editor in ~2 minutes.
+
+Save to `articles/YYYY/MM/YYYY-MM-DD-slug/substack-paste.md`. Substack's editor takes plain paste-in text (it does not parse YAML frontmatter), so this file gives the user step-by-step posting instructions plus the raw body to paste.
+
+### Template
+
+```markdown
+# Substack paste-in — [article title]
+
+## Posting checklist (do these in Substack's editor)
+
+1. **Title:** [article title from frontmatter]
+2. **Subtitle:** [article subtitle from frontmatter]
+3. **Canonical URL** (Post settings → SEO → Canonical URL): `{SITE_URL}/articles/YYYY/MM/slug/` — this keeps SEO pointed at your site, not Substack.
+4. **Hero image:** re-upload `media/[hero-image-filename]` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
+5. **Inline images:** re-upload any of these as you reach them in the body:
+   - `media/[image-1]`
+   - `media/[image-2]`
+6. **Tags:** [comma-separated tags from frontmatter]
+7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
+
+   > Originally published at [yoursite.com/articles/YYYY/MM/slug](SITE_URL/articles/YYYY/MM/slug/).
+
+## Body to paste
+
+Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
+
+---
+
+[FULL ARTICLE BODY — everything below the frontmatter in article.md, with one transformation:
+ - Replace each `![caption](media/filename.png)` with a placeholder: `[IMAGE: caption — upload media/filename.png here]`
+ - This makes it impossible to miss an image during paste, since local paths don't resolve in Substack]
+
+---
+
+## After posting
+
+- Grab the Substack post URL.
+- Add a `substack_url:` field to the article frontmatter (currently not in the standard schema — add it alongside `medium_url`).
+- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.
+```
+
+Read the full article body from `article.md` (the text below the frontmatter). Embed it inline in the template above, with the image-reference transform applied. The user should be able to open `substack-paste.md` and paste the body section in one go.
+
+**Do NOT modify `article.md`** — Substack is downstream; the site article is canonical.
+
+If `SITE_URL` is not set in `.env`, fall back to `yoursite.com` as a placeholder the user can find-and-replace.
+
+## Step 9: Wrap up
 
 Tell the user:
 - The article has been saved to `articles/[path]/article.md`
 - Critique prompt saved to `articles/[path]/critique-prompt.md` — paste it into another AI before publishing to catch weak spots
 - Image prompts saved to `articles/[path]/image-prompts.md` (if generated)
+- Substack paste-in saved to `articles/[path]/substack-paste.md` — use after the article is live on the site
 - Remind: "To rebuild the site with this article: `python web/build.py`"
-- Remind: "When ready to promote on LinkedIn, run `/post [article-url]`"
-- Remind: "After publishing to Medium, update `medium_url` in the article frontmatter"
+- Remind: "When ready to promote on LinkedIn and X, run `/post [article-url]`"
+- Remind: "After publishing to Substack, grab the URL and add `substack_url:` to the article frontmatter"
+- Remind: "After publishing to Medium (if used), update `medium_url` in the article frontmatter"
 - Remind: "After generating images, save hero to `media/` folder and update `hero_image` in frontmatter"

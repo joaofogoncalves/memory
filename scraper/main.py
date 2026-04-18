@@ -3,13 +3,14 @@
 import argparse
 import logging
 import os
-import sys
-from dotenv import load_dotenv
-from pathlib import Path
-from datetime import datetime
-from tqdm import tqdm
-
 import re
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+from dotenv import load_dotenv
+from tqdm import tqdm
 
 from scraper.utils import (
     setup_logging,
@@ -102,6 +103,84 @@ class LinkedInArchiver:
         text = re.sub(r'\s+', ' ', text).strip()   # collapse whitespace
         return text
 
+    def _load_existing_posts_index(self) -> dict:
+        """Build a lookup index of existing on-disk posts for merge-mode.
+
+        Returns:
+            Dict with:
+              'by_url': {post_url: Path}  — exact post_url → post.md path
+              'by_fingerprint': [(fingerprint, YYYY-MM-DD str, Path), ...]
+        """
+        import yaml
+
+        index = {'by_url': {}, 'by_fingerprint': []}
+        if not self.base_dir.exists():
+            return index
+
+        for md_path in self.base_dir.rglob('post.md'):
+            try:
+                text = md_path.read_text(encoding='utf-8')
+                if not text.startswith('---'):
+                    continue
+                parts = text.split('---', 2)
+                if len(parts) < 3:
+                    continue
+                fm = yaml.safe_load(parts[1]) or {}
+                body = parts[2]
+
+                post_url = (fm.get('post_url') or '').strip('"\' ')
+                if post_url:
+                    index['by_url'][post_url] = md_path
+
+                fingerprint = self._content_fingerprint(body)
+                if not fingerprint:
+                    continue
+                date_val = fm.get('date', '')
+                if hasattr(date_val, 'strftime'):
+                    date_str = date_val.strftime('%Y-%m-%d')
+                else:
+                    date_str = str(date_val)[:10]
+                index['by_fingerprint'].append((fingerprint, date_str, md_path))
+            except Exception as e:
+                logger.debug(f"Skipping index entry for {md_path}: {e}")
+                continue
+
+        return index
+
+    def _find_matching_existing_post(self, post, index: dict) -> Optional[Path]:
+        """Find an existing local post.md that matches this scraped post.
+
+        Priority:
+          1. Exact post_url match.
+          2. Content fingerprint match within ±14 days of the post's date.
+
+        Args:
+            post: A LinkedInPost from the scraper.
+            index: The lookup index from _load_existing_posts_index.
+
+        Returns:
+            Path to the existing post.md, or None if no match.
+        """
+        if post.post_url and post.post_url in index['by_url']:
+            return index['by_url'][post.post_url]
+
+        incoming_fp = self._content_fingerprint(post.content)
+        if not incoming_fp:
+            return None
+
+        target_date = post.created_at.date()
+        for fp, date_str, path in index['by_fingerprint']:
+            if fp != incoming_fp:
+                continue
+            try:
+                existing_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            except (ValueError, TypeError):
+                continue
+            if abs((target_date - existing_date).days) <= 14:
+                return path
+
+        return None
+
     def _archive_posts(self, posts: list, desc: str = "Archiving posts") -> dict:
         """
         Archive a list of LinkedInPost objects to disk.
@@ -119,13 +198,20 @@ class LinkedInArchiver:
             'failed': 0,
             'skipped_self_reposts': 0,
             'media_downloaded': 0,
+            'engagement_updated': 0,
+            'new_posts': 0,
         }
 
-        # Pre-populate with slugs already on disk to prevent duplicates
-        existing_slugs = []
-        for d in self.base_dir.rglob('post.md'):
-            existing_slugs.append(d.parent.name)
-        # Track content fingerprints to detect self-reposts
+        # Index existing on-disk posts for merge-mode matching.
+        # Scraped posts that match an existing local post (by URL or content
+        # fingerprint) only have their engagement counts updated — the body
+        # is never overwritten. This protects authored posts and gives idempotent
+        # re-scrapes a useful side effect (refreshed reactions/comments).
+        existing_index = self._load_existing_posts_index()
+        existing_slugs = [
+            p.parent.name for p in self.base_dir.rglob('post.md')
+        ] if self.base_dir.exists() else []
+        # Track content fingerprints to detect duplicates within this batch
         content_fingerprints: set = set()
 
         for post in tqdm(posts, desc=desc):
@@ -145,21 +231,42 @@ class LinkedInArchiver:
 
                 content_fingerprints.add(fingerprint)
 
-                # Generate slug
+                # Merge-mode: if this scraped post matches an existing local
+                # one (by URL or by content fingerprint within a 14-day window),
+                # just refresh engagement and move on. Never rewrite the body.
+                existing_path = self._find_matching_existing_post(post, existing_index)
+                if existing_path is not None:
+                    self.markdown_generator.update_engagement(
+                        existing_path,
+                        post.reactions,
+                        post.comments,
+                        post_url=post.post_url,
+                    )
+                    stats['engagement_updated'] += 1
+                    stats['successful'] += 1
+                    continue
+
+                # New post — generate slug and archive normally
                 base_slug = slugify_post(post.content, post.created_at)
                 slug = get_unique_slug(base_slug, existing_slugs)
                 existing_slugs.append(slug)
                 post.slug = slug
 
-                # Create post directory
                 post_date_path = post.created_at.strftime(self.config['output']['date_format'])
                 post_dir = self.base_dir / post_date_path / slug
                 create_directory(post_dir)
 
-                # Check if post already exists
                 md_path = post_dir / 'post.md'
+                # Edge case: slug collided with an existing dir not matched above
+                # (e.g. content drifted but slug is identical). Treat as merge.
                 if md_path.exists():
-                    logger.debug(f"Post already archived: {slug}")
+                    self.markdown_generator.update_engagement(
+                        md_path,
+                        post.reactions,
+                        post.comments,
+                        post_url=post.post_url,
+                    )
+                    stats['engagement_updated'] += 1
                     stats['successful'] += 1
                     continue
 
@@ -173,6 +280,7 @@ class LinkedInArchiver:
 
                 if success:
                     stats['successful'] += 1
+                    stats['new_posts'] += 1
                 else:
                     stats['failed'] += 1
 
@@ -314,11 +422,15 @@ class LinkedInArchiver:
         logger.info("\n" + "=" * 60)
         logger.info(f"{label} Complete!")
         logger.info("=" * 60)
-        logger.info(f"Total posts: {stats.get('total_posts', 0)}")
-        logger.info(f"Successfully archived: {stats.get('successful', 0)}")
+        logger.info(f"Total posts seen: {stats.get('total_posts', 0)}")
+        logger.info(f"Successfully processed: {stats.get('successful', 0)}")
+        if 'new_posts' in stats:
+            logger.info(f"  New posts added: {stats.get('new_posts', 0)}")
+        if 'engagement_updated' in stats:
+            logger.info(f"  Engagement updated on existing: {stats.get('engagement_updated', 0)}")
         logger.info(f"Failed: {stats.get('failed', 0)}")
         if stats.get('skipped_self_reposts'):
-            logger.info(f"Skipped self-reposts: {stats['skipped_self_reposts']}")
+            logger.info(f"Skipped reposts: {stats['skipped_self_reposts']}")
         logger.info(f"Media files downloaded: {stats.get('media_downloaded', 0)}")
         if stats.get('api_requests'):
             logger.info(f"API requests made: {stats['api_requests']}")

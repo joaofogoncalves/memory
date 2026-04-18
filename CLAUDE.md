@@ -71,7 +71,7 @@ linkedin-post-archiver/  # Project root
 ├── examples/
 │   └── sample-post/post.md           # Example archived post format
 │
-├── posts/                            # Archived posts output (git-ignored)
+├── posts/                            # Short-form posts (tracked; mix of authored via /post and historical scrape)
 │   └── YYYY/MM/post-slug/
 │       ├── post.md                   # Markdown file
 │       └── media/                    # Downloaded images/videos
@@ -151,16 +151,20 @@ linkedin-post-archiver/  # Project root
 - Max 3 retries per request
 - All rate limiting handled in `linkedin_client.py`
 
-### 4. Post Organization
-- Structure: `posts/YYYY/MM/post-slug/`
+### 4. Post Organization (authored-first model)
+- Structure: `posts/YYYY/MM/YYYY-MM-DD-slug/`
 - Slug format: `YYYY-MM-DD-first-words-of-post` (max 60 chars)
 - Duplicate slugs handled with numeric suffixes (-2, -3, etc.)
 - Media stored in `media/` subdirectory per post
+- **Site is canonical for short-form posts.** Authored via `/post`, which saves `post.md` (canonical body) plus `linkedin.md` and `x-thread.md` (paste-ready variants for manual posting). `posts/` is tracked in git — these are authored artifacts the user owns, not just a scraped mirror.
+- The historical `posts/` archive (scraped from LinkedIn before this model existed) lives alongside newly-authored posts; both are rendered the same way by the site builder.
+- **Authored-post frontmatter** differs slightly from scraped: `authored: true`, empty `post_url:` and `x_url:` initially (filled in after posting manually), `source_urls:`, `angle:`, `template:`.
 
-### 5. Idempotent Operation
-- Safe to re-run; skips posts that already exist
-- Checks for `post.md` file before archiving
-- Media downloads skip existing files
+### 5. Idempotent Operation with Merge Mode
+- Safe to re-run; the scraper never overwrites existing post bodies.
+- On re-crawl, scraped posts are matched to existing local posts by (a) exact `post_url` match or (b) content fingerprint within ±14 days. Matched posts get **engagement-only updates**: `reactions:` and `comments:` are refreshed in-place; an empty `post_url:` on an authored post is filled in with the LinkedIn permalink.
+- Posts with no match are added as new. This catches anything posted manually on LinkedIn outside the `/post` workflow.
+- Media downloads still skip existing files.
 
 ### 6. Error Handling
 - All errors logged to `logs/scraper.log`
@@ -231,17 +235,18 @@ linkedin-post-archiver/  # Project root
 - `profile.md` supplements with vocabulary, topic expertise, and deeper voice patterns
 
 ### 13. Articles Section
-- `articles/` directory stores original long-form content (tracked in git, unlike `posts/`)
+- `articles/` directory stores original long-form content (tracked in git, same as `posts/` now)
 - Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
 - Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`, `draft` (default true on creation)
 - Draft mode: **new articles always start with `draft: true`** (set by `/article`). Drafts publish at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars), excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`.
 - To promote a draft: run `/publish <slug>` — removes `draft: true`, updates `date:` to today, and renames the directory to match the new date so the path stays `articles/YYYY/MM/YYYY-MM-DD-slug/`.
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
-- Build workflow: write article locally → build site → deploy → optionally publish to Medium → update `medium_url`
-- The `/article` skill handles drafting; `/post` handles the LinkedIn promotion post (decoupled)
+- Build workflow: write article locally → build site → deploy → optionally cross-post to Substack / Medium → update `substack_url` / `medium_url`
+- The `/article` skill handles drafting AND produces a `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). `/post` handles the LinkedIn + X promotion posts (decoupled).
 - Articles appear on: home page (tabbed Latest section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
-- **Why separate from posts:** articles are authored content, not archived LinkedIn posts. Different workflow, different frontmatter, different content type.
+- **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md`) → LinkedIn + X for short-form distribution (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
+- **Why separate from posts:** articles are long-form authored content with different frontmatter (title, subtitle, hero_image, reading_time). Short-form posts now also live in the site as canonical, but have their own structure optimized for short-form rhythm.
 
 ### 14. Image Specs
 All images display on the site at **720px content width** (2x retina = 1440px source). Thumbnails are cropped via `object-fit: cover` at various aspect ratios. **Keep subjects centered with breathing room** for safe cropping.
@@ -618,13 +623,14 @@ class Media:
 ### /article - Long-Form Article Writer
 - Writes long-form articles (1,000-3,500 words) for the website's articles section
 - Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
-- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt
+- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt → generate Substack paste artifact
 - Asks for **target audience** up front (engineering leaders, product/business, generalists, mixed) — threads through angle selection, drafting depth, and visual choices
 - Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
-- Generates a **critique prompt** (`critique-prompt.md` in the article dir) — user pastes into another AI for a sharp second-opinion review before publishing
-- Decoupled from LinkedIn: reminds user to run `/post` for promotion post after article is finalized
-- Article frontmatter: title, subtitle, date, tags, medium_url, hero_image, reading_time, draft (always true on creation)
+- Generates a **critique prompt** (`critique-prompt.md`) — user pastes into another AI for a sharp second-opinion review before publishing
+- Generates a **Substack paste artifact** (`substack-paste.md`) — reformats the article body for Substack's editor with explicit posting checklist (title, subtitle, canonical URL pointing back to the site, image re-upload reminders). Lets the user cross-post to Substack in ~2 minutes without losing SEO canonicality.
+- Decoupled from LinkedIn/X: reminds user to run `/post` for the short-form promo on LinkedIn and X after article is finalized
+- Article frontmatter: title, subtitle, date, tags, medium_url, substack_url, hero_image, reading_time, draft (always true on creation)
 
 ### /publish - Promote Draft to Published
 - Removes `draft: true` from an article's frontmatter and updates `date:` to today
@@ -653,20 +659,25 @@ class Media:
 - Requires 80%+ of images described before generating
 - Uses tiered recency weighting for visual patterns
 
-### /post - LinkedIn Post Writer
-- Writes LinkedIn posts using `writing_style.md` (primary) and `profile.md` (supplementary)
+### /post - Short-Form Post Authoring
+- Authors short-form content with the site as canonical home, and generates LinkedIn + X variants for manual posting
+- Writes three artifacts under `posts/YYYY/MM/YYYY-MM-DD-slug/`:
+  - `post.md` — canonical site version (with `authored: true` in frontmatter, empty `post_url`/`x_url` fields filled in later after posting)
+  - `linkedin.md` — LinkedIn paste-ready variant (hook-first, intentional line breaks, 2-4 hashtags, no emojis)
+  - `x-thread.md` — X thread paste-ready variant (thread-by-default, one idea per tweet, links in the last tweet, no hashtags)
+- Uses `writing_style.md` (primary) and `profile.md` (supplementary) for voice
 - Fetches source material from URLs, proposes 2-3 angles, drafts after user picks one
-- Auto-detects post template: short-form commentary, article promotion, or long-form thought piece
-- Generates 3 AI image prompts based on `taste.md` visual profile
-- Iterates on drafts via user feedback
+- Auto-detects template: short-form commentary, article reaction, or long-form thought piece
+- Thread-bias: defaults to X threads unless the idea is genuinely a single one-liner
+- Generates 3 image prompts (or chart spec) based on `taste.md` if images add value
+- After posting manually on LinkedIn + X, the user fills in `post_url:` and `x_url:` in `post.md` frontmatter. On the next scraper run, engagement counts (reactions, comments) are merged in automatically via the scraper's merge mode.
 
-### /sync - Scrape and Curate Recent Posts
-- Runs the browser crawler with `--limit 10` and applies editorial judgment on newly-scraped posts
-- Flags and removes **self-article-promo posts** — when a LinkedIn post exists only to promote a local article (in `articles/`), the article is the canonical content, the promo is noise
-- Flags low-value noise: milestone posts ("1k followers!"), empty posts, pure reposts
-- Detection uses `SITE_URL` (from `.env`), local article slugs/medium_urls, and language heuristics — then the user confirms each drop via AskUserQuestion
-- Deletes confirmed post directories (destructive — posts aren't in git); articles and site.yaml untouched
-- Run before `pipeline.sh --skip-scrape` to keep the archive + site clean
+### /sync - Refresh Engagement + Catch Stragglers
+- Runs the browser crawler with `--limit 10` to refresh engagement counts on existing posts (handled silently by the scraper's merge mode) and surface any genuinely-new posts that were written outside `/post`
+- **Merge-mode** means re-scraping does not duplicate posts — matched posts (by `post_url` or content fingerprint within 14 days) only get `reactions:` and `comments:` refreshed; bodies are never overwritten
+- For genuinely-new posts (things posted manually on LinkedIn without running `/post`), applies light noise curation: milestone posts, empty/placeholder posts, one-line reactions, pure reposts — flags each with a reason, user confirms drops via AskUserQuestion
+- **No longer does self-article-promo detection** — in the authored-first model, promo posts for articles are authored via `/post` and are canonical site content, not noise
+- Run before `pipeline.sh --skip-scrape` to keep engagement data fresh and catch stragglers
 
 ---
 
@@ -784,8 +795,10 @@ python -m scraper.main --reauth
 - `now.md`, `writing_style.md`, `article_style.md` (content that feeds the site/skills)
 - `articles/` directory (original long-form articles — authored content, not scraped)
 
+**Tracked (continued):**
+- `posts/` directory (short-form posts — authored via `/post` and historical scrape; the authored-first model treats these as canonical site content the user owns)
+
 **Ignored (personal content + runtime):**
-- `posts/` directory (user's archived posts)
 - `cv.md`, `profile.md`, `taste.md` (personal content generated by skills)
 - `config/site.yaml` (site identity)
 - `web/img/headshot.jpg` (personal photo)
@@ -1047,5 +1060,5 @@ bash web/deploy.sh
 
 ---
 
-_Last updated: 2026-04-14_
-_Project version: 2.0.0_
+_Last updated: 2026-04-18_
+_Project version: 2.1.0_

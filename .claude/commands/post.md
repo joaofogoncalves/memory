@@ -1,10 +1,10 @@
 ---
 argument-hint: [urls and/or notes about what to write]
-description: Write a LinkedIn post using your style guide and voice profile, and generate 3 AI image prompts
+description: Author a short-form post — saves canonical version to the site and generates LinkedIn + X variants for manual posting
 allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob, Bash
 ---
 
-Write a LinkedIn post based on the user's input and generate AI image prompts for it.
+Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`. LinkedIn and X variants are generated as paste-ready artifacts for manual posting on each platform.
 
 ## Arguments
 
@@ -38,13 +38,13 @@ Use AskUserQuestion to present the angles. Format:
 - Each option label is a short name for the angle (e.g., "The adoption gap angle")
 - Each option description is the 1-2 sentence take
 
-## Step 3: Draft the post
+## Step 3: Draft the canonical post (site version)
 
 ### Auto-detect post template
 
 Based on input type and chosen angle, select the template:
 - **Source is a tweet, LinkedIn post, or someone's hot take** → Short-form commentary (150-250 words)
-- **Source is an article the user wrote or wants to promote** → Article promotion (100-200 words)
+- **Source is an article (yours or someone else's) you want to riff on** → Article reaction / promotion (100-200 words)
 - **Source is an article/data + user has a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
 - **No URL, just text notes with a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
 - **No URL, brief reaction to an event/trend** → Short-form commentary (150-250 words)
@@ -62,23 +62,65 @@ Where `profile.md` and `writing_style.md` conflict, `writing_style.md` wins.
 
 Additional rules:
 - Emoji: zero by default
-- Hashtags: 2-4 at the very end
+- Hashtags: 2-4 at the very end of the body (LinkedIn convention — the site strips them before rendering)
 - No engagement asks, no self-promotion
 - If using the "ps:" aside device, keep it lowercase and casual
+
+This is the **canonical** draft. LinkedIn and X variants will be adapted from it in Step 4 — keep this version clean, platform-neutral, and suitable for the site. The canonical post may contain a link (e.g., to an article you're reacting to), but avoid LinkedIn-specific or X-specific phrasing.
 
 ### Show draft and iterate
 
 IMPORTANT: Always output the full draft as regular text in your response BEFORE asking for feedback. Never put the draft inside the `preview` field of AskUserQuestion — previews don't render reliably. The user must be able to read the draft directly in the conversation.
 
 Format: output the draft text between horizontal rules (`---`) so it's visually distinct, then use AskUserQuestion with options:
-- "Looks good" — proceed to image prompts
+- "Looks good" — proceed to platform variants
 - "Needs changes" — user provides feedback in the notes field
 - "Try a different angle" — go back to Step 2
 - "Scrap and start over" — ask for new input
 
 If the user selects "Needs changes," revise the draft, output the full revised text again, and ask once more. Continue iterating until they approve.
 
-## Step 4: Decide whether the post needs an image
+## Step 4: Generate platform variants
+
+Once the canonical post is approved, produce two platform-adapted artifacts. Each surface has different mechanics — don't just paste the same text to both.
+
+### LinkedIn variant
+
+LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), intentional paragraph breaks, conversational rhythm, hashtags at the end, zero emojis (per style guide).
+
+- Usually very close to the canonical draft — often identical
+- Double-check: first 2 lines MUST earn the expand click
+- Keep paragraph breaks generous (single-sentence paragraphs work well here)
+- Hashtags at the end, 2-4 tags
+- Length: 150-300 words comfortable; longer is fine if the argument earns it
+
+### X variant
+
+X rewards: thread structure, hook on tweet 1, short sentences, one idea per tweet, a landing tweet that closes the loop. 280 chars per tweet (soft — Premium users have more but write for the base limit).
+
+**Default to a thread.** Single tweets are only for genuinely one-line observations (under ~240 chars with room for the point to breathe). Even short ideas often read better as a 2-3 tweet thread with rhythm.
+
+Thread construction rules:
+- **Tweet 1**: the hook. Sharpest line from the post. Must stand alone as a reason to read more.
+- **Tweets 2-N**: one idea per tweet. Break on natural beats, not mid-thought. Avoid "1/", "2/" numbering — it feels mechanical and X displays thread position natively. Let the rhythm carry it.
+- **Last tweet**: the landing. Either the closing line from the canonical post, or a reframe that recontextualizes the thread.
+- **Target 3-7 tweets** for a typical short-form post. Longer threads (8+) only if the argument genuinely needs the space.
+- If the canonical post has a link (e.g. to an article), put the link in the **last tweet**, not the first — X throttles reach on posts with links, and first-tweet links hurt thread performance especially.
+- No hashtags (X culture — feels spammy). Optional handle mentions if quoting someone.
+
+**Short-but-thread-fits judgment call**: if the canonical post is 150-200 words but has a natural rhythm break (setup → turn → landing), still write a 3-tweet thread. Single-tweet output is the exception, not the default.
+
+### Show variants and iterate
+
+Output both variants clearly separated in the response, then use AskUserQuestion:
+- "Both look good" — proceed to images
+- "Revise LinkedIn" — feedback on LinkedIn variant
+- "Revise X thread" — feedback on X thread
+- "Revise both" — feedback on both
+
+Iterate until approved.
+
+## Step 5: Decide whether the post needs an image
 
 Before generating prompts, make a judgement call: does this post actually benefit from an image?
 
@@ -93,13 +135,13 @@ Before generating prompts, make a judgement call: does this post actually benefi
 - The argument has a visual structure (comparison, framework, data) that a diagram would clarify
 - The concept is abstract enough that an illustration gives the reader an anchor
 
-If you decide the post doesn't need an image, tell the user: "This post works better without an image — the text carries itself." Offer to generate prompts anyway if they want, then skip to Step 5.
+If you decide the post doesn't need an image, tell the user: "This post works better without an image — the text carries itself." Offer to generate prompts anyway if they want, then skip to Step 7.
 
-If the post does benefit from an image, proceed below.
+If the post does benefit from an image, proceed to Step 6.
 
 ### Chart as an alternative to AI image
 
-Some LinkedIn posts — especially ones built around a single stat, contrast, or comparison — are better served by a **chart** than a generated image. A crisp chart with the headline number often out-performs a stylized illustration for this style of post.
+Some posts — especially ones built around a single stat, contrast, or comparison — are better served by a **chart** than a generated image. A crisp chart with the headline number often out-performs a stylized illustration for this style of post.
 
 Consider a chart (not an AI image) when:
 - The post pivots on one or two numbers ("88% have access, 1% have maturity")
@@ -109,20 +151,20 @@ Consider a chart (not an AI image) when:
 
 Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `flow` (horizontal or vertical), `timeline`.
 
-If a chart fits, offer it as one of the 3 visual options in Step 4b — alongside two AI image prompts — rather than producing three AI prompts. Produce a chart **spec** (template name + sample JSON payload) and, if the user picks it, render it via the `charts/` module.
+If a chart fits, offer it as one of the 3 visual options in Step 6 — alongside two AI image prompts — rather than producing three AI prompts. Produce a chart **spec** (template name + sample JSON payload) and, if the user picks it, render it via the `charts/` module.
 
 **If the visual you want doesn't match any existing template,** ask the user with AskUserQuestion: "Add a new `<name>` template to `charts/`" vs. "Use an AI image prompt instead." Include a one-paragraph sketch of the proposed template.
 
-## Step 4b: Generate image prompts (or chart spec)
+## Step 6: Generate image prompts (or chart spec)
 
 If you decided above to offer a chart, the 3 options become: 1 chart spec + 2 AI image prompts. Otherwise produce **3 image prompts** following the visual taste profile from `taste.md`.
 
-When rendering a chart for a LinkedIn post, save the spec next to the post draft under a `media/` folder and render to `.webp`:
+When rendering a chart, save the spec next to the post under the post's `media/` folder and render to `.webp`:
 
 ```bash
 node charts/render.mjs --template <name> \
-  --data drafts/<slug>/media/<name>.json \
-  --output drafts/<slug>/media/<name>.webp \
+  --data posts/YYYY/MM/YYYY-MM-DD-slug/media/<name>.json \
+  --output posts/YYYY/MM/YYYY-MM-DD-slug/media/<name>.webp \
   --width <w> --height <h>
 ```
 
@@ -179,46 +221,117 @@ Present the 3 image prompts to the user using AskUserQuestion with options:
 
 If revising, iterate until approved.
 
-## Step 5: Save draft
+## Step 7: Save all artifacts
 
-1. Check if a `drafts/` directory exists at the project root. If not, note that it will be created.
-2. Generate a slug from the post's opening line: first 5-8 words, lowercased, hyphenated, max 50 chars.
-3. Save to `drafts/YYYY-MM-DD-slug.md` using today's date.
+1. Generate a slug from the canonical post's opening line: first 5-8 words, lowercased, hyphenated, max 50 chars.
+2. Compute the post directory path: `posts/YYYY/MM/YYYY-MM-DD-slug/` using today's date.
+3. If the directory already exists (rare, but possible if re-running), append `-2`, `-3`, etc. to the slug.
+4. Create the directory and write the following files:
 
-### File format
+### 7a. `post.md` — canonical site version
 
 ```markdown
 ---
-date: [today's date, YYYY-MM-DD]
+date: YYYY-MM-DD
+post_type: original
+authored: true
+post_url: ""
+x_url: ""
+tags: [tag1, tag2, tag3]
 source_urls:
   - [url1]
-  - [url2]
 angle: [one-line description of the chosen angle]
-template: [short-form | long-form | article-promotion]
+template: [short-form | long-form | article-reaction]
 ---
 
-## Post
+[the canonical post body, exactly as approved]
 
-[the approved post text, exactly as approved — ready to copy-paste to LinkedIn]
+**Hashtags:** #Tag1 #Tag2 #Tag3
+```
 
-## Image Prompts
+Notes:
+- `authored: true` distinguishes this from scraped posts. The scraper will respect this flag and only update engagement counts, never overwrite the body.
+- `post_url` starts empty — fill in with the LinkedIn permalink after posting manually.
+- `x_url` starts empty — fill in with the X permalink after posting.
+- `source_urls` — omit if the post has no external sources.
+- `tags` — lowercase tags extracted from the hashtags or the topic (match `site.yaml` topics where relevant).
 
-### Option 1: [type — e.g., "Screenshot of source tweet"]
+### 7b. `linkedin.md` — LinkedIn paste-ready variant
+
+```markdown
+# LinkedIn post — [slug]
+
+Paste this directly into LinkedIn's composer. Zero emojis, 2-4 hashtags at the end.
+
+---
+
+[LinkedIn variant body, exactly as approved]
+
+#Tag1 #Tag2 #Tag3
+
+---
+
+**After posting:** copy the LinkedIn permalink and paste it into `post.md` as `post_url:`.
+```
+
+### 7c. `x-thread.md` — X thread paste-ready variant
+
+```markdown
+# X thread — [slug]
+
+Paste each tweet into X manually as a reply chain, OR load into Typefully / similar scheduler. No hashtags, no numbering.
+
+---
+
+**Tweet 1 (hook):**
+[text, under 280 chars]
+
+**Tweet 2:**
+[text]
+
+**Tweet 3:**
+[text]
+
+...
+
+**Tweet N (landing):**
+[text, may include the link if this is an article reaction]
+
+---
+
+**After posting:** copy the X permalink (of tweet 1) and paste it into `post.md` as `x_url:`.
+```
+
+If the X variant is a single tweet (short-but-complete exception), use a single `**Tweet:**` block with the same structure.
+
+### 7d. `image-prompts.md` — if images were generated
+
+```markdown
+# Image Prompts
+
+## Option 1: [type — e.g., "Screenshot of source tweet"]
 [prompt or screenshot instructions]
 
-### Option 2: [type — e.g., "Diagram"]
+## Option 2: [type — e.g., "Diagram"]
 [prompt]
 
-### Option 3: [type — e.g., "AI illustration"]
+## Option 3: [type — e.g., "AI illustration"]
 [prompt]
 ```
 
-If no URLs were used, omit the `source_urls` field.
-If the user skipped images, omit the `## Image Prompts` section entirely.
+If the user skipped images, omit this file entirely.
 
-## Step 6: Confirm completion
+### 7e. Chart specs (if a chart was chosen)
+
+Chart JSON spec and rendered `.webp` go in the post's `media/` subdirectory (already created when rendering in Step 6).
+
+## Step 8: Confirm completion
 
 Tell the user:
-- The draft has been saved to `drafts/[filename].md`
-- Remind them the post text is ready to copy-paste
-- If image prompts were included, remind them to generate the images
+- **Site canonical post saved:** `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`
+- **LinkedIn variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/linkedin.md` — paste into LinkedIn's native composer
+- **X thread variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/x-thread.md` — paste into X or Typefully
+- If image prompts: `image-prompts.md` in the same directory, generate images and save hero to `media/`
+- Remind: "After posting on LinkedIn and X, fill in `post_url:` and `x_url:` in `post.md` frontmatter."
+- Remind: "To publish the site post: `bash pipeline.sh --skip-scrape`"
+- Remind: "Later runs of the scraper will pick up engagement counts (reactions, comments) from LinkedIn and merge them into this post automatically — no duplicate will be created because `authored: true` is set."

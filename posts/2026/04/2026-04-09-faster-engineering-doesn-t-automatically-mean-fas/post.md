@@ -5,6 +5,7 @@ post_type: original
 archived_at: 2026-04-12
 tags: [ai, leadership, engineering, teamperformance]
 comments: 3
+reactions: 9
 ---
 
 # April 09, 2026

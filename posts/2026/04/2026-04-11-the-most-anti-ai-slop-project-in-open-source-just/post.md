@@ -5,6 +5,7 @@ post_type: original
 archived_at: 2026-04-12
 tags: [AI, OpenSource, SoftwareEngineering]
 comments: 1
+reactions: 72
 ---
 
 # April 11, 2026

@@ -4,7 +4,8 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74482702535176806
 post_type: original
 archived_at: 2026-04-12
 tags: [ai, coding, softwaredevelopment]
-comments: 56
+comments: 68
+reactions: 393
 ---
 
 # April 10, 2026

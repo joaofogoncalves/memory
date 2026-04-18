@@ -4,7 +4,8 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74475472831367004
 post_type: original
 archived_at: 2026-04-08
 tags: [Leadership, Prompting, AI]
-comments: 2
+comments: 3
+reactions: 7
 ---
 
 # April 08, 2026

@@ -5,6 +5,7 @@ post_type: original
 archived_at: 2026-04-15
 tags: [SoftwareEngineering, EngineeringLeadership, AI]
 comments: 6
+reactions: 12
 ---
 
 # April 15, 2026

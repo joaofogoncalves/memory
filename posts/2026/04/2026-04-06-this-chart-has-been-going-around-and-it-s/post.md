@@ -4,7 +4,8 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74468252850413854
 post_type: original
 archived_at: 2026-04-08
 tags: [Leadership, AgenticDevelopment, Engineering, AI]
-comments: 9
+comments: 14
+reactions: 21
 ---
 
 # April 06, 2026

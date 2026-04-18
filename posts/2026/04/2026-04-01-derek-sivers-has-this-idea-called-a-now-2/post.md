@@ -5,6 +5,7 @@ post_type: original
 archived_at: 2026-04-05
 tags: [NowPage, PersonalWebsite, ContentOwnership]
 comments: 5
+reactions: 5
 ---
 
 # April 01, 2026

@@ -4,7 +4,8 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74480110893358981
 post_type: original
 archived_at: 2026-04-12
 tags: [AI, Security, Mythos]
-comments: 17
+comments: 18
+reactions: 23
 ---
 
 # April 09, 2026

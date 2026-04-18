@@ -245,7 +245,7 @@ linkedin-post-archiver/  # Project root
 - Build workflow: write article locally → build site → deploy → optionally cross-post to Substack / Medium → update `substack_url` / `medium_url`
 - The `/article` skill handles drafting AND produces a `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). `/post` handles the LinkedIn + X promotion posts (decoupled).
 - Articles appear on: home page (tabbed Latest section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
-- **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md`) → LinkedIn + X for short-form distribution (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
+- **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md` for articles, `substack-note.md` for short-form Notes) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
 - **Why separate from posts:** articles are long-form authored content with different frontmatter (title, subtitle, hero_image, reading_time). Short-form posts now also live in the site as canonical, but have their own structure optimized for short-form rhythm.
 
 ### 14. Image Specs
@@ -660,17 +660,21 @@ class Media:
 - Uses tiered recency weighting for visual patterns
 
 ### /post - Short-Form Post Authoring
-- Authors short-form content with the site as canonical home, and generates LinkedIn + X variants for manual posting
-- Writes three artifacts under `posts/YYYY/MM/YYYY-MM-DD-slug/`:
-  - `post.md` — canonical site version (with `authored: true` in frontmatter, empty `post_url`/`x_url` fields filled in later after posting)
+- Authors short-form content with the site as canonical home, and generates LinkedIn + X + Substack Note variants for manual posting
+- Writes four artifacts under `posts/YYYY/MM/YYYY-MM-DD-slug/`:
+  - `post.md` — canonical site version (with `authored: true` in frontmatter, empty `post_url`/`x_url`/`substack_note_url` fields filled in later after posting)
   - `linkedin.md` — LinkedIn paste-ready variant (hook-first, intentional line breaks, 2-4 hashtags, no emojis)
   - `x-thread.md` — X thread paste-ready variant (thread-by-default, one idea per tweet, links in the last tweet, no hashtags)
+  - `substack-note.md` — Substack Note paste-ready variant (~90% of LinkedIn copy: no hashtags, softer hook, link welcomed since Notes don't throttle them)
 - Uses `writing_style.md` (primary) and `profile.md` (supplementary) for voice
 - Fetches source material from URLs, proposes 2-3 angles, drafts after user picks one
 - Auto-detects template: short-form commentary, article reaction, or long-form thought piece
 - Thread-bias: defaults to X threads unless the idea is genuinely a single one-liner
+- Image-default: posts ship with a visual unless there's an explicit reason to skip (data shows ~5x engagement uplift)
+- Length target: 100-150 words is the peak engagement zone; 100-250 acceptable; under 100 underperforms
 - Generates 3 image prompts (or chart spec) based on `taste.md` if images add value
-- After posting manually on LinkedIn + X, the user fills in `post_url:` and `x_url:` in `post.md` frontmatter. On the next scraper run, engagement counts (reactions, comments) are merged in automatically via the scraper's merge mode.
+- After posting manually on each surface, the user fills in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter. On the next scraper run, engagement counts (reactions, comments) are merged in automatically via the scraper's merge mode.
+- Suggested posting order: site → LinkedIn (cold reach) → X (parallel cold reach) → Substack Note (warm conversion to subscribers)
 
 ### /sync - Refresh Engagement + Catch Stragglers
 - Runs the browser crawler with `--limit 10` to refresh engagement counts on existing posts (handled silently by the scraper's merge mode) and surface any genuinely-new posts that were written outside `/post`

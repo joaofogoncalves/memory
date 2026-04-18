@@ -1,10 +1,10 @@
 ---
 argument-hint: [urls and/or notes about what to write]
-description: Author a short-form post — saves canonical version to the site and generates LinkedIn + X variants for manual posting
+description: Author a short-form post — saves canonical version to the site and generates LinkedIn + X + Substack Note variants for manual posting
 allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob, Bash
 ---
 
-Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`. LinkedIn and X variants are generated as paste-ready artifacts for manual posting on each platform.
+Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`. LinkedIn, X thread, and Substack Note variants are generated as paste-ready artifacts for manual posting on each platform.
 
 ## Arguments
 
@@ -42,12 +42,16 @@ Use AskUserQuestion to present the angles. Format:
 
 ### Auto-detect post template
 
-Based on input type and chosen angle, select the template:
-- **Source is a tweet, LinkedIn post, or someone's hot take** → Short-form commentary (150-250 words)
-- **Source is an article (yours or someone else's) you want to riff on** → Article reaction / promotion (100-200 words)
-- **Source is an article/data + user has a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
-- **No URL, just text notes with a thesis** → Long-form thought piece (250-400 words, only if the argument needs the space)
-- **No URL, brief reaction to an event/trend** → Short-form commentary (150-250 words)
+Based on input type and chosen angle, select the template. Word counts below reflect engagement data: posts in the 100-150 word range score ~3-4x posts in the 150-200 range, which still beat 200+. Bias short.
+
+- **Source is a tweet, LinkedIn post, or someone's hot take** → Short-form commentary (**100-150 words**, hard upper bound 200)
+- **Source is an article (yours or someone else's) you want to riff on** → Article reaction / promotion (**100-180 words**)
+- **Source is an article/data + user has a thesis** → Long-form thought piece (**200-300 words**, only if the argument genuinely needs the space — and it usually doesn't)
+- **No URL, just text notes with a thesis** → Long-form thought piece (**200-300 words**, same caveat)
+- **No URL, brief reaction to an event/trend** → Short-form commentary (**100-150 words**)
+
+**Hard floor:** 100 words. Posts under 100 underperform across the archive.
+**Hard ceiling default:** 250 words. Going past requires the argument to earn it; cut anything restating what's already said.
 
 ### Write the draft
 
@@ -82,7 +86,7 @@ If the user selects "Needs changes," revise the draft, output the full revised t
 
 ## Step 4: Generate platform variants
 
-Once the canonical post is approved, produce two platform-adapted artifacts. Each surface has different mechanics — don't just paste the same text to both.
+Once the canonical post is approved, produce three platform-adapted artifacts (LinkedIn, X thread, Substack Note). Each surface has different mechanics and audience — don't just paste the same text to all three.
 
 ### LinkedIn variant
 
@@ -110,13 +114,26 @@ Thread construction rules:
 
 **Short-but-thread-fits judgment call**: if the canonical post is 150-200 words but has a natural rhythm break (setup → turn → landing), still write a 3-tweet thread. Single-tweet output is the exception, not the default.
 
+### Substack Note variant
+
+Substack Notes is a different beast from LinkedIn and X — the audience is already inside the newsletter ecosystem and one click from subscribing. Notes is mid-funnel (conversion), not top-of-funnel (cold reach). Adapt the LinkedIn variant with these moves:
+
+- **Strip the hashtags.** Notes culture doesn't use them.
+- **Soften the hook.** LinkedIn's first line has to earn the expand-click against a noisy feed; Notes readers are more receptive. The opener can be conversational rather than punchy. A flat first sentence is fine.
+- **Welcome the link.** Unlike X, Substack Notes don't throttle posts with links. If this is an article-promo post or a riff on a source, include the link inline near the close (or as a final standalone line for click prominence).
+- **Length:** roughly the same as LinkedIn — 100-250 words. Notes can go longer than tweets, but shorter feels native.
+- **No Subscribe CTA.** The Subscribe button shows up automatically on every Note for non-subscribers; don't ask explicitly.
+
+For most posts the Note is ~90% of the LinkedIn copy with these adjustments — a fast transform, not a fresh write. If the LinkedIn variant is also link-free and tag-light, the Note can be nearly identical.
+
 ### Show variants and iterate
 
-Output both variants clearly separated in the response, then use AskUserQuestion:
-- "Both look good" — proceed to images
+Output all three variants (LinkedIn, X thread, Substack Note) clearly separated in the response, then use AskUserQuestion:
+- "All look good" — proceed to images
 - "Revise LinkedIn" — feedback on LinkedIn variant
 - "Revise X thread" — feedback on X thread
-- "Revise both" — feedback on both
+- "Revise Substack Note" — feedback on Note variant
+- "Revise multiple" — feedback on more than one
 
 Iterate until approved.
 
@@ -237,6 +254,7 @@ post_type: original
 authored: true
 post_url: ""
 x_url: ""
+substack_note_url: ""
 tags: [tag1, tag2, tag3]
 source_urls:
   - [url1]
@@ -253,6 +271,7 @@ Notes:
 - `authored: true` distinguishes this from scraped posts. The scraper will respect this flag and only update engagement counts, never overwrite the body.
 - `post_url` starts empty — fill in with the LinkedIn permalink after posting manually.
 - `x_url` starts empty — fill in with the X permalink after posting.
+- `substack_note_url` starts empty — fill in with the Substack Note permalink after posting.
 - `source_urls` — omit if the post has no external sources.
 - `tags` — lowercase tags extracted from the hashtags or the topic (match `site.yaml` topics where relevant).
 
@@ -304,7 +323,23 @@ Paste each tweet into X manually as a reply chain, OR load into Typefully / simi
 
 If the X variant is a single tweet (short-but-complete exception), use a single `**Tweet:**` block with the same structure.
 
-### 7d. `image-prompts.md` — if images were generated
+### 7d. `substack-note.md` — Substack Note paste-ready variant
+
+```markdown
+# Substack Note — [slug]
+
+Paste into Substack Notes (substack.com/notes). No hashtags. Links welcome.
+
+---
+
+[Substack Note body, adapted from the LinkedIn variant — no hashtags, softer hook, link welcomed if applicable]
+
+---
+
+**After posting:** copy the Note URL and paste it into `post.md` as `substack_note_url:`.
+```
+
+### 7e. `image-prompts.md` — if images were generated
 
 ```markdown
 # Image Prompts
@@ -321,7 +356,7 @@ If the X variant is a single tweet (short-but-complete exception), use a single 
 
 If the user skipped images, omit this file entirely.
 
-### 7e. Chart specs (if a chart was chosen)
+### 7f. Chart specs (if a chart was chosen)
 
 Chart JSON spec and rendered `.webp` go in the post's `media/` subdirectory (already created when rendering in Step 6).
 
@@ -331,7 +366,9 @@ Tell the user:
 - **Site canonical post saved:** `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`
 - **LinkedIn variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/linkedin.md` — paste into LinkedIn's native composer
 - **X thread variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/x-thread.md` — paste into X or Typefully
+- **Substack Note variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/substack-note.md` — paste into substack.com/notes
 - If image prompts: `image-prompts.md` in the same directory, generate images and save hero to `media/`
-- Remind: "After posting on LinkedIn and X, fill in `post_url:` and `x_url:` in `post.md` frontmatter."
+- Remind: "After posting on each surface, fill in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter."
 - Remind: "To publish the site post: `bash pipeline.sh --skip-scrape`"
 - Remind: "Later runs of the scraper will pick up engagement counts (reactions, comments) from LinkedIn and merge them into this post automatically — no duplicate will be created because `authored: true` is set."
+- Suggested posting order: site (auto-deployed via pipeline) → LinkedIn (broadest cold reach) → X (parallel cold reach) → Substack Note (warm conversion to subscribers).

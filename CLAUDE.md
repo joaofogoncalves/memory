@@ -190,8 +190,8 @@ linkedin-post-archiver/  # Project root
 ### 8. Homepage Design
 - **Hero section**: Compact hero (not full-viewport) with animated particle network canvas background (`web/js/home.js`). Teal-colored nodes drift, form connections, and react to mouse movement. Name with glitch animation + blinking cursor, thesis statement with teal left border, social links.
 - **Transparent nav**: On the homepage, the nav bar starts fully transparent so particles flow behind it, then gains a frosted-glass background on scroll (`.nav--transparent` class).
-- **Featured Spotlight ("Start Here")**: Auto-rotating display of featured posts — one at a time with text on left and image on right. Crossfades every 12s with dot indicators. Pauses on hover for accessibility.
-- **Tabbed Content ("Latest / Top")**: Two-tab content section. "Latest" shows 8 most recent posts/articles by date. "Top" shows 8 highest-engagement posts by `reactions + comments×3` score. Uses 2-column card grid (`tab-grid`).
+- **Featured Spotlight ("Start Here")**: Auto-rotating display of the newest articles — one at a time with text on left and hero image on right. Crossfades every 12s with dot indicators. Pauses on hover for accessibility. Article-only (not posts) — the site positions long-form as primary.
+- **Recent notes**: Compact text-only strip of the 6 most recent short-form posts (date + title, one row each). Sits below the spotlight as secondary activity. Links to `/posts/` for the full archive.
 - **Topics section**: Topic cards with post counts (if topics configured in `site.yaml`)
 - **Newsletter CTA**: Centered section with teal glow button (if `newsletter_url` configured)
 
@@ -244,7 +244,7 @@ linkedin-post-archiver/  # Project root
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally cross-post to Substack / Medium → update `substack_url` / `medium_url`
 - The `/article` skill handles drafting AND produces a `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). `/post` handles the LinkedIn + X promotion posts (decoupled).
-- Articles appear on: home page (tabbed Latest section), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
+- Articles appear on: home page (Start Here spotlight + Essays grid — articles are the primary content on the home page), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
 - **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md` for articles, `substack-note.md` for short-form Notes) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
 - **Why separate from posts:** articles are long-form authored content with different frontmatter (title, subtitle, hero_image, reading_time). Short-form posts now also live in the site as canonical, but have their own structure optimized for short-form rhythm.
 
@@ -1013,7 +1013,7 @@ bash web/deploy.sh
 - `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
 - `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, medium_url, reading_time)
 - Nav links for Articles, Topics, and Now appear automatically when content exists; no dead links
-- **Homepage helpers**: `_featured_spotlight_html()` (auto-rotating spotlight), `_tabbed_content_html()` (Latest/Top tabs with card grid), `_topics_home_html()` (topic cards), `_newsletter_section_html()` (CTA section), `_render_mixed_card()` (handles both posts and articles in grids)
+- **Homepage helpers**: `_featured_spotlight_html()` (auto-rotating spotlight, accepts articles or posts), `_recent_notes_html()` (compact recent-posts strip), `_topics_home_html()` (topic cards), `_newsletter_section_html()` (CTA section)
 - **Posts page**: Single continuous list of spotlight-style row cards (`_render_list_card()` + `.list-card` CSS). Full-width rows with text left, thumbnail right (300×175). JS renders same format dynamically via `posts.js`.
 - Articles section: `/articles/` archive with hero image cards, `/articles/YYYY/MM/slug/` individual pages
 - Post/article content: 720px (`--max-content`) centered with `margin: 0 auto` within the 1280px page container

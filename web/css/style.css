@@ -404,6 +404,18 @@ h4 { font-size: 1.1rem; }
   flex-shrink: 0;
 }
 
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
 /* --- Post Cards (Home + Posts Recent) --- */
 .cards-grid {
   display: grid;
@@ -2107,6 +2119,42 @@ h4 { font-size: 1.1rem; }
   color: var(--on-surface-variant);
   line-height: 1.4;
   margin-bottom: 0.6rem;
+}
+
+/* --- Home: Recent notes (compact text-only strip) --- */
+.recent-notes {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--outline-variant);
+}
+
+.note-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--outline-variant);
+  text-decoration: none;
+  color: var(--on-surface);
+  transition: color 0.15s;
+}
+
+.note-row:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.note-date {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.02em;
+}
+
+.note-title {
+  font-size: 0.98rem;
+  line-height: 1.4;
 }
 
 /* Article page */

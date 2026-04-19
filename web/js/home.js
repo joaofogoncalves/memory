@@ -1,5 +1,5 @@
 /* ============================================================
-   Homepage: particle canvas, spotlight rotation, content tabs
+   Homepage: particle canvas, spotlight rotation
    Vanilla JS, no dependencies
    ============================================================ */
 
@@ -203,39 +203,10 @@
   }
 
   /* ----------------------------------------------------------
-     3. Content Tabs (Latest / Top)
-     ---------------------------------------------------------- */
-  function initTabs() {
-    var tabs = document.querySelectorAll('.content-tab');
-    var panels = document.querySelectorAll('.tab-panel');
-    if (!tabs.length || !panels.length) return;
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener('click', function () {
-        var target = tab.getAttribute('data-tab');
-
-        // Switch active tab
-        tabs.forEach(function (t) { t.classList.remove('active'); });
-        tab.classList.add('active');
-
-        // Switch visible panel
-        panels.forEach(function (p) {
-          if (p.id === 'tab-' + target) {
-            p.classList.add('active');
-          } else {
-            p.classList.remove('active');
-          }
-        });
-      });
-    });
-  }
-
-  /* ----------------------------------------------------------
      Init all on DOMContentLoaded
      ---------------------------------------------------------- */
   document.addEventListener('DOMContentLoaded', function () {
     initParticles();
     initSpotlight();
-    initTabs();
   });
 })();

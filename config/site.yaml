@@ -22,7 +22,7 @@ about_teaser: >-
 thesis: Everyone's optimizing for speed. The more interesting question is what gets lost when you do. I write about the engineering judgment AI can't replace — and the parts it already has.
 
 # Newsletter signup URL (Substack, Beehiiv, Buttondown, etc.)
-# newsletter_url: ""
+newsletter_url: "https://joaofogoncalves.substack.com/subscribe"
 
 # Curated "Start Here" posts — auto-updated by scraper from LinkedIn top performers.
 # Override by listing slugs manually; set to [] to disable the section.

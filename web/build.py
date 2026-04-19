@@ -565,6 +565,10 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
         f'<a href="{prefix}now/"{cls("now")}>Now</a>'
         if NOW_FILE.exists() else ''
     )
+    subscribe_link = (
+        f'<a href="{SITE["newsletter_url"]}" target="_blank" rel="noopener" class="nav-cta">Subscribe</a>'
+        if SITE.get('newsletter_url') else ''
+    )
     nav_cls = 'nav nav--transparent' if transparent else 'nav'
     return f'''<nav class="{nav_cls}">
   <div class="nav-inner">
@@ -574,6 +578,7 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
       {articles_link}
       <a href="{prefix}posts/"{cls("posts")}>Posts</a>
       {now_link}
+      {subscribe_link}
     </div>
   </div>
 </nav>
@@ -1053,6 +1058,8 @@ def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
   <div class="articles-grid">
     {cards_html}
   </div>
+
+  {newsletter_cta_html()}
 </div>
 
 {footer_html()}

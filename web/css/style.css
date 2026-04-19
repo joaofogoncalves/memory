@@ -193,6 +193,7 @@ h4 { font-size: 1.1rem; }
 
 .nav-links {
   display: flex;
+  align-items: center;
   gap: 2rem;
 }
 
@@ -209,6 +210,20 @@ h4 { font-size: 1.1rem; }
 .nav-links a.active {
   color: var(--primary);
   text-decoration: none;
+}
+
+.nav-links a.nav-cta {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-links a.nav-cta:hover {
+  background: var(--primary);
+  color: var(--bg);
 }
 
 /* --- Noise Overlay (global grain texture) --- */

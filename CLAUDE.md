@@ -243,7 +243,7 @@ linkedin-post-archiver/  # Project root
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally cross-post to Substack / Medium → update `substack_url` / `medium_url`
-- The `/article` skill handles drafting AND produces a `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). `/post` handles the LinkedIn + X promotion posts (decoupled).
+- The `/article` skill handles drafting; the `/publish` skill promotes a draft AND produces the `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). Generating Substack paste only at publish time avoids wasted token churn during the draft loop. `/post` handles the LinkedIn + X promotion posts (decoupled).
 - Articles appear on: home page (Start Here spotlight + Essays grid — articles are the primary content on the home page), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
 - **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md` for articles, `substack-note.md` for short-form Notes) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
 - **Why separate from posts:** articles are long-form authored content with different frontmatter (title, subtitle, hero_image, reading_time). Short-form posts now also live in the site as canonical, but have their own structure optimized for short-form rhythm.
@@ -623,18 +623,19 @@ class Media:
 ### /article - Long-Form Article Writer
 - Writes long-form articles (1,000-3,500 words) for the website's articles section
 - Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
-- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt → generate Substack paste artifact
+- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt. (Substack paste artifact is generated at publish time by `/publish`, not here.)
 - Asks for **target audience** up front (engineering leaders, product/business, generalists, mixed) — threads through angle selection, drafting depth, and visual choices
 - Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
 - Generates a **critique prompt** (`critique-prompt.md`) — user pastes into another AI for a sharp second-opinion review before publishing
-- Generates a **Substack paste artifact** (`substack-paste.md`) — reformats the article body for Substack's editor with explicit posting checklist (title, subtitle, canonical URL pointing back to the site, image re-upload reminders). Lets the user cross-post to Substack in ~2 minutes without losing SEO canonicality.
+- Does NOT generate the Substack paste artifact — that's moved to `/publish` so it's only created when a draft is promoted (saves tokens during the draft iteration loop)
 - Decoupled from LinkedIn/X: reminds user to run `/post` for the short-form promo on LinkedIn and X after article is finalized
 - Article frontmatter: title, subtitle, date, tags, medium_url, substack_url, hero_image, reading_time, draft (always true on creation)
 
 ### /publish - Promote Draft to Published
 - Removes `draft: true` from an article's frontmatter and updates `date:` to today
 - Renames the directory (`articles/YYYY/MM/YYYY-MM-DD-slug/`) via `git mv` so the new date is reflected in the path
+- Generates the **Substack paste artifact** (`substack-paste.md`) — reformats the article body for Substack's editor with posting checklist (title, subtitle, canonical URL pointing back to the site, image re-upload reminders). Only generated at publish time to avoid token churn during the draft loop.
 - Pass a slug fragment as arg, or run with no args to pick from a list of drafts
 - Reminds user to rebuild after
 

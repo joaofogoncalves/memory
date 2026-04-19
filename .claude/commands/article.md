@@ -208,7 +208,11 @@ All article images display on the site at **720px content width** (2x retina = 1
 ### Hero image prompt
 - Should capture the article's core tension or theme
 - Dimensions: **1440×900px (16:10)** — 2x retina for 720px display, crops cleanly for all thumbnail contexts
-- **Heroes are NOT bound by the site color scheme.** Unlike inline diagrams/charts (which follow the dark navy + teal palette from taste.md), the hero is the mood piece for the article. Use whatever palette, medium, and style best serves the concept — painterly editorial illustrations, warm tones, photography-like scenes, whatever fits. Think NYT Magazine / Wired long-read opener, not infographic.
+- **Heroes are NOT bound by the site color scheme.** Unlike inline diagrams/charts (which follow the dark navy + teal palette from taste.md), the hero is the mood piece for the article. Choose palette and lighting that serve the concept.
+- **Default to cinematic photography, not painting.** The heroes that land on this site look like photographs or photo-real renders: architectural interiors, documentary-style scenes, real objects with real light. Think *The New Yorker* photo essays, Wired feature photography, Apple product-site art direction, Edward Burtynsky, Gregory Crewdson — a real place or object, shot with intent. Not an illustration of one.
+- **Avoid language that invites painterly output:** "editorial painting," "painterly brushwork," "visible texture," "illustration," "digital painting," "artist's rendering." These consistently produce soft, watercolor-flavored images that read as generic AI art. Instead, write the prompt as a photograph: lens, lighting, camera distance, time of day.
+- **Prompt scaffolding that works** (mix and match): photorealistic wide shot · architectural/interior photography · shallow depth of field · natural window light · golden hour · overhead perspective · long exposure · 35mm / 50mm / wide-angle · cinematic color grade · documentary style · muted saturation · matte finish (not glossy).
+- **When the concept resists photography** (a metaphor with no physical referent), prefer a real object or scene that stands in for the idea over an illustration of the idea. A quiet workshop photographed at dawn beats a painting of industriousness.
 - Inline section images (diagrams, comparisons, schematics) DO follow taste.md / the site palette — only the hero is free.
 
 ### Section image prompts (1-2, if needed)
@@ -276,24 +280,30 @@ draft: true
 
 Save a copy-pasteable critique prompt the user can take to another AI (ChatGPT, Claude.ai, Gemini) for a second-opinion review. This is the main defense against the polish-after-publish loop — catching weak spots while the draft is still a draft.
 
-Write to `articles/YYYY/MM/YYYY-MM-DD-slug/critique-prompt.md`. Embed the full article text inline (read it back from `article.md` — user should be able to copy-paste the whole file into the other AI in one go, no extra steps).
+Write to `articles/YYYY/MM/YYYY-MM-DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
 
-Template (substitute `{AUDIENCE}` with the audience from Step 2.5, and `{FULL_ARTICLE_TEXT}` with the literal article body — title, subtitle, and all sections):
+Compute the draft URL:
+- Token: `sha256(slug)[:16]` (same method `web/build.py` uses for draft routing)
+- URL: `{SITE_URL}/articles/drafts/{token}/`
+- Read `SITE_URL` from `.env`; fall back to `yoursite.com` if missing.
+- Use `python -c "import hashlib; print(hashlib.sha256('<slug>'.encode()).hexdigest()[:16])"` to compute the token.
+
+Template (substitute `{AUDIENCE}` with the audience from Step 2.5, and `{DRAFT_URL}` with the computed URL):
 
 ```markdown
 # Critique prompt
 
-Paste the prompt below into another AI (ChatGPT, Claude.ai, Gemini — whichever gives you a fresh perspective) for a sharp second-opinion review. Bring the feedback back to Claude Code and ask for targeted revisions.
+Paste the prompt below into another AI (ChatGPT, Claude.ai, Gemini — whichever gives you a fresh perspective) for a sharp second-opinion review. The reviewer will fetch the draft directly. Bring the feedback back to Claude Code and ask for targeted revisions.
+
+**Before pasting:** make sure the draft is deployed (`bash pipeline.sh --skip-scrape`) so the URL resolves.
 
 ---
 
-You are an experienced editor and subject-matter skeptic. Below is a draft article. Your job is to give sharp, specific, unsentimental feedback that makes the piece stronger.
+You are an experienced editor and subject-matter skeptic. The draft article is published at the URL below — fetch it and read the full piece before responding. Your job is to give sharp, specific, unsentimental feedback that makes the piece stronger.
 
 **Target audience:** {AUDIENCE}
 
-**Article:**
-
-{FULL_ARTICLE_TEXT}
+**Draft article URL:** {DRAFT_URL}
 
 ---
 
@@ -317,65 +327,14 @@ Then go through each criterion above with specific quotes and line-level suggest
 Be direct. Don't cushion. The goal is a sharper article, not a comfortable author.
 ```
 
-## Step 8: Generate Substack paste artifact
-
-Substack is a distribution surface for the article — email delivery + discovery network — with the article's canonical home still on the user's site. Substack has no public API for publishing, so this step produces a paste-ready file the user can drop into Substack's editor in ~2 minutes.
-
-Save to `articles/YYYY/MM/YYYY-MM-DD-slug/substack-paste.md`. Substack's editor takes plain paste-in text (it does not parse YAML frontmatter), so this file gives the user step-by-step posting instructions plus the raw body to paste.
-
-### Template
-
-```markdown
-# Substack paste-in — [article title]
-
-## Posting checklist (do these in Substack's editor)
-
-1. **Title:** [article title from frontmatter]
-2. **Subtitle:** [article subtitle from frontmatter]
-3. **Canonical URL** (Post settings → SEO → Canonical URL): `{SITE_URL}/articles/YYYY/MM/slug/` — this keeps SEO pointed at your site, not Substack.
-4. **Hero image:** re-upload `media/[hero-image-filename]` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
-5. **Inline images:** re-upload any of these as you reach them in the body:
-   - `media/[image-1]`
-   - `media/[image-2]`
-6. **Tags:** [comma-separated tags from frontmatter]
-7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
-
-   > Originally published at [yoursite.com/articles/YYYY/MM/slug](SITE_URL/articles/YYYY/MM/slug/).
-
-## Body to paste
-
-Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
-
----
-
-[FULL ARTICLE BODY — everything below the frontmatter in article.md, with one transformation:
- - Replace each `![caption](media/filename.png)` with a placeholder: `[IMAGE: caption — upload media/filename.png here]`
- - This makes it impossible to miss an image during paste, since local paths don't resolve in Substack]
-
----
-
-## After posting
-
-- Grab the Substack post URL.
-- Add a `substack_url:` field to the article frontmatter (currently not in the standard schema — add it alongside `medium_url`).
-- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.
-```
-
-Read the full article body from `article.md` (the text below the frontmatter). Embed it inline in the template above, with the image-reference transform applied. The user should be able to open `substack-paste.md` and paste the body section in one go.
-
-**Do NOT modify `article.md`** — Substack is downstream; the site article is canonical.
-
-If `SITE_URL` is not set in `.env`, fall back to `yoursite.com` as a placeholder the user can find-and-replace.
-
-## Step 9: Wrap up
+## Step 8: Wrap up
 
 Tell the user:
 - The article has been saved to `articles/[path]/article.md`
 - Critique prompt saved to `articles/[path]/critique-prompt.md` — paste it into another AI before publishing to catch weak spots
 - Image prompts saved to `articles/[path]/image-prompts.md` (if generated)
-- Substack paste-in saved to `articles/[path]/substack-paste.md` — use after the article is live on the site
 - Remind: "To rebuild the site with this article: `python web/build.py`"
 - Remind: "When ready to promote on LinkedIn and X, run `/post [article-url]`"
-- Remind: "After publishing to Substack, grab the URL and add `substack_url:` to the article frontmatter"
+- Remind: "When ready to publish, run `/publish [slug]` — it flips the draft flag and generates the Substack paste-in artifact"
 - Remind: "After publishing to Medium (if used), update `medium_url` in the article frontmatter"
 - Remind: "After generating images, save hero to `media/` folder and update `hero_image` in frontmatter"

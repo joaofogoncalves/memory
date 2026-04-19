@@ -146,6 +146,25 @@ def autolink_urls(html: str) -> str:
     )
 
 
+def externalize_links(html: str) -> str:
+    """Add target="_blank" rel="noopener" to external <a> tags that lack it."""
+    def repl(m):
+        attrs = m.group(1)
+        if 'target=' in attrs:
+            return m.group(0)
+        # Preserve existing rel (e.g. rel="nofollow") and append noopener
+        if 'rel=' in attrs:
+            new_attrs = re.sub(
+                r'rel=(["\'])([^"\']*)\1',
+                lambda r: f'rel={r.group(1)}{r.group(2)} noopener{r.group(1)}' if 'noopener' not in r.group(2) else r.group(0),
+                attrs,
+            )
+            return f'<a{new_attrs} target="_blank">'
+        return f'<a{attrs} target="_blank" rel="noopener">'
+
+    return re.sub(r'<a([^>]*\shref="https?://[^"]*"[^>]*)>', repl, html)
+
+
 def expand_wide_fences(md_text: str) -> str:
     """Convert `::: wide` / `::: full` / `:::` fences into div wrappers.
 
@@ -1072,7 +1091,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
         depth = 3 if is_draft else 4
 
     md_renderer.reset()
-    body_html = _rewrite_img_to_webp(style_bridge_in(autolink_urls(md_renderer.convert(expand_wide_fences(article['content'])))))
+    body_html = externalize_links(_rewrite_img_to_webp(style_bridge_in(autolink_urls(md_renderer.convert(expand_wide_fences(article['content']))))))
 
     tags_html = render_tags_html(article['tags'])
 
@@ -1676,7 +1695,7 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
     cleaned = clean_content(post['content'])
     md_renderer.reset()
     body_html = md_renderer.convert(cleaned)
-    body_html = _rewrite_img_to_webp(autolink_urls(body_html))
+    body_html = externalize_links(_rewrite_img_to_webp(autolink_urls(body_html)))
 
     tags_html = render_tags_html(post['tags'])
     read_time = reading_time(cleaned)

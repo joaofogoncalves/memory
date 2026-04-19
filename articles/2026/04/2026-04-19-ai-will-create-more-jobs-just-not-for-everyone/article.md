@@ -1,11 +1,11 @@
 ---
 title: "AI Will Create More Jobs. Just Not For Everyone."
-subtitle: "Jevons paradox is real. So is the door policy."
+subtitle: "Jevons paradox is real. But the door won't open for everyone."
 date: 2026-04-19
 tags: [ai, future-of-work, labor-economics, engineering-leadership, ai-adoption]
 medium_url:
 substack_url:
-hero_image:
+hero_image: media/hero-door-policy.jpg
 reading_time: 10
 draft: true
 ---
@@ -36,7 +36,7 @@ It's been applied to electricity, fuel economy, bandwidth, and now AI. The logic
 
 If you read only the top-line numbers, Jevons looks airtight.
 
-Engineering postings are up 30% year over year despite two years of layoffs. AI-related roles are up even more. PwC reports the AI wage premium jumped from 25% in 2024 to 56% in 2025, meaning roles requiring AI skills now pay 56% more than otherwise comparable roles that don't. Their barometer shows AI-exposed occupations saw 27% revenue growth per employee and 16.7% wage growth. Total coal consumption went up when steam engines got efficient, and total demand for software is doing the same thing.
+Engineering postings are up 30% year over year despite two years of layoffs. AI-related roles are up even more. PwC reports the AI wage premium jumped from 25% in 2023 to 56% in 2024, meaning roles requiring AI skills now pay 56% more than otherwise comparable roles that don't. Their barometer shows AI-exposed occupations saw 27% revenue growth per employee and 16.7% wage growth, and productivity growth in AI-exposed industries [nearly quadrupled](https://www.pwc.com/gx/en/news-room/press-releases/2025/ai-linked-to-a-fourfold-increase-in-productivity-growth.html) — from 7% (2018–2022) to 27% (2022–2024). Total coal consumption went up when steam engines got efficient, and total demand for software is doing the same thing.
 
 The 2023 panic about AI replacing coders hasn't played out, at least at the aggregate level. Claude Code ships code. Engineers ship more code. Companies ship more software. The market absorbs more software than it did last year. Nothing about the shape of the industry suggests contraction.
 
@@ -48,11 +48,13 @@ The trouble is that the same dataset tells a different story if you read it from
 
 ## The part nobody prices in
 
-Junior developer postings are [falling sharply](https://stackoverflow.blog/2025/12/26/ai-vs-gen-z/). Stack Overflow's 2025 data shows entry-level hiring for the 22–25 cohort down roughly a quarter from late-2022 levels. Engineering postings overall are up 30%, but the composition has shifted. Experienced roles are expanding. Entry-level roles are vanishing.
+The totals are growing. The composition isn't. [Stack Overflow's 2025 analysis](https://stackoverflow.blog/2025/12/26/ai-vs-gen-z/) and the broader labor data tell the same story from three angles. Entry-level tech postings are off 34% vs 2020. Senior postings are off only 19%. In IT and software engineering employment, the 22–25 cohort is down 6% year over year, while the 35–49 cohort is up 9%. Same industry. Opposite directions.
 
-That 56% wage premium for AI skills? It doubled in a single year. A 25-point gap became a 56-point gap. The financial reward for AI fluency isn't leveling off. It's accelerating.
+![Senior cohort +9% vs entry cohort −6% — the middle is splitting in two](media/cohort-divergence.webp)
 
-![AI wage premium doubled in a single year](media/wage-premium-jump.webp)
+That 56% wage premium for AI skills? It doubled in a single year. A 25-point gap became a 56-point gap. Two years before that, the category didn't really exist. The financial reward for AI fluency isn't leveling off. It's accelerating.
+
+![AI-skill wage premium went from zero to 56% in two years](media/wage-premium-trajectory.webp)
 
 PwC's data, read carefully, says the same thing in a less comfortable way. AI-exposed roles are growing revenue per employee 3x faster than non-exposed roles. That's a widening gap between the boats that move and the boats that don't.
 
@@ -82,6 +84,8 @@ There are two doors. Most people who will thrive in the next five years walk thr
 
 The first door is leverage. Can you produce the work of five people with a harness of agents? A senior backend engineer I work with ships three features in the time her team used to ship one, because she runs Claude agents in parallel on the review, the migration, and the documentation pass. Her day-to-day isn't typing. It's queuing, checking, correcting. The engineers whose postings are up are the ones building that kind of harness on themselves.
 
+Leverage isn't free on day one. [METR's 2025 study](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) of experienced open-source developers found something uncomfortable: when early-2025 AI coding tools were allowed, those devs took 19% longer to complete real tasks than when they weren't. They felt 20% faster. They were 19% slower. METR's own [February 2026 follow-up](https://metr.org/blog/2026-02-24-uplift-update/) concedes the tools have since improved and the gap is likely closing, but the lesson stands: the leverage door doesn't open by installing Copilot. It opens after the dip, for the people who pushed through the first painful months when every prompt felt slower than just typing the code. Most people never clear the dip. The ones who do are the ones getting paid 56% more.
+
 The second door is judgment. When adequate code is free, the bottleneck moves to deciding what to build, what to kill, what good looks like. Product teams that used to draft one spec a week now see ten variants before lunch. The PM's value is no longer writing the spec. It's triaging the ten. Most PMs don't yet have the muscle for that kind of picking. The ones who do are about to get paid for it.
 
 Adopters get both doors. Non-adopters get neither. The people in the middle, doing careful, correct, adequate work at a pace that used to be valuable, are discovering that neither door opens for them anymore.
@@ -98,7 +102,11 @@ First, the adequate-is-free dynamic is categorically different. In past waves, a
 
 Second, the pipeline problem. If the first rung of engineering, writing mediocre code under supervision for four years, is the rung vanishing, how does the industry make senior engineers in 2030? The seniors using AI for leverage today didn't train under AI supervision. The next cohort will. What they turn into is not obvious, and nobody is running the experiment deliberately.
 
-The people betting on historical adaptation aren't wrong. They're betting on a pattern that may hold. But prior adaptation windows took a decade or more. The AI wage premium doubled in one year. If adaptation is happening, it's happening at a pace that leaves most of the workforce behind it.
+The people betting on historical adaptation aren't wrong. They're betting on a pattern that may hold. But prior adaptation windows were measured in decades, not quarters. The best-studied parallel, the PC, took [fifteen years](https://economics.mit.edu/sites/default/files/publications/computing%20inequality%201998.pdf) for computer-user wage premiums to creep from near-zero in 1984 to roughly 15% by the late 1990s. AI cleared that same climb in two years, and kept going. If adaptation is happening, it's happening at a pace that leaves most of the workforce behind it.
+
+::: wide
+![PC skill premium took 15 years to reach 15%. AI hit 56% in two.](media/adaptation-window.webp)
+:::
 
 ## Why this is hard to hear
 

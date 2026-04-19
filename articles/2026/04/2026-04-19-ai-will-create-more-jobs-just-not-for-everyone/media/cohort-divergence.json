@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "The middle is splitting in two",
+  "subtitle": "US tech employment change, 2024\u20132025, by age cohort.",
+  "arrowLabel": "Diverging fast",
+  "caption": "Source: Stack Overflow / labor-market analysis of AI-exposed occupations, 2025.",
+  "left": {
+    "label": "Senior cohort (35\u201349)",
+    "value": "+9%",
+    "description": "employment up, powered by demand for engineers who can orchestrate AI and own judgment calls."
+  },
+  "right": {
+    "label": "Entry cohort (22\u201325)",
+    "value": "\u22126%",
+    "description": "employment down. Entry-level tech postings are off 34% vs 2020 \u2014 the rung that trains juniors is vanishing."
+  }
+}

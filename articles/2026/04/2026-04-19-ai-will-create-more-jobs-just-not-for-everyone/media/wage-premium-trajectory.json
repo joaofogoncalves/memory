@@ -1,0 +1,11 @@
+{
+  "template": "line",
+  "title": "From zero to 56% in two years",
+  "subtitle": "Average wage premium commanded by workers with AI skills vs. comparable roles without, US.",
+  "unit": "%",
+  "caption": "Sources: PwC 2024 Global AI Jobs Barometer (2023 data); PwC 2025 Global AI Jobs Barometer (2024 data). 2022 baseline reflects pre-GenAI period when 'AI skills' was not a tracked labor-market category.",
+  "labels": ["2022", "2023", "2024"],
+  "series": [
+    { "label": "AI skills wage premium", "values": [0, 25, 56], "color": "#44d8f1" }
+  ]
+}

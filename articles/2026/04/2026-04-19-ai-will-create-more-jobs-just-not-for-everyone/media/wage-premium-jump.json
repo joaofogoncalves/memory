@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "Adequate stopped paying",
+  "subtitle": "The AI wage premium more than doubled in a single year. The curve describing the return on AI fluency is getting steeper, not flatter.",
+  "arrowLabel": "+31 points in 12 months",
+  "caption": "Source: PwC 2025 Global AI Jobs Barometer.",
+  "left": {
+    "label": "2024",
+    "value": "25%",
+    "description": "wage premium for AI-skilled roles vs comparable roles without AI skills."
+  },
+  "right": {
+    "label": "2025",
+    "value": "56%",
+    "description": "wage premium for AI-skilled roles. The gap more than doubled."
+  }
+}

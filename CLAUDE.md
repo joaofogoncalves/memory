@@ -1006,7 +1006,7 @@ bash web/deploy.sh
 - Loads site identity from `config/site.yaml` (name, bio, social links, footer, topics, thesis, etc.)
 - Reads markdown posts from `posts/`, articles from `articles/`, About content from `cv.md`, Now content from `now.md`
 - Generates HTML pages: Home, About, Articles archive, Posts archive, /topics index, /topics/{slug}, /now, individual posts, individual articles
-- Also generates: `feed.xml` (RSS 2.0, last 20 items — posts + articles interleaved by date), `sitemap.xml`, `robots.txt`
+- Also generates: `feed.xml` (RSS 2.0, last 20 articles — articles only, no short-form posts), `sitemap.xml`, `robots.txt`
 - JSON-LD structured data: Person schema on About, Article schema on each post and article
 - Topics are assigned at build time by matching post/article tags against `topics[].tags` in site.yaml
 - `compute_featured_posts(posts, days=90, top_n=3)` — engagement-ranked featured posts

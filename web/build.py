@@ -702,24 +702,20 @@ def jsonld_article(post: dict) -> str:
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
 
 
-def generate_rss(posts: list[dict], articles: Optional[list[dict]] = None) -> str:
-    """Generate RSS 2.0 feed XML for the last 20 items (posts + articles)."""
-    # Merge posts and articles, sorted by date
-    all_items = list(posts)
-    for a in (articles or []):
-        all_items.append({**a, 'content': a['content'], 'title': a['title'], 'preview': a.get('subtitle', a['preview'])})
-    all_items.sort(key=lambda p: p['date'], reverse=True)
+def generate_rss(articles: list[dict]) -> str:
+    """Generate RSS 2.0 feed XML for the last 20 articles."""
+    items_sorted = sorted(articles, key=lambda a: a['date'], reverse=True)
     base = SITE_URL or ''
     items = []
-    for p in all_items[:20]:
-        url = f'{base}{p["url"]}'
+    for a in items_sorted[:20]:
+        url = f'{base}{a["url"]}'
         try:
-            dt = datetime.strptime(p['date'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
+            dt = datetime.strptime(a['date'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
             pub_date = _fmt_rfc2822(dt)
         except Exception:
-            pub_date = p['date']
+            pub_date = a['date']
 
-        cleaned = clean_content(p['content'])
+        cleaned = clean_content(a['content'])
         md_renderer.reset()
         content_html = md_renderer.convert(cleaned)
         # Escape CDATA end sequence within content
@@ -727,7 +723,7 @@ def generate_rss(posts: list[dict], articles: Optional[list[dict]] = None) -> st
 
         items.append(
             f'  <item>\n'
-            f'    <title>{escape(p["title"])}</title>\n'
+            f'    <title>{escape(a["title"])}</title>\n'
             f'    <link>{url}</link>\n'
             f'    <guid isPermaLink="true">{url}</guid>\n'
             f'    <pubDate>{pub_date}</pubDate>\n'
@@ -2027,7 +2023,7 @@ def build():
 
     # Generate RSS feed
     print('Generating RSS feed...')
-    (DIST_DIR / 'feed.xml').write_text(generate_rss(posts, articles), encoding='utf-8')
+    (DIST_DIR / 'feed.xml').write_text(generate_rss(articles), encoding='utf-8')
 
     # Generate sitemap
     print('Generating sitemap...')

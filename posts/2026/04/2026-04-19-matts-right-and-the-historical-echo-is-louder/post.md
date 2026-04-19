@@ -2,9 +2,9 @@
 date: 2026-04-19
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-careergrowth-share-7451644757086392320-a5bU?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAjFhLsB81CuAoXa9mG9-Xhkp29dDtbEtQc"
+x_url: "https://x.com/joaofogoncalves/status/2045879742386123099"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-245850962"
 tags: [ai, future-of-work, career-growth]
 source_urls:
   - https://x.com/matt_gray_
@@ -25,3 +25,12 @@ Adequate is a stable position when the ground isn't moving. The ground is moving
 ps: the skill isn't "using AI." It's being the kind of person who rebuilds how they work when the tools change. You used to have a decade to do it. Now you have a year.
 
 **Hashtags:** #AI #FutureOfWork #CareerGrowth
+
+---
+
+## Media
+
+![image-1.jpg](media/image-1.png)
+
+
+---

@@ -1,0 +1,26 @@
+{
+  "template": "feature-compare",
+  "orientation": "vertical",
+  "title": "Two doors to the new work",
+  "subtitle": "When adequate is free, the new demand lands on work that needs either leverage or judgment. Adopters walk through both doors. Non-adopters walk through neither.",
+  "arrowLabel": "Most thrivers clear both",
+  "caption": "Framing for editorial use.",
+  "left": {
+    "label": "Leverage",
+    "title": "Can you produce the work of five people with a harness of agents?",
+    "items": [
+      "Spec, build, review, refactor run in parallel",
+      "The job shifts to enabling agents, not keystrokes",
+      "This is where the +30% engineering postings are concentrated"
+    ]
+  },
+  "right": {
+    "label": "Judgment",
+    "title": "Can you decide what's worth building when adequate is free?",
+    "items": [
+      "AI generates 100 variants; a person picks the one to ship",
+      "Taste, strategy, and direction are what don't compress",
+      "The bottleneck moves from output to selection"
+    ]
+  }
+}

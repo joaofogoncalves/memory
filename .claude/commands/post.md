@@ -154,7 +154,20 @@ Archive analysis shows posts with media average ~6.5x the comment engagement of 
 
 These are rare cases. If you skip, state the reason explicitly in the conversation: "Skipping visual — this post is [raw personal admission / rhythm-driven / ...], and adding an image would hurt the point." Do not skip silently.
 
-If the post includes a visual, proceed to Step 6. If skipping, jump to Step 7.
+If skipping, jump to Step 7. If including a visual, decide **single image or a sequence** next.
+
+### Single image or a sequence?
+
+LinkedIn supports carousels up to 9 images. X allows up to 4 images per tweet. Substack Notes accepts multiple inline images. A sequence is worth it when the argument unfolds across beats — a carousel narrative, a before/after, a framework broken out slide by slide, a thread where specific tweets benefit from their own supporting visual.
+
+**Default: single image.** Choose a sequence only when you can name what each slot carries. If you can't articulate what slide 2 adds beyond slide 1, you don't have a sequence — you have one image with extras.
+
+If choosing a sequence, use AskUserQuestion to decide the count:
+- 2-3 images: tight narrative, works on all three platforms cleanly
+- 4 images: fits X per-tweet max; fine on LinkedIn carousel and Substack
+- 5-9 images: LinkedIn carousel only — too many for X threads and Substack Notes start to feel cluttered
+
+For a sequence, briefly sketch what each slot carries (e.g. "slide 1: the claim; slide 2: the contrast; slide 3: the landing data") before moving to Step 6. This sketch feeds the prompts.
 
 ### Chart as an alternative to AI image
 
@@ -174,9 +187,50 @@ If a chart fits, offer it as one of the 3 visual options in Step 6 — alongside
 
 ## Step 6: Generate image prompts (or chart spec)
 
-If you decided above to offer a chart, the 3 options become: 1 chart spec + 2 AI image prompts. Otherwise produce **3 image prompts** following the visual taste profile from `taste.md`.
+Two modes depending on Step 5. Single-image mode is the default; sequence mode produces one prompt per slot.
 
-When rendering a chart, save the spec next to the post under the post's `media/` folder and render to `.webp`:
+### Single-image mode (default)
+
+Produce **3 image prompts** as alternatives for one slot — user picks one. If you decided above to offer a chart, the 3 options become: 1 chart spec + 2 AI image prompts.
+
+#### Three different visual approaches
+
+Each prompt should target a **different image type** from the taste profile:
+1. **Screenshot or evidence-based visual** — if the source material came from a URL (especially a tweet, LinkedIn post, or article), the FIRST option should be a **screenshot suggestion** instead of a generation prompt. Describe exactly what to screenshot (the tweet, the article headline, the key quote), specify dark mode if it's a Twitter/X screenshot, note whether to crop to a specific section or capture full-width. If the source isn't screenshot-worthy, replace this with a third generation prompt.
+2. **Diagram or infographic** — visualize a framework, comparison, or data point from the post. Dark background preferred, deep blues/teals, readable text labels.
+3. **AI-generated conceptual illustration** — for the abstract concept in the post. Non-threatening, stylized. Dark palette. No split-layout banners, no floating 3D icons, no bright pastels.
+
+#### Show prompts and iterate
+
+Present the 3 prompts to the user using AskUserQuestion with options:
+- "All good" — proceed to save
+- "Revise prompts" — user provides feedback
+- "Skip images" — save post without image prompts
+
+If revising, iterate until approved.
+
+### Sequence mode (multi-image posts)
+
+Produce **exactly N prompts — one per slot, in narrative order.** No 3-alternative ceremony per slot; a sequence is already a larger commitment and each slot needs a clear role, not three options. User reviews all N prompts together and targets revisions by slot index.
+
+Each prompt must explicitly name its role in the sequence — e.g. "Slide 1/4 — the opening claim," "Slide 2/4 — the contrast setup," "Slide 4/4 — the landing number." Slots should build on each other visually (consistent palette, consistent type treatment) unless a deliberate visual shift is part of the argument.
+
+#### Sequence mixing
+
+A sequence can mix types (e.g. slot 1 is a screenshot, slots 2-3 are diagrams, slot 4 is an illustration). Don't force the same type across every slot — the right tool per beat wins. The constraint is narrative coherence, not visual uniformity.
+
+#### Show prompts and iterate
+
+Output all N prompts as regular text in the response, clearly labeled by slot, then use AskUserQuestion:
+- "All good" — proceed to save
+- "Revise slot X" — user names the slot and provides feedback in notes
+- "Skip images" — save post without image prompts
+
+If revising, regenerate only the named slot(s), re-output the full sequence, and ask again. Iterate until approved.
+
+### Chart rendering
+
+When rendering a chart (single-image mode or as one slot of a sequence), save the spec next to the post under the post's `media/` folder and render to `.webp`:
 
 ```bash
 node charts/render.mjs --template <name> \
@@ -186,22 +240,6 @@ node charts/render.mjs --template <name> \
 ```
 
 LinkedIn crops to ~1:1 in feed. For square-favorable charts use `--width 1200 --height 1200`; for wide editorial charts use the defaults from `charts/README.md`.
-
-### Screenshot suggestion
-
-If the source material came from a URL (especially a tweet, LinkedIn post, or article), the FIRST option should be a **screenshot suggestion** instead of a generation prompt. Format:
-- Describe exactly what to screenshot (the tweet, the article headline, the key quote)
-- Specify dark mode if it's a Twitter/X screenshot
-- Note whether to crop to a specific section or capture full-width
-
-If the source isn't screenshot-worthy, replace this with a third generation prompt.
-
-### Three different visual approaches
-
-Each prompt should target a **different image type** from the taste profile:
-1. **Screenshot or evidence-based visual** (if applicable — see above)
-2. **Diagram or infographic** — visualize a framework, comparison, or data point from the post. Dark background preferred, deep blues/teals, readable text labels.
-3. **AI-generated conceptual illustration** — for the abstract concept in the post. Non-threatening, stylized. Dark palette. No split-layout banners, no floating 3D icons, no bright pastels.
 
 ### Prompt format
 
@@ -227,16 +265,9 @@ Posts appear on both LinkedIn and the personal website. Use these defaults:
 
 **Important**: Keep the main subject **centered with breathing room** — the website crops images via `object-fit: cover` at different ratios depending on context (homepage spotlight, post list thumbnails, card grids).
 
-Override the defaults when the content demands it (e.g., a tall flowchart might need 1080x1350 portrait).
+For a sequence, pick a dimension per slot and keep it consistent across the sequence unless the argument demands otherwise — a LinkedIn carousel with mixed aspect ratios reads as sloppy. Default to 1200×1200 square for carousels (LinkedIn renders all carousel images at the same crop).
 
-### Show prompts and iterate
-
-Present the 3 image prompts to the user using AskUserQuestion with options:
-- "All good" — proceed to save
-- "Revise prompts" — user provides feedback
-- "Skip images" — save post without image prompts
-
-If revising, iterate until approved.
+Override the defaults when the content demands it (e.g., a tall flowchart might need 1080×1350 portrait).
 
 ## Step 7: Save all artifacts
 
@@ -267,6 +298,24 @@ template: [short-form | long-form | article-reaction]
 **Hashtags:** #Tag1 #Tag2 #Tag3
 ```
 
+**For sequence posts (2+ images):** append a `## Media` section after the hashtags line with one markdown reference per image, in sequence order. This matches the scraper's existing convention and makes all images render stacked on the individual post page.
+
+```markdown
+**Hashtags:** #Tag1 #Tag2 #Tag3
+
+---
+
+## Media
+
+![image-1.webp](media/image-1.webp)
+
+![image-2.webp](media/image-2.webp)
+
+![image-3.webp](media/image-3.webp)
+```
+
+Single-image posts don't need the `## Media` section — the builder picks up `media[0]` as the card thumbnail and OG image automatically, and the individual post page reads fine without an inline hero.
+
 Notes:
 - `authored: true` distinguishes this from scraped posts. The scraper will respect this flag and only update engagement counts, never overwrite the body.
 - `post_url` starts empty — fill in with the LinkedIn permalink after posting manually.
@@ -290,8 +339,25 @@ Paste this directly into LinkedIn's composer. Zero emojis, 2-4 hashtags at the e
 
 ---
 
+**Attach image:** media/image-1.webp
+
+---
+
 **After posting:** copy the LinkedIn permalink and paste it into `post.md` as `post_url:`.
 ```
+
+**For sequence posts (2+ images):** replace the single-image attach line with a carousel attach block:
+
+```markdown
+**Attach as a carousel (in order):**
+- media/image-1.webp
+- media/image-2.webp
+- media/image-3.webp
+
+LinkedIn renders 2+ images as a swipeable carousel. Order matters — image-1 is the feed thumbnail, and readers swipe left in sequence.
+```
+
+If the post has no image, omit the attach block entirely.
 
 ### 7c. `x-thread.md` — X thread paste-ready variant
 
@@ -304,6 +370,7 @@ Paste each tweet into X manually as a reply chain, OR load into Typefully / simi
 
 **Tweet 1 (hook):**
 [text, under 280 chars]
+*Attach: media/image-1.webp*
 
 **Tweet 2:**
 [text]
@@ -321,7 +388,14 @@ Paste each tweet into X manually as a reply chain, OR load into Typefully / simi
 **After posting:** copy the X permalink (of tweet 1) and paste it into `post.md` as `x_url:`.
 ```
 
-If the X variant is a single tweet (short-but-complete exception), use a single `**Tweet:**` block with the same structure.
+**Image-per-tweet rules:**
+- **Single-image post:** attach `media/image-1.webp` to tweet 1 (the hook). Its visibility in the feed matters most.
+- **Sequence post (2-4 images):** distribute one image per tweet across the tweets that best carry them. Default: image-1 on tweet 1, then subsequent images on the tweets whose argument they anchor. X allows up to 4 images in a single tweet, but one-per-tweet reads cleaner for a narrative thread.
+- **Sequence post (5-9 images):** X doesn't fit this cleanly — pick the 3-4 strongest images for the thread, note the rest are LinkedIn-carousel-only.
+
+Use `*Attach: media/image-N.webp*` as an italic line directly under the relevant tweet's body. If a tweet has no image, omit the attach line.
+
+If the X variant is a single tweet (short-but-complete exception), use a single `**Tweet:**` block with the attach line underneath.
 
 ### 7d. `substack-note.md` — Substack Note paste-ready variant
 
@@ -336,10 +410,29 @@ Paste into Substack Notes (substack.com/notes). No hashtags. Links welcome.
 
 ---
 
+**Attach image:** media/image-1.webp
+
+---
+
 **After posting:** copy the Note URL and paste it into `post.md` as `substack_note_url:`.
 ```
 
+**For sequence posts (2+ images):** replace the single-image attach line with an inline attach block:
+
+```markdown
+**Attach inline (in order):**
+- media/image-1.webp (primary — shown above the fold)
+- media/image-2.webp
+- media/image-3.webp
+
+Substack Notes supports multiple inline images. Paste the text first, then drag each image in at the cursor position where it should appear in the flow. If you want all images at the top (simplest), drag them in as a block before the first paragraph.
+```
+
+If the post has no image, omit the attach block entirely.
+
 ### 7e. `image-prompts.md` — if images were generated
+
+**Single-image mode (3 alternatives, user picked one):**
 
 ```markdown
 # Image Prompts
@@ -354,6 +447,23 @@ Paste into Substack Notes (substack.com/notes). No hashtags. Links welcome.
 [prompt]
 ```
 
+**Sequence mode (N slots, one prompt per slot):**
+
+```markdown
+# Image Prompts — sequence
+
+## Slide 1/N: [role — e.g., "the opening claim"]
+[prompt]
+
+## Slide 2/N: [role — e.g., "the contrast setup"]
+[prompt]
+
+## Slide 3/N: [role — e.g., "the landing data"]
+[prompt]
+```
+
+The final image file written to `media/` for each slot should be named `image-1.webp`, `image-2.webp`, ..., `image-N.webp` in the same order as the slides appear here.
+
 If the user skipped images, omit this file entirely.
 
 ### 7f. Chart specs (if a chart was chosen)
@@ -367,7 +477,7 @@ Tell the user:
 - **LinkedIn variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/linkedin.md` — paste into LinkedIn's native composer
 - **X thread variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/x-thread.md` — paste into X or Typefully
 - **Substack Note variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/substack-note.md` — paste into substack.com/notes
-- If image prompts: `image-prompts.md` in the same directory, generate images and save hero to `media/`
+- If image prompts: `image-prompts.md` in the same directory. Generate each image and save to `media/` as `image-1.webp` (single-image posts) or `image-1.webp` through `image-N.webp` in sequence order (multi-image posts).
 - Remind: "After posting on each surface, fill in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter."
 - Remind: "To publish the site post: `bash pipeline.sh --skip-scrape`"
 - Remind: "Later runs of the scraper will pick up engagement counts (reactions, comments) from LinkedIn and merge them into this post automatically — no duplicate will be created because `authored: true` is set."

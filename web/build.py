@@ -354,6 +354,8 @@ def parse_all_posts() -> list[dict]:
             'tags': [str(t) for t in (fm.get('tags', []) or [])],
             'post_type': post_type,
             'post_url': fm.get('post_url', ''),
+            'x_url': fm.get('x_url', ''),
+            'substack_note_url': fm.get('substack_note_url', ''),
             'url': url_path,
             'media': media_files,
             'source_dir': str(post_dir),
@@ -1730,9 +1732,20 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
         next_url = prefix + next_post['url'].lstrip('/')
         next_link = f'<a href="{next_url}">Next →</a>'
 
-    original_link = ''
+    # Hero image: first media file, unless the body already embeds a media/ reference
+    hero_html = ''
+    if post.get('media') and 'media/' not in cleaned:
+        hero_src = _webp_name(post['media'][0])
+        hero_html = f'<img class="article-hero" src="media/{hero_src}" alt="" loading="lazy">'
+
+    backlinks = []
     if post.get('post_url'):
-        original_link = f'<a href="{post["post_url"]}" class="post-original-link" target="_blank" rel="noopener">View original on LinkedIn →</a>'
+        backlinks.append(f'<a href="{post["post_url"]}" class="post-original-link" target="_blank" rel="noopener">View on LinkedIn →</a>')
+    if post.get('x_url'):
+        backlinks.append(f'<a href="{post["x_url"]}" class="post-original-link" target="_blank" rel="noopener">View on X →</a>')
+    if post.get('substack_note_url'):
+        backlinks.append(f'<a href="{post["substack_note_url"]}" class="post-original-link" target="_blank" rel="noopener">View on Substack →</a>')
+    original_link = ''.join(backlinks)
 
     return f'''{head_html(post['title'][:60], depth=depth,
         description=post['preview'][:160],
@@ -1752,6 +1765,8 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
     </div>
     <div class="post-tags">{tags_html}</div>
   </div>
+
+  {hero_html}
 
   <div class="post-content">
     {body_html}

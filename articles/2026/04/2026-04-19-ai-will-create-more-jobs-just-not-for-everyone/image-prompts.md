@@ -19,6 +19,7 @@ Target path: `media/hero-door-policy.jpg` (generated and wired into frontmatter)
 - `media/wage-premium-trajectory.webp` — line chart anchoring "The part nobody prices in" (0% → 25% → 56% over 2022–2024)
 - `media/cohort-divergence.webp` — stat-compare anchoring "The part nobody prices in" (senior cohort +9% vs entry cohort −6%)
 - `media/two-doors.webp` — feature-compare anchoring "Who gets the new jobs" (leverage vs judgment)
-- `media/adaptation-window.webp` — two-series line anchoring "But isn't this just reskilling panic?" (PC wage premium 1984–1999 vs AI wage premium 2022–2024)
+- `media/adaptation-window.webp` — stat-compare anchoring "But isn't this just reskilling panic?" (PC era 5–15 yr productivity diffusion lag vs AI era 10 mo of task-coverage growth 36% → 49%). **Regenerated** from Solow-paradox sources (David 1990, Brynjolfsson & Hitt 2003) and AEI data after the original's factually-wrong PC wage premium claim (0 → 15% over 15 years) was corrected — Krueger (1993) found a 10–15% PC-user wage premium already in 1984 CPS data; Autor/Katz/Krueger (1998) measured 17% → 22% over 1984–1993. Rendered via Playwright from JSON spec at `media/adaptation-window.json`.
+- `media/quality-debt-gitclear.webp` — stat-compare anchoring "But doesn't AI code rot?" (4× clone growth vs +54% bugs/developer). Rendered via Playwright from JSON spec at `media/quality-debt-gitclear.json`.
 
 The old `wage-premium-jump.webp` stat-compare is superseded by the trajectory line chart and can be deleted once the article body is updated.

@@ -1,12 +1,17 @@
 {
-  "template": "line",
-  "title": "This adaptation window is different",
-  "subtitle": "Wage premium for skill with the defining technology of the era, years since mainstream introduction.",
-  "unit": "%",
-  "caption": "Sources: Autor (1998), Krueger (1993) and NBER analyses for PC-skill wage premium 1984\u20131997; PwC Global AI Jobs Barometer 2024\u20132025 for AI-skill premium. PC series shown at 5-year intervals.",
-  "labels": ["Year 0", "Year 2", "Year 5", "Year 10", "Year 15"],
-  "series": [
-    { "label": "PC skill premium (from 1984)", "values": [0, 4, 10, 13, 15], "color": "#6b7a99" },
-    { "label": "AI skill premium (from 2022)", "values": [0, 25, 56, null, null], "color": "#44d8f1" }
-  ]
+  "template": "stat-compare",
+  "title": "The diffusion curve is shorter now",
+  "subtitle": "How long the PC took to show up in aggregate productivity statistics vs how fast AI is showing up in measured task coverage.",
+  "arrowLabel": "A different clock",
+  "caption": "Sources: Paul David (1990), 'The Dynamo and the Computer' and Brynjolfsson & Hitt (2003), 'Computing Productivity: Firm-Level Evidence' for the 5–15 year PC productivity-diffusion lag (the Solow productivity paradox). Anthropic Economic Index reports, February 2025 (V1) and March 2026, for task coverage of O*NET jobs moving from 36% to 49% in ten months.",
+  "left": {
+    "label": "PC era",
+    "value": "5–15 yr",
+    "description": "before IT productivity showed up in aggregate statistics at all. The Solow productivity paradox: investment in computing hardware exploded through the 1980s, but the productivity gains took more than a decade to register."
+  },
+  "right": {
+    "label": "AI era",
+    "value": "10 mo",
+    "description": "for the Anthropic Economic Index to move from 36% to 49% task coverage of O*NET jobs. Thirteen points in under a year on the measurement that matters most for labor displacement."
+  }
 }

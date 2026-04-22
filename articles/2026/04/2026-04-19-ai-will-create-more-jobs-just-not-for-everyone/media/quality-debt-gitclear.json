@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "The quality debt is real",
+  "subtitle": "Shifts in US code-quality metrics from 2023 to 2025, covering the two years AI coding assistants went mainstream.",
+  "arrowLabel": "Exactly why leverage pays",
+  "caption": "Source: GitClear 2025 'AI Assistant Code Quality Research', analysis of millions of pull requests across engineering teams with varying AI-assistant adoption. Copy-paste now exceeds refactoring for the first time on record; bugs-per-developer rose sharply on teams with heaviest AI usage.",
+  "left": {
+    "label": "Code clones",
+    "value": "4×",
+    "description": "growth in duplicated code across repos. More adequate output, more surface area, more places for the same bug to hide."
+  },
+  "right": {
+    "label": "Bugs per developer",
+    "value": "+54%",
+    "description": "on teams with heaviest AI adoption. Every one of those bugs is work for the humans who can triage, rewrite, and delete — i.e. the leverage and judgment doors."
+  }
+}

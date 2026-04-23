@@ -1137,10 +1137,11 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
     # OG image
     og_image = ''
     if article.get('hero_image'):
+        hero_fname = _webp_name(article['hero_image'])
         if is_draft:
-            og_image = f"articles/drafts/{article['draft_token']}/{article['hero_image']}"
+            og_image = f"articles/drafts/{article['draft_token']}/{hero_fname}"
         else:
-            og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{article['hero_image']}"
+            og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{hero_fname}"
 
     return f'''{head_html(article['title'][:60], depth=depth,
         description=article.get('subtitle', article['preview'])[:160],
@@ -1716,7 +1717,8 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
     # OG image: use first media if available, else headshot
     post_og_image = ''
     if post.get('media'):
-        post_og_image = f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{post['media'][0]}"
+        media_fname = _webp_name(post['media'][0])
+        post_og_image = f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{media_fname}"
 
     # Fix media paths — they reference media/image-1.jpg, which is correct
     # since media/ is copied into the same directory

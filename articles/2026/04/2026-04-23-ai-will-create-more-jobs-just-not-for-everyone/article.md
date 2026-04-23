@@ -1,13 +1,12 @@
 ---
 title: "AI Will Create More Jobs. Just Not For Everyone."
-subtitle: "Jevons paradox is real. But the door won't open for everyone."
-date: 2026-04-19
+subtitle: "Jevons was right. The paradox has a door policy."
+date: 2026-04-23
 tags: [ai, future-of-work, labor-economics, engineering-leadership, ai-adoption]
 medium_url:
-substack_url:
+substack_url: https://joaofogoncalves.substack.com/p/2026-04-23-ai-will-create-more-jobs-just-not-for-everyone
 hero_image: media/hero-door-policy.jpg
 reading_time: 10
-draft: true
 ---
 
 ## The paradox has two sides
@@ -142,7 +141,7 @@ The workers most exposed to the adequate-is-free shift are also the ones most li
 
 If you're waiting for your company to pull you through this shift, your company is statistically the worst-positioned actor to do it.
 
-## The paradox has a door policy
+## The door is still open
 
 Jevons is real. AI will create more jobs. That was never the question.
 

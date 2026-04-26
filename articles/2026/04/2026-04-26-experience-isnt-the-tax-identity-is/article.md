@@ -5,7 +5,7 @@ date: 2026-04-26
 tags: [ai-adoption, leadership, decision-making, experience]
 medium_url:
 substack_url:
-hero_image: hero.jpg
+hero_image: media/hero.jpg
 reading_time: 11
 draft: true
 ---

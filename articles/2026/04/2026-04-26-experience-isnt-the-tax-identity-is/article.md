@@ -1,12 +1,12 @@
 ---
 title: "Experience Isn't the Tax. Identity Is."
-subtitle: "Jaya Gupta's piece on AI rewiring decision-making is right about the diagnosis. The prescription misses a third group quietly winning everything."
+subtitle: "Jaya Gupta's piece on AI rewiring decision-making is right about the diagnosis. It mis-attributes the variable."
 date: 2026-04-26
 tags: [ai-adoption, leadership, decision-making, experience]
 medium_url:
 substack_url:
 hero_image: media/hero.jpg
-reading_time: 11
+reading_time: 8
 draft: true
 ---
 
@@ -16,97 +16,67 @@ There's a piece going around called ["Experience is now a tax."](https://x.com/J
 
 Meanwhile, a 22-year-old is writing production code in an afternoon and turning a napkin sketch into a working prototype before lunch.
 
-Jaya's argument is that these two people are having different experiences of the same technology, and the cultural conversation hasn't caught up. The senior cohort defends its seat with two words: judgment and taste. Things AI cannot replicate. Things that take decades to develop. Things, conveniently, that the person making the argument has spent a career accumulating.
+These two people are having different experiences of the same technology, and the cultural conversation hasn't caught up. The senior cohort defends its seat with two words: judgment and taste. Things AI cannot replicate. Things that take decades to develop. Things, conveniently, that the person making the argument has spent a career accumulating.
 
-She then walks through three decision-making algorithms the brain runs constantly, and shows how AI just collapsed the cost of each one.
+Jaya's argument is that AI just collapsed the cost of three decision-making algorithms the brain runs constantly. *Trying something new versus sticking with what works* used to be expensive. *Carrying knowledge in your head versus offloading it* used to be the senior advantage. *Committing to a decision versus reversing it* used to be a one-way door. AI cheapened all three. The skill is no longer weighing every option before choosing. It's choosing fast, learning fast, and not attaching your identity to the last version of yourself who made the previous choice.
 
-*Try something new, or stick with what's working.* Trying used to be expensive. Now a PM can generate five competitive positioning memos by end of day. The bias toward sticking used to have a structural excuse. Now it doesn't.
+She lands the punch on the third one. Senior people reverse slowly because they've spent careers learning that reversing is admitting they were wrong. Young people haven't learned to attach identity to their decisions yet. Reversal feels like iteration to them. Her closer to young readers: if you can still think clearly without a filter, leave the environment that's training you not to.
 
-*Carry knowledge in your head, or offload it.* Senior people built careers on having the right analogy ready. AI compresses that retrieval advantage from decades to minutes. What replaces carrying as the scarce skill is structuring, which has almost nothing to do with years of experience.
+The diagnosis is right. I see it every week. Some of the smartest engineers I know are the slowest to ship because they're protecting an old version of themselves who knew the answer before AI changed what knowing meant.
 
-*Commit slowly, or reverse fast.* The cost of commitment used to be high because the cost of reversal was high. For more and more decisions that isn't true anymore. The skill is no longer weighing every option before choosing. It's choosing fast, learning fast, and not attaching your identity to the last version of yourself who made the previous choice.
+But the article mis-attributes the variable. The thing being taxed isn't experience. It's identity attachment to past decisions, and that's a separate axis from age.
 
-Then she lands the punch. Experience is no longer a moat. It's starting to look like a tax. Senior people reverse slowly because they've spent careers learning that reversing is admitting they were wrong. Young people haven't learned to attach identity to their decisions yet. Reversal feels like iteration to them. Her closer is aimed at young readers: if you can still think clearly without a filter, leave the environment that's training you not to.
+## The variable isn't age
 
-The diagnosis is right. I see it every week. Some of the smartest engineers I know are the slowest to ship because they're protecting an old version of themselves that knew the answer before AI changed what knowing the answer means.
+Jaya names the right phenomenon, then attaches it to the wrong axis. She points at the senior cohort and says: this group has more reputation to defend, more decisions tied to their identity, so reversal is more expensive for them. All true. But she frames identity attachment as a natural byproduct of having been right in public for a long time.
 
-But the prescription has a hole. There's a third group Jaya didn't write about, and they're the ones quietly running away with everything.
+It isn't natural. It's a choice, made compulsory by environment and habit.
 
-## The group she didn't write about
+Here is the steelman of Jaya's position, and it survives most of the data. *On average* experience correlates with identity attachment because the longer you've been right in public, the more reputation you've put on the line. Most senior people are paying the tax. That's true at the population level, and it's the part of her argument that doesn't go away.
 
-Jaya's piece sets up a binary. The CIO who never opened Claude. The 22-year-old who lives in it.
+The piece's gap is conflating the average with the rule. Some senior operators figured out, somewhere along the way, that holding your previous self lightly is the only way to keep clarity past the age it's supposed to expire. They aren't outliers because they got lucky. They built environments around themselves, and habits inside themselves, where reversal stayed cheap. They're the existence proof that the tax is a default, not a fate.
 
-There's a third group. Smaller than either. Growing faster than either.
+The 2026 adoption data is also messier than Jaya's piece suggests. A poll of 4,000 US and UK workers found [senior staff adopting AI faster than junior peers](https://www.metaintro.com/blog/ai-adoption-gap-high-earners-workers-2026), not slower. Top earners have better access to paid tools, more dedicated training time, and more autonomy to experiment. By 2025, 73% of director-level workers had adopted AI, against 65% of individual contributors. Caveat the numbers honestly. "Adopted" is a low bar. The headline gap is single-digit. Among regular AI users only, 21% of leaders report extremely positive productivity impact against 13% of individual contributors, but that's self-report inside an already-fluent population. None of these prove seniority dominance. What they show is that the binary "old people are slow, young people are fast" doesn't hold cleanly even at the population level.
 
-Experienced operators who actually use the tools. Daily. Fluently. They have the analogies a career builds and the new algorithms a fluent user runs. When they show up in a room, they eat both ends of the spectrum.
-
-The 2026 data is starting to confirm this, and it's not showing the pattern Jaya's piece implies. It's showing something closer to the opposite.
-
-A poll of 4,000 US and UK workers this year found [senior staff adopting AI faster than junior peers, not slower](https://www.metaintro.com/blog/ai-adoption-gap-high-earners-workers-2026). Top earners have better access to paid tools, more dedicated training time, and the autonomy to experiment. By 2025, 73% of director-level workers had adopted AI, compared to 65% of individual contributors. Among regular AI users, leaders are far more likely to report strong productivity gains. 21% of leaders say AI has had an extremely positive impact on their productivity, against 13% of individual contributors.
-
-92% of the C-suite is now actively [cultivating what one report calls "AI elite" employees](https://www.grantthornton.com/services/advisory-services/artificial-intelligence/2026-ai-impact-survey), and most leaders report these super-users are at least 5x more productive than colleagues who aren't. Roles requiring demonstrated AI skills are commanding 15 to 30 percent salary premiums.
-
-Read the studies side by side and a different shape emerges. Adoption isn't bottlenecked by age. It's bottlenecked by access, intent, and the willingness to put hours into something the person didn't grow up with.
-
-Some senior people put in the hours. Most don't. The ones who do are the third group.
-
-That's the group worth writing about. Not the people losing the race. The ones quietly winning it.
+The decade of life isn't doing the work. The decade of identity-protection is.
 
 ::: wide
 ![Three groups, one missing axis](media/three-groups.webp)
 :::
 
-## Why the third group has the actual moat
+## What the verification asymmetry looks like
 
-The cognitive offloading research is where this gets interesting.
+There is [one finding](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1699320/full) in the cognitive offloading research that matters here. When AI produces an output, you have to evaluate it. Hold the claims against what you know. Spot the hallucinations. Decide whether to revise or regenerate. That work is cognitively demanding. Experienced professionals catch errors faster because they have deep domain knowledge to compare against. Novices pay a verification tax that sometimes cancels out the efficiency gains.
 
-Studies from MIT, Harvard, and Microsoft over the last year have shown that AI boosts short-term output by 14 to 40 percent while [eroding the critical thinking it's supposed to augment](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1699320/full). Workers who relied most heavily on AI showed reduced engagement in deep, reflective thinking. They felt confident the AI would handle the hard part.
+In software this shows up cleanly. Junior engineers using Claude daily are shipping faster than they were a year ago. Some of the seniors using Claude daily are shipping faster than the juniors *and* catching a category of issues the juniors didn't see was a category.
 
-There's a finding inside that finding. The verification burden is real, and not everyone pays it equally.
+A specific example. Last month I watched a junior engineer prompt Claude to refactor a payment service. The output was clean, the tests passed, and the refactor did exactly what the prompt asked. A senior on the team noticed in about thirty seconds, in code review, that the new version had quietly removed a retry-on-rate-limit pattern that wasn't covered by the test suite. The model had simplified the wrong thing. The junior's verification was test-pass. The senior's was twenty years of "what does this look like in production at 3am." Both shipped. Only one would have caught it.
 
-When AI produces an output, you have to evaluate it. Hold the claims against what you know. Spot the hallucinations. Decide whether to revise or regenerate. That work is cognitively demanding. The research shows experienced professionals catch errors quickly because they have deep domain knowledge to compare against. Novices pay a verification tax that sometimes cancels out the efficiency gains entirely.
+This is the asymmetry the binary obscures. AI fluency without a pattern library lets you ship things you can't fully evaluate. A pattern library without AI fluency keeps you from shipping at all in the new medium.
 
-This is the part Jaya undersells.
+It isn't a moat in the durable sense. Tool fluency in 2026 won't look like tool fluency in 2028, and anyone betting their career on "I'm fluent in Claude" is making the same mistake the CIO made one cycle earlier. What's durable is the disposition that produced the fluency. The willingness to put hours into something you didn't grow up with, learn it like a craft, and let your priors get tested by it instead of using them to deflect the test.
 
-A 22-year-old can ship faster than the CIO. Nobody's arguing that. But she's also rebuilding pattern recognition from the ground up. Every time the model produces something subtly wrong, she has fewer hooks to catch it on. She'll catch the obvious bugs. She might miss the ones that look right and aren't.
-
-The senior person who's never used the tool can't ship anything in the new medium at all.
-
-The third group has both. Pattern library plus tool fluency. Not additive. Multiplicative.
-
-I see this directly in software. The senior engineers I work with who use Claude daily are shipping more than they were a year ago, by a lot. The junior engineers using Claude daily are shipping faster, but the seniors catch a category of issues the juniors didn't see was a category.
-
-Both things are happening at once. The kids are right that experience without fluency is being taxed. The seniors who got fluent are right that experience with fluency is the new moat.
-
-The actual gap isn't between old and young. It's between fluent and not.
-
-## What the third group does differently
+## What the discipline looks like in practice
 
 It isn't judgment and taste. That phrase is exactly the defensive crouch Jaya named.
 
-The third group does specific things. Patterns I notice over and over working with senior operators who are pulling ahead.
+The patterns I see in operators who have un-taxed themselves:
 
-They run their own experiments. They don't delegate the prompt to a junior and review the output. They sit with the tool. They paste their own context, read their own raw output, fix their own broken prompts. They've put in the same kind of hours they put into mastering a previous craft, and they're past the awkward part.
+They run their own experiments. They don't delegate the prompt to a junior and review the output. They paste their own context, read their own raw output, fix their own broken prompts. They've put in the same kind of hours they put into mastering a previous craft.
 
-They reverse without ego. The third group treats their last decision as a hypothesis, not a stake. When the data comes back wrong, they don't relitigate. They commit again. The reversal feels cheap because they've trained themselves to make it cheap.
+They reverse without ego. The last decision is a hypothesis, not a stake. When the data comes back wrong, they don't relitigate. They commit again.
 
-They use AI to attack their own priors. This is the move that separates them from everyone else. Most people use the tool to confirm what they already think. The third group uses it to find the strongest counter-argument to their position, the cleanest version of the case against, the data point that breaks the model. They've made the tool adversarial on purpose.
+They use AI to attack their own priors. Most people use the tool to confirm what they already think. The discipline is asking the tool for the strongest counter-argument to your position, the cleanest version of the case against, the data point that breaks the model. Adversarial use, on purpose.
 
-They've stopped leading with "in my experience." That phrase used to be a gear shift. Now they treat it as a flag. They might still have the analogy. They might be right. But they've noticed that "in my experience" arriving early in a meeting often shuts the conversation down before anyone has tested whether the analogy actually fits this case.
+They've stopped leading with "in my experience." That phrase used to be a gear shift in a meeting. Now they treat it as a flag. They might still have the analogy. They might be right. But they've noticed that "in my experience" arriving early in a conversation often shuts the conversation down before anyone has tested whether the analogy actually fits this case.
 
 They pattern-match live. Instead of pulling examples from memory, they pull them from a tool that has more examples and less ego. The senior person who used to win the room with "I've seen this before" now does that work in real time, with citations.
 
-I run this loop at BRIDGE IN. We're an early-stage company. The team is small. I'm using Claude on my own code daily, not as a search engine, as a thinking partner that argues back. The shape of my own output is unrecognizable from where it was a year ago. Not because I got smarter. Because the tool got better and I stopped treating it as something I delegate to.
+I run this loop at BRIDGE IN. Specifically: I open a task, write the spec myself, prompt Claude to find the worst implementation I'd still accept, then prompt it to defend the cleanest one, then argue with it. The thing that's changed in the last year isn't that I'm faster. It's that the version of me who would have shipped the first plausible-looking design is gone. The tool replaced that version of me.
 
-The third group is identifiable by behavior, not by years on a CV. That's the part Jaya's binary obscures.
+The discipline is identifiable by behavior, not by years on a CV.
 
-## The real tax is identity, not age
-
-Jaya gets close to this, then walks past it.
-
-She frames identity-attachment as something that accumulates with age. The longer you've been doing the thing, the more decisions you've defended, the more reputation rides on those decisions, the harder it gets to reverse. Eventually you stop having thoughts your nervous system has learned aren't worth having.
-
-That's true. It's also a choice.
+## The thing being taxed
 
 The thing being taxed isn't experience. It isn't age. It's the version of you that needs to be right.
 
@@ -116,27 +86,9 @@ The 22-year-old isn't fast because she's young. She's fast because her identity 
 
 That's the real variable. Not chronological age. Identity weight.
 
-Some senior people have built careers without putting much weight on any single call. They reverse easily because they never made reversal the expensive thing. They're indistinguishable from the kid in motion, except they have more analogies.
+Some senior people have built careers without putting much weight on any single call. They reverse easily because they never made reversal the expensive thing. Some 22-year-olds are already attaching identity to their first big decision. You can see it in the way they double down on a take that didn't land. The tax shows up in them too, just earlier.
 
-Some 22-year-olds are already attaching identity to their first big decision. You can see it in the way they double down on a take that didn't land. The tax is showing up in them too, just earlier.
-
-The decade of life isn't doing the work. The decade of identity-protection is.
-
-This is reversible. Most people don't reverse it. The third group did, somewhere along the way. They figured out that holding your previous self lightly is the only way to keep clarity past the age it's supposed to expire.
-
-## What this means if you're in the seat
-
-For experienced operators: the move isn't to defend judgment and taste. It's to use the tools enough that you have new things to be experienced about.
-
-The thirty years you have are an asset only if you keep them in motion. The moment they calcify into "in my experience" as a closer, they become the tax Jaya described. Use them as hypotheses. Run the experiment with the tool. See what breaks.
-
-For young operators: the people you should be learning from aren't the loudest in your meetings. They're not the ones quoting their thirty years. Find the third group. They tend to be quiet. They're not selling the experience because they're using it. They've internalized that the kid in the room might be right, and they're willing to be wrong in front of you.
-
-Those people will teach you more in six months than the credentialed ones will teach you in a career. They've kept the thing you have right now and built around it.
-
-For organizations: stop running AI adoption like a workshop problem. The third group is identifiable by behavior. Who's running their own experiments? Who's reversed publicly in the last quarter? Who's using the tools in their actual workflow and not just their demo? Find those people. Remove the constraints. Stop putting them in committees with the people who haven't opened Claude.
-
-The 5x productivity number from the survey isn't an average. It's a distribution. In every organization there are people producing at that level and people producing at the old level, and the gap is widening every month. The leadership job is to make sure the producers aren't being slowed down by the protectors.
+This is reversible. Most people don't reverse it. That's the honest version of Jaya's point. The base rate is real. The ones who do reverse it figured out, somewhere along the way, that holding your previous self lightly is the only way to keep clarity past the age it's supposed to expire.
 
 ## The discipline of staying clear
 
@@ -148,10 +100,6 @@ Clarity isn't an asset of being young. It's a discipline.
 
 Some 22-year-olds will lose it inside ten years if they let the next decade teach them that being right is a personality. Some 50-year-olds never lost it because they refused to learn that lesson. They built environments around themselves where reversal stayed cheap. They kept the tool they had at 22 and added thirty years of analogies to it.
 
-That's the third group. They aren't winning because they're old. They aren't winning because they were lucky enough to be young at the right moment. They're winning because they figured out that holding your previous self lightly is the only sustainable way to think.
+The discipline is identifiable by behavior. Who's running their own experiments. Who's reversed publicly in the last quarter. Who's using the tools in their actual workflow and not just their demo. That's the question, for hiring, for learning, for staying sharp yourself.
 
 Experience is only a tax if you treat it as a fixed asset. As a moving one, it compounds.
-
-The actual moat isn't experience or youth.
-
-It's the willingness to be wrong out loud, faster than the next person. And the patience to keep doing that for thirty years.

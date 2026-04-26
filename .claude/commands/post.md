@@ -100,19 +100,21 @@ LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), 
 
 ### X variant
 
-X rewards: thread structure, hook on tweet 1, short sentences, one idea per tweet, a landing tweet that closes the loop. 280 chars per tweet (soft — Premium users have more but write for the base limit).
+X rewards: thread structure, hook on tweet 1, a landing tweet that closes the loop. 280 chars per tweet (soft — Premium users have more but write for the base limit).
 
-**Default to a thread.** Single tweets are only for genuinely one-line observations (under ~240 chars with room for the point to breathe). Even short ideas often read better as a 2-3 tweet thread with rhythm.
+**Default to a thread, but pack each tweet.** Use the full 280-char budget. Group related beats into a single dense tweet rather than spinning every short sentence off into its own. Splitting a setup line and its punchline into two tweets just because they read as two beats is wrong — keep them together if they both fit.
 
 Thread construction rules:
-- **Tweet 1**: the hook. Sharpest line from the post. Must stand alone as a reason to read more.
-- **Tweets 2-N**: one idea per tweet. Break on natural beats, not mid-thought. Avoid "1/", "2/" numbering — it feels mechanical and X displays thread position natively. Let the rhythm carry it.
-- **Last tweet**: the landing. Either the closing line from the canonical post, or a reframe that recontextualizes the thread.
-- **Target 3-7 tweets** for a typical short-form post. Longer threads (8+) only if the argument genuinely needs the space.
+- **Tweet 1**: the hook + first beat. Pack toward 280 chars — typically the canonical post's opener AND the next paragraph or two if they fit. Must stand alone as a reason to read more.
+- **Tweets 2-N**: continue packing toward 280 chars per tweet. Break on major argument shifts, not minor rhythm beats. Avoid "1/", "2/" numbering — X displays thread position natively.
+- **Last tweet**: the landing. Either the closing line from the canonical post, or a reframe that recontextualizes the thread. Often combined with the prior beat into one dense tweet.
+- **Target 3-4 tweets** for a typical short-form post. 5 only if the argument genuinely needs the space. 6+ is almost always over-fragmented — go back and combine.
 - If the canonical post has a link (e.g. to an article), put the link in the **last tweet**, not the first — X throttles reach on posts with links, and first-tweet links hurt thread performance especially.
 - No hashtags (X culture — feels spammy). Optional handle mentions if quoting someone.
 
-**Short-but-thread-fits judgment call**: if the canonical post is 150-200 words but has a natural rhythm break (setup → turn → landing), still write a 3-tweet thread. Single-tweet output is the exception, not the default.
+**Char-count sanity check before showing the variant:** if any tweet is under ~180 chars, ask whether it can be combined with the next one. The default failure mode is over-splitting, not under-splitting.
+
+**Single-tweet exception**: only for genuinely one-line observations under ~240 chars. Almost everything else is a thread.
 
 ### Substack Note variant
 
@@ -169,21 +171,25 @@ If choosing a sequence, use AskUserQuestion to decide the count:
 
 For a sequence, briefly sketch what each slot carries (e.g. "slide 1: the claim; slide 2: the contrast; slide 3: the landing data") before moving to Step 6. This sketch feeds the prompts.
 
-### Chart as an alternative to AI image
+### Chart is always one of the visual options
 
-Some posts — especially ones built around a single stat, contrast, or comparison — are better served by a **chart** than a generated image. A crisp chart with the headline number often out-performs a stylized illustration for this style of post.
+**Always include a chart spec as one of the 3 visual options in Step 6** — never offer 3 AI image prompts. Charts render as crisp, on-brand visuals via the `charts/` module and consistently outperform generic AI illustrations for posts with any structural argument.
 
-Consider a chart (not an AI image) when:
-- The post pivots on one or two numbers ("88% have access, 1% have maturity")
-- The post contrasts two paths / before-after / pipeline vs. nervous system
-- The hook is a ranking or funnel
-- The post already cites a stat the reader should see, not just read
+Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `feature-compare`, `grid-diff`, `flow` (horizontal or vertical), `timeline`.
 
-Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `flow` (horizontal or vertical), `timeline`.
+The chart should fit the post's actual argument. Some natural pairings:
+- Single number / ranking → `bar`
+- Two numbers contrasted → `stat-compare`
+- Two-by-two framing → `quadrant`
+- Two paths / before vs. after → `feature-compare`
+- Old vs. new with overlap → `grid-diff`
+- Process / pipeline / sequence → `flow`
+- Trend over time → `line`
+- Events on a time axis → `timeline`
 
-If a chart fits, offer it as one of the 3 visual options in Step 6 — alongside two AI image prompts — rather than producing three AI prompts. Produce a chart **spec** (template name + sample JSON payload) and, if the user picks it, render it via the `charts/` module.
+**If no existing template fits the argument,** add a new template to `charts/` rather than dropping the chart option. Use AskUserQuestion to confirm: "Add a new `<name>` template to `charts/`" vs. "Use a different existing template." Include a one-paragraph sketch of the proposed template (data shape + visual layout) so the user can decide.
 
-**If the visual you want doesn't match any existing template,** ask the user with AskUserQuestion: "Add a new `<name>` template to `charts/`" vs. "Use an AI image prompt instead." Include a one-paragraph sketch of the proposed template.
+For a chart spec, produce the JSON payload inline in the conversation alongside the other two image prompts so the user sees all three options together. If the user picks the chart, render it via the `charts/` module before saving.
 
 ## Step 6: Generate image prompts (or chart spec)
 

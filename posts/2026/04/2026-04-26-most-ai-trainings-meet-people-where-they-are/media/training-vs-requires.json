@@ -1,0 +1,27 @@
+{
+  "template": "feature-compare",
+  "title": "What AI trainings teach vs what AI actually requires",
+  "subtitle": "Most trainings stop at the surface. The real prerequisites are skills that were always valuable and now mandatory.",
+  "arrowLabel": "Real curriculum",
+  "left": {
+    "label": "What trainings teach",
+    "title": "The visible surface",
+    "items": [
+      "Prompt templates",
+      "Live demos",
+      "Copy-paste workflows",
+      "Tool feature tours"
+    ]
+  },
+  "right": {
+    "label": "What AI requires",
+    "title": "The actual prerequisites",
+    "items": [
+      "Structured problem solving",
+      "Task decomposition",
+      "Setting and evaluating quality criteria",
+      "Clear communication",
+      "Working through blockers"
+    ]
+  }
+}

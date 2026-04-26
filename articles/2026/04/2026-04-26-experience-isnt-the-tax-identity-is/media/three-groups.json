@@ -1,0 +1,34 @@
+{
+  "template": "quadrant",
+  "title": "Three groups, one missing axis",
+  "subtitle": "Jaya's piece compares pattern library and tool fluency as if they're rival assets. They aren't. The interesting group has both.",
+  "caption": "Where decision-makers actually sit on AI in 2026.",
+  "xAxis": {
+    "title": "AI tool fluency",
+    "low": "Hasn't opened Claude",
+    "high": "Lives in the tool"
+  },
+  "yAxis": {
+    "title": "Pattern library",
+    "low": "Few priors yet",
+    "high": "Heavy priors"
+  },
+  "quadrants": {
+    "tl": {
+      "label": "The CIO",
+      "description": "Deep experience, no access to the new medium. Defends with 'judgment and taste.'"
+    },
+    "tr": {
+      "label": "The third group",
+      "description": "Pattern library plus tool fluency. Multiplicative, not additive. Quietly running away with everything."
+    },
+    "bl": {
+      "label": "Sidelined",
+      "description": "Few priors, no fluency. Not in the conversation yet."
+    },
+    "br": {
+      "label": "The 22-year-old",
+      "description": "Speed and zero calcified priors. Rebuilding pattern recognition from the ground up."
+    }
+  }
+}

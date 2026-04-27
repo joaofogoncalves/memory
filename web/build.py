@@ -303,11 +303,18 @@ def extract_preview(content: str, max_chars: int = 250) -> str:
 
 
 def has_media(post_dir: Path) -> list[str]:
-    """Return list of media filenames in post's media/ dir."""
+    """Return list of renderable media filenames in post's media/ dir.
+
+    Excludes non-renderable build artifacts like chart spec JSON files.
+    """
     media_dir = post_dir / 'media'
     if not media_dir.exists():
         return []
-    return [f.name for f in sorted(media_dir.iterdir()) if f.is_file()]
+    renderable_exts = ('.jpg', '.jpeg', '.png', '.webp', '.gif', '.mp4', '.mov', '.svg')
+    return [
+        f.name for f in sorted(media_dir.iterdir())
+        if f.is_file() and f.suffix.lower() in renderable_exts
+    ]
 
 
 def parse_all_posts() -> list[dict]:

@@ -20,7 +20,7 @@ Pipelines deliver. Nervous systems sense, react, remember, adapt. Sensors watchi
 
 The gap between "AI writes code" and "AI delivers features" was a systems problem. The gap between "AI delivers features" and "AI runs a product loop" is the same shape, one level up.
 
-New article: https://lnkd.in/eZFm2QDs
+New article: https://joaofogoncalves.com/articles/2026/04/2026-04-16-from-pipeline-to-nervous-system/
 
 hashtag
 #AI 

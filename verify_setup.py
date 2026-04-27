@@ -6,9 +6,9 @@ from pathlib import Path
 
 
 def check_python_version():
-    """Check if Python version is 3.9+."""
-    if sys.version_info < (3, 9):
-        print("✗ Python 3.9+ required")
+    """Check if Python version is 3.14+."""
+    if sys.version_info < (3, 14):
+        print("✗ Python 3.14+ required")
         print(f"  Current version: {sys.version_info.major}.{sys.version_info.minor}")
         return False
     print(f"✓ Python {sys.version_info.major}.{sys.version_info.minor} detected")
@@ -18,42 +18,26 @@ def check_python_version():
 def check_dependencies():
     """Check if required packages are installed."""
     required_packages = [
-        'requests',
-        'yaml',
-        'dotenv',
-        'PIL',
-        'slugify',
-        'dateutil',
-        'tqdm',
-        'coloredlogs',
-        'markdown',
+        ('requests', 'requests'),
+        ('yaml', 'yaml'),
+        ('dotenv', 'dotenv'),
+        ('PIL', 'PIL'),
+        ('slugify', 'slugify'),
+        ('tqdm', 'tqdm'),
+        ('coloredlogs', 'coloredlogs'),
+        ('markdown', 'markdown'),
+        ('reportlab', 'reportlab'),
+        ('playwright', 'playwright'),
     ]
 
     all_installed = True
-    for package in required_packages:
+    for label, module in required_packages:
         try:
-            if package == 'PIL':
-                __import__('PIL')
-            elif package == 'yaml':
-                __import__('yaml')
-            elif package == 'dotenv':
-                __import__('dotenv')
-            elif package == 'dateutil':
-                __import__('dateutil')
-            else:
-                __import__(package)
-            print(f"✓ {package}")
+            __import__(module)
+            print(f"✓ {label}")
         except ImportError:
-            print(f"✗ {package} not installed")
+            print(f"✗ {label} not installed")
             all_installed = False
-
-    # Optional: check Playwright (needed for browser crawler)
-    try:
-        __import__('playwright')
-        print("✓ playwright (browser crawler)")
-    except ImportError:
-        print("⚠ playwright not installed (needed for browser crawler)")
-        print("  Install with: pip install playwright && python -m playwright install")
 
     return all_installed
 
@@ -82,7 +66,7 @@ def check_directory_structure():
 def check_config_files():
     """Check if configuration files exist."""
     required_files = [
-        'requirements.txt',
+        'pyproject.toml',
         'config/config.yaml',
         '.env.example',
         '.gitignore'
@@ -155,16 +139,16 @@ def main():
     if all(results):
         print("✓ Setup verification complete! Ready to use.")
         print("\nNext steps (browser crawler — recommended):")
-        print("  1. python -m playwright install")
-        print("  2. python scraper/main.py --browser-login")
-        print("  3. python scraper/main.py --fetch")
+        print("  1. uv run playwright install chromium")
+        print("  2. uv run python -m scraper.main --browser-login")
+        print("  3. uv run python -m scraper.main --crawl")
         print("\nAlternative (API path):")
-        print("  1. python scraper/main.py --auth")
-        print("  2. python scraper/main.py --fetch")
+        print("  1. uv run python -m scraper.main --auth")
+        print("  2. uv run python -m scraper.main --fetch")
     else:
         print("✗ Setup incomplete. Please fix the issues above.")
         print("\nTo install dependencies:")
-        print("  pip install -r requirements.txt")
+        print("  uv sync")
         print("\nTo configure credentials:")
         print("  1. Copy .env.example to .env")
         print("  2. Add your LinkedIn app credentials")

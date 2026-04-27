@@ -17,7 +17,7 @@ Everything else is scaffolding. AI doesn't need the scaffolding. It needs the kn
 Most companies, when they go looking for it, discover they have far less of it documented than they assumed.
 
 Wrote about this: 
-https://lnkd.in/edQYmvtf
+https://joaofogoncalves.com/articles/2026/04/2026-04-12-every-company-is-three-things-ai-just-made-that-obvious/
 
 
 ---

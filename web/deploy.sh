@@ -5,8 +5,8 @@ set -euo pipefail
 #
 # This script is configured for Opalstack hosting by default.
 # To adapt for other providers:
-#   - GitHub Pages: run `python web/build.py`, then push web/dist/ to gh-pages
-#   - Netlify / Vercel: point the build command to `python web/build.py`
+#   - GitHub Pages: run `uv run python web/build.py`, then push web/dist/ to gh-pages
+#   - Netlify / Vercel: point the build command to `uv run python web/build.py`
 #     and set the publish directory to web/dist/
 #   - Any SSH host: set the OPAL_* variables in .env to match your server
 #
@@ -34,10 +34,9 @@ set +a
 : "${OPAL_APP_PATH:?Set OPAL_APP_PATH in .env (e.g. /home/myuser/apps/mysite)}"
 OPAL_SSH_PORT="${OPAL_SSH_PORT:-22}"
 
-# Build first
+# Build first via uv (auto-syncs the project env from pyproject.toml).
 echo "Building site..."
-source "$ROOT_DIR/venv/bin/activate" 2>/dev/null || true
-python "$SCRIPT_DIR/build.py"
+(cd "$ROOT_DIR" && uv run python "$SCRIPT_DIR/build.py")
 
 # Deploy via rsync
 echo ""

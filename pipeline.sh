@@ -2,7 +2,10 @@
 # Full pipeline: scrape → resolve links → build → deploy
 #
 # Run this whenever you want to refresh the site with new posts.
-# On first use, log in once with:  python scraper/main.py --browser-login
+# Dependencies are managed by uv (see pyproject.toml). On first use:
+#   uv sync                                    # install deps
+#   uv run playwright install chromium         # install browser
+#   uv run python -m scraper.main --browser-login   # log in
 #
 # Usage:
 #   bash pipeline.sh              # scrape + resolve + deploy
@@ -20,8 +23,8 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 set -a; source "$ENV_FILE"; set +a
 
-# Activate venv and set Python path so scraper/ imports resolve
-source "$SCRIPT_DIR/venv/bin/activate"
+# uv run auto-syncs and runs in the project env. Set PYTHONPATH so scraper/
+# imports resolve when scripts are invoked by file path.
 export PYTHONPATH="$SCRIPT_DIR"
 
 SKIP_SCRAPE=false
@@ -41,13 +44,13 @@ if [ "$SKIP_SCRAPE" = false ]; then
   LIMIT_FLAG=""
   [ -n "$LIMIT" ] && LIMIT_FLAG="--limit $LIMIT"
   echo "=== Scraping LinkedIn posts ==="
-  python "$SCRIPT_DIR/scraper/main.py" --crawl --profile-url "$LINKEDIN_PROFILE_URL" $LIMIT_FLAG
+  uv run python "$SCRIPT_DIR/scraper/main.py" --crawl --profile-url "$LINKEDIN_PROFILE_URL" $LIMIT_FLAG
   echo ""
 fi
 
 # ── 2. Resolve shortened URLs ────────────────────────────────────────────────
 echo "=== Resolving shortened URLs ==="
-python "$SCRIPT_DIR/web/resolve_links.py"
+uv run python "$SCRIPT_DIR/web/resolve_links.py"
 echo ""
 
 # ── 3. Build & deploy ────────────────────────────────────────────────────────
@@ -56,7 +59,7 @@ if [ "$DRY_RUN" = false ]; then
   bash "$SCRIPT_DIR/web/deploy.sh"
 else
   echo "=== Dry run: building site only (no deploy) ==="
-  python "$SCRIPT_DIR/web/build.py"
+  uv run python "$SCRIPT_DIR/web/build.py"
 fi
 
 echo ""

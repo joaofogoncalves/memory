@@ -36,7 +36,7 @@
 The script now tracks and displays API requests:
 
 ```bash
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 ```
 
 **Output:**
@@ -69,7 +69,7 @@ Built-in protections:
 
 ```bash
 # Just run it once - fetches everything
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 ```
 
 **Why this works:**
@@ -85,13 +85,13 @@ python scraper/main.py --fetch
 
 ```bash
 # Day 1: First 5,000 posts
-python scraper/main.py --limit 5000
+uv run python -m scraper.main --limit 5000
 
 # Day 2: Next 5,000 posts
-python scraper/main.py --limit 10000
+uv run python -m scraper.main --limit 10000
 
 # Or just let it resume
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 ```
 
 **How it works:**
@@ -120,7 +120,7 @@ The script is **idempotent** - running it repeatedly:
 crontab -e
 
 # Add this line (runs daily at 2 AM)
-0 2 * * * cd /path/to/linkedin-post-archiver && source venv/bin/activate && python scraper/main.py --fetch >> logs/cron.log 2>&1
+0 2 * * * cd /path/to/linkedin-post-archiver && source .venv/bin/activate && uv run python -m scraper.main --fetch >> logs/cron.log 2>&1
 ```
 
 **Schedule options:**
@@ -148,7 +148,7 @@ Create `~/Library/LaunchAgents/com.linkedin.archiver.plist`:
     <string>com.linkedin.archiver</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/path/to/linkedin-post-archiver/venv/bin/python</string>
+        <string>/path/to/linkedin-post-archiver/.venv/bin/python</string>
         <string>/path/to/linkedin-post-archiver/scraper/main.py</string>
         <string>--fetch</string>
     </array>
@@ -249,7 +249,7 @@ If you're approaching the limit:
 1. **Wait 24 hours** - LinkedIn resets daily limits
 2. **Re-run the script:**
    ```bash
-   python scraper/main.py --fetch
+   uv run python -m scraper.main --fetch
    ```
 3. Script automatically **resumes** from where it stopped (idempotent)
 
@@ -265,7 +265,7 @@ If you're approaching the limit:
 ### Scenario 1: New User with 500 Posts
 
 ```bash
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 ```
 
 **Result:**
@@ -278,7 +278,7 @@ python scraper/main.py --fetch
 ### Scenario 2: Active User with 2,000 Posts
 
 ```bash
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 ```
 
 **Result:**
@@ -292,7 +292,7 @@ python scraper/main.py --fetch
 
 ```bash
 # First run
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 # ... runs for 20 minutes, hits 450 requests
 # ... gets first ~22,500 posts
 ```
@@ -300,7 +300,7 @@ python scraper/main.py --fetch
 If interrupted or hitting limits:
 ```bash
 # Next day or after waiting
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 # ... resumes, gets remaining posts
 # ... only makes ~50 more requests
 ```
@@ -316,7 +316,7 @@ python scraper/main.py --fetch
 
 Set up cron job:
 ```bash
-0 2 * * * cd /path/to/archiver && source venv/bin/activate && python scraper/main.py --fetch
+0 2 * * * cd /path/to/archiver && source .venv/bin/activate && uv run python -m scraper.main --fetch
 ```
 
 **What happens each day:**
@@ -397,7 +397,7 @@ API requests made: 0
 **For 99% of users:**
 ```bash
 # Just do this once
-python scraper/main.py --fetch
+uv run python -m scraper.main --fetch
 
 # Then set up automation for updates
 # (optional but recommended)

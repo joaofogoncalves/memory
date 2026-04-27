@@ -1,0 +1,45 @@
+[project]
+name = "linkedin-post-archiver"
+version = "2.1.0"
+description = "Archive LinkedIn posts as local markdown and publish them as a static site."
+readme = "README.md"
+requires-python = ">=3.14"
+license = { text = "MIT" }
+authors = [{ name = "João Gonçalves" }]
+
+dependencies = [
+    # HTTP and OAuth
+    "requests>=2.31.0",
+    "requests-oauthlib>=1.3.1",
+
+    # Browser automation (primary crawl method)
+    "playwright>=1.40.0",
+    "playwright-stealth>=1.0.6",
+
+    # Content processing
+    "pyyaml>=6.0.1",
+    "python-dotenv>=1.0.0",
+    "pillow>=10.2.0",
+    "python-slugify>=8.0.1",
+
+    # Site generator
+    "markdown>=3.5",
+    "pygments>=2.17",
+
+    # CV PDF generator
+    "reportlab>=4.4",
+
+    # CLI UX
+    "tqdm>=4.66.1",
+    "coloredlogs>=15.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scraper"]
+
+[tool.uv]
+package = false

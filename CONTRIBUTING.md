@@ -22,17 +22,17 @@ cd linkedin-post-archiver
 
 ### 2. Set Up Development Environment
 
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-# venv\Scripts\activate  # On Windows
+The project uses [uv](https://docs.astral.sh/uv/) to manage Python and deps.
 
-# Install dependencies
-pip install -r requirements.txt
+```bash
+# Sync the env (creates .venv with Python 3.14 + project deps)
+uv sync
+
+# Install Playwright browser
+uv run playwright install chromium
 
 # Verify setup
-python verify_setup.py
+uv run python verify_setup.py
 ```
 
 ### 3. Create a Branch
@@ -78,7 +78,7 @@ Before submitting:
 1. **Test your changes:**
    ```bash
    # Test with limited posts
-   python scraper/main.py --limit 5
+   uv run python -m scraper.main --limit 5
    ```
 
 2. **Check logs:**

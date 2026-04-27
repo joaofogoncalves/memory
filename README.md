@@ -19,7 +19,7 @@ Archive your LinkedIn posts as clean markdown files with media downloads, and op
 
 ### Prerequisites
 
-- Python 3.9+
+- [uv](https://docs.astral.sh/uv/) (manages Python and dependencies)
 - A LinkedIn account
 
 ### 1. Clone and install
@@ -28,12 +28,8 @@ Archive your LinkedIn posts as clean markdown files with media downloads, and op
 git clone https://github.com/joaofogoncalves/memory.git
 cd memory
 
-python -m venv venv
-source venv/bin/activate  # macOS/Linux
-# venv\Scripts\activate   # Windows
-
-pip install -r requirements.txt
-python -m playwright install
+uv sync                                  # creates .venv with Python 3.14 + deps
+uv run playwright install chromium       # installs the browser for crawling
 ```
 
 ### 2. Configure credentials
@@ -61,26 +57,26 @@ LINKEDIN_REDIRECT_URI=http://localhost:8080/callback
 
 ```bash
 # First time — opens a browser window to log in
-python scraper/main.py --browser-login
+uv run python -m scraper.main --browser-login
 
 # Fetch all posts
-python scraper/main.py --fetch
+uv run python -m scraper.main --crawl
 
 # Or limit to the most recent N posts
-python scraper/main.py --limit 50
+uv run python -m scraper.main --crawl --limit 50
 ```
 
 **API path (alternative):**
 
 ```bash
-python scraper/main.py --auth    # authenticate via OAuth
-python scraper/main.py --fetch   # fetch posts
+uv run python -m scraper.main --auth    # authenticate via OAuth
+uv run python -m scraper.main --fetch   # fetch posts
 ```
 
 ### 4. Verify setup (optional)
 
 ```bash
-python verify_setup.py
+uv run python verify_setup.py
 ```
 
 ## Forking for Your Own Use
@@ -122,11 +118,11 @@ cp .env.example .env
 # Edit .env with your LinkedIn API keys
 
 # 6. Archive your posts
-python scraper/main.py --browser-login
-python scraper/main.py --fetch
+uv run python -m scraper.main --browser-login
+uv run python -m scraper.main --crawl
 
 # 7. Build and preview the website
-python web/build.py
+uv run python web/build.py
 open web/dist/index.html
 ```
 
@@ -137,7 +133,7 @@ The site generator turns your archive into a static personal website with a dark
 ### Build
 
 ```bash
-python web/build.py
+uv run python web/build.py
 ```
 
 Output goes to `web/dist/`. Open `web/dist/index.html` to preview locally.
@@ -150,7 +146,7 @@ The included deploy script uses rsync over SSH (configured for Opalstack):
 bash web/deploy.sh
 ```
 
-For other hosts (GitHub Pages, Netlify, Vercel), point the build to `python web/build.py` and publish the `web/dist/` directory. See comments in `web/deploy.sh` for details.
+For other hosts (GitHub Pages, Netlify, Vercel), point the build to `uv run python web/build.py` and publish the `web/dist/` directory. See comments in `web/deploy.sh` for details.
 
 ## Output Structure
 
@@ -237,7 +233,9 @@ The API path has a ~500 requests/day limit. Most users can archive everything in
 │
 ├── .env.example                # Credentials template
 ├── cv.md.example               # CV template for About page
-├── requirements.txt            # Python dependencies
+├── pyproject.toml              # Project metadata + dependencies (uv)
+├── uv.lock                     # Resolved dependency lockfile
+├── .python-version             # Pins Python 3.14
 ├── verify_setup.py             # Setup checker
 ├── CONTRIBUTING.md             # Contribution guidelines
 ├── RATE_LIMITS.md              # API rate limit details

@@ -12,7 +12,7 @@ This is a Python application that archives LinkedIn posts locally as clean markd
 
 ## Technology Stack
 
-- **Python 3.9+** (currently running on 3.14)
+- **Python 3.14+** (managed by [uv](https://docs.astral.sh/uv/) — see `pyproject.toml`)
 - **Playwright** - Browser automation for crawling LinkedIn (primary method)
 - **LinkedIn API v2** - OAuth 2.0 (legacy fallback, limited by API restrictions)
 - **Static Site** - Vanilla HTML/CSS/JS, no frameworks
@@ -99,10 +99,12 @@ linkedin-post-archiver/  # Project root
 │
 ├── cache/                            # Browser profile + token cache (git-ignored)
 ├── logs/                             # Application logs (git-ignored)
-├── venv/                             # Virtual environment (git-ignored)
+├── .venv/                            # uv-managed virtual environment (git-ignored)
 │
 ├── pipeline.sh                       # Full pipeline: scrape → resolve → build → deploy
-├── requirements.txt                  # Python dependencies
+├── pyproject.toml                    # Python project metadata + dependencies (uv)
+├── uv.lock                           # Resolved dependency lockfile (uv)
+├── .python-version                   # Pins Python 3.14 for uv
 ├── .env                              # Credentials (git-ignored, created by user)
 ├── .env.example                      # Credentials template
 ├── .gitignore                        # Git exclusions
@@ -302,58 +304,64 @@ All images display on the site at **720px content width** (2x retina = 1440px so
 
 ## Working with the Code
 
-### Virtual Environment
+### Environment (uv)
 
-**Always activate venv before working:**
+The project uses [`uv`](https://docs.astral.sh/uv/) to manage Python and dependencies. Configuration is in `pyproject.toml`; the resolved env lives in `.venv/` (auto-created on first `uv sync` or `uv run`).
+
+**First-time setup:**
 ```bash
-source venv/bin/activate  # macOS/Linux
+uv sync                                  # install Python 3.14 env + deps
+uv run playwright install chromium       # install Playwright browser
 ```
 
-**Check current environment:**
+**Run any script via `uv run` — no manual venv activation needed:**
 ```bash
-which python  # Should point to venv/bin/python
+uv run python -m scraper.main --crawl
+uv run python web/build.py
 ```
+
+If you prefer to activate the venv directly: `source .venv/bin/activate`.
 
 ### Running the Application
 
 **Browser login (first time):**
 ```bash
-python -m scraper.main --browser-login
+uv run python -m scraper.main --browser-login
 ```
 
 **Archive all posts (browser crawler):**
 ```bash
-python -m scraper.main --crawl
+uv run python -m scraper.main --crawl
 # Uses LINKEDIN_PROFILE_URL from .env automatically
 # Or pass explicitly: --profile-url https://www.linkedin.com/in/username
 ```
 
 **Test with limited posts:**
 ```bash
-python -m scraper.main --crawl --limit 10
+uv run python -m scraper.main --crawl --limit 10
 ```
 
 **Legacy API authentication:**
 ```bash
-python -m scraper.main --auth
+uv run python -m scraper.main --auth
 ```
 
 **Force re-authentication (API):**
 ```bash
-python -m scraper.main --reauth --fetch
+uv run python -m scraper.main --reauth --fetch
 ```
 
 ### Static Site Workflow
 
 **Build the website:**
 ```bash
-python web/build.py
+uv run python web/build.py
 ```
 
 **Resolve lnkd.in shortened URLs in posts:**
 ```bash
-python web/resolve_links.py          # apply changes
-python web/resolve_links.py --dry-run  # preview only
+uv run python web/resolve_links.py          # apply changes
+uv run python web/resolve_links.py --dry-run  # preview only
 ```
 
 **Deploy to Opalstack:**
@@ -378,10 +386,10 @@ bash pipeline.sh --dry-run
 
 ```bash
 # 1. Crawl new posts (also auto-updates featured_posts in site.yaml)
-python -m scraper.main --crawl --profile-url https://www.linkedin.com/in/yourprofile
+uv run python -m scraper.main --crawl --profile-url https://www.linkedin.com/in/yourprofile
 
 # 2. Resolve shortened URLs
-python web/resolve_links.py
+uv run python web/resolve_links.py
 
 # 3. Build and deploy website
 bash web/deploy.sh
@@ -691,11 +699,11 @@ class Media:
 ### Setup Verification
 
 ```bash
-python verify_setup.py
+uv run python verify_setup.py
 ```
 
 Checks:
-- Python version (3.9+)
+- Python version (3.14+)
 - All dependencies installed
 - Directory structure exists
 - Configuration files present
@@ -712,17 +720,17 @@ logging:
 Or set environment variable:
 ```bash
 export LOG_LEVEL=DEBUG
-python -m scraper.main --fetch
+uv run python -m scraper.main --fetch
 ```
 
 ### Testing Browser Crawler
 
 ```bash
 # Login (opens headed browser)
-python -m scraper.main --browser-login
+uv run python -m scraper.main --browser-login
 
 # Crawl with limit
-python -m scraper.main --limit 5
+uv run python -m scraper.main --limit 5
 
 # Check logs for errors
 tail -f logs/scraper.log
@@ -732,13 +740,13 @@ tail -f logs/scraper.log
 
 ```bash
 # Test OAuth flow
-python -m scraper.main --auth
+uv run python -m scraper.main --auth
 
 # Check token cache
 cat cache/token.json
 
 # Force re-authentication
-python -m scraper.main --reauth
+uv run python -m scraper.main --reauth
 ```
 
 ### Common Issues
@@ -808,7 +816,7 @@ python -m scraper.main --reauth
 - `config/site.yaml` (site identity)
 - `web/img/headshot.jpg` (personal photo)
 - `.env` file (credentials)
-- `venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
+- `.venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
 
 ### Performance Considerations
 
@@ -825,15 +833,15 @@ python -m scraper.main --reauth
 ### Update Dependencies
 
 ```bash
-source venv/bin/activate
-pip install --upgrade -r requirements.txt
-pip list --outdated
+uv lock --upgrade        # bump lockfile to latest compatible versions
+uv sync                  # apply the new lockfile to .venv
+uv tree --outdated       # show what's still out of date
 ```
 
 ### Update Playwright Browsers
 
 ```bash
-python -m playwright install
+uv run playwright install
 ```
 
 ### Clear Cache
@@ -846,7 +854,7 @@ rm -rf cache/token.json
 rm -rf cache/browser_profile
 
 # Re-login
-python -m scraper.main --browser-login
+uv run python -m scraper.main --browser-login
 ```
 
 ### Clean Logs
@@ -860,7 +868,7 @@ rm logs/scraper.log
 
 ```bash
 # Safe to re-run, skips existing
-python -m scraper.main --fetch
+uv run python -m scraper.main --fetch
 ```
 
 ### Rebuild & Deploy Website
@@ -1041,7 +1049,7 @@ bash web/deploy.sh
 - Self-contained reportlab script that generates `cv_joaofogoncalves.pdf` from hardcoded CV content
 - Brutalist dark theme: `#0e131e` background, `#44d8f1` teal accents, Inter + JetBrains Mono fonts
 - Fonts bundled in `cv/fonts/` — no external downloads needed at runtime
-- Run: `python cv/generate.py` → outputs `cv_joaofogoncalves.pdf` in project root
+- Run: `uv run python cv/generate.py` → outputs `cv_joaofogoncalves.pdf` in project root
 
 ---
 

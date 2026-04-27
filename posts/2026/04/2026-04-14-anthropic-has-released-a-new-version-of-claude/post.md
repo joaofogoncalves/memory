@@ -17,7 +17,7 @@ The redesign also adds an integrated terminal, file editing, HTML and PDF previe
 
 Your CLI plugins work exactly as they do on the command line.
 
-https://lnkd.in/ey68324g
+https://claude.com/blog/claude-code-desktop-redesign
 
 
 ---

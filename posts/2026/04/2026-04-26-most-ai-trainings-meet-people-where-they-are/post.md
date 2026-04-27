@@ -2,9 +2,9 @@
 date: 2026-04-26
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7454201660610080768/"
+x_url: "https://x.com/joaofogoncalves/status/2048435266482831502"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-249487279"
 tags: [ai, ai-literacy, ai-training, learning-and-development]
 angle: AI training that doesn't teach decomposition, quality criteria, and structured thinking isn't really teaching AI — those skills are the actual curriculum.
 template: long-form

@@ -1,0 +1,10 @@
+{
+  "template": "line",
+  "title": "% of new code at BRIDGE IN written by AI",
+  "subtitle": "Greenfield repo, Nov 2025 – Apr 2026.",
+  "unit": "%",
+  "labels": ["Nov '25", "Dec '25", "Jan '26", "Feb '26", "Mar '26", "Apr '26"],
+  "series": [
+    { "label": "AI-authored share", "values": [0, 0, 19, 75, 98, 99.9], "color": "#44d8f1" }
+  ]
+}

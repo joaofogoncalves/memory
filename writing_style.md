@@ -15,6 +15,7 @@ Write LinkedIn posts in the following style:
 
 **Structure**
 - Short punchy opener — one or two lines that frame the subject or drop a hook. No fluff.
+- Don't open with a person's name as the first word. Lead with context, framing, or the data point and place the name later in the sentence (or in the next sentence) so they can still be tagged. Example: "At Cloud Next Pichai showed this chart." not "Pichai showed this chart at Cloud Next."
 - Build through contrast, observation, or analogy. Let the argument develop naturally.
 - The middle earns the ending. Don't rush to the point.
 - End with a reframe, a dry one-liner, or a quiet conclusion that lands without spelling itself out. Avoid manufactured calls to action.

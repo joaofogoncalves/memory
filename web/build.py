@@ -1069,7 +1069,7 @@ def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
   <div class="posts-header">
     <h1>Articles</h1>
     <span class="posts-count">{total} articles</span>
-    <p class="posts-description">Long-form writing. Originally published on Medium.</p>
+    <p class="posts-description">Long-form essays on AI, engineering, and the judgment that doesn't automate.</p>
   </div>
 
   <div class="articles-grid">
@@ -1694,8 +1694,10 @@ def generate_posts_archive(posts: list[dict]) -> str:
 
 def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optional[dict], depth: int = 4) -> str:
     """Generate an individual post page."""
-    # Clean and render content
+    # Clean and render content. Strip inline media/ image refs — they render in the
+    # bottom gallery instead so the body stays text-first.
     cleaned = clean_content(post['content'])
+    cleaned = re.sub(r'!\[[^\]]*\]\(media/[^)]+\)\s*', '', cleaned).strip()
     md_renderer.reset()
     body_html = md_renderer.convert(cleaned)
     body_html = externalize_links(_rewrite_img_to_webp(autolink_urls(body_html)))
@@ -1734,11 +1736,22 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
         next_url = prefix + next_post['url'].lstrip('/')
         next_link = f'<a href="{next_url}">Next →</a>'
 
-    # Hero image: first media file, unless the body already embeds a media/ reference
-    hero_html = ''
-    if post.get('media') and 'media/' not in cleaned:
-        hero_src = _webp_name(post['media'][0])
-        hero_html = f'<img class="article-hero" src="media/{hero_src}" alt="" loading="lazy">'
+    # Media gallery: render all images at the bottom (inline refs already stripped above)
+    image_exts = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
+    gallery_html = ''
+    if post.get('media'):
+        gallery_items = []
+        for fname in post['media']:
+            if not fname.lower().endswith(image_exts):
+                continue
+            src = _webp_name(fname)
+            gallery_items.append(
+                f'<a class="post-media-item" href="media/{src}" target="_blank" rel="noopener">'
+                f'<img src="media/{src}" alt="" loading="lazy">'
+                f'</a>'
+            )
+        if gallery_items:
+            gallery_html = f'<div class="post-media-gallery">{"".join(gallery_items)}</div>'
 
     backlinks = []
     if post.get('post_url'):
@@ -1768,11 +1781,11 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
     <div class="post-tags">{tags_html}</div>
   </div>
 
-  {hero_html}
-
   <div class="post-content">
     {body_html}
   </div>
+
+  {gallery_html}
 
   <div class="post-footer">
     {topics_html}

@@ -1673,7 +1673,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
   <div class="posts-header">
     <h1>Posts</h1>
     <span class="posts-count" id="posts-count">{total} posts</span>
-    <p class="posts-description">Archived from LinkedIn. Originals only.</p>
+    <p class="posts-description">Short-form notes on AI, engineering, and the work in flight.</p>
   </div>
 
   <div class="filters">

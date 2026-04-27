@@ -70,6 +70,7 @@ def _load_site_config() -> dict:
         'github': cfg.get('github', ''),
         'twitter': cfg.get('twitter', ''),
         'twitter_handle': cfg.get('twitter_handle', ''),
+        'substack': cfg.get('substack', ''),
         'hero_title': cfg.get('hero_title', cfg.get('site_name', 'My Site')),
         'hero_subline': cfg.get('hero_subline', ''),
         'about_teaser': cfg.get('about_teaser', ''),
@@ -89,6 +90,7 @@ LINKEDIN = SITE['linkedin']
 GITHUB = SITE['github']
 TWITTER = SITE['twitter']
 TWITTER_HANDLE = SITE['twitter_handle']
+SUBSTACK = SITE['substack']
 
 md_renderer = markdown.Markdown(
     extensions=['fenced_code', 'codehilite', 'tables', 'smarty', 'md_in_html'],
@@ -616,6 +618,7 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
 SVG_LINKEDIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
 SVG_GITHUB = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>'
 SVG_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
+SVG_SUBSTACK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>'
 SVG_RSS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 010 4.36 2.18 2.18 0 010-4.36M4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44m0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/></svg>'
 
 
@@ -627,6 +630,8 @@ def footer_html() -> str:
         social_links += f'<a href="{GITHUB}" target="_blank" rel="noopener" aria-label="GitHub">{SVG_GITHUB}</a>'
     if TWITTER:
         social_links += f'<a href="{TWITTER}" target="_blank" rel="noopener" aria-label="X">{SVG_X}</a>'
+    if SUBSTACK:
+        social_links += f'<a href="{SUBSTACK}" target="_blank" rel="noopener" aria-label="Substack">{SVG_SUBSTACK}</a>'
     social_links += f'<a href="/feed.xml" aria-label="RSS feed">{SVG_RSS}</a>'
     links_div = f'<div class="footer-links">{social_links}</div>' if social_links else ''
 
@@ -873,7 +878,11 @@ def render_featured_card(post: dict, depth: int = 0) -> str:
 # ============================================================
 
 def _hero_links_html() -> str:
-    """Build social links for the hero section."""
+    """Build social links for the hero section.
+
+    Wraps social handles and the role line in separate spans so the role line
+    can break to its own row on small screens via CSS.
+    """
     links = []
     if LINKEDIN:
         links.append(f'<a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>')
@@ -881,15 +890,20 @@ def _hero_links_html() -> str:
         links.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
     if TWITTER:
         links.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    if SUBSTACK:
+        links.append(f'<a href="{SUBSTACK}" target="_blank" rel="noopener">Substack</a>')
     sep = '<span class="sep">·</span>'
     social = sep.join(links)
     return (
-        f'<div class="hero-links">{social}'
-        f'<span class="sep">·</span>'
+        f'<div class="hero-links">'
+        f'<span class="hero-links-social">{social}</span>'
+        f'<span class="sep hero-links-sep">·</span>'
+        f'<span class="hero-links-role">'
         f'Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
         f'<span class="sep">·</span>'
         f'Previously at: <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
         f' and <a href="https://www.valispace.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--valispace">Valispace</a>'
+        f'</span>'
         f'</div>'
     )
 
@@ -1541,6 +1555,8 @@ def generate_about() -> str:
         social_parts.append(f'<a href="{GITHUB}" target="_blank" rel="noopener">GitHub</a>')
     if TWITTER:
         social_parts.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
+    if SUBSTACK:
+        social_parts.append(f'<a href="{SUBSTACK}" target="_blank" rel="noopener">Substack</a>')
     # CV download link (shown if cv.pdf exists in project root)
     if CV_PDF.exists():
         social_parts.append('<a href="cv_joaofogoncalves.pdf" download>Download CV</a>')

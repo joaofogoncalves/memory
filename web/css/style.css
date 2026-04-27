@@ -326,10 +326,20 @@ h4 { font-size: 1.1rem; }
 
 .hero-links {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   animation: hero-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
+.hero-links-social,
+.hero-links-role {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
 .hero-links a {
@@ -1777,6 +1787,10 @@ h4 { font-size: 1.1rem; }
   .hero h1 { font-size: 2.5rem; }
   .hero { padding-top: calc(40px + 2.5rem); padding-bottom: 2rem; }
   .hero-subline { font-size: 1rem; }
+
+  /* Drop the role line to its own row beneath the social handles. */
+  .hero-links-sep { display: none; }
+  .hero-links-role { flex-basis: 100%; }
 
   .cards-grid,
   .featured-grid {

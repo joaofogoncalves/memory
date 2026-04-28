@@ -137,7 +137,7 @@ async function main() {
       sig.style.cssText = [
         'position:absolute', 'right:48px', 'bottom:40px',
         'display:flex', 'align-items:center', 'gap:18px',
-        'font-family:"Inter",sans-serif', 'font-size:24px', 'font-weight:500',
+        'font-family:"Inter",sans-serif', 'font-size:30px', 'font-weight:500',
         'color:#f4f7fc', 'opacity:0.92', 'pointer-events:none',
         'z-index:10',
       ].join(';');

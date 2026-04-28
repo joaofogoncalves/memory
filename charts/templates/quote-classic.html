@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Quote Card — Classic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1;
+  --bg: #0e131e;
+  --text: #f4f7fc;
+  --text-muted: #bbc9cc;
+  --text-faint: #869396;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body {
+  margin: 0; padding: 0; background: var(--bg);
+  font-family: var(--font-sans); color: var(--text);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+#chart-container {
+  position: relative;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 800px at 18% 22%, rgba(68,216,241,0.10) 0%, rgba(68,216,241,0) 60%),
+    radial-gradient(900px 600px at 88% 88%, rgba(189,194,255,0.06) 0%, rgba(189,194,255,0) 60%),
+    var(--bg);
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: 96px 112px 112px;
+  box-sizing: border-box;
+}
+.frame {
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 48px;
+  max-width: 1200px;
+}
+.glyph {
+  position: absolute;
+  left: -20px; top: -100px;
+  font-family: var(--font-display);
+  font-size: 280px; line-height: 1;
+  color: var(--cyan-500);
+  opacity: 0.18;
+  user-select: none;
+  pointer-events: none;
+}
+.quote {
+  font-family: var(--font-display);
+  font-size: 64px; font-weight: 600; line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0;
+  text-wrap: balance;
+}
+.quote.size-xl { font-size: 84px; }
+.quote.size-l  { font-size: 70px; }
+.quote.size-m  { font-size: 56px; }
+.quote.size-s  { font-size: 44px; }
+.quote.size-xs { font-size: 36px; line-height: 1.22; }
+.attribution {
+  display: flex; align-items: center; gap: 24px;
+  font-size: 28px; font-weight: 500;
+  color: var(--text-muted);
+  margin: 0;
+}
+.attribution::before {
+  content: ''; flex: 0 0 140px; height: 1px;
+  background: var(--text-faint); opacity: 0.55;
+}
+.attribution-source {
+  font-size: 20px; font-weight: 400; color: var(--text-faint);
+  margin-left: 12px;
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <div class="frame">
+    <span class="glyph" aria-hidden="true">&ldquo;</span>
+    <p class="quote" id="quote"></p>
+    <p class="attribution">
+      <span id="attributionName"></span>
+      <span class="attribution-source" id="attributionSource"></span>
+    </p>
+  </div>
+</div>
+<script>
+const d = window.__DATA__ || {};
+
+const quote = d.quote || '';
+const quoteEl = document.getElementById('quote');
+// Auto-wrap with curly quotation marks unless the source text already has them
+const wrapped = quote.startsWith('"') || quote.startsWith('“')
+  ? quote
+  : `“${quote}”`;
+quoteEl.textContent = wrapped;
+
+const len = quote.length;
+if (len <= 80)        quoteEl.classList.add('size-xl');
+else if (len <= 140)  quoteEl.classList.add('size-l');
+else if (len <= 220)  quoteEl.classList.add('size-m');
+else if (len <= 320)  quoteEl.classList.add('size-s');
+else                  quoteEl.classList.add('size-xs');
+
+const name = d.name || d.attribution || d.author || '';
+const source = d.source || '';
+document.getElementById('attributionName').textContent = name;
+document.getElementById('attributionSource').textContent = source;
+
+if (!name && !source) {
+  document.querySelector('.attribution').style.display = 'none';
+}
+</script>
+</body>
+</html>

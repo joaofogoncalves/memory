@@ -9,13 +9,10 @@
 <style>
 :root {
   --cyan-500: #44d8f1;
-  --cyan-700: #00bcd4;
   --bg: #0e131e;
-  --surface-low: #171b27;
   --text: #f4f7fc;
   --text-muted: #bbc9cc;
   --text-faint: #869396;
-  --border: #3c494c;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: "Space Grotesk", "Inter", sans-serif;
 }
@@ -29,46 +26,43 @@ html, body {
   width: 100vw; height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(1200px 800px at 18% 22%, rgba(68,216,241,0.10) 0%, rgba(68,216,241,0) 60%),
-    radial-gradient(900px 600px at 88% 88%, rgba(189,194,255,0.06) 0%, rgba(189,194,255,0) 60%),
+    radial-gradient(1200px 800px at 18% 22%, rgba(68,216,241,0.08) 0%, rgba(68,216,241,0) 60%),
+    radial-gradient(900px 600px at 88% 88%, rgba(189,194,255,0.05) 0%, rgba(189,194,255,0) 60%),
     var(--bg);
-  display: grid;
-  grid-template-rows: 1fr;
-  align-items: center;
-  padding: 96px 112px 88px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 96px 120px 112px;
   box-sizing: border-box;
+  gap: 56px;
 }
-.frame {
-  position: relative;
-  display: flex; flex-direction: column;
-  gap: 36px;
-  max-width: 1200px;
+.header {
+  display: flex; align-items: center; gap: 24px;
 }
-.glyph {
-  position: absolute;
-  left: -20px; top: -72px;
+.avatar {
+  width: 96px; height: 96px;
+  border-radius: 999px;
+  background: var(--text-faint);
+  background-size: cover; background-position: center;
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+}
+.identity {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.name {
   font-family: var(--font-display);
-  font-size: 240px; line-height: 1;
-  color: var(--cyan-500);
-  opacity: 0.18;
-  user-select: none;
-  pointer-events: none;
-}
-.context {
-  font-family: var(--font-display);
-  font-size: 14px; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--cyan-500);
+  font-size: 36px; font-weight: 600;
+  letter-spacing: -0.01em; line-height: 1.15;
+  color: var(--text);
   margin: 0;
-  display: flex; align-items: center; gap: 12px;
 }
-.context::after {
-  content: ''; flex: 0 0 48px; height: 2px;
-  background: var(--cyan-500); opacity: 0.7;
+.handle {
+  font-size: 24px; font-weight: 400;
+  color: var(--text-muted);
+  margin: 0; line-height: 1.2;
 }
 .quote {
   font-family: var(--font-display);
-  font-size: 64px; font-weight: 600; line-height: 1.15;
+  font-size: 64px; font-weight: 600; line-height: 1.18;
   letter-spacing: -0.015em;
   color: var(--text);
   margin: 0;
@@ -78,67 +72,59 @@ html, body {
 .quote.size-l  { font-size: 64px; }
 .quote.size-m  { font-size: 52px; }
 .quote.size-s  { font-size: 40px; }
-.quote.size-xs { font-size: 32px; line-height: 1.2; }
-.attribution {
-  display: flex; align-items: center; gap: 20px;
-  font-size: 22px; font-weight: 500;
-  color: var(--text-muted);
-  margin: 0;
-}
-.attribution::before {
-  content: ''; flex: 0 0 120px; height: 1px;
-  background: var(--text-faint); opacity: 0.55;
-}
-.attribution-source {
-  font-size: 16px; font-weight: 400; color: var(--text-faint);
-  margin-left: 8px;
-}
+.quote.size-xs { font-size: 32px; line-height: 1.22; }
 </style>
 </head>
 <body>
 <div id="chart-container">
-  <div class="frame">
-    <span class="glyph" aria-hidden="true">&ldquo;</span>
-    <p class="context" id="context"></p>
-    <p class="quote" id="quote"></p>
-    <p class="attribution">
-      <span id="attributionName"></span>
-      <span class="attribution-source" id="attributionSource"></span>
-    </p>
+  <div class="header">
+    <div class="avatar" id="avatar"></div>
+    <div class="identity">
+      <p class="name" id="name"></p>
+      <p class="handle" id="handle"></p>
+    </div>
   </div>
+  <p class="quote" id="quote"></p>
 </div>
 <script>
 const d = window.__DATA__ || {};
+const assets = d.assets || {};
 
-const contextEl = document.getElementById('context');
-const ctx = d.context || '';
-if (ctx) contextEl.textContent = ctx.toUpperCase();
-else contextEl.style.display = 'none';
+// Avatar (passed via --asset avatar=<path>; falls back to a flat circle)
+const avatarEl = document.getElementById('avatar');
+if (assets.avatar) avatarEl.style.backgroundImage = `url("${assets.avatar}")`;
 
+// Name (accept `name` or legacy `attribution`/`author`)
+const name = d.name || d.attribution || d.author || '';
+const nameEl = document.getElementById('name');
+nameEl.textContent = name;
+if (!name) nameEl.style.display = 'none';
+
+// Handle (e.g. "@joaofogoncalves") — auto-prepend @ if missing
+const handleEl = document.getElementById('handle');
+const rawHandle = (d.handle || '').trim();
+const handle = rawHandle && !rawHandle.startsWith('@') ? `@${rawHandle}` : rawHandle;
+handleEl.textContent = handle;
+if (!handle) handleEl.style.display = 'none';
+
+// Hide whole header if neither avatar, name, nor handle exists
+if (!assets.avatar && !name && !handle) {
+  document.querySelector('.header').style.display = 'none';
+}
+
+// Quote — shown verbatim (no auto curly-quote wrap; the avatar+name carries
+// attribution, so quote marks are no longer needed for the framing)
 const quote = d.quote || '';
 const quoteEl = document.getElementById('quote');
-// Render with smart quotation marks if not already wrapped
-const wrapped = quote.startsWith('"') || quote.startsWith('“')
-  ? quote
-  : `“${quote}”`;
-quoteEl.textContent = wrapped;
+quoteEl.textContent = quote;
 
-// Adapt size to length — measured against the canvas roughly fitting 1080px wide text
+// Adapt size to length
 const len = quote.length;
 if (len <= 80)        quoteEl.classList.add('size-xl');
 else if (len <= 140)  quoteEl.classList.add('size-l');
 else if (len <= 220)  quoteEl.classList.add('size-m');
 else if (len <= 320)  quoteEl.classList.add('size-s');
 else                  quoteEl.classList.add('size-xs');
-
-const name = d.attribution || d.author || '';
-const source = d.source || '';
-document.getElementById('attributionName').textContent = name;
-document.getElementById('attributionSource').textContent = source;
-
-if (!name && !source) {
-  document.querySelector('.attribution').style.display = 'none';
-}
 </script>
 </body>
 </html>

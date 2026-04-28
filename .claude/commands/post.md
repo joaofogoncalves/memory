@@ -175,7 +175,7 @@ For a sequence, briefly sketch what each slot carries (e.g. "slide 1: the claim;
 
 **Always include a chart spec as one of the 3 visual options in Step 6** — never offer 3 AI image prompts. Charts render as crisp, on-brand visuals via the `charts/` module and consistently outperform generic AI illustrations for posts with any structural argument.
 
-Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `feature-compare`, `grid-diff`, `flow` (horizontal or vertical), `timeline`, `article-card`, `quote-card`.
+Available chart templates (see `charts/README.md`): `bar`, `stat-compare`, `quadrant`, `line`, `feature-compare`, `grid-diff`, `flow` (horizontal or vertical), `timeline`, `article-card`, `quote-card`, `quote-classic`.
 
 The chart should fit the post's actual argument. Some natural pairings:
 - Single number / ranking → `bar`
@@ -187,7 +187,8 @@ The chart should fit the post's actual argument. Some natural pairings:
 - Trend over time → `line`
 - Events on a time axis → `timeline`
 - Article-promo post (pointing readers to a published article) → `article-card` (hero + title + subtitle + auto logo/URL — replaces Substack's auto-card so the canonical visual lives in the repo). Pass the hero via `--asset hero=<path-to-article-hero>`.
-- Original quote / pull-quote (yours or someone else's) when no clean source screenshot is available → `quote-card` (display-font pull-quote with attribution and optional source). Use this instead of an AI illustration when the post is built around a single line.
+- Internet / personal quote (yours or someone else's tweet/post) when no clean source screenshot is available → `quote-card` (X-style avatar + name + @handle header above the quote). Pass the avatar via `--asset avatar=<path>` (defaults to `web/img/headshot.jpg` for your own quotes).
+- Famous / editorial quote (historical, classic literature, Stanford-commencement-style) → `quote-classic` (big curly-quote glyph, attribution with thin rule, optional source line). No avatar.
 
 **If no existing template fits the argument,** add a new template to `charts/` rather than dropping the chart option. Use AskUserQuestion to confirm: "Add a new `<name>` template to `charts/`" vs. "Use a different existing template." Include a one-paragraph sketch of the proposed template (data shape + visual layout) so the user can decide.
 

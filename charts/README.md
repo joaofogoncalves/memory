@@ -154,19 +154,34 @@ node charts/render.mjs \
 
 Data shape: `{ eyebrow?, title, subtitle? }`. The hero image is passed via `--asset hero=<path>` (the renderer inlines it as a data URL, so the path resolves at render time, not in the data file). Title font size auto-adapts to length (3 stops). Use this for short-form promo posts that drive readers to a published article — replaces Substack's auto-generated card so the canonical visual lives in the repo.
 
-### `quote-card` — original pull-quote card
+### `quote-card` — internet/personal pull-quote card (X-style header)
 
-Use when the post is a quote and you don't have a clean source screenshot (your own line, or someone else's line you don't want to screenshot). Big display-font pull-quote with attribution, optional eyebrow context, faint quote-mark glyph as a visual anchor. **1440×900** to fit the site ratio.
+Use for quotes that live on the social web — your own one-liner, or someone else's tweet/post you don't have a clean screenshot of. X-style header (round avatar, name, `@handle`) sits above the quote so attribution is unambiguous. Quote text renders verbatim — no auto curly-quote wrap, since the header already does the framing. **1440×900** to fit the site ratio.
 
 ```bash
 node charts/render.mjs \
   --template quote-card \
   --data charts/examples/quote-card-identity-weight.json \
+  --asset avatar=web/img/headshot.jpg \
   --output charts/out/quote-card-identity-weight.webp \
   --width 1440 --height 900
 ```
 
-Data shape: `{ quote, attribution?, source?, context? }`. Quote font size auto-adapts to length across 5 stops (≤80, ≤140, ≤220, ≤320, longer). Wrap your quote in straight `"..."` if you want to override the auto-applied curly quotes. `source` is the small fade after the attribution name — use it for venue/url (e.g. `joaofogoncalves.com`, `On X · 2026-04`).
+Data shape: `{ quote, name, handle? }`. The avatar is passed via `--asset avatar=<path>` (use `web/img/headshot.jpg` for your own quotes; pass a different file for someone else's quote). The `@` in `handle` is auto-prepended if missing. Quote font auto-adapts to length across 5 stops (≤80, ≤140, ≤220, ≤320, longer). Legacy fields `attribution`/`author` are accepted as aliases for `name`.
+
+### `quote-classic` — famous / editorial pull-quote card
+
+Use for famous quotes and historical lines (Steve Jobs, Einstein, classic literature). Big curly-quote glyph as a backdrop, large display quote, attribution with a thin rule and an optional muted source line. No avatar. **1440×900**.
+
+```bash
+node charts/render.mjs \
+  --template quote-classic \
+  --data charts/examples/quote-classic-jobs.json \
+  --output charts/out/quote-classic-jobs.webp \
+  --width 1440 --height 900
+```
+
+Data shape: `{ quote, name?, source? }`. Quote auto-wraps in curly quotation marks unless your text already starts with one. Source is the small fade after the name — use it for venue/date (e.g. `Stanford commencement, 2005`).
 
 ## CLI flags
 

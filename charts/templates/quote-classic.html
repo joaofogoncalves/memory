@@ -38,19 +38,21 @@ html, body {
 .frame {
   position: relative;
   display: flex; flex-direction: column;
-  gap: 48px;
+  gap: 32px;
   max-width: 1200px;
 }
 .glyph {
-  position: absolute;
-  left: -20px; top: -100px;
   font-family: var(--font-display);
-  font-size: 280px; line-height: 1;
+  font-size: 160px; font-weight: 700;
+  line-height: 0.7;
   color: var(--cyan-500);
-  opacity: 0.18;
+  opacity: 0.9;
   user-select: none;
-  pointer-events: none;
+  display: block;
+  margin: 0;
 }
+.glyph-open  { align-self: flex-start; }
+.glyph-close { align-self: flex-end; }
 .quote {
   font-family: var(--font-display);
   font-size: 64px; font-weight: 600; line-height: 1.18;
@@ -83,8 +85,9 @@ html, body {
 <body>
 <div id="chart-container">
   <div class="frame">
-    <span class="glyph" aria-hidden="true">&ldquo;</span>
+    <span class="glyph glyph-open" aria-hidden="true">&ldquo;</span>
     <p class="quote" id="quote"></p>
+    <span class="glyph glyph-close" aria-hidden="true">&rdquo;</span>
     <p class="attribution">
       <span id="attributionName"></span>
       <span class="attribution-source" id="attributionSource"></span>
@@ -96,11 +99,10 @@ const d = window.__DATA__ || {};
 
 const quote = d.quote || '';
 const quoteEl = document.getElementById('quote');
-// Auto-wrap with curly quotation marks unless the source text already has them
-const wrapped = quote.startsWith('"') || quote.startsWith('“')
-  ? quote
-  : `“${quote}”`;
-quoteEl.textContent = wrapped;
+// Strip any leading/trailing straight or curly quotes — the standalone
+// teal glyphs above and below carry the quotation framing now.
+const stripped = quote.replace(/^["“”]+\s*/, '').replace(/\s*["“”]+$/, '');
+quoteEl.textContent = stripped;
 
 const len = quote.length;
 if (len <= 80)        quoteEl.classList.add('size-xl');

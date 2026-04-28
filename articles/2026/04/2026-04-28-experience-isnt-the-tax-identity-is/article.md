@@ -1,13 +1,12 @@
 ---
 title: "Experience Isn't the Tax. Identity Is."
 subtitle: "Jaya Gupta's piece on AI rewiring decision-making is right about the diagnosis. It mis-attributes the variable."
-date: 2026-04-26
+date: 2026-04-28
 tags: [ai-adoption, leadership, decision-making, experience]
 medium_url:
 substack_url:
 hero_image: media/hero.jpg
 reading_time: 8
-draft: true
 ---
 
 ## What Jaya got right

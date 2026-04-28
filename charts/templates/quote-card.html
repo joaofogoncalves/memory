@@ -80,14 +80,14 @@ html, body {
 .quote.size-s  { font-size: 40px; }
 .quote.size-xs { font-size: 32px; line-height: 1.2; }
 .attribution {
-  display: flex; align-items: center; gap: 16px;
+  display: flex; align-items: center; gap: 20px;
   font-size: 22px; font-weight: 500;
   color: var(--text-muted);
   margin: 0;
 }
 .attribution::before {
-  content: ''; flex: 0 0 56px; height: 2px;
-  background: var(--text-faint); opacity: 0.6;
+  content: ''; flex: 0 0 120px; height: 1px;
+  background: var(--text-faint); opacity: 0.55;
 }
 .attribution-source {
   font-size: 16px; font-weight: 400; color: var(--text-faint);
@@ -133,8 +133,8 @@ else                  quoteEl.classList.add('size-xs');
 
 const name = d.attribution || d.author || '';
 const source = d.source || '';
-document.getElementById('attributionName').textContent = name ? `— ${name}` : '';
-document.getElementById('attributionSource').textContent = source ? source : '';
+document.getElementById('attributionName').textContent = name;
+document.getElementById('attributionSource').textContent = source;
 
 if (!name && !source) {
   document.querySelector('.attribution').style.display = 'none';

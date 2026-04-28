@@ -135,16 +135,16 @@ async function main() {
       const sig = document.createElement('div');
       sig.setAttribute('data-signature', '');
       sig.style.cssText = [
-        'position:absolute', 'right:24px', 'bottom:16px',
-        'display:flex', 'align-items:center', 'gap:10px',
-        'font-family:"Inter",sans-serif', 'font-size:13px',
-        'color:#bbc9cc', 'opacity:0.7', 'pointer-events:none',
+        'position:absolute', 'right:48px', 'bottom:40px',
+        'display:flex', 'align-items:center', 'gap:18px',
+        'font-family:"Inter",sans-serif', 'font-size:24px', 'font-weight:500',
+        'color:#f4f7fc', 'opacity:0.92', 'pointer-events:none',
         'z-index:10',
       ].join(';');
       if (logoDataUrl) {
         const img = document.createElement('img');
         img.src = logoDataUrl;
-        img.style.cssText = 'height:20px;width:auto;display:block;';
+        img.style.cssText = 'height:44px;width:auto;display:block;';
         sig.appendChild(img);
       }
       const url = document.createElement('span');

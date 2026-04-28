@@ -750,7 +750,10 @@ def generate_rss(articles: list[dict]) -> str:
 
         cleaned = clean_content(a['content'])
         md_renderer.reset()
-        content_html = md_renderer.convert(cleaned)
+        content_html = md_renderer.convert(expand_wide_fences(cleaned))
+        content_html = _rewrite_img_to_webp(content_html)
+        # Article URL ends with /, so relative media/foo.webp resolves correctly
+        content_html = _absolutize_img_src(content_html, url if url.endswith('/') else url + '/')
         # Escape CDATA end sequence within content
         content_html = content_html.replace(']]>', ']]]]><![CDATA[>')
 
@@ -1884,6 +1887,18 @@ def _rewrite_img_to_webp(html: str) -> str:
         _replace,
         html,
     )
+
+
+def _absolutize_img_src(html: str, base_url: str) -> str:
+    """Resolve relative <img src> paths against base_url. Used for RSS where
+    feed readers can't resolve paths relative to the article page."""
+    def _replace(m):
+        prefix = m.group(1)
+        src = m.group(2)
+        if src.startswith(('http://', 'https://', '//', '/', 'data:')):
+            return m.group(0)
+        return f'{prefix}{base_url}{src}"'
+    return re.sub(r'(<img[^>]+src=")([^"]+)"', _replace, html)
 
 
 def _optimize_image(src: Path, dst_dir: Path) -> None:

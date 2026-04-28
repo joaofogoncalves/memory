@@ -27,8 +27,35 @@ const argv = yargs(hideBin(process.argv))
   .option('scale',    { type: 'number', default: 2, describe: 'deviceScaleFactor (retina)' })
   .option('transparent', { type: 'boolean', default: false, describe: 'Transparent background (drops the dark surface)' })
   .option('no-signature', { type: 'boolean', default: false, describe: 'Skip the logo + URL signature in bottom-right' })
+  .option('asset',    { type: 'array', default: [], describe: 'Inline a file as a data URL under window.__DATA__.assets[KEY]. Format: KEY=PATH (repeatable). Paths resolve from CWD.' })
   .strict()
   .parseSync();
+
+const MIME_BY_EXT = {
+  '.webp': 'image/webp',
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif':  'image/gif',
+  '.svg':  'image/svg+xml',
+};
+
+async function loadAssetsAsDataUrls(assetSpecs) {
+  const out = {};
+  for (const spec of assetSpecs) {
+    const eq = String(spec).indexOf('=');
+    if (eq < 1) throw new Error(`Bad --asset (expected KEY=PATH): ${spec}`);
+    const key = spec.slice(0, eq);
+    const path = resolvePath(spec.slice(eq + 1));
+    if (!existsSync(path)) throw new Error(`Asset not found: ${path}`);
+    const ext = extname(path).toLowerCase();
+    const mime = MIME_BY_EXT[ext];
+    if (!mime) throw new Error(`Unsupported asset extension: ${ext}`);
+    const buf = await readFile(path);
+    out[key] = `data:${mime};base64,${buf.toString('base64')}`;
+  }
+  return out;
+}
 
 function resolvePath(p) {
   return isAbsolute(p) ? p : resolve(process.cwd(), p);
@@ -56,6 +83,10 @@ async function main() {
 
   const htmlRaw = await readFile(templatePath, 'utf8');
   const data = JSON.parse(await readFile(dataPath, 'utf8'));
+
+  if (argv.asset && argv.asset.length) {
+    data.assets = { ...(data.assets || {}), ...(await loadAssetsAsDataUrls(argv.asset)) };
+  }
 
   // Inject window.__DATA__ before any <script> so templates can read it synchronously.
   const injection = `<script>window.__DATA__ = ${JSON.stringify(data).replace(/</g, '\\u003c')};</script>`;

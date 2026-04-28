@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Quote Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1;
+  --cyan-700: #00bcd4;
+  --bg: #0e131e;
+  --surface-low: #171b27;
+  --text: #f4f7fc;
+  --text-muted: #bbc9cc;
+  --text-faint: #869396;
+  --border: #3c494c;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body {
+  margin: 0; padding: 0; background: var(--bg);
+  font-family: var(--font-sans); color: var(--text);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+#chart-container {
+  position: relative;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 800px at 18% 22%, rgba(68,216,241,0.10) 0%, rgba(68,216,241,0) 60%),
+    radial-gradient(900px 600px at 88% 88%, rgba(189,194,255,0.06) 0%, rgba(189,194,255,0) 60%),
+    var(--bg);
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: 96px 112px 88px;
+  box-sizing: border-box;
+}
+.frame {
+  position: relative;
+  display: flex; flex-direction: column;
+  gap: 36px;
+  max-width: 1200px;
+}
+.glyph {
+  position: absolute;
+  left: -20px; top: -72px;
+  font-family: var(--font-display);
+  font-size: 240px; line-height: 1;
+  color: var(--cyan-500);
+  opacity: 0.18;
+  user-select: none;
+  pointer-events: none;
+}
+.context {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cyan-500);
+  margin: 0;
+  display: flex; align-items: center; gap: 12px;
+}
+.context::after {
+  content: ''; flex: 0 0 48px; height: 2px;
+  background: var(--cyan-500); opacity: 0.7;
+}
+.quote {
+  font-family: var(--font-display);
+  font-size: 64px; font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0;
+  text-wrap: balance;
+}
+.quote.size-xl { font-size: 76px; }
+.quote.size-l  { font-size: 64px; }
+.quote.size-m  { font-size: 52px; }
+.quote.size-s  { font-size: 40px; }
+.quote.size-xs { font-size: 32px; line-height: 1.2; }
+.attribution {
+  display: flex; align-items: center; gap: 16px;
+  font-size: 22px; font-weight: 500;
+  color: var(--text-muted);
+  margin: 0;
+}
+.attribution::before {
+  content: ''; flex: 0 0 56px; height: 2px;
+  background: var(--text-faint); opacity: 0.6;
+}
+.attribution-source {
+  font-size: 16px; font-weight: 400; color: var(--text-faint);
+  margin-left: 8px;
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <div class="frame">
+    <span class="glyph" aria-hidden="true">&ldquo;</span>
+    <p class="context" id="context"></p>
+    <p class="quote" id="quote"></p>
+    <p class="attribution">
+      <span id="attributionName"></span>
+      <span class="attribution-source" id="attributionSource"></span>
+    </p>
+  </div>
+</div>
+<script>
+const d = window.__DATA__ || {};
+
+const contextEl = document.getElementById('context');
+const ctx = d.context || '';
+if (ctx) contextEl.textContent = ctx.toUpperCase();
+else contextEl.style.display = 'none';
+
+const quote = d.quote || '';
+const quoteEl = document.getElementById('quote');
+// Render with smart quotation marks if not already wrapped
+const wrapped = quote.startsWith('"') || quote.startsWith('“')
+  ? quote
+  : `“${quote}”`;
+quoteEl.textContent = wrapped;
+
+// Adapt size to length — measured against the canvas roughly fitting 1080px wide text
+const len = quote.length;
+if (len <= 80)        quoteEl.classList.add('size-xl');
+else if (len <= 140)  quoteEl.classList.add('size-l');
+else if (len <= 220)  quoteEl.classList.add('size-m');
+else if (len <= 320)  quoteEl.classList.add('size-s');
+else                  quoteEl.classList.add('size-xs');
+
+const name = d.attribution || d.author || '';
+const source = d.source || '';
+document.getElementById('attributionName').textContent = name ? `— ${name}` : '';
+document.getElementById('attributionSource').textContent = source ? source : '';
+
+if (!name && !source) {
+  document.querySelector('.attribution').style.display = 'none';
+}
+</script>
+</body>
+</html>

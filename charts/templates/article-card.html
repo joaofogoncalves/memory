@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Article Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan-500: #44d8f1;
+  --bg: #0e131e;
+  --text: #f4f7fc;
+  --text-muted: #c9d2e0;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+html, body {
+  margin: 0; padding: 0; background: var(--bg);
+  font-family: var(--font-sans); color: var(--text);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+#chart-container {
+  position: relative;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+.hero {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(14,19,30,0.15) 0%, rgba(14,19,30,0.55) 55%, rgba(14,19,30,0.92) 100%),
+    linear-gradient(90deg, rgba(14,19,30,0.85) 0%, rgba(14,19,30,0.45) 45%, rgba(14,19,30,0.15) 80%);
+}
+.content {
+  position: absolute;
+  left: 64px; right: 64px; bottom: 88px;
+  display: flex; flex-direction: column; gap: 20px;
+  max-width: 1180px;
+}
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cyan-500);
+  margin: 0;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::after {
+  content: ''; flex: 0 0 48px; height: 2px;
+  background: var(--cyan-500); opacity: 0.7;
+}
+.title {
+  font-family: var(--font-display);
+  font-size: 64px; font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0;
+  text-wrap: balance;
+}
+.subtitle {
+  font-size: 26px; font-weight: 400; line-height: 1.35;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 1000px;
+}
+.title.size-l   { font-size: 72px; }
+.title.size-m   { font-size: 56px; }
+.title.size-s   { font-size: 44px; }
+.subtitle.size-s { font-size: 22px; }
+/* Bottom-right scrim guarantees signature legibility on bright heroes */
+.sig-scrim {
+  position: absolute; right: 0; bottom: 0;
+  width: 360px; height: 96px;
+  background: linear-gradient(135deg, transparent 0%, rgba(14,19,30,0.65) 70%, rgba(14,19,30,0.85) 100%);
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+  <div class="hero" id="hero"></div>
+  <div class="scrim"></div>
+  <div class="sig-scrim"></div>
+  <div class="content">
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 class="title" id="title"></h1>
+    <p class="subtitle" id="subtitle"></p>
+  </div>
+</div>
+<script>
+const d = window.__DATA__ || {};
+const assets = d.assets || {};
+
+const hero = document.getElementById('hero');
+if (assets.hero) hero.style.backgroundImage = `url("${assets.hero}")`;
+
+const eyebrow = (d.eyebrow || 'Essay').toUpperCase();
+document.getElementById('eyebrow').textContent = eyebrow;
+
+const titleEl = document.getElementById('title');
+const subtitleEl = document.getElementById('subtitle');
+const title = d.title || '';
+const subtitle = d.subtitle || '';
+titleEl.textContent = title;
+subtitleEl.textContent = subtitle;
+
+// Adapt title size to length so it fits cleanly without manual tweaks
+if (title.length > 80) titleEl.classList.add('size-s');
+else if (title.length > 50) titleEl.classList.add('size-m');
+else if (title.length < 30) titleEl.classList.add('size-l');
+
+if (subtitle.length > 140) subtitleEl.classList.add('size-s');
+
+if (!subtitle) subtitleEl.style.display = 'none';
+if (!d.eyebrow && d.eyebrow !== '') {
+  // default eyebrow if not explicitly set to empty
+} else if (d.eyebrow === '') {
+  document.getElementById('eyebrow').style.display = 'none';
+}
+</script>
+</body>
+</html>

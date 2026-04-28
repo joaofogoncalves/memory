@@ -139,17 +139,48 @@ node charts/render.mjs \
 
 Data shape: `{ title, subtitle, unit, labels: [...], series: [{label, values, color}] }`
 
+### `article-card` — promo card for article launches (hero + title + subtitle)
+
+Substack-style social card. Hero image as background with a darkening scrim, eyebrow tag + title + subtitle bottom-left, logo + URL signature bottom-right (auto-stamped by the renderer). Render at **1440×900** (16:10) to match the site's universal hero ratio so the card crops cleanly across LinkedIn, X, and the homepage spotlight.
+
+```bash
+node charts/render.mjs \
+  --template article-card \
+  --data charts/examples/article-card-experience-tax.json \
+  --asset hero=articles/2026/04/2026-04-28-experience-isnt-the-tax-identity-is/media/hero.jpg \
+  --output charts/out/article-card-experience-tax.webp \
+  --width 1440 --height 900
+```
+
+Data shape: `{ eyebrow?, title, subtitle? }`. The hero image is passed via `--asset hero=<path>` (the renderer inlines it as a data URL, so the path resolves at render time, not in the data file). Title font size auto-adapts to length (3 stops). Use this for short-form promo posts that drive readers to a published article — replaces Substack's auto-generated card so the canonical visual lives in the repo.
+
+### `quote-card` — original pull-quote card
+
+Use when the post is a quote and you don't have a clean source screenshot (your own line, or someone else's line you don't want to screenshot). Big display-font pull-quote with attribution, optional eyebrow context, faint quote-mark glyph as a visual anchor. **1440×900** to fit the site ratio.
+
+```bash
+node charts/render.mjs \
+  --template quote-card \
+  --data charts/examples/quote-card-identity-weight.json \
+  --output charts/out/quote-card-identity-weight.webp \
+  --width 1440 --height 900
+```
+
+Data shape: `{ quote, attribution?, source?, context? }`. Quote font size auto-adapts to length across 5 stops (≤80, ≤140, ≤220, ≤320, longer). Wrap your quote in straight `"..."` if you want to override the auto-applied curly quotes. `source` is the small fade after the attribution name — use it for venue/url (e.g. `joaofogoncalves.com`, `On X · 2026-04`).
+
 ## CLI flags
 
 | flag | default | notes |
 |---|---|---|
-| `--template` | — | Template name (`bar`, `stat-compare`, `quadrant`, `line`) or path to `.html` |
+| `--template` | — | Template name (`bar`, `stat-compare`, `quadrant`, `line`, `article-card`, `quote-card`, ...) or path to `.html` |
 | `--data`     | — | Path to JSON file |
 | `--output`   | — | `.webp` → quality 95, `.png` → lossless |
 | `--width`    | 1600 | Viewport width |
 | `--height`   | 900 | Viewport height |
 | `--scale`    | 2 | `deviceScaleFactor` (retina) |
 | `--transparent` | false | Drops the dark surface. Charts render with transparent background (text stays light — use only over dark composites). |
+| `--no-signature` | false | Skip the auto-stamped logo + URL in the bottom-right. |
+| `--asset`    | — | Inline a file as a data URL under `window.__DATA__.assets[KEY]`. Format: `KEY=PATH` (repeatable). Used by `article-card` for the hero image. |
 
 ## Theme
 

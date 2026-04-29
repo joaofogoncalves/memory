@@ -2,9 +2,9 @@
 date: 2026-04-29
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_softwaredevelopment-ai-agents-activity-7455361719528411136-1ZHi"
+x_url: "https://x.com/i/status/2049595737973965116"
+substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-251226791?r=1vl76e"
 tags: [softwaredevelopment, ai, agents]
 source_urls:
   - https://www.linkedin.com/feed/update/urn:li:activity:7107264071728603136/

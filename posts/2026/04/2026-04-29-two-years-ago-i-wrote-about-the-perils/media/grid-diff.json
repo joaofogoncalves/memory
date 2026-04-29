@@ -1,0 +1,26 @@
+{
+  "title": "Same disease, new vocabulary",
+  "subtitle": "Four anti-patterns from a 2024 post on over-engineering, mapped to their 2026 agentic equivalents.",
+  "columns": 1,
+  "left": {
+    "header": "2024 — Over-engineering",
+    "count": "4",
+    "items": [
+      { "label": "Heavy abstractions", "note": "Factory pattern wrapped around a single function" },
+      { "label": "Solving non-problems", "note": "Database for a billion records, 3k users" },
+      { "label": "Future-proofing the stack", "note": "Kafka before you've shipped v1" },
+      { "label": "Premature microservices", "note": "Six devs splitting a monolith" }
+    ]
+  },
+  "right": {
+    "header": "2026 — Over-agenting",
+    "count": "4",
+    "items": [
+      { "label": "Heavy agent harnesses", "note": "Agent + 5 tools for a 30-line script", "isNew": true },
+      { "label": "RAG over nothing", "note": "Vector DB for 50 documents grep would handle", "isNew": true },
+      { "label": "Future-proofing the agents", "note": "Agentic framework before the prompt", "isNew": true },
+      { "label": "Premature swarms", "note": "5-agent swarm where one model with context would ship", "isNew": true }
+    ]
+  },
+  "caption": "Same shape. Higher token bill."
+}

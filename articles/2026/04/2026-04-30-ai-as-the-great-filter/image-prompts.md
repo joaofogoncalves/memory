@@ -15,16 +15,27 @@ Communicates: the Great Filter as a real geological narrowing — most never mak
 Format: 1440×900px (16:10) · JPG
 Target path: `media/hero.jpg`
 
-## Optional Inline Visual (stat-compare)
+## Inline Visual (line chart)
 
-If a single supporting visual is useful, the strongest stat in the piece is the sycophancy spread:
+The conceptual heart of the piece — two engineer trajectories using AI, identical output for ~6 months, then divergence — rendered as a `line` chart.
 
-- Title: "Pushback rates on false premises (BullshitBench, 2026)"
-- Left stat: **~90%** — Claude Sonnet 4.6 pushback rate
-- Right stat: **~50%** — average across major frontier models
-- Caption beneath: "Half of the assistants engineers ship code with will, on a coin flip, agree with a wrong assumption rather than correct it."
-- Style: dark navy `#0e131e` background, teal `#44d8f1` accent on the 90% bar, muted grey on the 50% bar, JetBrains Mono for the numerals, Inter for caption. Same stat-compare convention used elsewhere on the site.
-- Target path: `media/sycophancy-pushback.webp`
-- Anchor: end of the **The slot machine in your IDE** section.
+- Template: `line`
+- Spec: `media/two-trajectories.json`
+- Output: `media/two-trajectories.webp`
+- Title: "The selection happens in the gap"
+- Subtitle: "Two engineers using AI — output looks identical, until it doesn't."
+- Series 1 (cyan `#44d8f1`): "AI as force multiplier on depth" — climbs steadily through Month 13.
+- Series 2 (coral `#ff8a9e`): "AI as substitute for depth" — tracks identically through Month 7, peaks at Month 9, collapses by Month 13.
+- Caption: clarifies the y-axis is illustrative ("real value shipped — code the engineer can defend, debug, and extend").
+- Anchor: inside **The filter is selection, not extinction**, immediately after "And only one of them can fix it."
 
-Skip if the article reads better as a single hero + clean prose. The piece is meditation-shaped more than data-shaped, and one strong hero may be enough.
+Render command:
+
+```bash
+node charts/render.mjs --template line \
+  --data articles/2026/04/2026-04-30-ai-as-the-great-filter/media/two-trajectories.json \
+  --output articles/2026/04/2026-04-30-ai-as-the-great-filter/media/two-trajectories.webp \
+  --width 1600 --height 900
+```
+
+Why this chart, not a sycophancy stat-compare: the sycophancy data lands fine in prose with citations. The two-trajectories shape is the thesis — externalising it as a single image gives the piece a screenshot-shareable visual that does work the prose can't. Distinct from the hero (canyon = the filter; chart = the divergence inside it).

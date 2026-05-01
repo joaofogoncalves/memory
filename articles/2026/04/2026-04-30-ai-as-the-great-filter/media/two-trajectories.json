@@ -1,0 +1,12 @@
+{
+  "template": "line",
+  "title": "The selection happens in the gap",
+  "subtitle": "Two engineers using AI — output looks identical, until it doesn't.",
+  "unit": "",
+  "caption": "Illustrative. The y-axis is real value shipped — code the engineer can defend, debug, and extend. For roughly six months, the trajectories are indistinguishable on dashboards.",
+  "labels": ["Month 1", "Month 3", "Month 5", "Month 7", "Month 9", "Month 11", "Month 13"],
+  "series": [
+    { "label": "AI as force multiplier on depth", "values": [10, 30, 60, 100, 160, 230, 310], "color": "#44d8f1" },
+    { "label": "AI as substitute for depth",       "values": [10, 30, 60, 100, 130, 110, 60],  "color": "#ff8a9e" }
+  ]
+}

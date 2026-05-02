@@ -35,7 +35,7 @@ Render command:
 node charts/render.mjs --template line \
   --data articles/2026/04/2026-04-30-ai-as-the-great-filter/media/two-trajectories.json \
   --output articles/2026/04/2026-04-30-ai-as-the-great-filter/media/two-trajectories.webp \
-  --width 1600 --height 900
+  --width 2160 --height 900
 ```
 
 Why this chart, not a sycophancy stat-compare: the sycophancy data lands fine in prose with citations. The two-trajectories shape is the thesis — externalising it as a single image gives the piece a screenshot-shareable visual that does work the prose can't. Distinct from the hero (canyon = the filter; chart = the divergence inside it).

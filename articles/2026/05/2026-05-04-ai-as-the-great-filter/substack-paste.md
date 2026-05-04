@@ -1,13 +1,22 @@
----
-title: "AI as the Great Filter"
-subtitle: "Engineering depth was a nice-to-have. Now it's the thing that decides who survives."
-date: 2026-04-30
-tags: [ai-adoption, engineering, sycophancy, depth, leadership]
-medium_url:
-substack_url:
-hero_image: media/hero.png
-reading_time: 8
-draft: true
+# Substack paste-in — AI as the Great Filter
+
+## Posting checklist (do these in Substack's editor)
+
+1. **Title:** AI as the Great Filter
+2. **Subtitle:** Engineering depth was a nice-to-have. Now it's the thing that decides who survives.
+3. **Canonical URL** (Post settings → SEO → Canonical URL): `https://joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter/` — this keeps SEO pointed at your site, not Substack.
+4. **Hero image:** upload `media/hero.png` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
+5. **Inline images:** re-upload as you reach them in the body:
+   - `media/two-trajectories.webp`
+6. **Tags:** ai-adoption, engineering, sycophancy, depth, leadership
+7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
+
+   > Originally published at [joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter](https://joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter/).
+
+## Body to paste
+
+Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
+
 ---
 
 ## The filter is already running
@@ -86,8 +95,16 @@ For a while, you can't tell them apart. They're both shipping. Their managers se
 
 Then something breaks that requires real understanding to fix. And only one of them can fix it.
 
-![Two engineer trajectories using AI: identical output for six months, then divergence — one keeps climbing, one collapses.](media/two-trajectories.webp)
+[IMAGE: Two engineer trajectories using AI: identical output for six months, then divergence — one keeps climbing, one collapses. — upload media/two-trajectories.webp here]
 
 The engineers letting AI run unchecked aren't getting filtered today. They're being selected against. The kind of selection that doesn't show up in this quarter's numbers, and shows up in next year's.
 
 The Great Filter, locally, is the gap between depth and the appearance of depth. It's been running the whole time. AI just turned up the speed.
+
+---
+
+## After posting
+
+- Grab the Substack post URL.
+- Add a `substack_url:` field to the article frontmatter (alongside `medium_url`).
+- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

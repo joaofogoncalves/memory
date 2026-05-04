@@ -751,6 +751,21 @@ def generate_rss(articles: list[dict]) -> str:
         cleaned = clean_content(a['content'])
         md_renderer.reset()
         content_html = md_renderer.convert(expand_wide_fences(cleaned))
+
+        # Hero image and subtitle live in frontmatter, not the body, so they
+        # don't reach RSS readers via the normal markdown render. Prepend them
+        # to the description so feeds carry the same lead-in as the page.
+        prefix_parts = []
+        if a.get('hero_image'):
+            prefix_parts.append(
+                f'<p><img src="{_webp_name(a["hero_image"])}" alt=""></p>'
+            )
+        if a.get('subtitle'):
+            prefix_parts.append(
+                f'<p><em>{escape(a["subtitle"])}</em></p>'
+            )
+        content_html = ''.join(prefix_parts) + content_html
+
         content_html = _rewrite_img_to_webp(content_html)
         # Article URL ends with /, so relative media/foo.webp resolves correctly
         content_html = _absolutize_img_src(content_html, url if url.endswith('/') else url + '/')

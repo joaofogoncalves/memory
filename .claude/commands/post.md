@@ -4,7 +4,7 @@ description: Author a short-form post — saves canonical version to the site an
 allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob, Bash
 ---
 
-Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`. LinkedIn, X thread, and Substack Note variants are generated as paste-ready artifacts for manual posting on each platform.
+Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`. LinkedIn, X, and Substack Note variants are generated as paste-ready artifacts for manual posting on each platform.
 
 ## Arguments
 
@@ -86,7 +86,7 @@ If the user selects "Needs changes," revise the draft, output the full revised t
 
 ## Step 4: Generate platform variants
 
-Once the canonical post is approved, produce three platform-adapted artifacts (LinkedIn, X thread, Substack Note). Each surface has different mechanics and audience — don't just paste the same text to all three.
+Once the canonical post is approved, produce three platform-adapted artifacts (LinkedIn, X, Substack Note). Each surface has different mechanics and audience — don't just paste the same text to all three.
 
 ### LinkedIn variant
 
@@ -97,24 +97,21 @@ LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), 
 - Keep paragraph breaks generous (single-sentence paragraphs work well here)
 - Hashtags at the end, 2-4 tags
 - Length: 150-300 words comfortable; longer is fine if the argument earns it
+- **Article-promo posts:** include the full article URL inline in the body (typically near the close, after a short framing line). LinkedIn's reach penalty on external links is real but not absolute — and an article-promo without the link defeats the purpose. Put the link in the body, not in a separate attach block.
 
 ### X variant
 
-X rewards: thread structure, hook on tweet 1, a landing tweet that closes the loop. 280 chars per tweet (soft — Premium users have more but write for the base limit).
+X now allows long-form posts (Premium up to 25,000 characters), so threads are no longer the default. **Default to a single long post.** The thread structure was a workaround for the 280-char limit; with longer posts you can keep the canonical rhythm intact.
 
-**Default to a thread, but pack each tweet.** Use the full 280-char budget. Group related beats into a single dense tweet rather than spinning every short sentence off into its own. Splitting a setup line and its punchline into two tweets just because they read as two beats is wrong — keep them together if they both fit.
+Single-post construction rules:
+- **Hook still leads.** The first 1-2 lines must earn the unfold — X shows "Show more" once the post exceeds the timeline preview window (~500 chars).
+- **Paragraph breaks matter.** Use them generously. Readers scan more aggressively than on LinkedIn.
+- **Length:** match the canonical post. Don't pad to use the longer limit just because it exists. If the canonical is 120 words, the X version is too.
+- **No hashtags** — X culture, feels spammy. Optional `@`-mentions if quoting someone.
 
-Thread construction rules:
-- **Tweet 1**: the hook + first beat. Pack toward 280 chars — typically the canonical post's opener AND the next paragraph or two if they fit. Must stand alone as a reason to read more.
-- **Tweets 2-N**: continue packing toward 280 chars per tweet. Break on major argument shifts, not minor rhythm beats. Avoid "1/", "2/" numbering — X displays thread position natively.
-- **Last tweet**: the landing. Either the closing line from the canonical post, or a reframe that recontextualizes the thread. Often combined with the prior beat into one dense tweet.
-- **Target 3-4 tweets** for a typical short-form post. 5 only if the argument genuinely needs the space. 6+ is almost always over-fragmented — go back and combine.
-- If the canonical post has a link (e.g. to an article), put the link in the **last tweet**, not the first — X throttles reach on posts with links, and first-tweet links hurt thread performance especially.
-- No hashtags (X culture — feels spammy). Optional handle mentions if quoting someone.
+**External links:** if the canonical post references an external URL (article-promo, source citation), append a single short **reply** with just that link, optionally prefixed by a one-line framing ("Full piece:", "Source:", etc.). The main post does not contain the URL. X still throttles reach on posts with links — keeping the link in a reply preserves the algorithm's reach while still giving readers a clean path. For posts with no external link, the output is a single tweet only.
 
-**Char-count sanity check before showing the variant:** if any tweet is under ~180 chars, ask whether it can be combined with the next one. The default failure mode is over-splitting, not under-splitting.
-
-**Single-tweet exception**: only for genuinely one-line observations under ~240 chars. Almost everything else is a thread.
+**Thread exception:** rare. Only when each beat genuinely benefits from its own card — a numbered breakdown, a multi-step narrative where the cards' visual separation carries weight. Default is single post; thread is the deliberate choice.
 
 ### Substack Note variant
 
@@ -130,10 +127,10 @@ For most posts the Note is ~90% of the LinkedIn copy with these adjustments — 
 
 ### Show variants and iterate
 
-Output all three variants (LinkedIn, X thread, Substack Note) clearly separated in the response, then use AskUserQuestion:
+Output all three variants (LinkedIn, X, Substack Note) clearly separated in the response, then use AskUserQuestion:
 - "All look good" — proceed to images
 - "Revise LinkedIn" — feedback on LinkedIn variant
-- "Revise X thread" — feedback on X thread
+- "Revise X" — feedback on X variant
 - "Revise Substack Note" — feedback on Note variant
 - "Revise multiple" — feedback on more than one
 
@@ -160,14 +157,14 @@ If skipping, jump to Step 7. If including a visual, decide **single image or a s
 
 ### Single image or a sequence?
 
-LinkedIn supports carousels up to 9 images. X allows up to 4 images per tweet. Substack Notes accepts multiple inline images. A sequence is worth it when the argument unfolds across beats — a carousel narrative, a before/after, a framework broken out slide by slide, a thread where specific tweets benefit from their own supporting visual.
+LinkedIn supports carousels up to 9 images. X allows up to 4 images per post. Substack Notes accepts multiple inline images. A sequence is worth it when the argument unfolds across beats — a carousel narrative, a before/after, or a framework broken out slide by slide.
 
 **Default: single image.** Choose a sequence only when you can name what each slot carries. If you can't articulate what slide 2 adds beyond slide 1, you don't have a sequence — you have one image with extras.
 
 If choosing a sequence, use AskUserQuestion to decide the count:
 - 2-3 images: tight narrative, works on all three platforms cleanly
 - 4 images: fits X per-tweet max; fine on LinkedIn carousel and Substack
-- 5-9 images: LinkedIn carousel only — too many for X threads and Substack Notes start to feel cluttered
+- 5-9 images: LinkedIn carousel only — X caps at 4 per post, and Substack Notes start to feel cluttered
 
 For a sequence, briefly sketch what each slot carries (e.g. "slide 1: the claim; slide 2: the contrast; slide 3: the landing data") before moving to Step 6. This sketch feeds the prompts.
 
@@ -368,43 +365,36 @@ LinkedIn renders 2+ images as a swipeable carousel. Order matters — image-1 is
 
 If the post has no image, omit the attach block entirely.
 
-### 7c. `x-thread.md` — X thread paste-ready variant
+### 7c. `x-thread.md` — X paste-ready variant
 
 ```markdown
-# X thread — [slug]
+# X post — [slug]
 
-Paste each tweet into X manually as a reply chain, OR load into Typefully / similar scheduler. No hashtags, no numbering.
+Paste into X manually. No hashtags.
 
 ---
 
-**Tweet 1 (hook):**
-[text, under 280 chars]
+**Main post:**
+[long-form body — first 1-2 lines must earn the unfold]
 *Attach: media/image-1.webp*
 
-**Tweet 2:**
-[text]
-
-**Tweet 3:**
-[text]
-
-...
-
-**Tweet N (landing):**
-[text, may include the link if this is an article reaction]
+**Reply (link, only if the canonical post has an external URL):**
+[optional 1-line framing]
+[external URL]
 
 ---
 
-**After posting:** copy the X permalink (of tweet 1) and paste it into `post.md` as `x_url:`.
+**After posting:** copy the X permalink (of the main post) and paste it into `post.md` as `x_url:`.
 ```
 
-**Image-per-tweet rules:**
-- **Single-image post:** attach `media/image-1.webp` to tweet 1 (the hook). Its visibility in the feed matters most.
-- **Sequence post (2-4 images):** distribute one image per tweet across the tweets that best carry them. Default: image-1 on tweet 1, then subsequent images on the tweets whose argument they anchor. X allows up to 4 images in a single tweet, but one-per-tweet reads cleaner for a narrative thread.
-- **Sequence post (5-9 images):** X doesn't fit this cleanly — pick the 3-4 strongest images for the thread, note the rest are LinkedIn-carousel-only.
+If the post has no external link, omit the **Reply** block entirely — output a single **Main post** block only.
 
-Use `*Attach: media/image-N.webp*` as an italic line directly under the relevant tweet's body. If a tweet has no image, omit the attach line.
+**Image rules:**
+- **Single-image post:** attach `media/image-1.webp` to the main post. Use `*Attach: media/image-1.webp*` as an italic line directly under the body.
+- **Multi-image post (2-4 images):** X allows up to 4 images per post — attach all of them to the main post on one `*Attach:*` line, comma-separated. The first image carries the timeline thumbnail; the rest reveal on tap.
+- **5-9 images:** X doesn't fit this cleanly — pick the 1-4 strongest, note the rest are LinkedIn-carousel-only.
 
-If the X variant is a single tweet (short-but-complete exception), use a single `**Tweet:**` block with the attach line underneath.
+If a thread is genuinely warranted (rare — see X variant section above), use sequential `**Tweet 1:**`, `**Tweet 2:**` blocks with each tweet's attach line directly underneath.
 
 ### 7d. `substack-note.md` — Substack Note paste-ready variant
 
@@ -484,7 +474,7 @@ Chart JSON spec and rendered `.webp` go in the post's `media/` subdirectory (alr
 Tell the user:
 - **Site canonical post saved:** `posts/YYYY/MM/YYYY-MM-DD-slug/post.md`
 - **LinkedIn variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/linkedin.md` — paste into LinkedIn's native composer
-- **X thread variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/x-thread.md` — paste into X or Typefully
+- **X variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/x-thread.md` — paste into X or Typefully
 - **Substack Note variant:** `posts/YYYY/MM/YYYY-MM-DD-slug/substack-note.md` — paste into substack.com/notes
 - If image prompts: `image-prompts.md` in the same directory. Generate each image and save to `media/` as `image-1.webp` (single-image posts) or `image-1.webp` through `image-N.webp` in sequence order (multi-image posts).
 - Remind: "After posting on each surface, fill in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter."

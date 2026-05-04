@@ -673,7 +673,7 @@ class Media:
 - Writes four artifacts under `posts/YYYY/MM/YYYY-MM-DD-slug/`:
   - `post.md` — canonical site version (with `authored: true` in frontmatter, empty `post_url`/`x_url`/`substack_note_url` fields filled in later after posting)
   - `linkedin.md` — LinkedIn paste-ready variant (hook-first, intentional line breaks, 2-4 hashtags, no emojis)
-  - `x-thread.md` — X thread paste-ready variant (thread-by-default, one idea per tweet, links in the last tweet, no hashtags)
+  - `x-thread.md` — X paste-ready variant (single long post by default — X allows long-form now; for posts with an external URL, append one short reply tweet with just the link; no hashtags)
   - `substack-note.md` — Substack Note paste-ready variant (~90% of LinkedIn copy: no hashtags, softer hook, link welcomed since Notes don't throttle them)
 - Uses `writing_style.md` (primary) and `profile.md` (supplementary) for voice
 - Fetches source material from URLs, proposes 2-3 angles, drafts after user picks one

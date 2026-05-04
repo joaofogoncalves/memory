@@ -4,7 +4,7 @@ subtitle: "Engineering depth was a nice-to-have. Now it's the thing that decides
 date: 2026-05-04
 tags: [ai-adoption, engineering, sycophancy, depth, leadership]
 medium_url:
-substack_url:
+substack_url: https://open.substack.com/pub/joaofogoncalves/p/2026-05-04-ai-as-the-great-filter
 hero_image: media/hero.png
 reading_time: 8
 ---

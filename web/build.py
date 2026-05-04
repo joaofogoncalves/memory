@@ -137,7 +137,7 @@ def autolink_urls(html: str) -> str:
         prefix = m.group(1)
         url = m.group(2)
         # Skip if already inside an href or src attribute
-        if prefix in ('="', "='", '>'):
+        if prefix in ('="', "='"):
             return m.group(0)
         return f'{prefix}<a href="{url}" target="_blank" rel="noopener">{url}</a>'
 

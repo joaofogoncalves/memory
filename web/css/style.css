@@ -2213,7 +2213,7 @@ h4 { font-size: 1.1rem; }
 
 .post-media-gallery {
   max-width: var(--max-content);
-  margin: calc(var(--spacing-unit) * 2) auto calc(var(--spacing-unit) * 1.5);
+  margin: calc(var(--spacing-unit) * 0.75) auto calc(var(--spacing-unit) * 1.5);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 0.75rem;

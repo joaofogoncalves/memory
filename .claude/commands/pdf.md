@@ -32,10 +32,16 @@ If in **tailored mode**, also read:
 
 Parse `cv.md` into sections: header (pre-`##`), Summary, Experience, Education, Top Skills/Skills, Languages, Certifications. Use the content as-is.
 
+**Skip About-only sections.** `cv.md` also contains narrative sections used by the website's About page — `## Hero`, `## Thesis`, `## Building`, `## Open To`. These must NEVER appear in the printed CV. Drop them when preparing PDF content.
+
+**Experience grouping.** Roles with 2+ bullets render as detailed entries under the `EXPERIENCE` section. Roles with a single bullet render compactly under an `EARLIER CAREER` section. The user controls grouping by adjusting bullet count in `cv.md`.
+
+**`[badges]` lines** under each Experience role are for the website's About page only — drop them when rendering the PDF.
+
 ### Tailored mode (JD provided)
 
 1. Parse the job description for: key requirements, valued skills, technologies, seniority signals, company name
-2. Parse `cv.md` into sections
+2. Parse `cv.md` into sections (skip About-only sections as above)
 3. **Reframe** the CV to emphasize fit for this role:
    - Rewrite Summary to target the role (2-3 sentences)
    - Reorder experience bullets to lead with most relevant
@@ -106,7 +112,7 @@ Line height: 1.5 for body text, 1.2 for headings.
 ### Output path
 
 - Generic mode: `cv_joaofogoncalves.pdf` in project root
-- Tailored mode: `cv-{company-slug}.pdf` in project root
+- Tailored mode: `applications/{company-slug}/cv.pdf` (create the directory if missing — see CLAUDE.md "Applications folder structure")
 
 ## Step 4: Confirm completion
 

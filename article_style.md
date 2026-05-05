@@ -91,6 +91,28 @@ Style: clean, minimal, light backgrounds. Text readable. No decorative flourishe
 - Generic examples when you have specific ones from your own experience.
 - Hedging the thesis. Take a position. Complicate it later, but start with a clear claim.
 
+### Numbered-section variant
+
+For pieces that are arguments rather than essays — diagnoses, frameworks, or self-positioning long-form — use numbered sections (`01`, `02`, `03`) instead of free-form thematic headers. The pattern, lifted from the James Gardner "817 Applications Later" template:
+
+- Numbered prefix (`01 — `) in monospace accent color, followed by the section label in display font.
+- An italic concept sub-headline below each header (one line, often a fragment): "The bottleneck moved." / "The numbers don't lie." / "It's also a strategy."
+- Each section is a complete beat in the argument; the numbered structure makes the through-line easier to track.
+
+When to reach for it:
+
+- **Diagnostic essays** that walk through a system's failures and prescriptions (the James archetype).
+- **Long-form self-positioning** (the rebuilt About page is in this mode).
+- **Frameworks** that genuinely have N steps or principles (and where each deserves equal weight).
+
+When NOT to:
+
+- Argument-shaped essays where the structure is "tension → exploration → reframe." Free-form thematic headers carry the rhythm better.
+- Tutorials that already have a natural sequence — a numbered section title is redundant when "Step 1" / "Step 2" already do that work.
+- Pieces under ~600 words. The structure becomes scaffolding for content that doesn't need it.
+
+The numbered-section pattern pairs naturally with **symmetric prescriptions** (e.g., "For candidates" / "For companies" sections, each with 3 points in mirrored format) and with **stat callouts** before the first numbered section.
+
 ---
 
 Generated from analysis of 3 published articles (Feb–Mar 2026)

@@ -3,9 +3,47 @@
 **Founding Engineer @ BRIDGE IN**
 Lisbon, Portugal
 
+## Hero
+
+*I've spent 15 years scaling engineering teams. I now run a 14-agent AI orchestration system that does the work those teams used to do.*
+
+[stats] 14 / AI agents · 27 / custom skills · 15+ / years engineering
+
 ## Summary
 
-A Software Engineering Leader with 15+ years of experience scaling infrastructure, teams, and technical strategy across SaaS, engineering software, and IoT ventures. Builds high-performing, cross-functional teams to ship enterprise platforms, align system architecture with business objectives, and drive cloud adoption, security compliance, and DevOps maturity.
+Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that ships full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
+
+## Thesis
+
+*The bottleneck moved. The discipline didn't.*
+
+Engineering used to be where everything stalled. Now it's everywhere else: product clarity, decision speed, the ability to evaluate output that nobody on the team wrote.
+
+The teams pulling ahead aren't using AI more carefully. They're using it harder, with their hands on the wheel. Senior judgment plus AI velocity. Depth in the system, ruthless review of output, willingness to throw the model's first answer away.
+
+I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I now run the new pattern at BRIDGE IN. The leverage is different. The work is the same.
+
+## Building
+
+*BRIDGE IN, since November 2025.*
+
+Founding Engineer at BRIDGE IN. Building the BRIDGE IN Operating System — a Django/React platform that centralizes payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
+
+The unusual part is how it gets built. A 14-agent AI orchestration system runs a 4-phase workflow — plan, implement, test, deliver — through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operate as a permanent member of the engineering team. I direct the system. The system does most of the work.
+
+[badges] 14-agent orchestration · 27 custom skills · 4 EU markets · zero → operational in 3 months
+
+## Open To
+
+*A few conversations a year.*
+
+Not actively looking, but I take a few conversations a year that are interesting enough to make space for.
+
+What I'll talk about: founding-engineer or early-stage technical leadership at a company building something at the edge of agents and engineering. Advisory work for operators figuring out how to integrate AI into their delivery loop without producing more slop. Intros to teams thinking seriously about agent infrastructure or AI-native eng tooling.
+
+What I won't: anything pitched as "AI transformation," roles where AI is a buzzword, companies looking for a hire to validate a strategy already decided.
+
+If that fits, the email and LinkedIn below work.
 
 ## Experience
 
@@ -16,7 +54,9 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 - Designing and operating a 14-agent AI orchestration system where specialized agents coordinate through a 4-phase workflow to plan, implement, test, and deliver full-stack features end-to-end with minimal human intervention.
 - Authoring 27 custom development skills that automate the entire engineering pipeline: from Sentry error triage and Slack feedback processing to autonomous issue creation, CI failure resolution, implementation, and production deployment.
 - Operating AI agents that autonomously monitor production errors, triage user feedback, implement high-priority fixes, and generate release reports, functioning as a permanent member of the engineering team.
-- Establishing the entire product development function from zero — CI/CD, quality gates, error monitoring, and release cadence in under 3 months
+- Establishing the entire product development function from zero — CI/CD, quality gates, error monitoring, and release cadence in under 3 months.
+
+[badges] 14-agent orchestration · 27 custom skills · Django + React · 4 EU markets
 
 ---
 
@@ -28,6 +68,8 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 - Interfacing cross-departmentally to identify and implement technology solutions that directly impact business growth, streamline processes, and optimize data analytics capabilities, notably equipping DevOps with improved Kubernetes infrastructure to accommodate a surge in demand.
 - Cultivating a healthy, productive, and meritocratic department culture that retained 90% of its staff post-merger, despite the temptation of a generous shareholder payout.
 
+[badges] Engineering doubled · 90% retention post-merger · K8s scaled for surge demand
+
 ---
 
 ### Valispace — Head of Technology & Interim CTO
@@ -38,6 +80,8 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 - Orchestrated an engineering department's 25+ staff on three teams to successfully implement cloud computing and other emerging technologies, notably operating a complex global cloud environment with only three engineers.
 - Implemented ISO-27001 to access untapped and highly regulated opportunities in the aerospace sector, such as Airbus, Clearspace, and iSpace.
 
+[badges] $20M acquisition · 25+ engineers across 3 teams · ISO-27001 · Aerospace clients
+
 ---
 
 ### Valispace — Head of DevOps
@@ -47,6 +91,8 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 - Owned a robust continuous integration and deployment pipeline that accelerated time-to-market for software releases by 88.89%.
 - Established and maintained strong relationships with external vendors and stakeholders to ensure the successful integration of third-party tools and services.
 
+[badges] 100+ deployments · 88% faster releases · 4-person ops team
+
 ---
 
 ### Valispace — Senior Developer
@@ -54,6 +100,8 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 
 - Performed in-depth code reviews, amplified team productivity, reduced software defects, and streamlined development processes by introducing Agile and automated testing frameworks.
 - Developed, maintained, and improved both the backend REST API and the Frontend app.
+
+[badges] Backend REST + frontend · Agile + automated testing
 
 ---
 
@@ -67,17 +115,14 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 ### Sources.pt — Co-Founder & Lead Developer
 **January 2015 – October 2017** · Lisbon, Portugal
 
-- Conceived an IoT modular platform, built its working prototype, and marketed its unique merits as a cost-saving sensor solution accessible to the consumer market.
-- Pitched the project to a bigger tech company to secure stable financing and merge capabilities.
+- Conceived an IoT modular platform, built a working prototype, and pitched the project to a larger tech company to secure financing and merge capabilities.
 
 ---
 
 ### Inova Software — Senior Mobile Developer
 **April 2013 – January 2015** · Lisbon, Portugal
 
-- Project Management of the App "Partnering Place Mobile"
-- Architecture design of UI render engine based on descriptive models
-- Development of the app based on Phonegap with JavaScript frameworks like Underscore.js, Backbone.js, Angular.js, and UI customized for the different mobile OS.
+- Led the Partnering Place Mobile app: project management, UI render engine designed around descriptive models, Phonegap-based delivery with Backbone.js, Angular.js, and per-OS UI customization.
 
 ---
 
@@ -91,14 +136,14 @@ A Software Engineering Leader with 15+ years of experience scaling infrastructur
 ### EmergeIT — Developer
 **January 2011 – May 2011** · Lisbon, Portugal
 
-- Development of remote management applications, with application in mobile devices, Web-based administration tools, Websites, based on Phonegap with JavaScript frameworks.
+- Built remote management applications across mobile devices and web admin tools, on Phonegap with JavaScript frameworks.
 
 ---
 
 ### NAD / Design Solutions — Developer
 **September 2009 – December 2010** · Lisbon, Portugal
 
-- Developing applications with support for browsers: Websites, Intranets, Newsletters, Database Systems, Multimedia applications. Technologies: HTML, CSS, JavaScript, Python, SQL, Django, Ajax, ActionScript.
+- Web applications (HTML, CSS, JavaScript, Python, Django, SQL, AJAX, ActionScript) for intranets, newsletters, multimedia, and database systems.
 
 ## Education
 

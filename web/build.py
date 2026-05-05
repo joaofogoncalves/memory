@@ -1484,7 +1484,13 @@ def _parse_cv_sections(content: str) -> dict:
 
 
 def _parse_experience_entries(text: str) -> list[dict]:
-    """Parse the Experience section text into a list of entry dicts."""
+    """Parse the Experience section text into a list of entry dicts.
+
+    Recognized lines beneath the `### Company — Role` header:
+      - `**Date Range** · Location` — date and location
+      - `[badges] item · item · item` — pill row rendered under bullets
+      - `- bullet` — highlight bullets
+    """
     entries = []
     for raw in re.split(r'\n---\n', text):
         raw = raw.strip()
@@ -1500,15 +1506,20 @@ def _parse_experience_entries(text: str) -> list[dict]:
         role = m.group(2).strip()
 
         date_str = location = ''
+        badges: list[str] = []
         for line in lines[1:]:
-            line = line.strip()
-            if not line:
+            stripped = line.strip()
+            if not stripped:
                 continue
-            dm = re.match(r'^\*\*(.+?)\*\*\s*[·•]\s*(.+)$', line)
-            if dm:
+            dm = re.match(r'^\*\*(.+?)\*\*\s*[·•]\s*(.+)$', stripped)
+            if dm and not date_str:
                 date_str = _fmt_date_range(dm.group(1))
                 location = dm.group(2).strip()
-            break
+                continue
+            bm = re.match(r'^\[badges\]\s*(.+)$', stripped, re.IGNORECASE)
+            if bm:
+                badges = [b.strip() for b in re.split(r'\s*[·•]\s*', bm.group(1)) if b.strip()]
+                continue
 
         bullets = [ln[2:].strip() for ln in lines if ln.startswith('- ')]
 
@@ -1518,6 +1529,7 @@ def _parse_experience_entries(text: str) -> list[dict]:
             'date': date_str,
             'location': location,
             'bullets': bullets,
+            'badges': badges,
         })
     return entries
 
@@ -1531,13 +1543,20 @@ def _render_timeline(entries: list[dict]) -> str:
         if e['bullets']:
             items = ''.join(f'<li>{escape(b)}</li>' for b in e['bullets'])
             bullets_html = f'\n      <ul class="timeline-highlights">{items}</ul>'
+        badges_html = ''
+        if e.get('badges'):
+            pills = ''.join(
+                f'<span class="timeline-badge">{escape(b)}</span>' for b in e['badges']
+            )
+            badges_html = f'\n      <div class="timeline-badges">{pills}</div>'
         nodes.append(
             f'    <div class="timeline-node">\n'
             f'      <div class="timeline-date">{escape(e["date"])}</div>\n'
             f'      <div class="timeline-company">{company_html}</div>\n'
             f'      <div class="timeline-role">{escape(e["role"])}</div>\n'
             f'      <div class="timeline-location">{escape(e["location"])}</div>'
-            f'{bullets_html}\n'
+            f'{bullets_html}'
+            f'{badges_html}\n'
             f'    </div>'
         )
     return '<div class="timeline">\n\n' + '\n\n'.join(nodes) + '\n\n  </div>'
@@ -1558,13 +1577,136 @@ def _render_skills(text: str) -> str:
     return '<div class="skills-section">\n    ' + '\n    '.join(rows) + '\n  </div>'
 
 
-def generate_about() -> str:
-    """Generate the about page HTML from cv.md (if present)."""
-    headshot = ''
-    headshot_path = IMG_SRC / 'headshot.jpg'
-    if headshot_path.exists():
-        headshot = f'<img src="../img/headshot.jpg" alt="{escape(SITE_NAME)}" class="headshot">'
+def _parse_about_section(text: str) -> dict:
+    """Parse a section into italic sub-headline, body markdown, and badges.
 
+    Recognized lines:
+      - `*italic concept line*` — single-line italic header (first one wins)
+      - `[badges] item · item · item` — pill row
+      - `[stats] value / label · value / label` — stat-pair row (hero only)
+    Everything else is body markdown.
+    """
+    italic = ''
+    badges: list[str] = []
+    body_lines: list[str] = []
+
+    seen_body = False
+    for line in (text or '').split('\n'):
+        stripped = line.strip()
+        m = re.match(r'^\*([^*]+?)\*$', stripped)
+        if m and not italic and not seen_body:
+            italic = m.group(1).strip()
+            continue
+        bm = re.match(r'^\[(?:badges|stats)\]\s*(.+)$', stripped, re.IGNORECASE)
+        if bm:
+            badges = [b.strip() for b in re.split(r'\s*[·•]\s*', bm.group(1)) if b.strip()]
+            continue
+        if stripped:
+            seen_body = True
+        body_lines.append(line)
+
+    body_md = '\n'.join(body_lines).strip()
+    return {'italic': italic, 'body_md': body_md, 'badges': badges}
+
+
+def _render_hero(name: str, parsed: dict, summary_md: str) -> str:
+    """Render the about-page hero: name, italic headline, stat callouts, context."""
+    headline = parsed.get('italic', '')
+    stat_pairs = parsed.get('badges', [])
+
+    headline_html = (
+        f'  <p class="about-hero-headline">{escape(headline)}</p>\n' if headline else ''
+    )
+
+    stats_html = ''
+    if stat_pairs:
+        items = []
+        for pair in stat_pairs:
+            if '/' in pair:
+                value, label = [p.strip() for p in pair.split('/', 1)]
+            else:
+                value, label = pair, ''
+            items.append(
+                '<div class="about-hero-stat">'
+                f'<div class="about-hero-stat-value">{escape(value)}</div>'
+                f'<div class="about-hero-stat-label">{escape(label)}</div>'
+                '</div>'
+            )
+        stats_html = '  <div class="about-hero-stats">' + ''.join(items) + '</div>\n'
+
+    context_html = ''
+    if summary_md:
+        md_renderer.reset()
+        rendered = style_bridge_in(autolink_urls(md_renderer.convert(summary_md)))
+        context_html = f'  <div class="about-hero-context">{rendered}</div>\n'
+
+    return (
+        '<section class="about-hero">\n'
+        f'  <h1 class="about-hero-name">{escape(name)}</h1>\n'
+        f'{headline_html}{stats_html}{context_html}'
+        '</section>'
+    )
+
+
+def _render_about_section(num: str, label: str, parsed: dict,
+                         body_html_override: Optional[str] = None,
+                         extra_class: str = '') -> str:
+    """Render a numbered about-page section."""
+    italic_html = ''
+    if parsed.get('italic'):
+        italic_html = (
+            f'\n  <div class="about-section-italic">{escape(parsed["italic"])}</div>'
+        )
+
+    if body_html_override is not None:
+        body_inner = body_html_override
+    elif parsed.get('body_md'):
+        md_renderer.reset()
+        body_inner = style_bridge_in(autolink_urls(md_renderer.convert(parsed['body_md'])))
+    else:
+        body_inner = ''
+
+    badges_html = ''
+    if parsed.get('badges'):
+        pills = ''.join(
+            f'<span class="about-badge">{escape(b)}</span>' for b in parsed['badges']
+        )
+        badges_html = f'\n  <div class="about-badges">{pills}</div>'
+
+    cls = 'about-section' + (f' {extra_class}' if extra_class else '')
+    return (
+        f'<section class="{cls}">\n'
+        '  <div class="about-section-header">\n'
+        f'    <span class="about-section-num">{escape(num)}</span>\n'
+        f'    <span class="about-section-label">{escape(label)}</span>\n'
+        '  </div>'
+        f'{italic_html}\n'
+        f'  <div class="about-section-body">{body_inner}</div>'
+        f'{badges_html}\n'
+        '</section>'
+    )
+
+
+def _extract_name_from_intro(intro: str, fallback: str) -> str:
+    """Pull the name from cv.md `# Name` header; fall back to provided default."""
+    for line in (intro or '').split('\n'):
+        stripped = line.strip()
+        if stripped.startswith('# '):
+            return stripped[2:].strip()
+    return fallback
+
+
+def generate_about() -> str:
+    """Generate the about page HTML from cv.md (if present).
+
+    Structure:
+      Hero (name, italic headline, 3 stat callouts, context paragraph)
+      01 — Thesis
+      02 — What I'm Building
+      03 — How I Got Here  (timeline with metric badges)
+      04 — Open To  (soft-pitch CTA)
+      Footer CTA (social links + Download CV + small Education/Languages strip)
+    """
     # Social links
     social_parts = []
     if LINKEDIN:
@@ -1575,70 +1717,18 @@ def generate_about() -> str:
         social_parts.append(f'<a href="{TWITTER}" target="_blank" rel="noopener">X</a>')
     if SUBSTACK:
         social_parts.append(f'<a href="{SUBSTACK}" target="_blank" rel="noopener">Substack</a>')
-    # CV download link (shown if cv.pdf exists in project root)
     if CV_PDF.exists():
         social_parts.append('<a href="cv_joaofogoncalves.pdf" download>Download CV</a>')
 
     sep = '<span class="muted" style="margin:0 0.75rem">&middot;</span>'
     social_html = sep.join(social_parts)
 
-    speaking_text = SITE.get('speaking_text', '')
-    speaking_p = f'<p>{escape(speaking_text)}</p>\n    ' if speaking_text else ''
-
     if not CV_FILE.exists():
-        intro_html = (
+        body = (
             '<p class="muted">Add a <code>cv.md</code> file in the project root '
             'to populate this page.</p>'
         )
-        timeline_html = skills_html = education_html = ''
-    else:
-        cv_text = CV_FILE.read_text(encoding='utf-8')
-        _, cv_content = parse_frontmatter(cv_text)
-        sections = _parse_cv_sections(cv_content)
-
-        # Intro from Summary section
-        summary_md = sections.get('Summary', '')
-        md_renderer.reset()
-        intro_html = style_bridge_in(autolink_urls(md_renderer.convert(summary_md))) if summary_md else ''
-
-        # Experience timeline
-        experience_text = sections.get('Experience', '')
-        entries = _parse_experience_entries(experience_text)
-        timeline_html = _render_timeline(entries) if entries else ''
-
-        # Skills
-        skills_text = sections.get('Top Skills', '')
-        skills_html = _render_skills(skills_text)
-
-        # Education — "### University\nDegree · Date"
-        edu_raw = sections.get('Education', '').strip()
-        edu_html_inner = ''
-        if edu_raw:
-            edu_lines = [l for l in edu_raw.split('\n') if l.strip()]
-            uni = edu_lines[0].lstrip('#').strip()
-            degree = ''
-            if len(edu_lines) > 1:
-                degree = edu_lines[1].split('·')[0].split('(')[0].strip()
-            edu_html_inner = escape(uni) + (f' — {escape(degree)}' if degree else '')
-        education_html = f'<div class="education">{edu_html_inner}</div>' if edu_html_inner else ''
-
-    experience_block = ''
-    if timeline_html:
-        experience_block = f'''
-  <div class="section-title">Experience</div>
-
-  {timeline_html}
-'''
-
-    skills_block = ''
-    if skills_html:
-        skills_block = f'''
-  <div class="section-title">Skills</div>
-
-  {skills_html}
-'''
-
-    return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
+        return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='about', depth=1)}
@@ -1647,19 +1737,129 @@ def generate_about() -> str:
   <div class="about-header">
     <h1>About</h1>
   </div>
-
-  <div class="about-intro-row">
-    <div class="about-intro">
-      {intro_html}
-    </div>
-    {headshot}
+  {body}
+  <div class="about-cta">
+    <div class="about-cta-links">{social_html}</div>
   </div>
-{experience_block}{skills_block}
-  <div class="speaking-cta">
-    {speaking_p}{social_html}
-  </div>
+</div>
 
-  {education_html}
+{footer_html()}
+</body>
+</html>'''
+
+    cv_text = CV_FILE.read_text(encoding='utf-8')
+    _, cv_content = parse_frontmatter(cv_text)
+    sections = _parse_cv_sections(cv_content)
+
+    name = _extract_name_from_intro(sections.get('_intro', ''), SITE_NAME)
+
+    hero_parsed = _parse_about_section(sections.get('Hero', ''))
+    summary_md = sections.get('Summary', '').strip()
+    thesis_parsed = _parse_about_section(sections.get('Thesis', ''))
+    building_parsed = _parse_about_section(sections.get('Building', ''))
+    open_to_parsed = _parse_about_section(sections.get('Open To', ''))
+
+    hero_html = _render_hero(name, hero_parsed, summary_md)
+
+    thesis_html = (
+        _render_about_section('01', 'Thesis', thesis_parsed)
+        if thesis_parsed['body_md']
+        else ''
+    )
+
+    building_html = (
+        _render_about_section('02', "What I'm Building", building_parsed)
+        if building_parsed['body_md']
+        else ''
+    )
+
+    # 03 — How I Got Here: render the timeline as the section body
+    experience_text = sections.get('Experience', '')
+    entries = _parse_experience_entries(experience_text)
+    history_html = ''
+    if entries:
+        timeline_html = _render_timeline(entries)
+        history_parsed = {
+            'italic': 'Fifteen years before BRIDGE IN.',
+            'body_md': '',
+            'badges': [],
+        }
+        history_html = _render_about_section(
+            '03',
+            'How I Got Here',
+            history_parsed,
+            body_html_override=timeline_html,
+        )
+
+    # 04 — Open To: stronger CTA styling via .about-pitch variant
+    open_to_html = (
+        _render_about_section(
+            '04',
+            'Open To',
+            open_to_parsed,
+            extra_class='about-pitch',
+        )
+        if open_to_parsed['body_md']
+        else ''
+    )
+
+    # Footer metadata strip: Education + Languages
+    edu_text = ''
+    edu_raw = sections.get('Education', '').strip()
+    if edu_raw:
+        edu_lines = [l for l in edu_raw.split('\n') if l.strip()]
+        if edu_lines:
+            uni = edu_lines[0].lstrip('#').strip()
+            degree = ''
+            if len(edu_lines) > 1:
+                degree = edu_lines[1].split('·')[0].split('(')[0].strip()
+            edu_text = uni + (f' — {degree}' if degree else '')
+
+    languages_text = ''
+    lang_raw = sections.get('Languages', '').strip()
+    if lang_raw:
+        langs = []
+        for line in lang_raw.split('\n'):
+            line = line.strip()
+            if line.startswith('- '):
+                lang = line[2:].split('(')[0].strip()
+                if lang:
+                    langs.append(lang)
+        if langs:
+            languages_text = ' · '.join(langs)
+
+    meta_lines = []
+    if edu_text:
+        meta_lines.append(f'<div>{escape(edu_text)}</div>')
+    if languages_text:
+        meta_lines.append(f'<div>{escape(languages_text)}</div>')
+    meta_block = ''
+    if meta_lines:
+        meta_block = (
+            '\n  <div class="about-cta-meta">\n    '
+            + '\n    '.join(meta_lines)
+            + '\n  </div>'
+        )
+
+    cta_html = (
+        '<div class="about-cta">\n'
+        f'  <div class="about-cta-links">{social_html}</div>'
+        f'{meta_block}\n'
+        '</div>'
+    )
+
+    return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='about', depth=1)}
+
+<div class="page-container about-page">
+  {hero_html}
+  {thesis_html}
+  {building_html}
+  {history_html}
+  {open_to_html}
+  {cta_html}
 </div>
 
 {footer_html()}

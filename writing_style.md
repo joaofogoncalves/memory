@@ -61,3 +61,15 @@ Write LinkedIn posts in the following style:
 - "Both people are probably telling the truth. They're just on different levels."
 - "That's a different thing entirely."
 - "Different mental model. Better outcomes once you have it."
+
+---
+
+### When the post is about your own work
+
+Same voice rules apply, but tighten three things:
+
+- **Lead with proof, not a wind-up.** "Shipped a 14-agent orchestration system this month" beats "Wanted to share a project I've been working on…" The post is the receipt, not the announcement.
+- **The post is not the artifact.** Link to the thing. The post should make someone want to click through, not summarize the work in place. Two sentences of what changed + a link is better than five paragraphs of what you built.
+- **No self-positioning language.** Don't write "passionate about," "thought leader," "results-driven," "leverage." Use `pitch_style.md` if you find yourself reaching for them — it lists the anti-patterns and proof-led replacements.
+
+Same closing rule as everything else: a quiet observation, not a marketing CTA. "Worth understanding why" beats "Excited to discuss in the comments!"

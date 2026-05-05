@@ -965,6 +965,248 @@ h4 { font-size: 1.1rem; }
   padding-bottom: calc(var(--spacing-unit) * 2);
 }
 
+/* --- About page restructured (hero + numbered sections + CTA) --- */
+
+.page-container.about-page {
+  padding-top: 0;
+}
+
+.about-hero {
+  padding-top: 96px;
+  padding-bottom: calc(var(--spacing-unit) * 1.75);
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.about-hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 600;
+  color: var(--on-surface);
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.05;
+}
+
+.about-hero-headline {
+  font-style: italic;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  color: var(--on-surface);
+  max-width: 760px;
+  line-height: 1.5;
+  margin: 0 0 calc(var(--spacing-unit) * 1.25) 0;
+  border-left: 2px solid var(--primary);
+  padding-left: 1.25rem;
+}
+
+.about-hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+.about-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 90px;
+}
+
+.about-hero-stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.about-hero-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--outline);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.about-hero-context {
+  max-width: var(--max-content);
+  font-size: 1.05rem;
+  color: var(--on-surface-variant);
+  line-height: 1.7;
+}
+
+.about-hero-context p {
+  margin: 0 0 0.85rem 0;
+}
+
+.about-hero-context p:last-child {
+  margin-bottom: 0;
+}
+
+/* Numbered sections (01, 02, 03, 04) */
+.about-section {
+  max-width: var(--max-content);
+  margin: 0 auto calc(var(--spacing-unit) * 2.5) auto;
+  padding-top: calc(var(--spacing-unit) * 0.75);
+}
+
+.about-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-section-num {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--primary);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.about-section-num::after {
+  content: ' \2014';
+  color: var(--outline-variant);
+}
+
+.about-section-label {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  color: var(--on-surface);
+  letter-spacing: -0.01em;
+}
+
+.about-section-italic {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--on-surface-variant);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.about-section-body {
+  font-size: 1rem;
+  color: var(--on-surface-variant);
+  line-height: 1.75;
+}
+
+.about-section-body > p {
+  margin: 0 0 1rem 0;
+}
+
+.about-section-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inside-section badge pills (e.g. under "What I'm Building") */
+.about-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.about-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  padding: 0.35rem 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Timeline badges (small pill row under each career role) */
+.timeline-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.timeline-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--outline);
+  background: var(--surface-container);
+  padding: 0.25rem 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* "Open To" pitch variant — stronger left rule, slightly larger lead paragraph */
+.about-section.about-pitch {
+  border-left: 2px solid var(--primary);
+  padding-left: 1.5rem;
+  background: linear-gradient(
+    to right,
+    rgba(68, 216, 241, 0.04),
+    transparent 40%
+  );
+}
+
+.about-section.about-pitch .about-section-body > p:first-child {
+  font-size: 1.1rem;
+  color: var(--on-surface);
+}
+
+/* Footer CTA */
+.about-cta {
+  max-width: var(--max-content);
+  margin: calc(var(--spacing-unit) * 2) auto calc(var(--spacing-unit) * 3) auto;
+  padding-top: calc(var(--spacing-unit) * 1.25);
+  border-top: 1px solid var(--outline-variant);
+}
+
+.about-cta-links {
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-cta-links a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.about-cta-links a:hover {
+  text-decoration: underline;
+}
+
+.about-cta-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--outline);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding-top: 80px;
+  }
+  .about-hero-stats {
+    gap: 1.5rem;
+  }
+  .about-hero-stat {
+    min-width: 70px;
+  }
+  .about-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .about-section.about-pitch {
+    padding-left: 1rem;
+  }
+}
+
 /* --- Individual Post Page --- */
 .post-header {
   padding-top: 80px;

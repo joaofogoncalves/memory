@@ -90,12 +90,24 @@ linkedin-post-archiver/  # Project root
 │   ├── settings.json                 # Plugin configuration
 │   └── commands/                     # Claude Code custom skills
 │       ├── article.md                # /article - long-form article writer
-│       ├── pdf.md                    # /pdf - CV PDF generator
+│       ├── cover-letter.md           # /cover-letter - tailored cover letter for a JD
+│       ├── interview-prep.md         # /interview-prep - prep doc for a specific interview
+│       ├── outreach.md               # /outreach - recruiter / HM / founder DMs + emails
+│       ├── pdf.md                    # /pdf - CV PDF generator (generic + JD-tailored)
+│       ├── pitch.md                  # /pitch - elevator/talk/bio/LinkedIn variants
 │       ├── post.md                   # /post - LinkedIn post writer
 │       ├── profile.md                # /profile - voice profile generator
 │       ├── publish.md                # /publish - promote draft to published
 │       ├── sync.md                   # /sync - scrape + curate recent posts
 │       └── taste.md                  # /taste - visual taste profile generator
+│
+├── applications/                     # Job-search artifacts (git-ignored; see "Job-Search Toolkit")
+│   └── {company-slug}/
+│       ├── cover-letter.md           # /cover-letter output
+│       ├── outreach.md               # /outreach output (3 variants)
+│       ├── interview-prep.md         # /interview-prep output
+│       ├── notes.md                  # User-maintained: JD copy, contacts, dates
+│       └── cv.pdf                    # /pdf tailored mode output (was cv-{slug}.pdf at root)
 │
 ├── cache/                            # Browser profile + token cache (git-ignored)
 ├── logs/                             # Application logs (git-ignored)
@@ -109,14 +121,16 @@ linkedin-post-archiver/  # Project root
 ├── .env.example                      # Credentials template
 ├── .gitignore                        # Git exclusions
 │
-├── cv.md                             # Professional CV — About page (git-ignored)
+├── cv.md                             # Professional CV + About-page narrative sections (tracked)
 ├── cv_joaofogoncalves.pdf                            # Generated CV PDF (tracked, persistent asset)
 ├── now.md                            # /now page content (tracked)
 ├── now.md.example                    # /now template (tracked)
 ├── article_style.md                  # Long-form article style supplement (tracked)
 ├── writing_style.md                  # LinkedIn writing style guide (tracked)
-├── profile.md                        # Voice profile for AI writing (git-ignored)
-├── taste.md                          # Visual taste profile (git-ignored)
+├── pitch_style.md                    # Self-positioning style guide (tracked) — used by /cover-letter, /outreach, /interview-prep, /pitch and the About page
+├── profile.md                        # Voice profile for AI writing (tracked)
+├── taste.md                          # Visual taste profile (tracked)
+├── pitches.md                        # /pitch output: living doc with all pitch variants (git-ignored)
 │
 ├── README.md                         # Full documentation
 ├── CONTRIBUTING.md                   # Contribution guidelines
@@ -267,6 +281,45 @@ All images display on the site at **720px content width** (2x retina = 1440px so
 - **Screenshots**: native resolution, crop to content · PNG
 
 **Hero images are NOT bound by the site color scheme.** Heroes are mood pieces — use whatever palette, medium, and style best serves the article's concept (painterly editorial illustrations, warm tones, cinematic photography-like scenes, etc.). Think NYT Magazine / Wired long-read opener. Only inline diagrams, charts, and schematics follow `taste.md` and the dark navy + teal palette.
+
+### 15. Job-Search Toolkit (soft-hunt-shaped)
+
+The user is in a soft-hunt posture (open to conversations, not actively job-hunting). The toolkit is shaped around four operating principles borrowed from James Gardner's "817 Applications" site:
+
+- **Lead with proof, not promises** — every artifact opens with a specific accomplishment, never an introduction
+- **Target conversations, not applications** — outreach is substantive and low-volume, not blast
+- **Build in public** — the site itself is the proof; artifacts link back to it
+- **Quiet ask, not marketing CTA** — closes invite a conversation, never sell
+
+**The toolkit:**
+
+| Surface | Skill | Output | Notes |
+|---|---|---|---|
+| Personal narrative (always-on) | n/a (manual) | About page (rendered from `cv.md` Hero/Thesis/Building/Open To sections) | Replaces conventional bio + timeline. Numbered sections, metric callouts, soft pitch at bottom. |
+| Generic CV (always-on) | `/pdf` (no args) | `cv_joaofogoncalves.pdf` at root | Reads `cv.md` as source of truth; tracked in git. |
+| Self-pitch variants (always-on) | `/pitch` (optional variant arg) | `pitches.md` at root (git-ignored) | 9 variants in one file: 30s/60s/2min elevator, LinkedIn headline + About, talk abstract, 3 speaker bios. |
+| Tailored CV (per JD) | `/pdf {JD URL}` | `applications/{slug}/cv.pdf` | Reframes existing proofs for the specific role; never fabricates. |
+| Cover letter (per JD) | `/cover-letter {JD URL}` | `applications/{slug}/cover-letter.md` | 250–350 words, three paragraphs, proof-led opener. |
+| Recruiter / HM / founder outreach | `/outreach {recipient}` | `applications/{slug}/outreach.md` | LinkedIn DM (~80w) + email cold (~150w) + follow-up (~50w). Requires a specific hook about the recipient. |
+| Interview prep | `/interview-prep {JD URL} [company URL]` | `applications/{slug}/interview-prep.md` | TL;DR + tailored "tell me about yourself" + behavioral STARs + technical talking points + questions to ask back + company research |
+
+**The canonical content flow:**
+
+`cv.md` is the source of truth for everything. Its sections split into two audiences:
+
+- **CV-only sections** (`Summary`, `Experience`, `Education`, `Languages`, `Top Skills`, `Certifications`) — render in `cv_joaofogoncalves.pdf` and `applications/{slug}/cv.pdf`.
+- **About-only sections** (`Hero`, `Thesis`, `Building`, `Open To`) — render only on the website's About page. The `/pdf` skill and `cv/generate.py` explicitly skip them.
+- **Both** — the Experience section is read by both. Rich `[badges] item · item · item` lines under each role render as pills on the About page; they're skipped in the PDF.
+
+**Experience grouping in PDF**: roles with 2+ bullets → detailed `EXPERIENCE` section. Roles with 1 bullet → compact `EARLIER CAREER` section. The user controls grouping by editing bullet counts in `cv.md`.
+
+**Style guides:**
+
+- `pitch_style.md` — primary authority for any artifact where João is the subject (About page, cover letters, outreach, interview prep, pitches). Codifies the four principles above plus length targets per surface and an anti-pattern checklist.
+- `writing_style.md` — for LinkedIn posts (still primary for `/post`)
+- `article_style.md` — for long-form essays (still primary for `/article`)
+
+**Why `applications/` is git-ignored**: cover letters and outreach often contain confidential JD text and recipient contact details; tailored CVs reference specific company contexts. Default-ignored to keep them local. The user can override per-folder if they want a tracked record.
 
 ---
 
@@ -692,6 +745,35 @@ class Media:
 - **No longer does self-article-promo detection** — in the authored-first model, promo posts for articles are authored via `/post` and are canonical site content, not noise
 - Run before `pipeline.sh --skip-scrape` to keep engagement data fresh and catch stragglers
 
+### /cover-letter - Tailored Cover Letter
+- Generates a 250–350 word cover letter for a specific job description (URL or text)
+- Reads `cv.md`, `pitch_style.md`, `profile.md`, `writing_style.md`, `config/site.yaml`
+- **Lead-with-proof discipline**: opens with a specific accomplishment that maps to the role, not a generic introduction. Anti-patterns (passionate, leverage, "I would bring…") are explicitly rejected by a voice-check step.
+- Saves to `applications/{company-slug}/cover-letter.md` with frontmatter (company, role, contact, date, jd_source)
+- Optional: also produce a styled PDF via `document-skills:pdf` matching the brutalist theme
+- Recommended companion runs: `/pdf {JD URL}` for tailored CV, `/outreach` for the recruiter DM
+
+### /outreach - Recruiter / Hiring Manager / Founder Outreach
+- Drafts three length-tiered variants of cold outreach for one specific recipient: LinkedIn DM (~80 words), email cold (~150 words), follow-up (~50 words for 5–7 days later)
+- Operationalizes "Target conversations, not applications": each variant must lead with relevance to the recipient (a specific hook — their work, their post, their thesis), not with a request
+- LinkedIn URLs are usually blocked by WebFetch — falls back to asking the user for the recipient's context if so
+- Saves to `applications/{company-slug}/outreach.md`
+- The hook is a hard requirement: if the user can't supply something specific about the recipient, the skill stops and asks. Generic outreach is worse than no outreach.
+
+### /interview-prep - Interview Prep Document
+- Given a JD (URL or text) and optional company URL, generates a focused prep doc designed to read in 30 minutes the night before
+- Sections: TL;DR refresher, "Tell me about yourself" pitch tailored to the role, 5–7 behavioral questions with STAR-shaped answer notes pulled from cv.md, 5–7 technical/role questions with talking points, 5–7 substantive questions to ask back, optional company research summary, failure-mode list (specific things to avoid in this interview)
+- Reads recent `articles/*` for thesis material to surface in answers
+- Saves to `applications/{company-slug}/interview-prep.md`
+- The embedded "Tell me about yourself" pitch follows `pitch_style.md`; the prep doc itself is plain working notes
+
+### /pitch - Self-Pitch Variants (Living Document)
+- Generates surface-tailored ways to describe yourself when there's no specific JD: elevator pitches (30s/60s/2min), LinkedIn headline + About summary, conference talk abstract, speaker bios (short/medium/long)
+- Default (no args): regenerates ALL variants. Pass a variant name (`30s`, `60s`, `2min`, `linkedin-headline`, `linkedin-about`, `talk-abstract`, `bio-short`, `bio-medium`, `bio-long`) to refresh just one in place — preserves user edits to the others.
+- Saves to `pitches.md` at project root (single living document with all variants under headers)
+- Builds an internal **through-line sentence** first — the one claim every variant compresses or expands from — so the variants stay coherent across surfaces
+- LinkedIn headline mode: generates 3 candidates and recommends the strongest; user picks
+
 ---
 
 ## Testing & Debugging
@@ -805,18 +887,18 @@ uv run python -m scraper.main --reauth
 - Claude Code skills (`.claude/commands/`) and settings (`.claude/settings.json`)
 - CV PDF generator (`cv/generate.py`, `cv/fonts/`)
 - `cv_joaofogoncalves.pdf` (persistent generated asset)
-- `now.md`, `writing_style.md`, `article_style.md` (content that feeds the site/skills)
+- `cv.md`, `profile.md`, `taste.md`, `now.md` (personal content the user owns)
+- `writing_style.md`, `article_style.md`, `pitch_style.md` (style guides feeding the skills)
 - `articles/` directory (original long-form articles — authored content, not scraped)
-
-**Tracked (continued):**
 - `posts/` directory (short-form posts — authored via `/post` and historical scrape; the authored-first model treats these as canonical site content the user owns)
 
-**Ignored (personal content + runtime):**
-- `cv.md`, `profile.md`, `taste.md` (personal content generated by skills)
-- `config/site.yaml` (site identity)
+**Ignored (runtime + per-application artifacts):**
+- `config/site.yaml` (site identity — copy `config/site.yaml.example` to start)
 - `web/img/headshot.jpg` (personal photo)
 - `.env` file (credentials)
 - `.venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
+- `applications/` (per-application artifacts — cover letters, outreach, interview prep, tailored CVs; often contain confidential JD text)
+- `pitches.md` (`/pitch` output — local working doc, may be edited frequently)
 
 ### Performance Considerations
 

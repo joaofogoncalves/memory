@@ -47,6 +47,23 @@ Otherwise, use AskUserQuestion with these options:
 
 Remember this choice — it informs angles (Step 3), depth (Step 4), and visuals (Step 5).
 
+## Step 2.6: SERP reality check
+
+Before proposing angles, do a quick SERP read for the topic. The goal is **not** to pick the angle by what ranks — it's to make sure the angle isn't accidentally indistinguishable from what's already on page 1.
+
+1. Pick 1–3 likely search queries a reader interested in this topic might type. Frame them as the reader would, not as the author. Calibrate vocabulary to the audience from Step 2.5.
+2. Use WebSearch on each query. Skim the top ~10 results.
+3. Capture, in an internal note (not shown to the user yet):
+   - **Dominant format**: listicle, how-to, explainer, comparison, opinion essay, case study, news. Which formats own the SERP?
+   - **Recurring framings**: what angle does almost every result take? Where do they all agree?
+   - **Format gap**: what shape of piece is *missing*? (e.g. all listicles, no opinion piece; all how-tos, no skeptical take.)
+   - **Proof gap**: what concrete evidence, examples, or numbers do top results lack?
+   - **People Also Ask / related questions** if visible — surface them as candidate FAQ entries later (Step 6 will emit FAQPage JSON-LD if you include a `## FAQ` section).
+
+Carry this into Step 3. The angle should either fill a real gap (format or proof) or earn its place by being a sharper, more specific take than the SERP consensus. If every top result already says what you were going to say, the angle is wrong — pick a different one.
+
+This is a sanity check, not an SEO playbook. Don't warp the voice to match SERP norms; warp the *positioning* so the piece is genuinely additive.
+
 ## Step 3: Propose angles and structure
 
 Based on the source material, text notes, research, and the target audience from Step 2.5, propose **2-3 angles** for the article. Each angle should:
@@ -68,6 +85,24 @@ Present the outline with AskUserQuestion. Options:
 - "Try different angles" — go back to angle selection
 
 Iterate until the outline is approved.
+
+## Step 3.5: Plan internal links
+
+After the outline is approved and **before drafting**, identify 2–4 candidate internal links the article should weave in naturally. Internal linking is one of the cheapest discoverability levers and is much harder to retrofit cleanly.
+
+1. **Scan existing articles**: list all non-draft article slugs and titles from `articles/YYYY/MM/*/article.md`. Glob is fine. For each, read the title and subtitle from frontmatter — that's enough to judge thematic fit.
+2. **Scan recent posts**: glob `posts/YYYY/MM/*/post.md` from the last ~12 months. Many short-form posts contain the seed of an idea this article expands on; linking back gives them a second life.
+3. **Check for matching topic pages**: read `config/site.yaml` `topics:` list. If the article fits one (or two), the topic page is a natural cross-link.
+4. **Pick 2–4 candidates** with a one-sentence reason each. Favor links that:
+   - Expand on a claim made in passing in this article (so the link adds something the reader will actually click)
+   - Connect to a piece on the *same* theme that approaches it differently (cluster signal)
+   - Point to a topic page when this article belongs to a recurring theme
+
+**Decide where each link belongs in the outline.** Specify section + anchor phrase. The link should fit a sentence the article would naturally write — never bolt one on for SEO.
+
+**Skip if the article is genuinely standalone.** A link that has to be forced is worse than no link at all. Two strong internal links beat four weak ones.
+
+Carry the chosen links + their anchor placements into the draft prompt — the writer should reach for them as it goes, not retrofit them at the end. External citations (the 3–5 source links from Step 2) are separate; this step is only about *internal* linking.
 
 ## Step 4: Draft the article
 
@@ -240,12 +275,19 @@ Present both chart specs and image prompts together with AskUserQuestion:
 
 1. Generate a slug from the title: key words, lowercased, hyphenated, max 60 chars
 2. Create the directory: `articles/YYYY/MM/YYYY-MM-DD-slug/`
-3. Save `article.md` with this format:
+3. **Write a meta description** (140–160 characters) for the `description:` frontmatter field. This is what shows up in Google SERP snippets and link previews — it must earn the click on its own. Rules:
+   - Distinct from the subtitle (different phrasing, different beat — they sit next to each other in the preview)
+   - Lead with the punch, not throat-clearing ("Most teams… X. Here's why."), not "This article explores…"
+   - Concrete enough that someone scanning a SERP knows what they're getting
+   - No keyword stuffing, no clickbait, voice consistent with the article
+   - Include 1–2 of the article's key terms naturally (queries it would plausibly rank for)
+4. Save `article.md` with this format:
 
 ```markdown
 ---
 title: "[Article title]"
 subtitle: "[Subtitle]"
+description: "[140–160 char meta description — earns the click in the SERP]"
 date: [today's date, YYYY-MM-DD]
 tags: [tag1, tag2, tag3]
 medium_url:
@@ -256,6 +298,8 @@ draft: true
 
 [Full article content as approved]
 ```
+
+**Optional — FAQ section for snippet eligibility.** If the article naturally answers 3+ recurring questions about its topic (often surfaced by the People Also Ask box in Step 2.6), add a `## FAQ` section near the bottom with `### Question?` H3s and a short paragraph answer under each. The build pipeline auto-emits FAQPage JSON-LD when it detects this pattern, which can earn rich-result placement. Don't fabricate questions to game it — the FAQ has to read as a genuine extension of the piece, not a tacked-on SEO tail.
 
 4. Chart specs (`media/<name>.json`) and rendered `.webp` files are already saved from Step 5b. Include inline references (`![caption](media/<name>.webp)`) in the article body at the relevant sections.
 5. If AI image prompts were generated, save them as `articles/YYYY/MM/YYYY-MM-DD-slug/image-prompts.md`:

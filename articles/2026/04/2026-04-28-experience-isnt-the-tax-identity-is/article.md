@@ -1,6 +1,7 @@
 ---
 title: "Experience Isn't the Tax. Identity Is."
 subtitle: "Jaya Gupta's piece on AI rewiring decision-making is right about the diagnosis. It mis-attributes the variable."
+description: "Experience isn't what AI taxes — identity is. Senior people who can't adapt aren't paying for years on the job; they're paying for attachment."
 date: 2026-04-28
 tags: [ai-adoption, leadership, decision-making, experience]
 medium_url:

@@ -1,6 +1,7 @@
 ---
 title: "Is SaaS Dead?"
 subtitle: "No. But the version of SaaS most people are selling might be."
+description: "AI flipped the build-vs-buy equation. SaaS isn't dead, but the pricing model most vendors still ride on assumes a math that no longer holds."
 date: 2026-03-16
 tags: [saas, ai, startup, software-development]
 medium_url: https://medium.com/@joaofogoncalves/is-saas-dead-37c715b37d19

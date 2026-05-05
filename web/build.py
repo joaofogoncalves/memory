@@ -352,14 +352,27 @@ def parse_all_posts() -> list[dict]:
 
         read_time = reading_time(content)
 
+        try:
+            mtime_iso = datetime.fromtimestamp(
+                post_file.stat().st_mtime, tz=timezone.utc
+            ).date().isoformat()
+        except Exception:
+            mtime_iso = date_str
+        date_modified = mtime_iso if mtime_iso > date_str else date_str
+
+        word_count = len(content.split())
+
         posts.append({
             'date': date_str,
+            'date_modified': date_modified,
             'year': year,
             'month': month,
             'slug': slug,
             'title': title,
+            'description': str(fm.get('description', '') or '').strip(),
             'preview': preview,
             'reading_time': read_time,
+            'word_count': word_count,
             'tags': [str(t) for t in (fm.get('tags', []) or [])],
             'post_type': post_type,
             'post_url': fm.get('post_url', ''),
@@ -436,15 +449,29 @@ def parse_all_articles() -> list[dict]:
         else:
             url_path = f'/articles/{year}/{month}/{slug}/'
 
+        # dateModified from file mtime if newer than the publish date
+        try:
+            mtime_iso = datetime.fromtimestamp(
+                article_file.stat().st_mtime, tz=timezone.utc
+            ).date().isoformat()
+        except Exception:
+            mtime_iso = date_str
+        date_modified = mtime_iso if mtime_iso > date_str else date_str
+
+        word_count = len(content.split())
+
         articles.append({
             'date': date_str,
+            'date_modified': date_modified,
             'year': year,
             'month': month,
             'slug': slug,
             'title': title,
             'subtitle': subtitle,
+            'description': str(fm.get('description', '') or '').strip(),
             'preview': preview,
             'reading_time': read_time,
+            'word_count': word_count,
             'tags': [str(t) for t in (fm.get('tags', []) or [])],
             'medium_url': fm.get('medium_url', ''),
             'hero_image': hero_image,
@@ -517,21 +544,37 @@ def reading_time(text: str) -> str:
 
 
 def og_tags(title: str, description: str = '', og_type: str = 'website',
-            og_image: str = '', depth: int = 0) -> str:
-    """Generate Open Graph and Twitter Card meta tags."""
+            og_image: str = '', depth: int = 0, large_image: bool = False,
+            canonical_url: str = '') -> str:
+    """Generate Open Graph and Twitter Card meta tags.
+
+    `large_image` switches the Twitter card to summary_large_image — use it
+    whenever the og_image is a real hero (not the default headshot fallback).
+    """
     prefix = '../' * depth
     desc = escape(description or SITE_DESCRIPTION)
+    has_real_image = bool(og_image)
     img = og_image or f'{prefix}img/headshot.jpg'
     if SITE_URL and not img.startswith('http'):
         img = f'{SITE_URL}/{img.lstrip("/")}'
+    card_type = 'summary_large_image' if (large_image and has_real_image) else 'summary'
     lines = [
         f'<meta property="og:title" content="{escape(title)}">',
         f'<meta property="og:description" content="{desc}">',
         f'<meta property="og:type" content="{og_type}">',
         f'<meta property="og:image" content="{img}">',
-        f'<meta name="twitter:card" content="summary">',
-        f'<meta name="twitter:site" content="{TWITTER_HANDLE}">',
     ]
+    if large_image and has_real_image:
+        # Standard hero dims used by /article (1440×900). Helps platforms that
+        # respect og:image:width/height for layout decisions.
+        lines.append('<meta property="og:image:width" content="1440">')
+        lines.append('<meta property="og:image:height" content="900">')
+    if canonical_url:
+        lines.append(f'<meta property="og:url" content="{canonical_url}">')
+    lines.append(f'<meta name="twitter:card" content="{card_type}">')
+    lines.append(f'<meta name="twitter:site" content="{TWITTER_HANDLE}">')
+    if has_real_image:
+        lines.append(f'<meta name="twitter:image" content="{img}">')
     if SITE_URL:
         lines.append(f'<meta property="og:site_name" content="{SITE_NAME}">')
     return '\n  '.join(lines)
@@ -539,12 +582,24 @@ def og_tags(title: str, description: str = '', og_type: str = 'website',
 
 def head_html(title: str, depth: int = 0, extra_head: str = '',
               description: str = '', og_type: str = 'website', og_image: str = '',
-              jsonld: str = '', noindex: bool = False) -> str:
-    """Generate <head> with proper relative paths."""
+              jsonld: str = '', noindex: bool = False,
+              large_image: bool = False, canonical_path: str = '') -> str:
+    """Generate <head> with proper relative paths.
+
+    `canonical_path` is the site-root-relative path of the current page
+    (e.g. "/articles/2026/05/foo/"). When SITE_URL is set, it produces a
+    <link rel="canonical"> and a matching og:url.
+    """
     prefix = '../' * depth
     ga = ga_snippet()
     desc = escape(description or SITE_DESCRIPTION)
-    og = og_tags(title, description, og_type, og_image, depth)
+    canonical_url = ''
+    canonical_link = ''
+    if SITE_URL and canonical_path:
+        canonical_url = f'{SITE_URL}{canonical_path}'
+        canonical_link = f'<link rel="canonical" href="{canonical_url}">'
+    og = og_tags(title, description, og_type, og_image, depth,
+                 large_image=large_image, canonical_url=canonical_url)
     rss_link = f'<link rel="alternate" type="application/rss+xml" title="{escape(SITE_NAME)}" href="{prefix}feed.xml">'
     robots = '<meta name="robots" content="noindex, nofollow">' if noindex else ''
     return f'''<!DOCTYPE html>
@@ -556,6 +611,7 @@ def head_html(title: str, depth: int = 0, extra_head: str = '',
   <title>{escape(title)} — {SITE_NAME}</title>
   <meta name="description" content="{desc}">
   {robots}
+  {canonical_link}
   {FAVICON.format(prefix=prefix)}
   {rss_link}
   {og}
@@ -716,21 +772,127 @@ def jsonld_person() -> str:
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
 
 
-def jsonld_article(post: dict) -> str:
-    """Generate JSON-LD Article schema for a post page."""
+def jsonld_article(post: dict, image_url: str = '') -> str:
+    """Generate JSON-LD Article schema for a post or article page.
+
+    Accepts an absolute `image_url` (the article hero or post media). When
+    omitted, falls back to the site headshot so the schema still validates.
+    """
     url = f'{SITE_URL}{post["url"]}' if SITE_URL else post['url']
-    data = {
+    description = (
+        post.get('description')
+        or post.get('subtitle')
+        or post.get('preview', '')
+    )[:200]
+
+    same_as = [u for u in [LINKEDIN, GITHUB, TWITTER] if u]
+    author: dict = {
+        '@type': 'Person',
+        'name': SITE_NAME,
+        'url': SITE_URL or '/',
+    }
+    if same_as:
+        author['sameAs'] = same_as
+
+    publisher: dict = {
+        '@type': 'Person',
+        'name': SITE_NAME,
+        'url': SITE_URL or '/',
+    }
+
+    if not image_url and SITE_URL:
+        image_url = f'{SITE_URL}/img/headshot.jpg'
+
+    data: dict = {
         '@context': 'https://schema.org',
         '@type': 'Article',
         'headline': post['title'][:110],
-        'datePublished': post['date'],
-        'description': post['preview'][:200],
+        'description': description,
         'url': url,
-        'author': {
-            '@type': 'Person',
-            'name': SITE_NAME,
-            'url': SITE_URL or '/',
-        },
+        'datePublished': post['date'],
+        'dateModified': post.get('date_modified', post['date']),
+        'inLanguage': 'en',
+        'mainEntityOfPage': {'@type': 'WebPage', '@id': url},
+        'author': author,
+        'publisher': publisher,
+    }
+    if image_url:
+        data['image'] = image_url
+    if post.get('word_count'):
+        data['wordCount'] = post['word_count']
+    if post.get('tags'):
+        data['keywords'] = ', '.join(post['tags'])
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
+
+_FAQ_HEADING_RE = re.compile(
+    r'^##\s+(?:FAQ|Frequently asked questions|Common questions)\s*$',
+    re.IGNORECASE | re.MULTILINE,
+)
+
+
+def _extract_faq_pairs(content: str) -> list[tuple[str, str]]:
+    """Pull (question, answer) pairs out of a markdown FAQ section.
+
+    Looks for a heading like `## FAQ` (or `## Frequently asked questions`)
+    and treats every following H3 (`### …?`) as a question, with the
+    paragraphs underneath it as the answer. Stops at the next H2.
+    """
+    match = _FAQ_HEADING_RE.search(content)
+    if not match:
+        return []
+
+    section = content[match.end():]
+    next_h2 = re.search(r'^##\s+\S', section, re.MULTILINE)
+    if next_h2:
+        section = section[:next_h2.start()]
+
+    pairs: list[tuple[str, str]] = []
+    current_q: Optional[str] = None
+    answer_lines: list[str] = []
+
+    def _flush() -> None:
+        if current_q is None:
+            return
+        answer = '\n'.join(answer_lines).strip()
+        # Strip markdown emphasis/links/inline-code lightly so the answer reads
+        # cleanly when surfaced as a Google FAQ snippet.
+        answer = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', answer)
+        answer = re.sub(r'[*_`]', '', answer)
+        if current_q and answer:
+            pairs.append((current_q, answer))
+
+    for line in section.split('\n'):
+        h3 = re.match(r'^###\s+(.+?)\s*$', line)
+        if h3:
+            _flush()
+            q = h3.group(1).strip()
+            current_q = q if q.endswith('?') else None
+            answer_lines = []
+            continue
+        if current_q is not None:
+            answer_lines.append(line)
+    _flush()
+
+    return pairs
+
+
+def jsonld_faq(content: str) -> str:
+    """Generate FAQPage JSON-LD if the article has a recognizable FAQ section."""
+    pairs = _extract_faq_pairs(content)
+    if not pairs:
+        return ''
+    data = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': [
+            {
+                '@type': 'Question',
+                'name': q,
+                'acceptedAnswer': {'@type': 'Answer', 'text': a},
+            }
+            for q, a in pairs
+        ],
     }
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
 
@@ -966,7 +1128,7 @@ def generate_now(posts: list[dict] = None, topics: list[dict] = None) -> str:
 
     topics_section = _topics_home_html(posts or [], topics or [])
 
-    return f'''{head_html("Now", depth=1, description=f"What {SITE_NAME} is doing now.")}
+    return f'''{head_html("Now", depth=1, description=f"What {SITE_NAME} is doing now.", canonical_path='/now/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='now', depth=1)}
@@ -1004,7 +1166,7 @@ def generate_topics_index(posts: list[dict], topics: list[dict]) -> str:
   <div class="topic-card-count">{count} posts</div>
 </a>\n'''
 
-    return f'''{head_html("Topics", depth=1, description=f"Writing themes by {SITE_NAME}.")}
+    return f'''{head_html("Topics", depth=1, description=f"Writing themes by {SITE_NAME}.", canonical_path='/topics/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='topics', depth=1)}
@@ -1043,7 +1205,7 @@ def generate_topic_page(topic: dict, posts: list[dict]) -> str:
 </div>\n'''
 
     desc = escape(topic.get('description', ''))
-    return f'''{head_html(topic["name"], depth=2, description=topic.get("description", ""))}
+    return f'''{head_html(topic["name"], depth=2, description=topic.get("description", ""), canonical_path=f'/topics/{topic["slug"]}/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='topics', depth=2)}
@@ -1099,7 +1261,7 @@ def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
 
     cards_html = '\n'.join(render_article_card(a, depth=1) for a in articles)
 
-    return f'''{head_html("Articles", depth=1, description=f"Long-form writing by {SITE_NAME}.")}
+    return f'''{head_html("Articles", depth=1, description=f"Long-form writing by {SITE_NAME}.", canonical_path='/articles/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='articles', depth=1)}
@@ -1173,20 +1335,40 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
             '</div>'
         )
 
-    # OG image
+    # OG image (relative path used for the meta tag; absolute used for JSON-LD)
     og_image = ''
+    image_url_abs = ''
     if article.get('hero_image'):
         hero_fname = _webp_name(article['hero_image'])
         if is_draft:
             og_image = f"articles/drafts/{article['draft_token']}/{hero_fname}"
         else:
             og_image = f"articles/{article['year']}/{article['month']}/{article['slug']}/{hero_fname}"
+        if SITE_URL and not is_draft:
+            image_url_abs = f'{SITE_URL}/{og_image.lstrip("/")}'
+
+    description = (
+        article.get('description')
+        or article.get('subtitle')
+        or article.get('preview', '')
+    )[:160]
+
+    canonical_path = '' if is_draft else article['url']
+
+    article_jsonld = ''
+    if not is_draft:
+        article_jsonld = jsonld_article(article, image_url=image_url_abs)
+        faq_jsonld = jsonld_faq(article['content'])
+        if faq_jsonld:
+            article_jsonld = article_jsonld + '\n  ' + faq_jsonld
 
     return f'''{head_html(article['title'][:60], depth=depth,
-        description=article.get('subtitle', article['preview'])[:160],
+        description=description,
         og_type='article',
         og_image=og_image,
-        jsonld='' if is_draft else jsonld_article(article),
+        large_image=bool(og_image),
+        canonical_path=canonical_path,
+        jsonld=article_jsonld,
         noindex=is_draft)}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -1410,7 +1592,7 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
 
     home_script = f'<script src="js/home.js?v={_HOME_JS_VER}" defer></script>'
 
-    return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION, extra_head=home_script)}
+    return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION, extra_head=home_script, canonical_path='/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(depth=0, transparent=True)}
@@ -1728,7 +1910,7 @@ def generate_about() -> str:
             '<p class="muted">Add a <code>cv.md</code> file in the project root '
             'to populate this page.</p>'
         )
-        return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
+        return f'''{head_html("About", depth=1, jsonld=jsonld_person(), canonical_path='/about/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='about', depth=1)}
@@ -1848,7 +2030,7 @@ def generate_about() -> str:
         '</div>'
     )
 
-    return f'''{head_html("About", depth=1, jsonld=jsonld_person())}
+    return f'''{head_html("About", depth=1, jsonld=jsonld_person(), canonical_path='/about/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='about', depth=1)}
@@ -1898,7 +2080,7 @@ def generate_posts_archive(posts: list[dict]) -> str:
     # Server-render the first page for no-JS fallback
     fallback_cards = '\n'.join(_render_list_card(p, depth=1) for p in posts[:20])
 
-    return f'''{head_html("Posts", depth=1)}
+    return f'''{head_html("Posts", depth=1, canonical_path='/posts/')}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 {nav_html(active='posts', depth=1)}
@@ -1959,9 +2141,12 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
 
     # OG image: use first media if available, else headshot
     post_og_image = ''
+    post_image_abs = ''
     if post.get('media'):
         media_fname = _webp_name(post['media'][0])
         post_og_image = f"posts/{post['year']}/{post['month']}/{post['slug']}/media/{media_fname}"
+        if SITE_URL:
+            post_image_abs = f'{SITE_URL}/{post_og_image.lstrip("/")}'
 
     # Fix media paths — they reference media/image-1.jpg, which is correct
     # since media/ is copied into the same directory
@@ -2003,11 +2188,15 @@ def generate_post_page(post: dict, prev_post: Optional[dict], next_post: Optiona
         backlinks.append(f'<a href="{post["substack_note_url"]}" class="post-original-link" target="_blank" rel="noopener">View on Substack →</a>')
     original_link = ''.join(backlinks)
 
+    description = (post.get('description') or post.get('preview', ''))[:160]
+
     return f'''{head_html(post['title'][:60], depth=depth,
-        description=post['preview'][:160],
+        description=description,
         og_type='article',
         og_image=post_og_image,
-        jsonld=jsonld_article(post))}
+        large_image=bool(post_og_image),
+        canonical_path=post['url'],
+        jsonld=jsonld_article(post, image_url=post_image_abs))}
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 <div id="reading-progress" class="reading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-hidden="true"></div>

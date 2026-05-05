@@ -1,6 +1,7 @@
 ---
 title: "Pain Gets You In The Door. Curiosity Builds Everything Else"
 subtitle: "Why organizations keep treating AI adoption as a pain problem — and why that's only half the answer."
+description: "Pain gets executives to try AI. It also caps how deep that adoption goes. Why pain-driven AI usage stays shallow, and what actually deepens it."
 date: 2026-03-26
 tags: [ai, leadership, future-of-work, organizational-culture, management]
 medium_url: https://medium.com/@joaofogoncalves/pain-gets-you-in-the-door-curiosity-builds-everything-else-02a2f1bef7c4

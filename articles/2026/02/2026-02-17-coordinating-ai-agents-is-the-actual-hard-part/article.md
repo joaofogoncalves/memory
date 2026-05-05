@@ -1,6 +1,7 @@
 ---
 title: "AI Can Write Code. Coordinating AI Agents Is the Actual Hard Part."
 subtitle: "Building a full-stack SaaS platform with a 12-agent orchestration system using Claude Code custom agents."
+description: "Most teams optimize single-agent prompting. The leap is orchestration — coordinating, sequencing, and quality-gating 12 agents through one feature."
 date: 2026-02-17
 tags: [ai, software-engineering, agents, claude-code]
 medium_url: https://medium.com/@joaofogoncalves/ai-can-write-code-coordinating-ai-agents-is-the-actual-hard-part-9d692261e7d4

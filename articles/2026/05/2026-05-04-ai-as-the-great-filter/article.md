@@ -1,6 +1,7 @@
 ---
 title: "AI as the Great Filter"
 subtitle: "Engineering depth was a nice-to-have. Now it's the thing that decides who survives."
+description: "Hanson's Great Filter, scaled down for engineers. Amazon's outages and Kiro's blast radius are the early signal. Depth decides who clears it."
 date: 2026-05-04
 tags: [ai-adoption, engineering, sycophancy, depth, leadership]
 medium_url:

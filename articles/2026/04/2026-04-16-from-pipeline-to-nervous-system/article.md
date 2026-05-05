@@ -1,6 +1,7 @@
 ---
 title: "Two Months Later, My AI Team Stopped Being a Pipeline"
 subtitle: "What changed when a 12-agent feature factory grew a nervous system."
+description: "A pipeline needs a human to start it. A nervous system reacts. Two months in, my 12-agent feature factory stopped needing a start button."
 date: 2026-04-16
 tags: [ai, software-engineering, agents, claude-code, workflows]
 medium_url:

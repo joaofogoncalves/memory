@@ -130,7 +130,7 @@ linkedin-post-archiver/  # Project root
 ├── pitch_style.md                    # Self-positioning style guide (tracked) — used by /cover-letter, /outreach, /interview-prep, /pitch and the About page
 ├── profile.md                        # Voice profile for AI writing (tracked)
 ├── taste.md                          # Visual taste profile (tracked)
-├── pitches.md                        # /pitch output: living doc with all pitch variants (git-ignored)
+├── pitches.md                        # /pitch output: living doc with all pitch variants (tracked)
 │
 ├── README.md                         # Full documentation
 ├── CONTRIBUTING.md                   # Contribution guidelines
@@ -297,7 +297,7 @@ The user is in a soft-hunt posture (open to conversations, not actively job-hunt
 |---|---|---|---|
 | Personal narrative (always-on) | n/a (manual) | About page (rendered from `cv.md` Hero/Thesis/Building/Open To sections) | Replaces conventional bio + timeline. Numbered sections, metric callouts, soft pitch at bottom. |
 | Generic CV (always-on) | `/pdf` (no args) | `cv_joaofogoncalves.pdf` at root | Reads `cv.md` as source of truth; tracked in git. |
-| Self-pitch variants (always-on) | `/pitch` (optional variant arg) | `pitches.md` at root (git-ignored) | 9 variants in one file: 30s/60s/2min elevator, LinkedIn headline + About, talk abstract, 3 speaker bios. |
+| Self-pitch variants (always-on) | `/pitch` (optional variant arg) | `pitches.md` at root (tracked) | 9 variants in one file: 30s/60s/2min elevator, LinkedIn headline + About, talk abstract, 3 speaker bios. |
 | Tailored CV (per JD) | `/pdf {JD URL}` | `applications/{slug}/cv.pdf` | Reframes existing proofs for the specific role; never fabricates. |
 | Cover letter (per JD) | `/cover-letter {JD URL}` | `applications/{slug}/cover-letter.md` | 250–350 words, three paragraphs, proof-led opener. |
 | Recruiter / HM / founder outreach | `/outreach {recipient}` | `applications/{slug}/outreach.md` | LinkedIn DM (~80w) + email cold (~150w) + follow-up (~50w). Requires a specific hook about the recipient. |
@@ -897,8 +897,7 @@ uv run python -m scraper.main --reauth
 - `web/img/headshot.jpg` (personal photo)
 - `.env` file (credentials)
 - `.venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
-- `applications/` (per-application artifacts — cover letters, outreach, interview prep, tailored CVs; often contain confidential JD text)
-- `pitches.md` (`/pitch` output — local working doc, may be edited frequently)
+- `applications/` (per-application artifacts — cover letters, outreach, interview prep, tailored CVs; often contain confidential JD text and recipient details)
 
 ### Performance Considerations
 

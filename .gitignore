@@ -19,12 +19,12 @@ logs/
 web/dist/
 drafts/
 
-# Job-search artifacts (cover letters, recruiter outreach, interview prep,
-# tailored CVs). Often contain confidential JD text and recipient contact
-# details — kept local by default. Override per-folder if you want a tracked
-# record of a specific application.
+# Per-application artifacts (cover letters, recruiter outreach, interview
+# prep, tailored CVs). Often contain confidential JD text and recipient
+# contact details — kept local by default. Override per-folder if you want
+# a tracked record of a specific application.
+# (pitches.md is intentionally NOT ignored — it's personal working content.)
 applications/
-pitches.md
 
 # Node
 node_modules/

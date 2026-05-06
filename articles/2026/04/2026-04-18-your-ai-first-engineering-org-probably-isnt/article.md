@@ -4,7 +4,7 @@ subtitle: "Bolting AI onto your workflow isn't AI-first. Here's what is."
 description: "Adding Copilot to your IDE isn't AI-first. AI-first means agents do the keystrokes and people do the judgment — at every phase, end to end."
 date: 2026-04-18
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
-medium_url:
+substack_url: https://joaofogoncalves.substack.com/p/2026-04-18-your-ai-first-engineering-org-probably-isnt
 hero_image: media/hero-harness.webp
 reading_time: 8
 ---

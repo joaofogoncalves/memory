@@ -26,7 +26,7 @@ Edit the article.md:
 - Remove the `draft: true` line entirely.
 - Replace the `date:` value with today's date.
 
-Leave `title`, `subtitle`, `tags`, `medium_url`, `hero_image`, `reading_time` untouched.
+Leave `title`, `subtitle`, `tags`, `substack_url`, `hero_image`, `reading_time` untouched.
 
 ## Step 3: Rename directory and file paths to match new date (if date changed)
 
@@ -86,7 +86,7 @@ Everything below the `---` line is the article body. Select all and paste into S
 ## After posting
 
 - Grab the Substack post URL.
-- Add a `substack_url:` field to the article frontmatter (alongside `medium_url`).
+- Update the `substack_url:` field.
 - Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.
 ```
 

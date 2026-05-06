@@ -4,7 +4,7 @@ subtitle: "Expert knowledge, tribal knowledge, and the software that stitches th
 description: "AI doesn't need your org chart — it needs your knowledge. Most companies discover they have far less of it documented than they assumed they did."
 date: 2026-04-12
 tags: [ai-adoption, knowledge-management, organizational-design, leadership]
-medium_url: https://medium.com/@joaofogoncalves/every-company-is-three-things-ai-just-made-that-obvious-f3fd570d3a05
+substack_url: https://joaofogoncalves.substack.com/p/2026-04-12-every-company-is-three-things-ai-just-made-that-obvious
 hero_image: media/3_layers_building_trans.jpg
 reading_time: 8
 ---

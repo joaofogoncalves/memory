@@ -4,8 +4,7 @@ subtitle: "Jaya Gupta's piece on AI rewiring decision-making is right about the 
 description: "Experience isn't what AI taxes — identity is. Senior people who can't adapt aren't paying for years on the job; they're paying for attachment."
 date: 2026-04-28
 tags: [ai-adoption, leadership, decision-making, experience]
-medium_url:
-substack_url:
+substack_url: https://joaofogoncalves.substack.com/p/2026-04-28-experience-isnt-the-tax-identity-is
 hero_image: media/hero.jpg
 reading_time: 8
 ---

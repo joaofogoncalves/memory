@@ -106,5 +106,5 @@ The Great Filter, locally, is the gap between depth and the appearance of depth.
 ## After posting
 
 - Grab the Substack post URL.
-- Add a `substack_url:` field to the article frontmatter (alongside `medium_url`).
+- Add a `substack_url:` field to the article frontmatter.
 - Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

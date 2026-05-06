@@ -16,12 +16,12 @@ It took 6 weeks to build this system. The hardest part wasn't the AI—it was fi
 
 Wrote about the journey, the failures, and the orchestration principles that transfer to any agentic system.
 
-https://medium.com/@joaofogoncalves/ai-can-write-code-coordinating-ai-agents-is-the-actual-hard-part-9d692261e7d4
+https://joaofogoncalves.substack.com/p/2026-02-17-coordinating-ai-agents-is-the-actual-hard-part
 
 hashtag
-#AI 
+#AI
 hashtag
-#SoftwareDevelopment 
+#SoftwareDevelopment
 hashtag
 #CodingAgents
 

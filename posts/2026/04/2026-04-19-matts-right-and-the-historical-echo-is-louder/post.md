@@ -2,7 +2,7 @@
 date: 2026-04-19
 post_type: original
 authored: true
-post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-careergrowth-share-7451644757086392320-a5bU?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAjFhLsB81CuAoXa9mG9-Xhkp29dDtbEtQc"
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-careergrowth-share-7451644757086392320-a5bU"
 x_url: "https://x.com/joaofogoncalves/status/2045879742386123099"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-245850962"
 tags: [ai, future-of-work, career-growth]

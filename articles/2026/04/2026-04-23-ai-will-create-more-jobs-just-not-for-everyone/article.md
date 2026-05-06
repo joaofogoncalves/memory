@@ -4,7 +4,6 @@ subtitle: "Jevons was right. The paradox has a door policy."
 description: "Jevons was right — AI is creating more software work, not less. The headline numbers hide who actually walks through the door and who doesn't."
 date: 2026-04-23
 tags: [ai, future-of-work, labor-economics, engineering-leadership, ai-adoption]
-medium_url:
 substack_url: https://joaofogoncalves.substack.com/p/2026-04-23-ai-will-create-more-jobs-just-not-for-everyone
 hero_image: media/hero-door-policy.jpg
 reading_time: 10

@@ -290,7 +290,7 @@ subtitle: "[Subtitle]"
 description: "[140–160 char meta description — earns the click in the SERP]"
 date: [today's date, YYYY-MM-DD]
 tags: [tag1, tag2, tag3]
-medium_url:
+substack_url:
 hero_image:
 reading_time: [computed from word count]
 draft: true
@@ -315,7 +315,7 @@ draft: true
 ```
 
 **Notes:**
-- `medium_url` is left empty — fill in after publishing to Medium
+- `substack_url` is left empty — fill in after publishing to Substack
 - `hero_image` is left empty — fill in after generating and saving the image
 - `reading_time` is computed: word count / 230, rounded to nearest minute
 - `draft: true` is set by default — new articles always start as drafts. They build at `/articles/drafts/<stable-token>/` only, not listed on home, archive, topics, RSS, or sitemap. Page is served with `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`. Use this URL to share review links. To publish, run `/publish <slug-or-path>` (or remove the `draft` line manually and update the date).
@@ -380,5 +380,5 @@ Tell the user:
 - Remind: "To rebuild the site with this article: `python web/build.py`"
 - Remind: "When ready to promote on LinkedIn and X, run `/post [article-url]`"
 - Remind: "When ready to publish, run `/publish [slug]` — it flips the draft flag and generates the Substack paste-in artifact"
-- Remind: "After publishing to Medium (if used), update `medium_url` in the article frontmatter"
+- Remind: "After publishing to Substack, update `substack_url` in the article frontmatter"
 - Remind: "After generating images, save hero to `media/` folder and update `hero_image` in frontmatter"

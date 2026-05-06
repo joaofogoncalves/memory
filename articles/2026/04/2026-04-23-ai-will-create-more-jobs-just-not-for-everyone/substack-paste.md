@@ -211,5 +211,5 @@ The door is still open. It's just getting stricter every quarter.
 ## After posting
 
 - Grab the Substack post URL.
-- Add a `substack_url:` field to the article frontmatter (alongside `medium_url`).
+- Add a `substack_url:` field to the article frontmatter.
 - Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

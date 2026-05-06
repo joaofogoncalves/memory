@@ -4,7 +4,7 @@ subtitle: "What changed when a 12-agent feature factory grew a nervous system."
 description: "A pipeline needs a human to start it. A nervous system reacts. Two months in, my 12-agent feature factory stopped needing a start button."
 date: 2026-04-16
 tags: [ai, software-engineering, agents, claude-code, workflows]
-medium_url:
+substack_url: https://joaofogoncalves.substack.com/p/2026-04-16-from-pipeline-to-nervous-system
 hero_image: media/hero-abstract.webp
 reading_time: 11
 ---

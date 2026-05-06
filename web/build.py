@@ -473,7 +473,7 @@ def parse_all_articles() -> list[dict]:
             'reading_time': read_time,
             'word_count': word_count,
             'tags': [str(t) for t in (fm.get('tags', []) or [])],
-            'medium_url': fm.get('medium_url', ''),
+            'substack_url': fm.get('substack_url', ''),
             'hero_image': hero_image,
             'url': url_path,
             'media': media_files,
@@ -1314,10 +1314,10 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
     if article.get('hero_image'):
         hero_html = f'<img class="article-hero" src="{_webp_name(article["hero_image"])}" alt="" loading="lazy">'
 
-    # Medium link
-    medium_link = ''
-    if article.get('medium_url'):
-        medium_link = f'<a href="{article["medium_url"]}" class="post-original-link" target="_blank" rel="noopener">Originally published on Medium →</a>'
+    # Substack link
+    substack_link = ''
+    if article.get('substack_url'):
+        substack_link = f'<a href="{article["substack_url"]}" class="post-original-link" target="_blank" rel="noopener">Also published on Substack →</a>'
 
     # Subtitle
     subtitle_html = ''
@@ -1396,7 +1396,7 @@ def generate_article_page(article: dict, topics: list[dict], depth: Optional[int
   <div class="post-footer">
     {topics_html}
     <div class="post-actions">
-      {medium_link}
+      {substack_link}
       <button class="copy-link-btn" aria-label="Copy link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
         <span>Copy link</span>

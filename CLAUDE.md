@@ -253,12 +253,12 @@ linkedin-post-archiver/  # Project root
 ### 13. Articles Section
 - `articles/` directory stores original long-form content (tracked in git, same as `posts/` now)
 - Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
-- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `medium_url`, `hero_image`, `reading_time`, `draft` (default true on creation)
+- Article frontmatter: `title`, `subtitle`, `date`, `tags`, `substack_url`, `hero_image`, `reading_time`, `draft` (default true on creation)
 - Draft mode: **new articles always start with `draft: true`** (set by `/article`). Drafts publish at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars), excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`.
 - To promote a draft: run `/publish <slug>` — removes `draft: true`, updates `date:` to today, and renames the directory to match the new date so the path stays `articles/YYYY/MM/YYYY-MM-DD-slug/`.
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
-- Build workflow: write article locally → build site → deploy → optionally cross-post to Substack / Medium → update `substack_url` / `medium_url`
+- Build workflow: write article locally → build site → deploy → optionally cross-post to Substack → update `substack_url`
 - The `/article` skill handles drafting; the `/publish` skill promotes a draft AND produces the `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). Generating Substack paste only at publish time avoids wasted token churn during the draft loop. `/post` handles the LinkedIn + X promotion posts (decoupled).
 - Articles appear on: home page (Start Here spotlight + Essays grid — articles are the primary content on the home page), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
 - **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md` for articles, `substack-note.md` for short-form Notes) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
@@ -691,7 +691,7 @@ class Media:
 - Generates a **critique prompt** (`critique-prompt.md`) — user pastes into another AI for a sharp second-opinion review before publishing
 - Does NOT generate the Substack paste artifact — that's moved to `/publish` so it's only created when a draft is promoted (saves tokens during the draft iteration loop)
 - Decoupled from LinkedIn/X: reminds user to run `/post` for the short-form promo on LinkedIn and X after article is finalized
-- Article frontmatter: title, subtitle, date, tags, medium_url, substack_url, hero_image, reading_time, draft (always true on creation)
+- Article frontmatter: title, subtitle, date, tags, substack_url, hero_image, reading_time, draft (always true on creation)
 
 ### /publish - Promote Draft to Published
 - Removes `draft: true` from an article's frontmatter and updates `date:` to today
@@ -1101,7 +1101,7 @@ bash web/deploy.sh
 - Topics are assigned at build time by matching post/article tags against `topics[].tags` in site.yaml
 - `compute_featured_posts(posts, days=90, top_n=3)` — engagement-ranked featured posts
 - `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
-- `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, medium_url, reading_time)
+- `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, substack_url, reading_time)
 - Nav links for Articles, Topics, and Now appear automatically when content exists; no dead links
 - **Homepage helpers**: `_featured_spotlight_html()` (auto-rotating spotlight, accepts articles or posts), `_recent_notes_html()` (compact recent-posts strip), `_topics_home_html()` (topic cards), `_newsletter_section_html()` (CTA section)
 - **Posts page**: Single continuous list of spotlight-style row cards (`_render_list_card()` + `.list-card` CSS). Full-width rows with text left, thumbnail right (300×175). JS renders same format dynamically via `posts.js`.

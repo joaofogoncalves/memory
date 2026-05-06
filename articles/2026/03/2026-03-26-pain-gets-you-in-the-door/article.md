@@ -4,7 +4,7 @@ subtitle: "Why organizations keep treating AI adoption as a pain problem — and
 description: "Pain gets executives to try AI. It also caps how deep that adoption goes. Why pain-driven AI usage stays shallow, and what actually deepens it."
 date: 2026-03-26
 tags: [ai, leadership, future-of-work, organizational-culture, management]
-medium_url: https://medium.com/@joaofogoncalves/pain-gets-you-in-the-door-curiosity-builds-everything-else-02a2f1bef7c4
+substack_url: https://joaofogoncalves.substack.com/p/2026-03-26-pain-gets-you-in-the-door
 hero_image: media/hero-door.webp
 reading_time: 6
 ---

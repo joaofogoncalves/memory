@@ -116,5 +116,5 @@ Experience is only a tax if you treat it as a fixed asset. As a moving one, it c
 ## After posting
 
 - Grab the Substack post URL.
-- Add a `substack_url:` field to the article frontmatter (alongside `medium_url`).
+- Add a `substack_url:` field to the article frontmatter.
 - Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

@@ -3,8 +3,8 @@ date: 2026-05-09
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_writing-substack-ai-share-7459597761471016960-fuEd"
-x_url: ""
-substack_note_url: ""
+x_url: "https://x.com/joaofogoncalves/status/2053832430201504022"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-257226171"
 tags: [writing, substack, newsletter, ai]
 source_urls:
   - https://joaofogoncalves.substack.com/

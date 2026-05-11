@@ -4,24 +4,18 @@ Paste this directly into LinkedIn's composer. Zero emojis, 3 hashtags at the end
 
 ---
 
-Essays on a website need to be remembered. Essays in an inbox don't.
+Quietly mirrored every essay I've written to Substack over the last few months. The site is still the canonical home. That's where the work lives and where it gets indexed. Substack is the email rail for the people who want the writing to show up instead of having to remember a URL.
 
-That's why I've been mirroring everything I write to Substack for the last few months. Same essays, different surface. The site stays canonical. Substack is the email rail.
+Nine pieces up so far. All about what AI is actually doing to engineering work, written from inside the shift.
 
-Nine pieces are up there now. AI as the Great Filter. Experience Isn't the Tax. Identity Is. From Pipeline to Nervous System. Is SaaS Dead?
-
-Mostly about what AI is actually doing to engineering work, and what most companies are still getting wrong about it.
-
-If you'd rather get them in your inbox than remember to come back to a site, the link's below.
-
-joaofogoncalves.substack.com
+If email is the surface you prefer: joaofogoncalves.substack.com
 
 #Writing #Substack #AI
 
 ---
 
 **Attach:**
-- media/image-1.png (Substack publication homepage screenshot — feed thumbnail)
+- media/substack-home.png (Substack publication homepage screenshot — feed thumbnail)
 
 ---
 

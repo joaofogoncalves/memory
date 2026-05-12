@@ -1,7 +1,7 @@
 ---
 argument-hint: (no args) — always scrapes with --limit 10
 description: Scrape recent LinkedIn posts to refresh engagement counts and catch any posts made outside the /post workflow
-allowed-tools: AskUserQuestion, Bash, Glob, Grep, Read
+allowed-tools: AskUserQuestion, Bash, Edit, Glob, Grep, Read
 ---
 
 Scrape the 10 most recent LinkedIn posts and reconcile them with the local archive.
@@ -9,7 +9,8 @@ Scrape the 10 most recent LinkedIn posts and reconcile them with the local archi
 **In the authored-first model**, the site is canonical for posts. You write with `/post`, which saves to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md` and generates paste-ready LinkedIn and X variants that you post natively. The scraper's job here is two-fold:
 
 1. **Refresh engagement** — for every scraped post that matches a local post (by `post_url` or by content fingerprint within 14 days), update `reactions:` and `comments:` in the frontmatter. Body is never touched. This is handled automatically by the scraper.
-2. **Catch stragglers** — anything you posted manually on LinkedIn without running `/post` gets picked up as a genuinely new post. Most of the time this catches noise (quick replies, milestones, follow-thanks) rather than substantive content. That's what this skill curates.
+2. **Catch authored-post duplicates** — the scraper's URL match can miss authored posts because the user-facing share URL (`linkedin.com/posts/joaofogoncalves_<slug>-<share-id>`) and the activity URN (`linkedin.com/feed/update/urn:li:activity:<activity-id>`) reference the same post with different numeric IDs. This skill detects those duplicates by body fingerprint and merges engagement into the authored version.
+3. **Catch stragglers** — anything you posted manually on LinkedIn without running `/post` gets picked up as a genuinely new post. Most of the time this catches noise (quick replies, milestones, follow-thanks) rather than substantive content. That's what this skill curates.
 
 Self-article-promo filtering (the old main job of this skill) is no longer needed — in the new model, when you promote an article on LinkedIn the promo is authored via `/post` and already exists as a canonical site post. Scraping it just updates its engagement.
 
@@ -63,6 +64,42 @@ For each new post, Read the full `post.md` file. Extract:
 
 Parallelize the Read calls where possible.
 
+## Step 4.5: Detect authored-post duplicates
+
+Before flagging anything as noise, check whether each genuinely-new post is actually a duplicate of an existing authored post (one with `authored: true` in frontmatter). The scraper's merge logic misses these when the share-URL and activity-URN don't match exactly and the content fingerprint window is too tight.
+
+For each genuinely-new post:
+
+1. **Compute a normalized opening fingerprint**: take the body text, strip hashtags / URLs / markdown links, collapse whitespace, lowercase. Take the first ~120 characters.
+2. **Search authored posts within ±21 days** of the new post's date (cast a wider net than the scraper's built-in 14-day window):
+
+   ```bash
+   # Find all authored posts in the date range — adjust the date math as needed
+   find posts -name "post.md" -newer <date-21-days-before> | xargs grep -l "^authored: true" 2>/dev/null
+   ```
+
+   Or, more simply, glob `posts/YYYY/MM*/post.md` for the relevant months and Read each one's frontmatter.
+
+3. **Compare opening fingerprints**. A match counts if the first sentence (up to the first period or ~80 chars) is substantially identical after normalization. Treat as a match if:
+   - The first 60 normalized chars match exactly, OR
+   - The first sentence matches with minor edits (typo fixes, link reformatting — Levenshtein distance proportionally small)
+
+4. **If matched**, classify the scraped post as an **Authored duplicate**, paired with its authored counterpart. Hold separately from low-value-noise candidates — these get a different action.
+
+5. **If no match**, the post falls through to Step 5 (noise check).
+
+### Auto-merge plan (per duplicate pair)
+
+For each Authored duplicate pair, plan two actions:
+
+- **Merge engagement** into the authored post's frontmatter:
+  - Extract `reactions:` and `comments:` values from the scraped post.
+  - Edit the authored post's frontmatter to add or overwrite `reactions:` and `comments:` (insert them right after the `tags:` line if not already present).
+  - Preserve all other frontmatter fields exactly.
+- **Delete the scraped duplicate directory** (`rm -rf posts/YYYY/MM/<scraped-slug>/`).
+
+Do NOT execute yet — collect pairs and present them in Step 6 for confirmation.
+
 ## Step 5: Flag low-value noise
 
 For each genuinely-new post, decide whether to flag it for removal. The new model has a much narrower scope here — authored content doesn't need flagging, so you're only looking at LinkedIn activity that happened outside the `/post` workflow.
@@ -111,6 +148,10 @@ Print a summary block, then ask for confirmation.
 Scraped 10 posts. Engagement updated on N existing posts.
 Found M genuinely-new posts since last sync:
 
+AUTHORED DUPLICATES (P) — will merge engagement and delete scraped dup:
+  • SCRAPED  2026-05-05-two-things-compound-...-that  (7r, 1c)
+    AUTHORED 2026-05-04-two-things-compound-in-ai-coding-tools
+
 FLAGGED FOR DROP (Y):
   • 2026-04-10-thanks-for-the-follows
     Low-value: milestone post
@@ -122,13 +163,24 @@ KEEP (Z):
 
 ### Confirmation
 
-- If **0 flagged**: tell the user nothing to drop, suggest rebuild, stop.
-- If **1-4 flagged**: use AskUserQuestion with `multiSelect: true`, one option per flagged post (label = short slug, description = reason). User checks the ones to drop.
+**Authored duplicates** (the new bucket — almost always safe to auto-merge):
+- If **0 pairs**: skip.
+- If **1+ pairs**: ask once with AskUserQuestion `multiSelect: false`, options `["Merge all P pairs", "Review each pair", "Skip merging"]`. Default action is "Merge all P pairs" — the false-positive risk is low because the body fingerprint is tight.
+- If user picks "Review each pair", iterate through each pair with a single-select question showing both slugs and the engagement numbers, options `["Merge and delete dup", "Keep both as-is", "Delete scraped without merging"]`.
+
+**Flagged-for-drop noise**:
+- If **0 flagged**: skip.
+- If **1-4 flagged**: AskUserQuestion with `multiSelect: true`, one option per flagged post (label = short slug, description = reason). User checks the ones to drop.
 - If **5+ flagged**: first ask "Drop all X flagged posts?" with options `["Drop all", "Review in batches", "Keep all"]`. If "Review in batches", loop through flagged posts 4 at a time with multiSelect questions.
 
-## Step 7: Delete confirmed drops
+## Step 7: Execute merges and deletions
 
-For each post the user confirmed:
+**For each confirmed authored-duplicate pair:**
+
+1. Use the Edit tool to update the authored post's frontmatter. Insert (or replace) `reactions:` and `comments:` lines. If those keys don't exist yet, insert them right after the `tags:` line. If they already exist, replace the values.
+2. `rm -rf posts/YYYY/MM/<scraped-slug>/` to remove the scraped duplicate directory entirely.
+
+**For each confirmed noise drop:**
 
 ```bash
 rm -rf posts/YYYY/MM/<slug>/
@@ -137,7 +189,7 @@ rm -rf posts/YYYY/MM/<slug>/
 Delete the whole directory (post + media). Do NOT touch:
 - `site.yaml` featured_posts — the scraper regenerates this on each run
 - The articles themselves — they're in `articles/`, untouched by this skill
-- Any post not in the confirmed-drop list
+- Any post not in the confirmed-drop or confirmed-merge list
 
 ## Step 8: Clean up temp files and confirm
 
@@ -146,7 +198,8 @@ rm -f /tmp/sync_before.txt /tmp/sync_after.txt
 ```
 
 Tell the user:
-- Engagement updated on N existing posts
+- Engagement updated on N existing posts (by the scraper's built-in merge)
+- P authored-duplicate pairs found; engagement merged into authored versions and scraped dups deleted
 - K genuinely-new posts found; J dropped as noise, (K-J) kept
 - Next step: "Rebuild the site with `python web/build.py` — or run `bash pipeline.sh --skip-scrape` to rebuild and deploy."
 

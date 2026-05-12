@@ -6,7 +6,7 @@ post_url: "https://www.linkedin.com/posts/joaofogoncalves_writing-substack-ai-sh
 x_url: "https://x.com/joaofogoncalves/status/2053832430201504022"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-257226171"
 tags: [writing, substack, newsletter, ai]
-reactions: 5
+reactions: 6
 comments: 0
 source_urls:
   - https://joaofogoncalves.substack.com/

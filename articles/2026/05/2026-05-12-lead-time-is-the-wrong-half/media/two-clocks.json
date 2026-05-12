@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "Two clocks, one month",
+  "subtitle": "DORA's lead time and the issue-to-shipped measure across the same engineering team. Same loop, different starting points.",
+  "caption": "BIOS engineering team, April 6 – May 4, 2026. Lead time mean across 30 agent PRs. Issue→shipped median across 78 feedback-sourced issues.",
+  "arrowLabel": "the rest of the loop",
+  "left": {
+    "label": "DORA lead time",
+    "value": "22 min",
+    "description": "Mean time from first commit to deploy"
+  },
+  "right": {
+    "label": "Issue → shipped",
+    "value": "18.6 hr",
+    "description": "Median across 78 feedback-sourced issues"
+  }
+}

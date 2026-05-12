@@ -1,0 +1,13 @@
+{
+  "template": "bar",
+  "title": "Where last month's shipping came from",
+  "subtitle": "30 PRs authored autonomously by the agent (zero human commits on the branches). 69 issues shipped by the 3-human engineering team across the same month. aiBerto carried roughly 30% of the org's monthly shipping without a single human keystroke.",
+  "caption": "BIOS engineering team, April 6 – May 4, 2026.",
+  "unit": "ships",
+  "yMax": 80,
+  "highlightIndex": 0,
+  "bars": [
+    {"label": "aiBerto (autonomous, 0 keystrokes)", "value": 30},
+    {"label": "Team (3 humans)", "value": 69}
+  ]
+}

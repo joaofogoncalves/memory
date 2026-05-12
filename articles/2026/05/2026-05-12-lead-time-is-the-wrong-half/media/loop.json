@@ -1,0 +1,16 @@
+{
+  "template": "flow",
+  "title": "DORA's lead time is the last quarter",
+  "subtitle": "The signal-to-deploy loop is what customers feel. DORA's clock starts after most of it has already happened.",
+  "caption": "Schematic of the BIOS engineering loop, April–May 2026.",
+  "highlightStageIndex": 4,
+  "tracks": [
+    {
+      "label": "Signal → Deploy",
+      "stages": ["Signal", "Triage", "Issue filed", "Picked up", "First commit", "CI + Review", "Merge", "Deploy"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 3, "label": "DORA lead-time window starts here" }
+  ]
+}

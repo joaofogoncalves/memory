@@ -8,6 +8,16 @@ substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/
 tags: [ai, ai-literacy, ai-training, learning-and-development]
 angle: AI training that doesn't teach decomposition, quality criteria, and structured thinking isn't really teaching AI — those skills are the actual curriculum.
 template: long-form
+media_descriptions:
+  image-1.webp: >-
+    Custom-built diagram in the site's brutalist dark theme. Dark navy
+    background, bold headline "What AI trainings teach vs what AI actually
+    requires". Two-card comparison joined by a "REAL CURRICULUM" arrow:
+    left card "The visible surface" (prompt templates, live demos,
+    copy-paste workflows, tool feature tours) in muted grey, right card
+    "The actual prerequisites" (structured problem solving, task decomposition,
+    quality criteria, clear communication, working through blockers) with
+    teal left border. JG/joaofogoncalves.com wordmark bottom right.
 ---
 
 Most AI trainings try to meet non-technical people where they are. That radically limits what they can get out of the tool.

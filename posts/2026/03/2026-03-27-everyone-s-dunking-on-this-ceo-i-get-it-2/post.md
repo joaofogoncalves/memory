@@ -4,6 +4,15 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74429453721020170
 post_type: original
 archived_at: 2026-03-31
 comments: 40
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a Reddit post, light mode. Title in bold: "CEO is obsessed
+    with AI. Checks everything through it. It can do no wrong." with a
+    yellow "Support" flair badge below. Body text vents about a CEO who
+    treats AI as a "best buddy" and always asks "have you asked AI what it
+    thinks about it?". Visible engagement counts at the bottom: 402 upvotes,
+    193 comments. Typical Reddit UI chrome cropped to the post itself,
+    text-dense, light/cream background.
 ---
 
 # March 27, 2026

@@ -6,6 +6,16 @@ archived_at: 2026-04-12
 tags: [ai, coding, softwaredevelopment]
 comments: 68
 reactions: 393
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a single X (Twitter) post by Kyle Gawley (@kylegawley).
+    Dark mode interface, verified blue checkmark, small profile photo top
+    left. Vertical list/rant format with one short line per row: "AI will
+    replace developers / just like no-code replaced developers / just like
+    low-code replaced developers / just like wordpress replaced developers
+    / just like wix replaced developers / just like squarespace replaced
+    developers / just like dreamweaver replaced developers". Standalone
+    screenshot, image-light/text-forward.
 ---
 
 # April 10, 2026

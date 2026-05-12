@@ -4,6 +4,15 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74425783025291427
 post_type: original
 archived_at: 2026-03-31
 comments: 1
+media_descriptions:
+  image-1.jpg: >-
+    Chart from Lenny's Newsletter / trueup, light cream-peach background.
+    Headline "AI eng and PM roles are up 400%+". Two side-by-side area
+    line charts: left "14,937 open AI engineering jobs / 438% from low"
+    in brown showing climb from 2023 trough to ~15K in March 2026; right
+    "1,135 open AI PM jobs / 465% from low" in orange showing similar
+    upward curve. "Lenny's Newsletter" + flame icon branding bottom right,
+    trueup attribution bottom left. Editorial branded chart, source asset.
 ---
 
 # March 26, 2026

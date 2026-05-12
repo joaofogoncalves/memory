@@ -6,8 +6,17 @@ post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineering-softwar
 x_url: "https://x.com/joaofogoncalves/status/2051646387888996653"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-254051534"
 tags: [ai, engineering, softwareengineering, aicoding]
+reactions: 8
+comments: 6
 angle: "The filter angle — kache right that you can't outsource understanding; the operator question is who actually built it"
 template: short-form
+media_descriptions:
+  image-1.png: >-
+    Screenshot of a single X (Twitter) post by @yacineMTB ("kache"). Dark
+    mode interface, anime-style profile avatar, X logo top right. Standalone
+    screenshot cropped to just the post content, no surrounding UI chrome.
+    Text reads: "you can outsource your thinking but you cannot outsource
+    your understanding". Timestamped 3:15 AM, Feb 4, 2026.
 ---
 
 He's right. The interesting question is who lands on which side of that line.

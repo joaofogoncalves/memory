@@ -10,6 +10,14 @@ source_urls:
   - https://www.bridgein.pt/blog/bridgeport-open-source-deployment-management
 angle: Personal take on why BRIDGEPORT went open source — 15 years of seeing the same infra problem across companies, the specific moment that triggered the build, and why the problem isn't ours to hoard.
 template: short-form
+media_descriptions:
+  image-1.webp: >-
+    Screenshot/preview of the linked bridgein.pt blog post. White background
+    serif headline "Building in Public: How we built BRIDGEPORT to solve
+    our own deployment problem" above a wide hero image: a dark cinematic
+    motion-blurred shot of glowing red "BRIDGEPORT" wordmark with a
+    glitchy/streaked motion effect, looking like a sci-fi movie title card.
+    External brand asset, light-mode at top with dark hero below.
 ---
 
 Fifteen years in infrastructure teaches you what breaks.

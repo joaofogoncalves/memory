@@ -6,6 +6,15 @@ archived_at: 2026-04-05
 tags: [NowPage, PersonalWebsite, ContentOwnership]
 comments: 5
 reactions: 5
+media_descriptions:
+  image-1.jpg: >-
+    Simple custom diagram on a dark navy background. Left side shows a
+    vertical stack of identical thin rectangles labeled "Archive" representing
+    a stack of static posts. An arrow points right to a single labeled node
+    "Living site", which branches out via teal curved lines to four labels:
+    Topics, /now, Reading List, RSS. Minimal hand-drawn-feeling illustration,
+    on-brand dark+teal palette, small sparkle icon bottom-right. Light text
+    density, conceptual.
 ---
 
 # April 01, 2026

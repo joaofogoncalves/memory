@@ -6,6 +6,16 @@ archived_at: 2026-04-08
 tags: [Leadership, AgenticDevelopment, Engineering, AI]
 comments: 14
 reactions: 21
+media_descriptions:
+  image-1.jpg: >-
+    Infographic on a dark background showing an 8-level AI adoption ladder
+    ("L1 No AI" at the bottom up to "L8 Build your own orchestrator" at the
+    top), each level a horizontal colored card (teal, green, yellow, orange,
+    red, purple, blue) with a short label and one-line description (e.g.
+    "L3 YOLO mode — Agent runs freely in IDE, trust is rising"). Right
+    side is labeled with phase groupings ("IDE ERA", "AGENT-FIRST",
+    "ORCHESTRATION") and a vertical axis "AI Autonomy + Trust". Diagram-style
+    visual reference, monospaced typography, text-dense.
 ---
 
 # April 06, 2026

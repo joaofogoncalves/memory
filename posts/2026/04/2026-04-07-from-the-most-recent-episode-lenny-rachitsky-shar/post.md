@@ -5,6 +5,17 @@ post_type: original
 archived_at: 2026-04-08
 comments: 5
 reactions: 19
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a single X (Twitter) post by Lenny Rachitsky (@lennysan).
+    Dark mode interface, verified blue checkmark, profile photo top left.
+    Multi-paragraph text titled "My biggest takeaways from @AnthropicAI's
+    Head of Growth Amol Avasare:" with a numbered bullet "1. Engineering
+    is getting the most AI leverage—and it's squeezing PMs and designers."
+    explaining a five-engineer team with Claude Code now produces output of
+    15–20 engineers and Anthropic is hiring more PMs and deputizing
+    product-minded engineers as mini-PMs. Standalone quote-tweet screenshot,
+    text-dense.
 ---
 
 # April 07, 2026

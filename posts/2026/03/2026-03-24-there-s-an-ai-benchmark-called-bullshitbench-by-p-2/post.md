@@ -5,6 +5,17 @@ post_type: original
 archived_at: 2026-03-31
 tags: [AI]
 comments: 9
+media_descriptions:
+  image-1.jpg: >-
+    Multi-line benchmark chart on a white background, titled "BullshitBench:
+    How have models improved?" with subtitle "Tracing performance improvements
+    (clear pushback %) with model releases." Three colored trend lines (orange
+    = Anthropic, green = OpenAI, blue = Google) plotting % clear pushback
+    over time from Q1 2024 to Q2 2026, with annotated model release dots
+    (Claude 3.5 Sonnet, Claude Sonnet 4.6, GPT-5.1 Chat, Gemini 3 Pro, etc.).
+    Anthropic's line climbs steeply to ~90% top right while OpenAI/Google
+    cluster around 30–50%. Editorial chart, attributable third-party data
+    visualization.
 ---
 
 # March 24, 2026

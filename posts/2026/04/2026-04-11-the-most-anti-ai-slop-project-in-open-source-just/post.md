@@ -6,6 +6,15 @@ archived_at: 2026-04-12
 tags: [AI, OpenSource, SoftwareEngineering]
 comments: 1
 reactions: 72
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a multi-post X (Twitter) thread, dark mode. Shows FFmpeg's
+    verified account thanking @AnthropicAI for sending FFmpeg patches, with
+    a quoted Anthropic tweet introducing "Project Glasswing" powered by
+    Claude Mythos Preview. Below: a reply from @xiaonweb asking "why arent
+    you mad because of AI sloppy pull requests ?????" and FFmpeg's reply
+    "Because the patches appear to be written by humans". Multi-post
+    conversation screenshot, text-dense, no surrounding browser chrome.
 ---
 
 # April 11, 2026

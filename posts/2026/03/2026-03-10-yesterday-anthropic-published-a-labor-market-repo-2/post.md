@@ -4,6 +4,17 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74358028025950576
 post_type: original
 archived_at: 2026-03-31
 comments: 14
+media_descriptions:
+  image-1.jpg: >-
+    Radar/spider chart from Anthropic's labor market report, light mode
+    white background. Title "Theoretical capability and observed usage by
+    occupational category". Roughly 20 occupational categories radiating
+    from center (Management, Business & finance, Computer & math,
+    Architecture & engineering, Legal, Sales, Construction, etc.). Two
+    overlaid filled polygons: blue = theoretical AI coverage (large irregular
+    shape reaching outer rings on cognitive jobs), red = observed AI coverage
+    (much smaller blob clustered near center). Figure 2 caption underneath
+    in small text. Official research paper chart, data-dense.
 ---
 
 # March 10, 2026

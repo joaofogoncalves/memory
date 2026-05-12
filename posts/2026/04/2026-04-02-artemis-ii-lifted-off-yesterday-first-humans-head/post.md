@@ -6,6 +6,14 @@ archived_at: 2026-04-08
 tags: [BuildThings, Space, Engineering, Artemis]
 comments: 1
 reactions: 8
+media_descriptions:
+  image-1.jpg: >-
+    Dramatic news/press photograph of a NASA Artemis II rocket lifting off
+    a launchpad. Wide shot with launch towers in silhouette, the rocket
+    mid-ascent leaving a brilliant orange-yellow plume of fire and grey-pink
+    smoke billowing outward, sun glaring behind the smoke. Sky is deep blue
+    with thin clouds. Wire-service style cinematic event photo, no text
+    overlay.
 ---
 
 # April 02, 2026

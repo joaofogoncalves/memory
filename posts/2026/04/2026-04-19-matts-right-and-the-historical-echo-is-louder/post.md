@@ -10,6 +10,16 @@ source_urls:
   - https://x.com/matt_gray_
 angle: Historical parallel — same squeeze as 80s/90s computer transition, but the window is collapsing from 20 years to 2.
 template: short-form
+media_descriptions:
+  image-1.png: >-
+    Screenshot of a single X (Twitter) post by Matt Gray (@matt_gray_).
+    Dark mode interface, verified blue checkmark, profile photo top left,
+    X logo top right. Text reads: "the thing nobody talks about with AI
+    replacing jobs: it's not the bad employees who should be scared. Bad
+    employees get fired anyway. Great employees become 10x with AI. It's
+    the person doing adequate work at adequate speed who's in trouble.
+    Adequate is now free." Timestamped 11:17 PM, Apr 18, 2026. Standalone
+    quoted-tweet screenshot.
 ---
 
 Matt's right, and the historical echo is louder than it reads.

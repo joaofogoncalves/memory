@@ -6,6 +6,17 @@ archived_at: 2026-04-19
 tags: [changemanagement, leadership, ai, softwareengineering]
 reactions: 4
 comments: 1
+media_descriptions:
+  image-1.jpg: >-
+    Article header/hero card for a long-form piece on the site. Dark navy
+    background with bold sans-serif white title "Your 'AI-First' Engineering
+    Org Probably Isn't" and subtitle "Bolting AI onto your workflow isn't
+    AI-first. Here's what is." Date "2026-04-18 · 8 min read" with row of
+    teal-outlined tag pills (AI, Software-Engineering, Agents, Claude-Code,
+    Engineering-Leadership). Below the metadata: AI-generated illustration
+    of a glass-walled conference room inside a futuristic open-plan office,
+    engineers at a long table with screens, cinematic top-down architectural
+    rendering. Brand-aligned site header crop.
 ---
 
 # April 18, 2026

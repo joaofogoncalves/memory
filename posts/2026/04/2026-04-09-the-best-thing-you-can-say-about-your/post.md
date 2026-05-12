@@ -6,6 +6,16 @@ archived_at: 2026-04-12
 tags: [AI, Security, Mythos]
 comments: 18
 reactions: 23
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a single X (Twitter) post by Wise (@trikcode). Dark mode
+    interface, verified checkmark with a small lightning-bolt premium badge,
+    cartoony anime-style profile avatar. Text reads: "So Anthropic built a
+    model that found a 27-year-old bug in OpenBSD. Twenty. Seven. Years.
+    Millions of developers looked at that code. Millions of test runs.
+    Thousands of security audits. Claude found it overnight. For $50. And
+    Anthropic said 'this is too dangerous to release.'" Standalone
+    quote-tweet screenshot.
 ---
 
 # April 09, 2026

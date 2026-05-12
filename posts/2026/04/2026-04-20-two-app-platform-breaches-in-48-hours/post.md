@@ -8,6 +8,15 @@ substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-24636617
 tags: [security, ai-platforms, supply-chain, vibe-coding]
 angle: Platform risk is structural — when every app runs on a handful of platforms, the attack surface collapsed and the blast radius grew
 template: short-form
+media_descriptions:
+  image-1.webp: >-
+    Composite screenshot of two X (Twitter) posts side by side, dark mode.
+    Left: @weezerOSINT detailing the Lovable breach — embedded screenshots
+    of code/credentials. Right: @shirsh_shh on the Vercel breach — embedded
+    screenshot of a "Vercel just got breached" tweet referencing BreachForums
+    and a Vercel security bulletin. Text-dense screenshot collage, mixed
+    image-and-text content, native X UI chrome visible (handles,
+    timestamps, engagement counts).
 ---
 
 Two app-platform breaches in 48 hours.

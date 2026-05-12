@@ -6,6 +6,16 @@ archived_at: 2026-04-13
 tags: [Development, Leadership, AI]
 comments: 5
 reactions: 15
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a single X (Twitter) post by Yegor Bugayenko (@yegor256).
+    Dark mode interface, verified blue checkmark, small profile photo top
+    left. Text reads: "Most people believe AI will replace developers, I
+    believe the opposite. Developers will stay while managers will disappear.
+    Why? Because programming requires creativity. Management is mostly
+    coordination, control, and tracking. These are exactly the things AI
+    does better than humans." Standalone quote-tweet screenshot, no replies
+    visible.
 ---
 
 # April 13, 2026

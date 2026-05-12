@@ -10,6 +10,15 @@ source_urls:
   - https://www.linkedin.com/feed/update/urn:li:activity:7107264071728603136/
 angle: Same disease, new vocabulary — 2024 over-engineering anti-patterns mapped to 2026 over-agenting
 template: long-form
+media_descriptions:
+  image-1.webp: >-
+    Custom-built diagram in the site's brutalist dark theme. Dark navy
+    background, bold white headline "Same disease, new vocabulary" top
+    left. Two-column comparison: left column "2024 — Over-engineering"
+    in muted grey cards, right column "2026 — Over-agenting" in teal-outlined
+    cards, joined by a centered arrow. Four mapped anti-patterns each side
+    (Heavy abstractions → Heavy agent harnesses, etc.). Mixed sans-serif
+    + monospaced typography, on-brand teal-and-navy palette.
 ---
 
 Two years ago I wrote about the perils of over-engineering. Heavy abstractions, premature microservices, solving problems that don't exist, picking technology for problems you don't have.

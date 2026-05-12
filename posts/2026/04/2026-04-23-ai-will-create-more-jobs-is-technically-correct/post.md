@@ -10,6 +10,15 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/04/2026-04-23-ai-will-create-more-jobs-just-not-for-everyone/
 angle: Adequate is now free — Jevons creates the demand, but the composition of the growth is what nobody prices in
 template: article-reaction
+media_descriptions:
+  image-1.webp: >-
+    Hero image for the linked article. Editorial-style cinematic photo
+    composition: cool teal-tinted nighttime office lobby or transit hallway
+    with row of turnstile gates and motion-blurred commuters. Bold serif
+    white title overlay top-left: "AI Will Create More Jobs. Just Not For
+    Everyone." with serif italic subtitle "Jevons was right. The paradox
+    has a door policy." and italic byline "João Gonçalves". Mood-piece
+    hero with editorial newspaper-magazine feel.
 ---
 
 "AI will create more jobs" is technically correct and completely hollow.

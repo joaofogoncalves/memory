@@ -6,8 +6,29 @@ post_url: "https://www.linkedin.com/posts/joaofogoncalves_agenticai-aiengineerin
 x_url: "https://x.com/joaofogoncalves/status/2052007372806148470"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-254590944"
 tags: [ai, agents, engineering, agentsday, agentic]
+reactions: 22
+comments: 2
 angle: "We built Quorum for the gap AI doesn't cover yet (the *what*) and AI then collapsed the *how* into half a day. The bottleneck moved twice in one room."
 template: long-form
+media_descriptions:
+  image-1.png: >-
+    Screenshot of Quorum, a hackathon-built web app. Dark navy/black UI with
+    a Kanban-style four-column layout (Team / Bucket / Candidates / Selected
+    for Development). Monospaced typography, neon-yellow accent for votes,
+    teal accents. Custom-built product screenshot showing the team's own
+    build, text-dense but cleanly laid out.
+  image-2.jpg: >-
+    Candid photo from Agents Day. A presentation screen at the front of an
+    industrial-loft venue displays the "AGENTS DAY — Build with AI Agents"
+    halftone logo. Five participants in the foreground (mostly men with
+    laptops) at a long table. Natural light, documentary event photography,
+    no branded overlay.
+  image-3.jpg: >-
+    Candid close-up photo of two men outdoors at the same event, both in
+    profile looking down at something (presumably a laptop). One wears
+    glasses and a navy hoodie, the other wears sunglasses and a black
+    jacket. Soft daylight, blurred greenery in the background, intimate
+    photojournalism feel.
 ---
 
 AI made software cheap to ship. The hard part is now figuring out what to ship.

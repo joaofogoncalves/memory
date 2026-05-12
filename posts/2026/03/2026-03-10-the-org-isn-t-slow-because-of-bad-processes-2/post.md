@@ -4,6 +4,14 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74361855767913635
 post_type: original
 archived_at: 2026-03-31
 comments: 2
+media_descriptions:
+  image-1.jpg: >-
+    Substack pull-quote card on a white/cream background. Large left-aligned
+    dark serif quote in big type: "Velocity is no longer a code problem.
+    It's an org design problem." Attribution below in smaller text: "Ed Sim
+    — What's [fire emoji] in Enterprise IT/VC #488", with WWW.WHATSHOTIT.VC
+    URL bottom left and a small Substack mark bottom right. Branded
+    quote-graphic asset, text-forward, light mode.
 ---
 
 # March 10, 2026

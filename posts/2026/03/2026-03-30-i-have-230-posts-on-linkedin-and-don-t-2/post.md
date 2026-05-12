@@ -5,6 +5,17 @@ post_type: original
 archived_at: 2026-03-31
 tags: [ContentOwnership, AICoding, LinkedInArchive]
 comments: 7
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of the author's own joaofogoncalves.com /posts page in a
+    browser, dark mode. Top shows the URL bar with joaofogoncalves.com/posts/?year=2026,
+    site nav (ABOUT, POSTS), large display heading "Posts 44 posts",
+    subline "Archived from LinkedIn. Originals only.", a search input, year
+    filter chips (ALL, 2026 highlighted, 2025… 2017), and a row of monospaced
+    teal-outlined tag pills (LEADERSHIP, AI, SOFTWAREDEVELOPMENT, INNOVATION,
+    etc.). Below that, three post-list rows with date / read-time / one-line
+    title. Self-referential product/site screenshot, on-brand brutalist
+    dark theme.
 ---
 
 # March 30, 2026

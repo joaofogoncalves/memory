@@ -6,6 +6,14 @@ archived_at: 2026-04-12
 tags: [ai, leadership, engineering, teamperformance]
 comments: 3
 reactions: 9
+media_descriptions:
+  image-1.jpg: >-
+    Stylized stock/illustrated photo: silhouette of an eight-person rowing
+    crew on calm water at dawn or dusk, viewed in profile. Muted teal/navy
+    color cast on the boat and rowers against a soft pink-to-grey sky and
+    glassy reflective water. One rower mid-stroke with paddle raised. No
+    text overlay. Moody, cinematic stock-photo style aligned with the
+    "rowing team problem" metaphor in the post.
 ---
 
 # April 09, 2026

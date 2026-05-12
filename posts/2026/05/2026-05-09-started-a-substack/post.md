@@ -6,6 +6,8 @@ post_url: "https://www.linkedin.com/posts/joaofogoncalves_writing-substack-ai-sh
 x_url: "https://x.com/joaofogoncalves/status/2053832430201504022"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-257226171"
 tags: [writing, substack, newsletter, ai]
+reactions: 5
+comments: 0
 source_urls:
   - https://joaofogoncalves.substack.com/
 angle: Quietly mirroring essays to Substack as an email rail. Site stays canonical. Treat it as an operational change, not a launch.

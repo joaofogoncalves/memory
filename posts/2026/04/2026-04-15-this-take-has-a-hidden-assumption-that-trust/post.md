@@ -6,6 +6,14 @@ archived_at: 2026-04-15
 tags: [SoftwareEngineering, EngineeringLeadership, AI]
 comments: 6
 reactions: 12
+media_descriptions:
+  image-1.jpg: >-
+    Screenshot of a single X (Twitter) post by Seb (@plainionist). Dark
+    mode interface, profile photo top left, X UI chrome. Text reads:
+    "Unpopular truth: We trust humans because we can hold them accountable.
+    Jobs. Contracts. Reputation. So they're motivated to deliver quality
+    and avoid cutting corners. LLMs have none of that. That's a fundamental
+    difference" followed by a shrug emoji. Standalone quote-tweet screenshot.
 ---
 
 # April 15, 2026

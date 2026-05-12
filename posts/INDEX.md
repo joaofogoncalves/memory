@@ -1,7 +1,7 @@
 # LinkedIn Posts Archive
 
-**Total posts:** 40
-**Generated:** 2026-04-19 00:07:12
+**Total posts:** 10
+**Generated:** 2026-05-12 10:45:10
 
 ---
 
@@ -9,95 +9,29 @@
 
 ### 2026
 
-- **April 18**: [Most teams calling themselves AI-first are AI-assisted.
+- **May 11**: [Quietly mirrored every essay I've written to Substack over the last few months. The site is still th...](2026/05/2026-05-11-quietly-mirrored-every-essay-i-ve-written-to-subs/post.md)
+- **May 09**: [it was a super fun day. And the energy in the room was such that even this super cool video does not...](2026/05/None/post.md)
+- **May 08**: [AI is everywhere. Agents inside products are still rare.
 
-Same sprint cycles, same manual reviews, sa...](2026/04/None/post.md)
-- **April 18**: [Most teams calling themselves AI-first are AI-assisted.
+Yesterday's AI Innovation Day at AIhub Lis...](2026/05/2026-05-08-ai-is-everywhere-agents-inside-products-are-still/post.md)
+- **May 08**: [AI is everywhere. Agents inside products are still rare.
 
-Same sprint cycles, same manual reviews, sa...](2026/04/None/post.md)
-- **April 18**: [Two months ago I wrote about an AI pipeline BRIDGE IN that could deliver a feature end-to-end. Spec ...](2026/04/None/post.md)
-- **April 18**: [Two months ago I wrote about an AI pipeline BRIDGE IN that could deliver a feature end-to-end. Spec ...](2026/04/None/post.md)
-- **April 18**: [Two months ago I wrote about an AI pipeline BRIDGE IN that could deliver a feature end-to-end. Spec ...](2026/04/None/post.md)
-- **April 18**: [They're at it again. 
-Just one day after Opus 4.7, now a full design, presentations, chart creation ...](2026/04/None/post.md)
-- **April 18**: [I've been building something inside BRIDGE IN in the past months and can’t wait to share more.](2026/04/None/post.md)
-- **April 17**: [Expect a lot more of this kind of research to come up.
+Yesterday's AI Innovation Day at AIhub Lis...](2026/05/None/post.md)
+- **May 07**: [AI made software cheap to ship. The hard part is now figuring out what to ship.
 
-Any small improvement in inference is massiv...](2026/04/None/post.md)
-- **April 17**: [Claude just introduced Claude Opus 4.7, their most capable Opus model yet.
+That gap is also th...](2026/05/2026-05-07-ai-made-software-cheap-to-ship-the-hard/post.md)
+- **May 07**: [AI made software cheap to ship. The hard part is now figuring out what to ship.
 
-It handles long-running ...](2026/04/None/post.md)
-- **April 17**: [Claude just introduced Claude Opus 4.7, their most capable Opus model yet.
+That gap is also th...](2026/05/None/post.md)
+- **May 06**: [He's right. The interesting question is who lands on which side of that line.
 
-It handles long-running ...](2026/04/None/post.md)
-- **April 16**: [This take has a hidden assumption: that trust = motivated-to-do-well.
+Two engineers feed Cl...](2026/05/2026-05-06-he-s-right-the-interesting-question-is-who-lands/post.md)
+- **May 06**: [He's right. The interesting question is who lands on which side of that line.
 
-We trust calculators. They ha...](2026/04/None/post.md)
-- **April 16**: [This take has a hidden assumption: that trust = motivated-to-do-well.
+Two engineers feed Cl...](2026/05/None/post.md)
+- **May 05**: [Two things compound in AI coding tools that don't get talked about together.
 
-We trust calculators. They ha...](2026/04/None/post.md)
-- **April 15**: [Ask any executive what their company does and you get an org chart.
+The first is sycophanc...](2026/05/2026-05-05-two-things-compound-in-ai-coding-tools-that/post.md)
+- **May 05**: [Two things compound in AI coding tools that don't get talked about together.
 
-Ask AI and you get three things...](2026/04/None/post.md)
-- **April 15**: [Ask any executive what their company does and you get an org chart.
-
-Ask AI and you get three things...](2026/04/None/post.md)
-- **April 15**: [Another step in the direction of what OpenClaw represents.](2026/04/None/post.md)
-- **April 15**: [Anthropic has released a new version of Claude Code on desktop.
-
-You can now run multiple Claude ses...](2026/04/None/post.md)
-- **April 15**: [Anthropic has released a new version of Claude Code on desktop.
-
-You can now run multiple Claude ses...](2026/04/None/post.md)
-- **April 15**: [Another step in the direction of what OpenClaw represents.](2026/04/None/post.md)
-- **April 14**: [This take from Yegor Bugayenko is directionally right but the reasoning is backwards.
-
-Programming r...](2026/04/None/post.md)
-- **April 14**: [This take from Yegor Bugayenko is directionally right but the reasoning is backwards.
-
-Programming r...](2026/04/None/post.md)
-- **April 12**: [This chart has been going around and it's the most accurate map of AI adoption I've seen.
-Not becaus...](2026/04/None/post.md)
-- **April 12**: [This chart has been going around and it's the most accurate map of AI adoption I've seen.
-Not becaus...](2026/04/None/post.md)
-- **April 12**: [From the most recent episode Lenny Rachitsky shared Anthropic numbers: a five-engineer team with Cla...](2026/04/None/post.md)
-- **April 12**: [From the most recent episode Lenny Rachitsky shared Anthropic numbers: a five-engineer team with Cla...](2026/04/None/post.md)
-- **April 12**: [I've been running prompting sessions with people on my team.
-
-The format is dead simple. I ask them:...](2026/04/None/post.md)
-- **April 12**: [I've been running prompting sessions with people on my team.
-
-The format is dead simple. I ask them:...](2026/04/None/post.md)
-- **April 12**: [Faster engineering doesn't automatically mean faster delivery.
-A team invests in AI tooling, dev vel...](2026/04/None/post.md)
-- **April 12**: [The best thing you can say about your product in 2026 is "we can't let people use this."
-
-Anthropic ...](2026/04/None/post.md)
-- **April 12**: [The best thing you can say about your product in 2026 is "we can't let people use this."
-
-Anthropic ...](2026/04/None/post.md)
-- **April 12**: [The funny part is every single item on that list created more developer jobs, not fewer.
-
-WordPress ...](2026/04/None/post.md)
-- **April 12**: [The funny part is every single item on that list created more developer jobs, not fewer.
-
-WordPress ...](2026/04/None/post.md)
-- **April 12**: [The most anti-AI-slop project in open source just publicly thanked an AI company for code contributi...](2026/04/None/post.md)
-- **April 12**: [The most anti-AI-slop project in open source just publicly thanked an AI company for code contributi...](2026/04/None/post.md)
-- **April 05**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/None/post.md)
-- **April 05**: [Derek Sivers has this idea called a /now page. Not who you are. What you're doing right now. What yo...](2026/04/None/post.md)
-- **April 05**: [Last Friday at 11pm I deleted three client websites.
-
-Not a rogue AI agent. Not a hallucinating copi...](2026/04/None/post.md)
-- **April 05**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
-
-I build software for a...](2026/04/None/post.md)
-- **April 05**: [Last Friday at 11pm I deleted three client websites.
-
-Not a rogue AI agent. Not a hallucinating copi...](2026/04/None/post.md)
-- **April 05**: [Artemis II lifted off yesterday. First humans headed to the Moon since 1972.
-
-I build software for a...](2026/04/None/post.md)
-- **April 05**: [Glass half full or half empty kind of situation. 
-
-I've long standed in the belief that there is no ...](2026/04/None/post.md)
+The first is sycophanc...](2026/05/None/post.md)

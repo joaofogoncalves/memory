@@ -6,6 +6,14 @@ archived_at: 2026-04-19
 tags: [AI, Claude]
 reactions: 13
 comments: 2
+media_descriptions:
+  image-1.jpg: >-
+    Anthropic announcement card for Claude Design, light-mode cream/beige
+    background. Centered bold black serif title "Introducing Claude Design
+    by Anthropic Labs" with date "Apr 17, 2026" below. A small muted
+    sage-green panel underneath holds a minimal hand-drawn line illustration
+    of a hand holding pages with a swirly mark. Branded Anthropic Labs
+    asset, light mode, image-light/text-forward.
 ---
 
 # April 17, 2026

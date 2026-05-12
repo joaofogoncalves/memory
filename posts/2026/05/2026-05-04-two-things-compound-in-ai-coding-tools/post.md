@@ -6,10 +6,20 @@ post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-softwareengineering
 x_url: "https://x.com/joaofogoncalves/status/2051211118102655449"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-253425173"
 tags: [ai, ai-coding, sycophancy, software-engineering, depth]
+reactions: 7
+comments: 1
 source_urls:
   - https://joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter/
 angle: Sycophancy + variable-ratio reinforcement compound silently in AI coding tools
 template: article-reaction
+media_descriptions:
+  image-1.webp: >-
+    Hero image for the linked article "AI as the Great Filter". Painterly,
+    cinematic editorial illustration in muted dark tones — a moody, narrow
+    canyon/chasm with tiny silhouetted figures walking toward a single
+    distant light source. Bold white sans-serif title overlaid left
+    ("AI as the Great Filter"), with a subtitle and the "JG joaofogoncalves.com"
+    wordmark in the bottom right. Mood-piece hero, not branded site palette.
 ---
 
 Two things compound in AI coding tools that don't get talked about together.

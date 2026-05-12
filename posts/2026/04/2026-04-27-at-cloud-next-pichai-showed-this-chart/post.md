@@ -9,6 +9,20 @@ tags: [ai, ai-coding, software-engineering, greenfield, bridge-in]
 source_urls: []
 angle: Two charts, two starting conditions — Google's 25→75% over 18 months vs. BRIDGE IN's 0→99.9% over 5 months. Same year, different constraints, different shapes.
 template: short-form
+media_descriptions:
+  image-1.png: >-
+    Reproduced/borrowed chart with light cream background: "% of new code
+    at Google written by AI". Multi-color dotted segmented line chart
+    rising from 25% (Q3 '24) to 75% (Cloud Next '26), with annotated
+    Pichai/Ashkenazi quote callouts at each data point. Editorial chart
+    style, four color-coded segments, source line "Alphabet IR · blog.google".
+  image-2.webp: >-
+    Custom-built companion chart in the site's brutalist dark theme. Dark
+    navy background, teal line on grid, "% of new code at BRIDGE IN written
+    by AI" headline, subtitle "Greenfield repo, Nov 2025 – Apr 2026". Clean
+    S-curve rising from 0% in Nov '25 to ~100% by Apr '26. JG/joaofogoncalves.com
+    wordmark bottom right. Companion piece deliberately mirroring the
+    Google chart but in the site's palette.
 ---
 
 At Cloud Next Pichai showed this chart. 25% to 75% of new code at Google written by AI in 18 months.

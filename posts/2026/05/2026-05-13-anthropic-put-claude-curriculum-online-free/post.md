@@ -2,7 +2,7 @@
 date: 2026-05-13
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-claude-anthropic-activity-7460215365088800768-U4SV"
 x_url: ""
 substack_note_url: ""
 tags: [ai, claude, anthropic, ailiteracy]

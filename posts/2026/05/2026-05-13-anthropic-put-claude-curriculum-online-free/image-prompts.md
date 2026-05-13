@@ -8,6 +8,6 @@ Keep it light-mode — this is a light-mode source (Anthropic's brand), and `tas
 
 Subject centered with breathing room — the site builder crops thumbnails via `object-fit: cover` at multiple aspect ratios (homepage spotlight 16:10, list cards 300×175, card thumbs 140×100), so leave margin around the focal subject.
 
-Save as: `media/image-1.png`
+Save as: `media/image-1.jpg`
 
-Format: native resolution (e.g., 2880×1800 retina) · PNG · cropped to content
+Format: 1440×836px · JPEG · cropped to content

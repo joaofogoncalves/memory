@@ -14,7 +14,7 @@ If you've been waiting to get into AI, this is the lowest-friction entry point t
 You don't need to be a developer. The AI Fluency track is two hours, built for anyone.
 
 Don't stay in the dark.
-*Attach: media/image-1.png*
+*Attach: media/image-1.jpg*
 
 **Reply (link):**
 Here:

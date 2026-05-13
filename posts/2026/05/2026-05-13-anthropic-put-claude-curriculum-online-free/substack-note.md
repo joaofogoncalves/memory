@@ -18,7 +18,7 @@ https://anthropic.skilljar.com/
 
 ---
 
-**Attach image:** media/image-1.png
+**Attach image:** media/image-1.jpg
 
 ---
 

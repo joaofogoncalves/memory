@@ -1,13 +1,25 @@
----
-title: "Lead Time Is the Wrong Half"
-subtitle: "Most engineering velocity metrics start the clock at the commit. A public agent forced us to start it at the report."
-description: "Lead time for changes measures the easy half. The metric that includes everything before the commit, and what a public Slack agent made visible."
-date: 2026-05-12
-tags: [ai, software-engineering, engineering-leadership, agents, devops, metrics]
-substack_url:
-hero_image: media/hero.png
-reading_time: 10
-draft: true
+# Substack paste-in — Lead Time Is the Wrong Half
+
+## Posting checklist (do these in Substack's editor)
+
+1. **Title:** Lead Time Is the Wrong Half
+2. **Subtitle:** Most engineering velocity metrics start the clock at the commit. A public agent forced us to start it at the report.
+3. **Canonical URL** (Post settings → SEO → Canonical URL): `https://joaofogoncalves.com/articles/2026/05/lead-time-is-the-wrong-half/` — this keeps SEO pointed at your site, not Substack.
+4. **Hero image:** upload `media/hero.png` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
+5. **Inline images:** re-upload any of these as you reach them in the body:
+   - `media/aiberto.png`
+   - `media/loop.webp`
+   - `media/two-clocks.webp`
+   - `media/contribution.webp`
+6. **Tags:** ai, software-engineering, engineering-leadership, agents, devops, metrics
+7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
+
+   > Originally published at [joaofogoncalves.com/articles/2026/05/lead-time-is-the-wrong-half](https://joaofogoncalves.com/articles/2026/05/lead-time-is-the-wrong-half/).
+
+## Body to paste
+
+Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
+
 ---
 
 ## The wrong half
@@ -28,7 +40,7 @@ I read about it the same week our team was halfway through building ours.
 
 Ours is called aiBerto. He has a hoodie, a moustache, and headphones.
 
-![aiBerto, our autonomous engineering agent](media/aiberto.png)
+[IMAGE: aiBerto, our autonomous engineering agent — upload media/aiberto.png here]
 
 He lives in our Slack. He picks the next bug off our project board every couple of hours, builds the fix, opens a PR, runs CI, fixes failing checks, asks for a human review when he's stuck. He triages Sentry. He reads our user-feedback channels, files GitHub issues for the unhandled threads, replies in the thread when the issue lands. He does not have a DM inbox.
 
@@ -52,15 +64,11 @@ That number can look great while the company moves slowly.
 
 Twenty-two minutes is a real measurement. We hit it. But the clock starts at the first commit, after a piece of work has already been scoped, prioritized, picked up, and written. Everything before the commit (somebody noticing the bug, somebody else reproducing it, a third person deciding it's worth fixing, a fourth person writing the issue, a fifth person finding time to start) is not in the number. In most teams, that prelude is where the days disappear.
 
-::: wide
-![Signal to deploy loop with DORA's lead-time window highlighted](media/loop.webp)
-:::
+[IMAGE: Signal to deploy loop with DORA's lead-time window highlighted — upload media/loop.webp here]
 
 Two teams can hit the same lead time and have wildly different report-to-deployment numbers. The first triages every user report inside an hour, runs an on-call, has a single shared queue. The second sees a Sentry alert in the morning and circulates a Slack message asking who should own it. Both teams ship in 22 minutes. One ships in six hours total. The other ships in six days.
 
-::: wide
-![Two clocks, one month: 22-minute DORA lead time vs 18.6-hour issue-to-shipped median](media/two-clocks.webp)
-:::
+[IMAGE: Two clocks, one month: 22-minute DORA lead time vs 18.6-hour issue-to-shipped median — upload media/two-clocks.webp here]
 
 This isn't a metric I'm inventing. It's closer to what [Mik Kersten calls Flow Time in the Flow Framework](https://flowframework.org/): the elapsed time from an idea becoming legible to it being delivered, including the planning and waiting and triage that DORA's lead time intentionally excludes. Industry-average Flow Efficiency sits around 15 to 25 percent. Work items in a typical team spend 75 to 85 percent of their lifetime waiting.
 
@@ -104,9 +112,7 @@ For the month between April 6 and May 4, aiBerto:
 
 Across the whole team that month, the median time from issue filed to in production was 18.6 hours, measured across 78 feedback-sourced issues. That's the report-to-deployment number, well under the 24-hour bar that DORA's pre-2025 reports used as the elite threshold for the much narrower lead-time-for-changes metric. Ours counts much more of the loop. Our engineering team is three humans plus the agent. The three humans shipped 69 issues that month. aiBerto's 30 PRs landed in parallel. Every one authored autonomously, with zero human commits on his branches.
 
-::: wide
-![Where last month's shipping came from: 30 PRs by aiBerto, 3-human engineering team shipped 69 issues](media/contribution.webp)
-:::
+[IMAGE: Where last month's shipping came from: 30 PRs by aiBerto, 3-human engineering team shipped 69 issues — upload media/contribution.webp here]
 
 A few of those numbers are flattering against industry benchmarks. The twenty-two-minute mean PR lead time clears any reasonable elite threshold. A hundred-percent autonomy rate on merged PRs is uncommon on the public record. Eighty-seven percent label coverage on PRs and ninety-nine percent on issues means almost everything is searchable along the dimensions you'd expect.
 
@@ -139,3 +145,11 @@ Pick one metric. Pick the one that includes the part of the loop you usually hav
 The agent doesn't need a dashboard.
 
 It needs a channel.
+
+---
+
+## After posting
+
+- Grab the Substack post URL.
+- Update the `substack_url:` field.
+- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

@@ -42,9 +42,9 @@ We didn't have to build ValiAdmin. Terraform existed. Pulumi existed. The whole 
 
 The general pattern: the system has to describe itself in machine-readable form, in one place, in a way that anyone, or anything, operating it can read and act on. Otherwise the institutional knowledge lives in three engineers' heads. The team can't grow past that.
 
-That pattern got a new vocabulary in 2026. CLAUDE.md. AGENTS.md. Rules files. MCPs. Custom skills. Bridgeport, the deployment tool I built recently at BRIDGE IN, is the agent-era equivalent.
+That pattern got a new vocabulary in 2026. CLAUDE.md. AGENTS.md. Rules files. MCPs. Custom skills. [Bridgeport](https://github.com/bridgeinpt/bridgeport), the deployment tool I built recently at BRIDGE IN, is the agent-era equivalent.
 
-Bridgeport is a hub-and-spoke control plane for Docker-native infrastructure. One instance manages every environment (dev, staging, production), every server, every service, every container image, every encrypted secret, every config file. Deployment plans resolve service dependencies, deploy in order, verify health checks between steps, and auto-rollback the whole chain if anything fails. The state of what's running, what version, where, and who deployed it is queryable from one UI. Same job ValiAdmin did at Valispace, scaled up for Docker-native infrastructure, and built so a Claude Code agent can answer "what changed on staging in the last hour" as easily as an on-call engineer can.
+[Bridgeport](https://github.com/bridgeinpt/bridgeport) is a hub-and-spoke control plane for Docker-native infrastructure. One instance manages every environment (dev, staging, production), every server, every service, every container image, every encrypted secret, every config file. Deployment plans resolve service dependencies, deploy in order, verify health checks between steps, and auto-rollback the whole chain if anything fails. The state of what's running, what version, where, and who deployed it is queryable from one UI. Same job ValiAdmin did at Valispace, scaled up for Docker-native infrastructure, and built so a Claude Code agent can answer "what changed on staging in the last hour" as easily as an on-call engineer can.
 
 The agent equivalents do the work ValiAdmin did: they tell whoever is driving how the system works, where the levers are, and what the constraints are. Engineer, agent, customer team. Same interface. Get it right, and the agent operates with the context a senior engineer would have. Get it wrong, and you spend the next six months reviewing PRs that don't know about your standards.
 
@@ -122,7 +122,7 @@ I did this in someone else's department once. Post-acquisition at Altium, I inhe
 
 ## What the road has to do now
 
-Doing something twice in 2022 meant writing a Bash script or a Python tool. Doing something twice in 2026 means writing a skill, a rules file, an MCP, an agent instruction. Same impulse. Different surface. I built Bridgeport because I'd done a manual deploy more than twice. I write Claude Code skills for the same reason.
+Doing something twice in 2022 meant writing a Bash script or a Python tool. Doing something twice in 2026 means writing a skill, a rules file, an MCP, an agent instruction. Same impulse. Different surface. I built [Bridgeport](https://github.com/bridgeinpt/bridgeport) because I'd done a manual deploy more than twice. I write Claude Code skills for the same reason.
 
 The discipline rhymes with what it was. The failure modes are the part that doesn't survive intact.
 

@@ -1,0 +1,34 @@
+{
+  "title": "Five C-suite → MTS moves at Anthropic",
+  "subtitle": "December 2024 — March 2026",
+  "timeAxis": {
+    "type": "date",
+    "start": "2024-12-01",
+    "end": "2026-05-15",
+    "ticks": [
+      {"at": "2024-12-01", "label": "Dec 2024"},
+      {"at": "2025-04-01", "label": "Apr 2025"},
+      {"at": "2025-08-01", "label": "Aug 2025"},
+      {"at": "2025-12-01", "label": "Dec 2025"},
+      {"at": "2026-04-01", "label": "Apr 2026"}
+    ]
+  },
+  "tracks": [
+    {
+      "label": "External",
+      "color": "#44d8f1",
+      "events": [
+        {"at": "2024-12-15", "label": "Parmar / Adept", "timeLabel": "Dec '24"},
+        {"at": "2025-07-15", "label": "Shi / Super.com", "timeLabel": "Jul '25"},
+        {"from": "2026-03-01", "to": "2026-03-25", "label": "McCann + Bailis"}
+      ]
+    },
+    {
+      "label": "Internal",
+      "color": "#9aa3b8",
+      "events": [
+        {"at": "2026-01-15", "label": "Krieger / Anthropic CPO", "timeLabel": "Jan '26"}
+      ]
+    }
+  ]
+}

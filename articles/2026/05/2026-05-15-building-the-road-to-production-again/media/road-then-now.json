@@ -1,0 +1,27 @@
+{
+  "title": "Same shape, different decade",
+  "subtitle": "Five SDLC patterns from Valispace (2019–2023) and their agentic equivalents in 2026.",
+  "arrowLabel": "Same job",
+  "left": {
+    "label": "VALISPACE · 2019–2023",
+    "title": "DevOps for humans",
+    "items": [
+      "ValiAdmin — one control plane, queryable by anyone",
+      "Valinstall — customer success ships without engineers",
+      "Managed AWS (RDS, SES) by default",
+      "Two-week release cycle, 400 deploys in 4 hours",
+      "Tooling teaches the rules: \"if you do it twice, automate it\""
+    ]
+  },
+  "right": {
+    "label": "AGENTIC ENGINEERING · 2026",
+    "title": "DevOps for humans + agents",
+    "items": [
+      "Bridgeport — one control plane, agent-readable",
+      "Skills, MCPs — the team ships without engineers",
+      "Hosted model APIs (Anthropic, Bedrock) by default",
+      "Agent-PR loop, hours not weeks",
+      "Tooling teaches the rules: \"if you do it twice, write a skill\""
+    ]
+  }
+}

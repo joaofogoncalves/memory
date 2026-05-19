@@ -2,9 +2,9 @@
 date: 2026-05-19
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-anthropic-careers-share-7462599108818804736-MYyy"
+x_url: "https://x.com/joaofogoncalves/status/2056833043147411817"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-261798181"
 tags: [ai, anthropic, careers, frontier-labs]
 angle: Karpathy joining Anthropic as the loudest data point yet for the proximity-compounds-fast pattern previously observed in CTO-to-IC moves
 template: long-form

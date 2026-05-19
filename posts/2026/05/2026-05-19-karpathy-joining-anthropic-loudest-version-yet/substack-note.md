@@ -6,7 +6,7 @@ Paste into Substack Notes (substack.com/notes). No hashtags. Links welcome.
 
 Karpathy joining Anthropic is the loudest version yet of a pattern that's been building for a year.
 
-A few days ago I wrote about high-profile CTOs taking IC seats at Anthropic. Bailis from Workday. McCann from You.com. Parmar from Adept. Krieger sideways into Labs. The reading I landed on was information arbitrage: being inside the lab gives you signal you can't reconstruct from the outside, no matter how plugged in you are. Title compounds slowly right now. Proximity compounds fast.
+A few days ago I wrote about high-profile CTOs taking IC seats at Anthropic. The reading I landed on was information arbitrage: being inside the lab gives you signal you can't reconstruct from the outside, no matter how plugged in you are. Title compounds slowly right now. Proximity compounds fast.
 
 Karpathy is the same trade, two levels louder.
 

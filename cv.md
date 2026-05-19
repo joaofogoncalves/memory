@@ -5,9 +5,9 @@ Lisbon, Portugal
 
 ## Hero
 
-*I've spent 15 years scaling engineering teams. I now run a 14-agent AI orchestration system that does the work those teams used to do.*
+*15 years scaling engineering teams and DevOps. Shipped AI into product within a month of ChatGPT's launch. Now I run 14 AI agents that ship full-stack features end-to-end.*
 
-[stats] 14 / AI agents · 27 / custom skills · 15+ / years engineering
+[stats] 14 / AI agents · 27 / custom skills · 88% / faster releases · 15+ / years engineering
 
 ## Summary
 
@@ -21,15 +21,17 @@ Engineering used to be where everything stalled. Now it's everywhere else: produ
 
 The teams pulling ahead aren't using AI more carefully. They're using it harder, with their hands on the wheel. Senior judgment plus AI velocity. Depth in the system, ruthless review of output, willingness to throw the model's first answer away.
 
-I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I now run the new pattern at BRIDGE IN. The leverage is different. The work is the same.
+I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I started shipping AI into product within a month of ChatGPT's launch, before the playbook existed. I now run the new pattern at BRIDGE IN, with agents handling most of the code. The leverage is different. The work is the same.
 
 ## Building
 
 *BRIDGE IN, since November 2025.*
 
-Founding Engineer at BRIDGE IN. Building the BRIDGE IN Operating System — a Django/React platform that centralizes payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
+Founding Engineer at BRIDGE IN. Building the BRIDGE IN Operating System, a Django/React platform that centralizes payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
 
-The unusual part is how it gets built. A 14-agent AI orchestration system runs a 4-phase workflow — plan, implement, test, deliver — through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operate as a permanent member of the engineering team. I direct the system. The system does most of the work.
+The unusual part is how it gets built. A 14-agent AI orchestration system runs a 4-phase workflow (plan, implement, test, deliver) through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operate as a permanent member of the engineering team. I direct the system. The system does most of the work.
+
+The product itself has AI in the workflow, parsing documents, classifying inputs, surfacing the right action before a human touches it. AI in how we build, and AI in what gets built.
 
 [badges] 14-agent orchestration · 27 custom skills · 4 EU markets · zero → operational in 3 months
 
@@ -39,7 +41,7 @@ The unusual part is how it gets built. A 14-agent AI orchestration system runs a
 
 Not actively looking, but I take a few conversations a year that are interesting enough to make space for.
 
-What I'll talk about: founding-engineer or early-stage technical leadership at a company building something at the edge of agents and engineering. Advisory work for operators figuring out how to integrate AI into their delivery loop without producing more slop. Intros to teams thinking seriously about agent infrastructure or AI-native eng tooling.
+What I'll talk about: founding-engineer or early-stage technical leadership at a company building at the edge of agents and engineering, or shipping AI into a real product. Advisory work for operators figuring out how to integrate AI into their delivery loop without producing more slop. Intros to teams thinking seriously about agent infrastructure, AI-native eng tooling, or product-AI rollouts.
 
 What I won't: anything pitched as "AI transformation," roles where AI is a buzzword, companies looking for a hire to validate a strategy already decided.
 
@@ -174,5 +176,5 @@ Computer Science (incomplete) · September 2001 – May 2009
 
 ## Contact
 
-- Email: joao.f.o.goncalves@gmail.com
+- Email: me@joaofogoncalves.com
 - LinkedIn: linkedin.com/in/joaofogoncalves

@@ -12,4 +12,16 @@ Format: 1440x900px (16:10) · PNG or JPG
 
 ## Section diagram (already rendered)
 
-The `Same shape, different decade` feature-compare chart is rendered at `media/road-then-now.webp` from `media/road-then-now.json`. No image prompt needed — it's a chart, not an AI image.
+The `Four patterns map. One breaks.` feature-compare chart is rendered at `media/road-then-now.webp` from `media/road-then-now.json`. No image prompt needed — it's a chart, not an AI image.
+
+The cycle row uses the per-item `{text, status: "breaks"}` shape (template extension added 2026-05-20) which renders the row in coral with a small "BREAKS" badge. Used to visually mark the asymmetry on both sides of the compare.
+
+To re-render after editing the JSON:
+
+```bash
+node charts/render.mjs \
+  --template feature-compare \
+  --data articles/2026/05/2026-05-20-building-the-road-to-production-again/media/road-then-now.json \
+  --output articles/2026/05/2026-05-20-building-the-road-to-production-again/media/road-then-now.webp \
+  --width 1600 --height 720 --scale 2
+```

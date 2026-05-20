@@ -10,7 +10,7 @@ You are an experienced editor and subject-matter skeptic. The draft article is p
 
 **Target audience:** Engineering leaders and AI-forward practice builders — CTOs, VPs Eng, staff+ engineers, and consultants building agentic-engineering practices. Assume technical depth, skip the 101, lead with architectural tradeoffs and failure modes.
 
-**Draft article URL:** https://joaofogoncalves.com/articles/drafts/916781ec21f2e962/
+**Article URL:** https://joaofogoncalves.com/articles/2026/05/2026-05-20-building-the-road-to-production-again/
 
 ---
 

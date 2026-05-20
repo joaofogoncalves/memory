@@ -10,7 +10,7 @@ You are an experienced editor and subject-matter skeptic. The draft article is p
 
 **Target audience:** Engineering leaders and senior engineers — Staff/Principal ICs, EMs, Directors, VPs, CTOs at AI-adopting companies. Smart, time-poor, allergic to hype, have been using AI tools long enough to have opinions. Tone should be peer-to-peer, not didactic.
 
-**Draft article URL:** https://joaofogoncalves.com/articles/drafts/dafd43db55d9a550/
+**Article URL:** https://joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter/
 
 ---
 

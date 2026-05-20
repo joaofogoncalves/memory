@@ -68,6 +68,23 @@ html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--fo
   border-radius: 1px;
 }
 .card.right li::before { background: var(--cyan-500); }
+.card li.breaks { color: var(--coral); }
+.card li.breaks::before { background: var(--coral); }
+.card li.breaks::after {
+  content: 'breaks';
+  font-family: var(--font-display);
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--coral);
+  background: rgba(255, 138, 158, 0.12);
+  border: 1px solid rgba(255, 138, 158, 0.35);
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1;
+}
 .arrow {
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
@@ -125,14 +142,21 @@ document.getElementById('leftLabel').textContent = l.label || '';
 document.getElementById('leftTitle').textContent = l.title || '';
 document.getElementById('rightLabel').textContent = r.label || '';
 document.getElementById('rightTitle').textContent = r.title || '';
-(l.items || []).forEach(it => {
-  const li = document.createElement('li'); li.textContent = it;
-  document.getElementById('leftItems').appendChild(li);
-});
-(r.items || []).forEach(it => {
-  const li = document.createElement('li'); li.textContent = it;
-  document.getElementById('rightItems').appendChild(li);
-});
+function renderItems(items, containerId) {
+  const container = document.getElementById(containerId);
+  (items || []).forEach(it => {
+    const li = document.createElement('li');
+    if (typeof it === 'string') {
+      li.textContent = it;
+    } else if (it && typeof it === 'object') {
+      li.textContent = it.text || '';
+      if (it.status) li.classList.add(it.status);
+    }
+    container.appendChild(li);
+  });
+}
+renderItems(l.items, 'leftItems');
+renderItems(r.items, 'rightItems');
 </script>
 </body>
 </html>

@@ -10,7 +10,7 @@ You are an experienced editor and subject-matter skeptic. The draft article is p
 
 **Target audience:** Engineering leaders / technical decision-makers (CTOs, VPs Eng, staff+ engineers). Assume technical depth, skip the 101, lead with architectural tradeoffs and failure modes.
 
-**Draft article URL:** https://joaofogoncalves.com/articles/drafts/b5b4924071958b71/
+**Article URL:** https://joaofogoncalves.com/articles/2026/05/2026-05-14-lead-time-is-the-wrong-half/
 
 ---
 

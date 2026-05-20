@@ -10,7 +10,7 @@ You are an experienced editor and subject-matter skeptic. The draft article is p
 
 **Target audience:** Mixed / broad audience. Smart non-specialist. Decision-making and AI adoption framing should be accessible to PMs, founders, engineering leaders, and curious professionals — not narrowly technical, not preachy.
 
-**Draft article URL:** https://joaofogoncalves.com/articles/drafts/6f261bbcfdf59908/
+**Article URL:** https://joaofogoncalves.com/articles/2026/04/2026-04-28-experience-isnt-the-tax-identity-is/
 
 ---
 

@@ -1,0 +1,19 @@
+{
+  "template": "flow",
+  "title": "The system the model operates inside",
+  "subtitle": "Five parts of working with AI on real problems. The prompt is downstream of all of them.",
+  "caption": "What 'structured thinking' looks like once you take the slogan apart.",
+  "highlightStageIndex": 2,
+  "tracks": [
+    {
+      "label": "The work the prompt template doesn't teach",
+      "stages": ["Scope", "Decompose", "Criteria", "Feedback loop", "Make explicit"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 0, "label": "stranger could verify the brief" },
+    { "afterIndex": 1, "label": "failures are visible per chunk" },
+    { "afterIndex": 2, "label": "rubric written before output" },
+    { "afterIndex": 3, "label": "next run reads the correction" }
+  ]
+}

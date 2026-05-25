@@ -1,0 +1,17 @@
+{
+  "template": "stat-compare",
+  "title": "Where the gain actually came from",
+  "subtitle": "aiBerto, last month. The model didn't change. The system around it did.",
+  "arrowLabel": "the system around the model",
+  "caption": "Internal numbers from a BRIDGE IN engineering month.",
+  "left": {
+    "label": "Model upgrades",
+    "value": "0",
+    "description": "underlying model unchanged for the entire month."
+  },
+  "right": {
+    "label": "Skill patches",
+    "value": "40",
+    "description": "sentences written by humans who watched him fail and figured out what he should have known."
+  }
+}

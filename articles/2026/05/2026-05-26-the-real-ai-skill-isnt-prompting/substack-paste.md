@@ -1,13 +1,23 @@
----
-title: "The Real AI Skill Isn't Prompting. It's System Design."
-subtitle: "Most AI training teaches the wrong half of the job."
-description: "AI literacy training keeps teaching prompts. The actual skill is designing the system the model operates inside — scope, criteria, feedback loops."
-date: 2026-05-25
-tags: [ai, ai-adoption, leadership, engineering-leadership, ai-literacy, ai-training, agents, claude-code]
-substack_url:
-hero_image: media/hero.webp
-reading_time: 10
-draft: true
+# Substack paste-in — The Real AI Skill Isn't Prompting. It's System Design.
+
+## Posting checklist (do these in Substack's editor)
+
+1. **Title:** The Real AI Skill Isn't Prompting. It's System Design.
+2. **Subtitle:** Most AI training teaches the wrong half of the job.
+3. **Canonical URL** (Post settings → SEO → Canonical URL): `https://joaofogoncalves.com/articles/2026/05/2026-05-26-the-real-ai-skill-isnt-prompting/` — this keeps SEO pointed at your site, not Substack.
+4. **Hero image:** upload `media/hero.webp` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
+5. **Inline images:** re-upload these as you reach them in the body:
+   - `media/system-flow.webp`
+   - `media/where-the-gain-came-from.webp`
+6. **Tags:** ai, ai-adoption, leadership, engineering-leadership, ai-literacy, ai-training, agents, claude-code
+7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
+
+   > Originally published at [joaofogoncalves.com/articles/2026/05/the-real-ai-skill-isnt-prompting](https://joaofogoncalves.com/articles/2026/05/2026-05-26-the-real-ai-skill-isnt-prompting/).
+
+## Body to paste
+
+Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
+
 ---
 
 I sat through one of these last quarter. Over twenty people on a video call (the "conference room" was a Zoom grid), a slide deck with the OpenAI logo cropped slightly wrong, a vendor walking everyone through a prompt template for writing emails. *Subject*: marketing campaign for Q3. *Tone*: professional, friendly. Paste. Hit return. ChatGPT produced six bullet points. A few thumbs-ups landed in the chat. The vendor moved to slide forty-one.
@@ -44,9 +54,7 @@ What people are reaching for when they say "prompting" is, almost always, a diff
 
 **Making the implicit explicit.** Every time you correct the model in your head and don't write the correction down, you are training nobody and nothing. Models are stateless and non-deterministic. They do not learn between conversations the way a contractor learns between engagements. The system around them has to carry what a person would have carried in their head. Put the correction in a system prompt, a skill file, a project doc, anywhere the next run will read it. That is what "system" means in this article. Not orchestration framework. The set of inputs the next run sees.
 
-::: wide
-![Five parts of working with AI on real problems: scope, decompose, criteria, feedback loop, make explicit](media/system-flow.webp)
-:::
+[IMAGE: Five parts of working with AI on real problems: scope, decompose, criteria, feedback loop, make explicit — upload media/system-flow.webp here]
 
 Five things. None of them are about the model. All of them are about the design around the model.
 
@@ -54,7 +62,7 @@ This is not new in shape. Scoping, criteria, and structured feedback are familia
 
 ## 03 — The floor and the ceiling
 
-I have been [running prompting sessions](/posts/2026/04/2026-04-26-most-ai-trainings-meet-people-where-they-are/) for over 6 months. The pattern is consistent.
+I have been [running prompting sessions](https://joaofogoncalves.com/posts/2026/04/2026-04-26-most-ai-trainings-meet-people-where-they-are/) for over 6 months. The pattern is consistent.
 
 The floor is structural. People who already know how to describe work in measurable, scoped, criteria-bearing terms become functional with almost any model inside an hour. The transferable competence is mostly older than the technology.
 
@@ -62,7 +70,7 @@ A head of support I worked with started a session with "I want to get more insig
 
 The ceiling is something else. It is engineering depth — the ability to look at output and know whether it is wrong. Structural skill gets you a working interaction. Depth is what catches the failure that compiles cleanly, passes the rubric you wrote, and ships your blind spot at scale.
 
-I wrote about this in [AI as the Great Filter](/articles/2026/05/2026-05-04-ai-as-the-great-filter/). The short version: engineering depth used to be a nice-to-have. Now it is the variable that decides who survives the next layer. The engineers who already had the muscle — architecture decisions, code review, design docs, naming a failure mode before someone hits it — compound. The ones who treated cheap AI as a substitute for that muscle ship fluently-broken code at scale.
+I wrote about this in [AI as the Great Filter](https://joaofogoncalves.com/articles/2026/05/2026-05-04-ai-as-the-great-filter/). The short version: engineering depth used to be a nice-to-have. Now it is the variable that decides who survives the next layer. The engineers who already had the muscle — architecture decisions, code review, design docs, naming a failure mode before someone hits it — compound. The ones who treated cheap AI as a substitute for that muscle ship fluently-broken code at scale.
 
 The trap on the engineering side is the interesting one. Technical literacy looks like depth and is often the opposite. Knowing the stack makes it tempting to skip system design and just write the code yourself. AI made that trap deeper, not shallower. The engineer who used to write a function in 30 minutes now writes it in 90 seconds with Claude. The gap from spec to output is almost entirely verification. If you can't articulate what good looks like before the model produces it, your verification reduces to "looks right." That ships your blind spots faster, with more confidence, in larger volume.
 
@@ -78,7 +86,7 @@ He didn't get smarter last month. The underlying model didn't change.
 
 He got 40 skill patches.
 
-![Where the gain came from: 0 model upgrades, 40 skill patches](media/where-the-gain-came-from.webp)
+[IMAGE: Where the gain came from: 0 model upgrades, 40 skill patches — upload media/where-the-gain-came-from.webp here]
 
 Forty sentences, written by humans who watched him fail at something specific and figured out what he should have known. Every patch sits in a markdown file in our repo. The next time aiBerto runs the relevant skill, the file gets prepended into his context window. The failure mode stops happening.
 
@@ -90,7 +98,7 @@ The honest question an engineering leader asks here is the regression question: 
 
 The model is the same. The system around it got better. The agent's effective intelligence rose because the people closest to each kind of failure added the missing piece of context. That is system design. It is also what AI literacy looks like at scale.
 
-[The longer version of this story](/articles/2026/05/2026-05-14-lead-time-is-the-wrong-half/) has the metrics. The shape that matters is this one: forty sentences moved more output than any prompt-template handout ever could.
+[The longer version of this story](https://joaofogoncalves.com/articles/2026/05/2026-05-14-lead-time-is-the-wrong-half/) has the metrics. The shape that matters is this one: forty sentences moved more output than any prompt-template handout ever could.
 
 ## 05 — What a real curriculum looks like
 
@@ -108,7 +116,7 @@ When the output is wrong, write the missing sentence the next run would need to 
 
 Do this for four weeks. The deliverable is not a slide deck. It is a markdown directory of sentences a team's worth of people wrote because they watched something fail and figured out what it should have known. That directory compounds. The slide deck does not.
 
-[The engineering-org version of this argument](/articles/2026/04/2026-04-18-your-ai-first-engineering-org-probably-isnt/) is adjacent. Bolting Copilot onto a workflow is not AI-first. Bolting prompt templates onto a workforce is not AI-literate. Both confuse the artifact for the work.
+[The engineering-org version of this argument](https://joaofogoncalves.com/articles/2026/04/2026-04-18-your-ai-first-engineering-org-probably-isnt/) is adjacent. Bolting Copilot onto a workflow is not AI-first. Bolting prompt templates onto a workforce is not AI-literate. Both confuse the artifact for the work.
 
 ## Back to the call
 
@@ -119,3 +127,11 @@ The honest version of the same training would have looked almost nothing like it
 The deliverable would have been a markdown file the team kept, not a slide deck the team forgot.
 
 The skill is older than the model. The model is just the latest reason to teach it.
+
+---
+
+## After posting
+
+- Grab the Substack post URL.
+- Update the `substack_url:` field in `articles/2026/05/2026-05-26-the-real-ai-skill-isnt-prompting/article.md`.
+- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.

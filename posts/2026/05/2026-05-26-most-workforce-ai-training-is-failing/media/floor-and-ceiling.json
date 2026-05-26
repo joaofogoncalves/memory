@@ -1,0 +1,25 @@
+{
+  "template": "feature-compare",
+  "orientation": "vertical",
+  "title": "The floor and the ceiling",
+  "subtitle": "What workforce AI training keeps missing.",
+  "arrowLabel": "Most training teaches neither",
+  "left": {
+    "label": "THE FLOOR",
+    "title": "Structural skill",
+    "items": [
+      "Scoping work in measurable terms",
+      "Writing rubrics before the model runs",
+      "Running a feedback loop on what failed"
+    ]
+  },
+  "right": {
+    "label": "THE CEILING",
+    "title": "Engineering depth",
+    "items": [
+      "Knowing when output is wrong",
+      "Catching the failure that compiles cleanly",
+      "Catching the blind spot the rubric missed"
+    ]
+  }
+}

@@ -4,7 +4,7 @@ subtitle: "The SDLC patterns that scaled three people to 400 deployments transfe
 description: "Four SDLC patterns from a 3-person DevOps team map directly to agentic engineering. The fifth — cheap, detectable failure — is the assumption that breaks. Most teams haven't noticed yet."
 date: 2026-05-20
 tags: [ai, software-engineering, devops, agents, engineering-leadership, claude-code]
-substack_url:
+substack_url: https://joaofogoncalves.substack.com/p/2026-05-20-building-the-road-to-production-again
 hero_image: media/hero.jpg
 reading_time: 10
 ---

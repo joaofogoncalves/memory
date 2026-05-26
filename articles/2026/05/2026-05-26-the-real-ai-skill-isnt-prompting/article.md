@@ -69,6 +69,10 @@ A two-hour prompt-engineering workshop teaches the model interface. It teaches n
 
 The floor is structural. The ceiling is engineering depth. Most workforce AI training is failing at the floor and ignoring the ceiling entirely.
 
+::: wide
+![The floor (structural skill: scoping, criteria, feedback loops) and the ceiling (engineering depth: knowing when output is wrong)](media/floor-and-ceiling.webp)
+:::
+
 ## 04 — aiBerto, the receipt
 
 We have an AI engineering agent at BRIDGE IN. His name is aiBerto. He lives in our Slack, picks the next issue off our project board every couple of hours, opens a PR, runs CI, fixes failing checks, asks for review when he's stuck. Last month he merged 30 PRs autonomously (zero human commits on his branches), opened 107 GitHub issues, resolved 104, and handled 81 Slack interactions.

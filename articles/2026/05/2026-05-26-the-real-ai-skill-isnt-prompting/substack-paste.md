@@ -8,6 +8,7 @@
 4. **Hero image:** upload `media/hero.webp` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
 5. **Inline images:** re-upload these as you reach them in the body:
    - `media/system-flow.webp`
+   - `media/floor-and-ceiling.webp`
    - `media/where-the-gain-came-from.webp`
 6. **Tags:** ai, ai-adoption, leadership, engineering-leadership, ai-literacy, ai-training, agents, claude-code
 7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
@@ -77,6 +78,8 @@ The trap on the engineering side is the interesting one. Technical literacy look
 A two-hour prompt-engineering workshop teaches the model interface. It teaches nothing about how to know whether the output is wrong. The engineer who could already eyeball a design and say "this won't work under load" gets faster. The engineer who could not gets a paste-bin of plausible code and a working keyboard.
 
 The floor is structural. The ceiling is engineering depth. Most workforce AI training is failing at the floor and ignoring the ceiling entirely.
+
+[IMAGE: The floor (structural skill: scoping, criteria, feedback loops) and the ceiling (engineering depth: knowing when output is wrong) — upload media/floor-and-ceiling.webp here]
 
 ## 04 — aiBerto, the receipt
 

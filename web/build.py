@@ -49,6 +49,7 @@ POSTS_DIR = ROOT / 'posts'
 CV_FILE = ROOT / 'cv.md'
 CV_PDF = ROOT / 'cv_joaofogoncalves.pdf'
 NOW_FILE = ROOT / 'now.md'
+WORK_FILE = ROOT / 'work.md'
 ARTICLES_DIR = ROOT / 'articles'
 WEB_DIR = Path(__file__).resolve().parent
 DIST_DIR = WEB_DIR / 'dist'
@@ -73,6 +74,7 @@ def _load_site_config() -> dict:
         'substack': cfg.get('substack', ''),
         'hero_title': cfg.get('hero_title', cfg.get('site_name', 'My Site')),
         'hero_subline': cfg.get('hero_subline', ''),
+        'hero_proof': cfg.get('hero_proof', ''),
         'about_teaser': cfg.get('about_teaser', ''),
         'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
         'speaking_text': cfg.get('speaking_text', ''),
@@ -651,6 +653,10 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
         f'<a href="{prefix}now/"{cls("now")}>Now</a>'
         if NOW_FILE.exists() else ''
     )
+    work_link = (
+        f'<a href="{prefix}work/"{cls("work")}>Work</a>'
+        if WORK_FILE.exists() else ''
+    )
     subscribe_link = (
         f'<a href="{SITE["newsletter_url"]}" target="_blank" rel="noopener" class="nav-cta">Subscribe</a>'
         if SITE.get('newsletter_url') else ''
@@ -661,6 +667,7 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
     <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
     <div class="nav-links">
       <a href="{prefix}about/"{cls("about")}>About</a>
+      {work_link}
       {articles_link}
       <a href="{prefix}posts/"{cls("posts")}>Posts</a>
       {now_link}
@@ -766,6 +773,12 @@ def jsonld_person() -> str:
         'name': SITE_NAME,
         'description': SITE_DESCRIPTION,
         'url': SITE_URL or '/',
+        'jobTitle': 'Founding Engineer',
+        'knowsAbout': [
+            'Agentic engineering', 'LLM orchestration', 'Multi-agent systems',
+            'RAG', 'Context engineering', 'Forward-deployed engineering',
+            'LLMOps', 'DevOps', 'Kubernetes', 'CI/CD', 'Production AI systems',
+        ],
     }
     if same_as:
         data['sameAs'] = same_as
@@ -1255,6 +1268,100 @@ def render_article_card(article: dict, depth: int = 0) -> str:
 </a>'''
 
 
+def _render_work_entry(title: str, body_md: str, stack: str, links: str) -> str:
+    """Render one work.md entry as a card."""
+    body_html = ''
+    if body_md:
+        md_renderer.reset()
+        body_html = style_bridge_in(autolink_urls(md_renderer.convert(body_md)))
+
+    stack_html = ''
+    if stack:
+        pills = ''.join(
+            f'<span class="work-tech">{escape(s)}</span>'
+            for s in (p.strip() for p in re.split(r'\s*[,·]\s*', stack))
+            if s
+        )
+        stack_html = f'\n  <div class="work-stack">{pills}</div>'
+
+    links_html = ''
+    if links:
+        anchors = []
+        for part in (p.strip() for p in re.split(r'\s*·\s*', links)):
+            if not part:
+                continue
+            m = re.search(r'((?:https?://)?[\w.-]+\.[a-z]{2,}(?:/\S*)?)', part, re.IGNORECASE)
+            if m:
+                raw = m.group(1)
+                href = raw if raw.lower().startswith('http') else f'https://{raw}'
+                anchors.append(
+                    f'<a href="{escape(href)}" target="_blank" rel="noopener">{escape(part)}</a>'
+                )
+            else:
+                anchors.append(f'<span>{escape(part)}</span>')
+        if anchors:
+            links_html = f'\n  <div class="work-links">{"".join(anchors)}</div>'
+
+    return (
+        '<article class="work-card">\n'
+        f'  <h2 class="work-card-title">{escape(title)}</h2>\n'
+        f'  <div class="work-card-body">{body_html}</div>'
+        f'{stack_html}{links_html}\n'
+        '</article>'
+    )
+
+
+def generate_work() -> str:
+    """Generate the /work page from work.md."""
+    _, content = parse_frontmatter(WORK_FILE.read_text(encoding='utf-8'))
+    sections = _parse_cv_sections(content)
+
+    intro_raw = sections.pop('_intro', '')
+    if not isinstance(intro_raw, str):
+        intro_raw = ''
+    intro_md = '\n'.join(
+        l for l in intro_raw.split('\n') if not l.strip().startswith('# ')
+    ).strip()
+    intro_html = f'<p class="work-intro">{escape(intro_md)}</p>' if intro_md else ''
+
+    cards = []
+    for title, text in sections.items():
+        body_lines, stack, links = [], '', ''
+        for line in text.split('\n'):
+            s = line.strip()
+            ms = re.match(r'^Stack:\s*(.+)$', s, re.IGNORECASE)
+            ml = re.match(r'^Links?:\s*(.+)$', s, re.IGNORECASE)
+            if ms:
+                stack = ms.group(1).strip()
+            elif ml:
+                links = ml.group(1).strip()
+            else:
+                body_lines.append(line)
+        body_md = '\n'.join(body_lines).strip()
+        cards.append(_render_work_entry(title, body_md, stack, links))
+
+    cards_html = '\n'.join(cards)
+
+    return f'''{head_html("Work", depth=1, description=f"Selected things {SITE_NAME} has built and shipped: agentic systems, production RAG, and open-source tools.", canonical_path='/work/')}
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+{nav_html(active='work', depth=1)}
+
+<div class="page-container">
+  <div class="about-header">
+    <h1>Work</h1>
+  </div>
+  {intro_html}
+  <div class="work-grid">
+    {cards_html}
+  </div>
+</div>
+
+{footer_html()}
+</body>
+</html>'''
+
+
 def generate_articles_archive(articles: list[dict], topics: list[dict]) -> str:
     """Generate the /articles/ archive page."""
     total = len(articles)
@@ -1590,6 +1697,9 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
         thesis_escaped = thesis_escaped.replace('when you do.', 'when you do.<br>', 1)
         thesis_html = f'<p class="hero-thesis">{thesis_escaped}</p>'
 
+    proof_text = SITE.get('hero_proof', '')
+    proof_html = f'<p class="hero-proof">{escape(proof_text)}</p>' if proof_text else ''
+
     home_script = f'<script src="js/home.js?v={_HOME_JS_VER}" defer></script>'
 
     return f'''{head_html("Home", depth=0, description=SITE_DESCRIPTION, extra_head=home_script, canonical_path='/')}
@@ -1602,6 +1712,8 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
 <div class="hero-fullscreen">
   <div class="hero-fullscreen-content page-container">
     <h1>{escape(SITE['hero_title'])}</h1>
+    {proof_html}
+    {_home_hero_stats_html()}
     {thesis_html}
     {_hero_links_html()}
   </div>
@@ -1757,6 +1869,58 @@ def _render_skills(text: str) -> str:
     if not rows:
         return ''
     return '<div class="skills-section">\n    ' + '\n    '.join(rows) + '\n  </div>'
+
+
+def _render_stack(text: str) -> str:
+    """Render the About-page Stack block from the cv.md `## Stack` section.
+
+    Each line is `**Label:** item, item`. Renders as labelled rows.
+    """
+    groups = []
+    for line in (text or '').split('\n'):
+        line = line.strip()
+        m = re.match(r'^\*\*(.+?):\*\*\s*(.+)$', line)
+        if not m:
+            continue
+        groups.append(
+            '<div class="stack-group">'
+            f'<span class="stack-label">{escape(m.group(1).strip())}</span>'
+            f'<span class="stack-items">{escape(m.group(2).strip())}</span>'
+            '</div>'
+        )
+    if not groups:
+        return ''
+    return (
+        '<section class="about-stack">\n'
+        '  <div class="about-stack-label">Stack</div>\n'
+        '  <div class="stack-groups">\n    '
+        + '\n    '.join(groups)
+        + '\n  </div>\n</section>'
+    )
+
+
+def _home_hero_stats_html() -> str:
+    """Render home hero stat chips from the cv.md Hero `[stats]` line."""
+    if not CV_FILE.exists():
+        return ''
+    _, cv_content = parse_frontmatter(CV_FILE.read_text(encoding='utf-8'))
+    parsed = _parse_about_section(_parse_cv_sections(cv_content).get('Hero', ''))
+    pairs = parsed.get('badges', [])
+    if not pairs:
+        return ''
+    items = []
+    for pair in pairs:
+        if '/' in pair:
+            value, label = [p.strip() for p in pair.split('/', 1)]
+        else:
+            value, label = pair, ''
+        items.append(
+            '<div class="hero-stat">'
+            f'<span class="hero-stat-value">{escape(value)}</span>'
+            f'<span class="hero-stat-label">{escape(label)}</span>'
+            '</div>'
+        )
+    return '<div class="hero-stats">' + ''.join(items) + '</div>'
 
 
 def _parse_about_section(text: str) -> dict:
@@ -1940,6 +2104,7 @@ def generate_about() -> str:
     thesis_parsed = _parse_about_section(sections.get('Thesis', ''))
     building_parsed = _parse_about_section(sections.get('Building', ''))
     open_to_parsed = _parse_about_section(sections.get('Open To', ''))
+    stack_html = _render_stack(sections.get('Stack', ''))
 
     hero_html = _render_hero(name, hero_parsed, summary_md)
 
@@ -2037,6 +2202,7 @@ def generate_about() -> str:
 
 <div class="page-container about-page">
   {hero_html}
+  {stack_html}
   {thesis_html}
   {building_html}
   {history_html}
@@ -2406,6 +2572,13 @@ def build():
     (about_dir / 'index.html').write_text(generate_about(), encoding='utf-8')
     if CV_PDF.exists():
         shutil.copy2(CV_PDF, about_dir / 'cv_joaofogoncalves.pdf')
+
+    # Generate /work page
+    if WORK_FILE.exists():
+        print('Generating /work page...')
+        work_dir = DIST_DIR / 'work'
+        work_dir.mkdir(parents=True)
+        (work_dir / 'index.html').write_text(generate_work(), encoding='utf-8')
 
     # Generate /now page
     if NOW_FILE.exists():

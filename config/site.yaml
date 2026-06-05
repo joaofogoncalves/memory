@@ -1,6 +1,6 @@
 # Site personalization
 site_name: "João Gonçalves"
-site_description: "Engineering leader & AI coding practitioner. Founding Engineer at BRIDGE IN."
+site_description: "Founding Engineer building agentic engineering systems in production. 15 years in DevOps, platform, and engineering leadership. Forward-deployed AI, RAG, and AI-native tooling."
 
 # Social links
 linkedin: "https://linkedin.com/in/joaofogoncalves"
@@ -11,6 +11,10 @@ substack: "https://joaofogoncalves.substack.com/"
 
 # Home page
 hero_title: "João Gonçalves"
+hero_proof: >-
+  I build and run agentic engineering systems in production. Fifteen years scaling
+  DevOps and platforms, now a 14-agent orchestration that ships full-stack features
+  end to end.
 hero_subline: >-
   Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
   style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a>. Previously Director
@@ -20,7 +24,7 @@ about_teaser: >-
   Now building from scratch again. Currently writing about what happens when AI changes how we build.
 
 # Thesis / POV statement (shown on home page as a callout block)
-thesis: Everyone's optimizing for speed. The more interesting question is what gets lost when you do. I write about the engineering judgment AI can't replace — and the parts it already has.
+thesis: Everyone's optimizing for speed. The more interesting question is what gets lost when you do. I write about the engineering judgment AI can't replace, and the parts it already has.
 
 # Newsletter signup URL (Substack, Beehiiv, Buttondown, etc.)
 newsletter_url: "https://joaofogoncalves.substack.com/subscribe"

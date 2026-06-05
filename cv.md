@@ -7,7 +7,7 @@ Lisbon, Portugal
 
 *15 years scaling engineering teams and DevOps. Shipped AI into product within a month of ChatGPT's launch. Now I run 14 AI agents that ship full-stack features end-to-end.*
 
-[stats] 14 / AI agents · 27 / custom skills · 88% / faster releases · 15+ / years engineering
+[stats] 14 / AI agents · 97% / agent autonomy · 88% / faster releases · 15+ / years engineering
 
 ## Summary
 
@@ -31,6 +31,10 @@ Founding Engineer at BRIDGE IN. Building the BRIDGE IN Operating System, a Djang
 
 The unusual part is how it gets built. A 14-agent AI orchestration system runs a 4-phase workflow (plan, implement, test, deliver) through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operate as a permanent member of the engineering team. I direct the system. The system does most of the work.
 
+The receipts: in a recent month the system merged 30 agent-authored PRs at 97% autonomy, 29 of 30 with no human commits, every one through the full CI gate. It triaged Sentry alerts into filed-and-fixed issues autonomously, caught regressions before users did, and turned reported feedback into shipped fixes at a 4.9-hour median. Median PR lead time, open to merge, was 7 minutes.
+
+The hard part isn't agents writing code. It's keeping them reliable across parallel git worktrees, where permission and isolation failures are the real operational hazard. That's the actual work: state coordination, quality gates, and recovery loops that let the system run without a human babysitting each step.
+
 The product itself has AI in the workflow, parsing documents, classifying inputs, surfacing the right action before a human touches it. AI in how we build, and AI in what gets built.
 
 [badges] 14-agent orchestration · 27 custom skills · 4 EU markets · zero → operational in 3 months
@@ -41,7 +45,7 @@ The product itself has AI in the workflow, parsing documents, classifying inputs
 
 Not actively looking, but I take a few conversations a year that are interesting enough to make space for.
 
-What I'll talk about: founding-engineer or early-stage technical leadership at a company building at the edge of agents and engineering, or shipping AI into a real product. Advisory work for operators figuring out how to integrate AI into their delivery loop without producing more slop. Intros to teams thinking seriously about agent infrastructure, AI-native eng tooling, or product-AI rollouts.
+The fits that map best: forward-deployed or applied AI engineering, agent and AI-infrastructure work, AI solutions architecture, or founding / early-stage technical leadership, at a company building at the edge of agents and engineering or shipping AI into a real product. Also open to advisory work with operators figuring out how to put AI into their delivery loop without producing more slop. Remote from Lisbon, open to travel.
 
 What I won't: anything pitched as "AI transformation," roles where AI is a buzzword, companies looking for a hire to validate a strategy already decided.
 
@@ -57,6 +61,7 @@ If that fits, the email and LinkedIn below work.
 - Authoring 27 custom development skills that automate the entire engineering pipeline: from Sentry error triage and Slack feedback processing to autonomous issue creation, CI failure resolution, implementation, and production deployment.
 - Operating AI agents that autonomously monitor production errors, triage user feedback, implement high-priority fixes, and generate release reports, functioning as a permanent member of the engineering team.
 - Establishing the entire product development function from zero — CI/CD, quality gates, error monitoring, and release cadence in under 3 months.
+- Operating the system at 97% agent autonomy in a recent month (29 of 30 agent-authored PRs merged with no human commits), with autonomous Sentry triage and a 4.9-hour median from reported feedback to shipped fix.
 
 [badges] 14-agent orchestration · 27 custom skills · Django + React · 4 EU markets
 
@@ -66,11 +71,12 @@ If that fits, the email and LinkedIn below work.
 **January 2024 – November 2025** · Lisbon, Portugal
 
 - Integrating Valispace as an Altium 365 app and ensuring continuity and merging capabilities in the aftermath of a high-profile acquisition.
+- Directing the team that built a production RAG assistant inside the Valispace requirements platform: retrieval over engineering requirements, test data, component trees, and company-specific authoring standards, surfaced to roughly 200 enterprise customers, the largest with over 1GB of requirements text. GPT in the cloud, Llama for on-prem. I owned the architecture and the technical calls.
 - Doubling the engineering department's size and coaching new team leads to own all operations, encompassing project management, system architecture, and software development.
 - Interfacing cross-departmentally to identify and implement technology solutions that directly impact business growth, streamline processes, and optimize data analytics capabilities, notably equipping DevOps with improved Kubernetes infrastructure to accommodate a surge in demand.
-- Cultivating a healthy, productive, and meritocratic department culture that retained 90% of its staff post-merger, despite the temptation of a generous shareholder payout.
+- Cultivating a healthy, productive, and meritocratic department culture that retained 90% of its staff post-merger.
 
-[badges] Engineering doubled · 90% retention post-merger · K8s scaled for surge demand
+[badges] Production RAG assistant · ~200 enterprise customers · Engineering doubled · 90% retention post-merger
 
 ---
 
@@ -165,6 +171,13 @@ Computer Science (incomplete) · September 2001 – May 2009
 - Engineering Leadership
 - Cloud Infrastructure & DevOps
 - Product Discovery
+
+## Stack
+
+**Languages:** Python (primary), TypeScript / JavaScript, SQL. Go (familiar).
+**Frontend:** React.
+**AI / ML:** LLM orchestration, multi-agent systems, RAG and retrieval, context engineering, structured outputs, evals, LLMOps.
+**Infra / Ops:** AWS, Kubernetes, Docker, CI/CD, PostgreSQL, observability (Sentry), ISO-27001.
 
 ## Certifications
 

@@ -125,6 +125,7 @@ linkedin-post-archiver/  # Project root
 ├── cv_joaofogoncalves.pdf                            # Generated CV PDF (tracked, persistent asset)
 ├── now.md                            # /now page content (tracked)
 ├── now.md.example                    # /now template (tracked)
+├── work.md                           # /work page content (case studies, tracked)
 ├── article_style.md                  # Long-form article style supplement (tracked)
 ├── writing_style.md                  # LinkedIn writing style guide (tracked)
 ├── pitch_style.md                    # Self-positioning style guide (tracked) — used by /cover-letter, /outreach, /interview-prep, /pitch and the About page
@@ -193,7 +194,7 @@ linkedin-post-archiver/  # Project root
 - About page rendered from `cv.md` (markdown → HTML), with placeholder if missing
 - Brutalist dark theme ("senior engineer's personal site")
 - **Layout**: `--max-page: 1280px` (page container), `--max-content: 720px` (readable text width for posts/articles, centered)
-- Pages: Home, About, Posts (searchable), Articles, /topics index, /topics/{slug}, /now
+- Pages: Home, About, /work, Posts (searchable), Articles, /topics index, /topics/{slug}, /now
 - Only shows `post_type: original` or `article` (filters out reposts)
 - Client-side search and tag filtering via `web/js/posts.js`
 - Homepage interactivity via `web/js/home.js` (particle canvas, spotlight rotation, tabs)
@@ -220,6 +221,7 @@ linkedin-post-archiver/  # Project root
   - Topics nav link appears automatically when `topics:` is configured in `site.yaml`
 - **Now page**: `/now/` generated from `now.md` (git-ignored personal content)
   - Nav link appears automatically when `now.md` exists
+- **Work page**: `/work/` generated from `work.md` (tracked); a case-study index of shipped work (agentic apps, production RAG, OSS tools). Each `## Title` entry renders as a card with parsed `Stack:` pills and `Link:` anchors. Nav link appears automatically when `work.md` exists.
 - **Newsletter CTA**: optional subscribe prompt on home + post pages (`newsletter_url` in site.yaml)
 - **Engagement capture**: browser crawler extracts reaction/comment counts into post frontmatter
 
@@ -887,7 +889,7 @@ uv run python -m scraper.main --reauth
 - Claude Code skills (`.claude/commands/`) and settings (`.claude/settings.json`)
 - CV PDF generator (`cv/generate.py`, `cv/fonts/`)
 - `cv_joaofogoncalves.pdf` (persistent generated asset)
-- `cv.md`, `profile.md`, `taste.md`, `now.md` (personal content the user owns)
+- `cv.md`, `profile.md`, `taste.md`, `now.md`, `work.md` (personal content the user owns)
 - `writing_style.md`, `article_style.md`, `pitch_style.md` (style guides feeding the skills)
 - `articles/` directory (original long-form articles — authored content, not scraped)
 - `posts/` directory (short-form posts — authored via `/post` and historical scrape; the authored-first model treats these as canonical site content the user owns)
@@ -1095,14 +1097,15 @@ bash web/deploy.sh
 - Static site generator
 - Loads site identity from `config/site.yaml` (name, bio, social links, footer, topics, thesis, etc.)
 - Reads markdown posts from `posts/`, articles from `articles/`, About content from `cv.md`, Now content from `now.md`
-- Generates HTML pages: Home, About, Articles archive, Posts archive, /topics index, /topics/{slug}, /now, individual posts, individual articles
+- Generates HTML pages: Home, About, /work, Articles archive, Posts archive, /topics index, /topics/{slug}, /now, individual posts, individual articles
+- `generate_work()` renders the `/work` page from `work.md`; `_render_stack()` renders the About-page Stack block from the `## Stack` cv.md section; `_home_hero_stats_html()` renders the home hero stat chips from the cv.md Hero `[stats]` line; the home hero proof line comes from `hero_proof` in `site.yaml`
 - Also generates: `feed.xml` (RSS 2.0, last 20 articles — articles only, no short-form posts), `sitemap.xml`, `robots.txt`
 - JSON-LD structured data: Person schema on About, Article schema on each post and article
 - Topics are assigned at build time by matching post/article tags against `topics[].tags` in site.yaml
 - `compute_featured_posts(posts, days=90, top_n=3)` — engagement-ranked featured posts
 - `update_site_yaml_featured(slugs)` — overwrites `featured_posts` in site.yaml in-place
 - `parse_all_articles()` — scans `articles/` for `article.md` files, extracts frontmatter (title, subtitle, hero_image, substack_url, reading_time)
-- Nav links for Articles, Topics, and Now appear automatically when content exists; no dead links
+- Nav links for Work, Articles, Topics, and Now appear automatically when content exists; no dead links
 - **Homepage helpers**: `_featured_spotlight_html()` (auto-rotating spotlight, accepts articles or posts), `_recent_notes_html()` (compact recent-posts strip), `_topics_home_html()` (topic cards), `_newsletter_section_html()` (CTA section)
 - **Posts page**: Single continuous list of spotlight-style row cards (`_render_list_card()` + `.list-card` CSS). Full-width rows with text left, thumbnail right (300×175). JS renders same format dynamically via `posts.js`.
 - Articles section: `/articles/` archive with hero image cards, `/articles/YYYY/MM/slug/` individual pages
@@ -1154,5 +1157,5 @@ bash web/deploy.sh
 
 ---
 
-_Last updated: 2026-04-18_
+_Last updated: 2026-06-05_
 _Project version: 2.1.0_

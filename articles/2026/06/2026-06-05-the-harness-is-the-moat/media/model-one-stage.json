@@ -1,0 +1,19 @@
+{
+  "template": "flow",
+  "title": "The model is one call inside the loop",
+  "subtitle": "The benchmark measures the call. The harness is everything between the calls.",
+  "caption": "One feature's path through the harness. The highlighted stage is the model. Everything around it is the part you build.",
+  "highlightStageIndex": 3,
+  "tracks": [
+    {
+      "label": "Per feature",
+      "stages": ["Spec", "Plan", "Coordinate state", "Model writes code", "Verify", "Recover", "Deploy"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 1, "label": "permissions scoped" },
+    { "afterIndex": 3, "label": "graded by a separate agent" },
+    { "afterIndex": 4, "label": "partial failures resumed" },
+    { "afterIndex": 5, "label": "deploy gate" }
+  ]
+}

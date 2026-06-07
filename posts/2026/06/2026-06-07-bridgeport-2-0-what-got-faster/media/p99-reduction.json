@@ -1,0 +1,14 @@
+{
+  "title": "Bridgeport 2.0 got faster everywhere",
+  "subtitle": "Reduction in p99 latency by endpoint, v1 to v2.0",
+  "unit": "%",
+  "yMax": 100,
+  "highlightIndex": 0,
+  "bars": [
+    { "label": "metrics-summary",         "value": 99.4 },
+    { "label": "server-metrics-history",  "value": 97 },
+    { "label": "dashboard first paint",   "value": 92 },
+    { "label": "health-status",           "value": 81 },
+    { "label": "service-metrics-history", "value": 79 }
+  ]
+}

@@ -45,30 +45,31 @@ html, body {
   position: relative;
   z-index: 2;
   padding: 0 64px;
-  display: flex; flex-direction: column; gap: 32px;
+  display: flex; flex-direction: column; gap: 44px;
   width: 100%;
   box-sizing: border-box;
+  transform: translateY(-48px);
 }
 .title {
   font-family: var(--font-display);
-  font-size: 96px; font-weight: 700; line-height: 1.05;
+  font-size: 106px; font-weight: 700; line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--text);
   margin: 0;
   text-shadow: 0 2px 24px rgba(14,19,30,0.45);
 }
 .subtitle {
-  font-size: 42px; font-weight: 400; line-height: 1.3;
+  font-size: 55px; font-weight: 400; line-height: 1.3;
   color: var(--text-muted);
   margin: 0;
   max-width: 1240px;
   text-shadow: 0 2px 16px rgba(14,19,30,0.45);
 }
-.title.size-xl  { font-size: 116px; }
-.title.size-l   { font-size: 104px; }
-.title.size-m   { font-size: 80px; }
-.title.size-s   { font-size: 64px; }
-.subtitle.size-s { font-size: 34px; }
+.title.size-xl  { font-size: 128px; }
+.title.size-l   { font-size: 114px; }
+.title.size-m   { font-size: 88px; }
+.title.size-s   { font-size: 70px; }
+.subtitle.size-s { font-size: 45px; }
 /* Bottom-right scrim guarantees signature legibility on bright heroes */
 .sig-scrim {
   position: absolute; right: 0; bottom: 0;
@@ -101,7 +102,11 @@ const subtitleEl = document.getElementById('subtitle');
 const title = d.title || '';
 const subtitle = d.subtitle || '';
 titleEl.textContent = title;
-subtitleEl.textContent = subtitle;
+// Honor explicit line breaks (\n) in the subtitle; plain text otherwise.
+subtitle.split('\n').forEach((line, i) => {
+  if (i > 0) subtitleEl.appendChild(document.createElement('br'));
+  subtitleEl.appendChild(document.createTextNode(line));
+});
 
 // Adapt title size to length so it fits cleanly without manual tweaks
 if (title.length > 80) titleEl.classList.add('size-s');

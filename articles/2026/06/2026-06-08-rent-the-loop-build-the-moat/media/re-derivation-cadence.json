@@ -1,0 +1,13 @@
+{
+  "template": "flow",
+  "title": "The week a model ships",
+  "subtitle": "The benchmark ritual stops at 'swap the string.' The harness work starts there, and part one called it the actual moat.",
+  "caption": "Run it every release, not in a panic. The team that does pulls a little further ahead each time.",
+  "highlightStageIndex": 3,
+  "tracks": [
+    {
+      "label": "Re-derivation",
+      "stages": ["Model ships", "Audit the bets", "Delete dead gates", "Hunt the new edge", "Re-baseline"]
+    }
+  ]
+}

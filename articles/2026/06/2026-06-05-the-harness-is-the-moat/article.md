@@ -80,6 +80,10 @@ Here is the strongest objection, and it comes from the same Anthropic post I kee
 
 This is not hypothetical, and they show their own work on it. They built context resets into their harness because Opus 4.5 got anxious as its context filled up. Opus 4.6 mostly stopped doing that, so they deleted the resets entirely. The scaffolding that was load-bearing in one version was dead weight in the next. The same post has a sequel to the two-hundred-dollar run, too: on the newer model they built a full audio workstation for a hundred and twenty-four dollars, sustaining hours of coherent work after stripping out the structure the older model had needed. The model improved and the harness shrank to meet it.
 
+::: wide
+![Two lines cross: as model capability rises across Opus 4.5, 4.6, and 4.8, the scaffolding the model still needs falls away. The harness encodes the model's current weaknesses, and they expire on each release.](media/harness-depreciation.webp)
+:::
+
 It is not only the model side. The labs are now selling the harness directly. Anthropic shipped [Managed Agents](https://www.anthropic.com/engineering/managed-agents) in April, a hosted service that runs the agent loop, the sandbox, and the session log on their infrastructure for eight cents a session-hour. The generic orchestration layer, the part everyone was writing from scratch a year ago, is becoming something you rent.
 
 So if the components depreciate and the plumbing commoditizes, where is the moat?
@@ -89,6 +93,10 @@ Not in any single gate. In two things the next model release cannot touch and th
 The first is the part of the harness that encodes your domain instead of the model's limits. Your deploy gates. Your permission boundaries. The verification that knows what correct means in your product, on your data, against the way your customers actually use it. Managed Agents will run the loop. It will not know that a green diff touching the billing path still needs a human, or that your migrations have a failure mode the last three agents already hit. You earned that knowledge in production, and no model upgrade ships with it preinstalled.
 
 The second is the one that compounds. Because the harness depreciates, the durable skill is not owning the right harness. It is re-deriving it faster than anyone else every time the model moves: knowing which assumptions just went stale, which gates to delete, which to keep, where the new failure surface opened up. That is not an artifact you build once. It is a capability that lives in the team, and it sharpens with every release while everyone still treating the model as the variable is learning the new failure modes from their first outage.
+
+::: wide
+![Two columns. Left, muted: the rented half of the harness, the generic agent loop, sandboxes, and session state that Anthropic now sells as a hosted service. Right, in teal: the owned half, your deploy gates, domain verification, accumulated failure history, and the skill of rebuilding it when the model moves. The moat is the right column.](media/rented-vs-owned.webp)
+:::
 
 ## What you actually own
 

@@ -10,9 +10,32 @@ Concept: the engine is the model (the impressive commodity everyone benchmarks);
 
 ---
 
-## Section diagram (already rendered — flow chart)
+## Section diagrams (rendered charts, not AI images)
 
-The §2 visual ("What a harness actually is") is a rendered chart, not an AI image:
-`media/model-one-stage.webp` (spec: `media/model-one-stage.json`, template `flow`).
+All three section visuals are rendered charts from JSON specs via `charts/render.mjs`, in the navy + teal studio palette with the JG wordmark. No AI image needed for any of these slots.
 
-The model is the single teal-highlighted stage ("Model writes code"); the surrounding stages and gate labels are the harness. No AI image needed for this slot.
+### §2 "What a harness actually is" — `model-one-stage.webp` (template `flow`)
+
+The model is the single teal-highlighted stage ("Model writes code"); the surrounding stages and gate labels are the harness.
+
+### §6 "Won't the model just eat the harness?" — `harness-depreciation.webp` (template `line`)
+
+Two lines cross: as model capability rises across Opus 4.5 → 4.6 → 4.8, the scaffolding the model still needs falls away (teal). Illustrative; the documented anchor is the 4.5 → 4.6 step (context resets + sprint decomposition removed, $200 → $124). Carries the depreciation thesis as a shape.
+
+```bash
+node charts/render.mjs --template line \
+  --data articles/2026/06/2026-06-05-the-harness-is-the-moat/media/harness-depreciation.json \
+  --output articles/2026/06/2026-06-05-the-harness-is-the-moat/media/harness-depreciation.webp \
+  --width 1600 --height 900 --scale 2
+```
+
+### §6 payoff (before "What you actually own") — `rented-vs-owned.webp` (template `feature-compare`)
+
+Left card (muted): the rented, commoditizing generic loop — agent loop, sandboxes, session state — now sold as Managed Agents. Right card (teal): the owned half that is the moat — your deploy gates, domain verification, failure history, and the skill of re-deriving the harness when the model moves. Arrow labelled "where the moat sits" points right.
+
+```bash
+node charts/render.mjs --template feature-compare \
+  --data articles/2026/06/2026-06-05-the-harness-is-the-moat/media/rented-vs-owned.json \
+  --output articles/2026/06/2026-06-05-the-harness-is-the-moat/media/rented-vs-owned.webp \
+  --width 1600 --height 820 --scale 2
+```

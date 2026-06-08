@@ -1,0 +1,13 @@
+{
+  "template": "line",
+  "title": "The harness shrinks to meet the model",
+  "subtitle": "Every gate encodes a model weakness. When the model outgrows the weakness, the gate becomes dead weight and comes out.",
+  "unit": "",
+  "beginAtZero": true,
+  "caption": "Illustrative; the documented step is Opus 4.5 to 4.6. Once the newer model stopped needing them, Anthropic removed context resets and sprint decomposition, and a leaner harness ran a full audio workstation for $124 against the older $200 run.",
+  "labels": ["Opus 4.5", "Opus 4.6", "Opus 4.8"],
+  "series": [
+    { "label": "Scaffolding the model still needs", "values": [100, 60, 38], "color": "#44d8f1" },
+    { "label": "Model capability", "values": [72, 88, 96], "color": "#bdc2ff" }
+  ]
+}

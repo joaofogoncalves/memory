@@ -1,0 +1,27 @@
+{
+  "template": "feature-compare",
+  "title": "The harness has a rented half and an owned half",
+  "subtitle": "The generic loop is becoming a line item you rent. The moat is the half that encodes your domain, and how fast you rebuild it when the model moves.",
+  "arrowLabel": "where the moat sits",
+  "caption": "Anthropic's Managed Agents now runs the loop, the sandbox, and the session log as a hosted service. The right column is the part no model release or hosted runtime ships with.",
+  "left": {
+    "label": "Rented · commoditizing",
+    "title": "The generic loop",
+    "items": [
+      "The agent loop that decides the next step",
+      "Sandboxes and tool execution",
+      "Session and state persistence",
+      "Now sold hosted: Managed Agents, $0.08 a session-hour"
+    ]
+  },
+  "right": {
+    "label": "Owned · the moat",
+    "title": "The part that encodes your domain",
+    "items": [
+      "Your deploy gates and permission boundaries",
+      "Verification that knows what correct means in your product",
+      "The failure history the last three agents already hit",
+      "The skill of re-deriving it faster every time the model moves"
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 date: 2026-06-07
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7469639285458173952/"
 x_url: "https://x.com/joaofogoncalves/status/2063737601732083972"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-272337016"
 tags: [open-source, devtools, software-engineering, bridgeport]

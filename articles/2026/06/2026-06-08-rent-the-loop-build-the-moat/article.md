@@ -12,7 +12,7 @@ draft: true
 
 Part one ended on a line that is easy to nod at and hard to act on: the moat is not the harness you have, it is how fast you can rebuild it when the model moves. True. Also useless on a Monday.
 
-Nobody ships "how fast you can rebuild it." They ship a decision about what to write themselves and what to pull off a shelf, then they live with that decision for a year. So this is the part [the argument](/articles/2026/06/2026-06-05-the-harness-is-the-moat/) skipped. Where the line goes.
+Nobody ships "how fast you can rebuild it." They ship a decision about what to write themselves and what to pull off a shelf, then they live with that decision for a year. So this is the part [the argument](/articles/2026/06/2026-06-08-the-harness-is-the-moat/) skipped. Where the line goes.
 
 ## Draw the line
 

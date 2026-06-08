@@ -2,12 +2,11 @@
 title: "The Harness Is the Moat"
 subtitle: "The model is the part everyone benchmarks. The reliability layer around it is the part that actually ships."
 description: "Everyone benchmarks and swaps the model. The teams shipping agents in production compete on the harness, the reliability layer no benchmark scores."
-date: 2026-06-05
+date: 2026-06-08
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
 substack_url:
 hero_image: media/hero.jpg
 reading_time: 9
-draft: true
 ---
 
 There is a ritual that runs in most engineering orgs right now. A new model drops. Someone reads the benchmark card, runs it against an internal eval, posts the delta in a channel, and files a ticket to swap the API string. The model is treated as the variable. Turn the knob, get more capability, ship better agents.

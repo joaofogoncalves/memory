@@ -4,7 +4,7 @@ subtitle: "The model is the part everyone benchmarks. The reliability layer arou
 description: "Everyone benchmarks and swaps the model. The teams shipping agents in production compete on the harness, the reliability layer no benchmark scores."
 date: 2026-06-08
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
-substack_url:
+substack_url: "https://joaofogoncalves.substack.com/p/2026-06-08-the-harness-is-the-moat"
 hero_image: media/hero.jpg
 reading_time: 9
 ---

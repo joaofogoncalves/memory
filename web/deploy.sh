@@ -35,8 +35,12 @@ set +a
 OPAL_SSH_PORT="${OPAL_SSH_PORT:-22}"
 
 # Build first via uv (auto-syncs the project env from pyproject.toml).
+# Capture build output so draft URLs can be surfaced after deploy, while
+# still streaming it to the terminal live.
 echo "Building site..."
-(cd "$ROOT_DIR" && uv run python "$SCRIPT_DIR/build.py")
+BUILD_LOG="$(mktemp)"
+trap 'rm -f "$BUILD_LOG"' EXIT
+(cd "$ROOT_DIR" && uv run python "$SCRIPT_DIR/build.py") | tee "$BUILD_LOG"
 
 # Deploy via rsync
 echo ""
@@ -46,6 +50,27 @@ rsync -avz --delete \
   -e "ssh -p $OPAL_SSH_PORT" \
   "$DIST_DIR/" \
   "${OPAL_SSH_USER}@${OPAL_SSH_HOST}:${OPAL_APP_PATH}/"
+
+# Surface draft article URLs (unlisted — reachable only by direct link).
+# Build prints "Draft: /articles/drafts/<token>/  (<slug>)" lines; turn each
+# into a full URL using SITE_URL from .env (falls back to the relative path).
+DRAFT_LINES="$(grep -E 'Draft: /articles/drafts/' "$BUILD_LOG" 2>/dev/null || true)"
+if [ -n "$DRAFT_LINES" ]; then
+  BASE="${SITE_URL:-}"; BASE="${BASE%/}"
+  echo ""
+  echo "Draft articles (unlisted — direct link only):"
+  while IFS= read -r line; do
+    path="$(printf '%s\n' "$line" | grep -oE '/articles/drafts/[a-f0-9]+/')"
+    [ -n "$path" ] || continue
+    slug=""
+    case "$line" in *\(*\)*) slug="${line##*\(}"; slug="${slug%%\)*}" ;; esac
+    if [ -n "$slug" ]; then
+      echo "  ${BASE}${path}  (${slug})"
+    else
+      echo "  ${BASE}${path}"
+    fi
+  done <<< "$DRAFT_LINES"
+fi
 
 echo ""
 echo "Deploy complete."

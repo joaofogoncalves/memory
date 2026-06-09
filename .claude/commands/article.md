@@ -327,12 +327,12 @@ Save a copy-pasteable critique prompt the user can take to another AI (ChatGPT, 
 Write to `articles/YYYY/MM/YYYY-MM-DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
 
 Compute the draft URL:
-- Token: `sha256(slug)[:16]` (same method `web/build.py` uses for draft routing)
+- Token: `sha256("<YYYY-MM-DD-slug>")[:16]` — hash the FULL directory name **with the date prefix**, not the bare slug. This is what `web/build.py` actually uses for draft routing; hashing the slug alone yields a dead URL the reviewer can't open.
 - URL: `{SITE_URL}/articles/drafts/{token}/`
 - Read `SITE_URL` from `.env`; fall back to `yoursite.com` if missing.
-- Use `python -c "import hashlib; print(hashlib.sha256('<slug>'.encode()).hexdigest()[:16])"` to compute the token.
+- Compute: `python -c "import hashlib; print(hashlib.sha256('<YYYY-MM-DD-slug>'.encode()).hexdigest()[:16])"` — pass the full dated directory name (e.g. `2026-06-08-rent-the-loop-build-the-moat`), then confirm it matches the `/articles/drafts/<token>/` path `build.py` prints for this draft.
 
-Template (substitute `{AUDIENCE}` with the audience from Step 2.5, and `{DRAFT_URL}` with the computed URL):
+Template (substitute `{AUDIENCE}` with the audience from Step 2.5, `{THESIS}` with the article's one-line thesis / promise to the reader from Step 3, and `{DRAFT_URL}` with the computed URL):
 
 ```markdown
 # Critique prompt
@@ -347,26 +347,37 @@ You are an experienced editor and subject-matter skeptic. The draft article is p
 
 **Target audience:** {AUDIENCE}
 
+**What the piece is trying to argue (its promise to the reader):** {THESIS}
+
 **Draft article URL:** {DRAFT_URL}
 
 ---
 
-**Review criteria — give specific, quote-level feedback on each:**
+**First, verify — don't take the article's word for anything.** This is where the most damaging problems hide, so do it before the stylistic pass:
+
+- **Check the sources.** Fetch what the article cites. Confirm every direct quote is represented faithfully and not truncated or cherry-picked into meaning something the source doesn't. Flag any quote where the source actually argues the *opposite* of how it's used.
+- **Check the facts.** Spot-check the 3–4 most load-bearing claims against current reality — model versions, benchmark numbers, dates, and statistics go stale or get mischaracterized fast. Flag anything outdated, wrong, or stretched beyond what the data supports (e.g. a statistic about one thing used to prove another).
+- **Flag your own uncertainty.** Mark which of your points you actually verified versus believe from memory, so the author doesn't chase a correction that turns out to be your error.
+
+**Then review — give specific, quote-level feedback on each:**
 
 1. **Argument strength.** Is the thesis actually supported by the evidence and examples? Where are the gaps or unproven leaps?
-2. **Evidence.** Which claims need a citation or concrete example? Which feel assertive without grounding?
-3. **Voice consistency.** Where does the writing drift into corporate, generic, or AI-ish language? Quote specific phrases.
-4. **Weakest section.** If you had to cut or rewrite one section end-to-end, which one? Why?
-5. **Missing counterargument.** What's the strongest objection a skeptical reader would raise that the article fails to address?
-6. **Overstatements and filler.** Quote specific sentences that are overclaims, hedges, throat-clearing, or fluff.
-7. **Opening and closing.** Does the opening earn the reader's attention? Does the closing land, or fade out?
-8. **Audience fit.** Does the writing match the stated audience? Where is it too technical, not technical enough, or missing their vocabulary?
+2. **Internal consistency.** Does any claim contradict another claim, the title, the subtitle, or the article's own evidence? Does the body actually deliver what the title and the stated thesis promise? Quote both sides of any contradiction — these are the easiest issues to miss and often the most fatal.
+3. **Evidence.** Which claims need a citation or concrete example? Which feel assertive without grounding? (Carry in anything from your source-check above.)
+4. **Voice consistency.** Where does the writing drift into corporate, generic, or AI-ish language? Quote specific phrases.
+5. **Weakest section.** If you had to cut or rewrite one section end-to-end, which one? Why?
+6. **Missing counterargument.** What's the strongest objection a skeptical reader would raise that the article fails to address? Check whether the article's own sources contain that objection.
+7. **Overstatements and filler.** Quote specific sentences that are overclaims, hedges, throat-clearing, or fluff.
+8. **Opening and closing.** Does the opening earn the reader's attention? Does the closing land, or fade out?
+9. **Audience fit.** Does the writing match the stated audience? Where is it too technical, not technical enough, or missing their vocabulary?
 
 **Output format:**
 
-Start with your **top 3 recommended changes** in priority order — the ones that would most improve the piece.
+Start with your **top 3 recommended changes** in priority order — the ones that would most improve the piece. Weight load-bearing problems (a false or contradicted claim, a thesis the evidence doesn't support, a misused source) above stylistic nitpicks.
 
-Then go through each criterion above with specific quotes and line-level suggestions.
+Then go through each item above with specific quotes and line-level suggestions.
+
+End with one constructive note: **the strongest version of this thesis that the article's own evidence actually supports** — even if it's narrower or different from what's currently written. Give the author a direction to rewrite toward, not just a teardown.
 
 Be direct. Don't cushion. The goal is a sharper article, not a comfortable author.
 ```

@@ -2,11 +2,13 @@
 
 ## Hero Image
 
-A photorealistic wide shot of a working craftsman's tool wall at the end of the day: a French-cleat wall hung with dozens of well-used hand tools, each in its own painted outline so the empty spaces read as clearly as the filled ones. One outline near the center is empty, its tool still in use off-frame. Low warm work-lamp light rakes across from the left, catching worn wooden handles, steel, and brass, deep shadows pooling between the tools. Shot on a 35mm lens at f/2, shallow depth of field falling off toward the edges, documentary register, muted warm palette of aged wood and metal, matte finish, no glossy sheen. The wall reads as a system someone built and maintains, not a store display. No text, no logos, no people, no hands. Centered composition with breathing room at the edges for thumbnail cropping.
+A photorealistic wide shot inside the same dim industrial engine test cell as part one ("The Harness Is the Moat"): the jet turbine still clamped in its steel test rig, but now a single technician in work clothes is mid-task on the scaffolding, reaching into the cabling, reading an instrumentation panel, adjusting a mount. The rig and the person are the subject. The engine sits behind them, unchanged. 35mm lens, shallow depth of field, cold blue-grey industrial light with one warm sodium work-lamp raking across the worker's hands and the panel. Edward Burtynsky / Wired documentary mood, muted desaturated palette, matte finish, no glossy CGI sheen. Face away or obscured, not a portrait. No text, no logos. Subject centered with breathing room for thumbnail cropping.
 
 Format: 1440x900px (16:10) · JPG
 
-Concept: the owned, maintained layer. Every tool earned its outline (the skills-as-a-ledger-of-failures idea); the empty slot is the gate currently in your hand (the re-derivation cadence). Off-palette and warm, contrasting the rented, disposable loop. Heroes are not bound by the site's navy + teal scheme.
+Concept: deliberate series continuity with part one's hero. Same engine test cell, same Burtynsky / Wired register, same cold-blue plus warm-lamp lighting. Part one showed the engine dwarfed by the rig (the system); part two shifts focus to the human working the rig, which is the re-derivation cadence and the close, "it lives in the team, not the repo." Introducing a figure in part two is the intended progression from part one's empty cell. Hero is off the site's navy + teal palette by design.
+
+(Superseded: the earlier draft prompt for this slot was a craftsman's tool-wall. Replaced for series visual continuity with part one.)
 
 ---
 

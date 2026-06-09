@@ -5,7 +5,7 @@ description: "Rent the agent loop. Build the harness that knows your domain. The
 date: 2026-06-08
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
 substack_url:
-hero_image:
+hero_image: media/hero.jpg
 reading_time: 8
 draft: true
 ---

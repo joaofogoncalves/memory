@@ -64,7 +64,13 @@ A new model drops. The cheap move is the one most teams make: swap the string, r
 
 You read your own harness as a list of bets. Every gate, every retry, every reset is a written-down assumption about something the model could not do on its own — and as Anthropic puts it, those assumptions "go stale as models improve." A better model just paid out some of those bets and voided others. Their [own harness](https://www.anthropic.com/engineering/harness-design-long-running-apps) is the cleanest example on the public record: the context resets that Sonnet 4.5 needed became dead weight on Opus 4.5, so they dropped them. The harness got smaller because the model got better, and someone had to notice.
 
-So you audit. The gates I delete are almost always the ones I added to compensate for a model that couldn't hold a plan or keep its context straight. The newer model holds both, and the gate that used to be a guardrail is now just latency. Deleting it is the work most teams skip, because a gate that no longer does anything still reads as safety.
+So you audit. Some gates die because the model got better; some die because your own tooling did, and it pays to know which.
+
+The first kind is a real bet on the model's limits. My agent loop used to stop and ask me to approve each step, because I did not trust it to run unattended. A stronger model earned the trust, the per-step prompts came out, and the loop went autonomous. That was the model paying out a bet I had made against it.
+
+The second kind was never about the model at all. My coordinator used to hand work to its sub-agents through files on disk — a spec file, an issue file, a review-output file — because that was how state moved between them. Then a small tooling change let each agent read the issue and post its own result directly, and the files were gone. No model release did that. It was scaffolding I had mistaken for structure.
+
+Only the first kind compounds, which is why the audit runs as a routine and not a cleanup. Deleting a dead gate is the work most teams skip, because a gate that no longer does anything still reads as safety.
 
 Then you go looking for the new failure surface, because there always is one. A model that writes better code fails in subtler ways. It is confidently wrong about more sophisticated things. The gate that caught last year's mistakes will not see this year's. Finding the new edge before your customers do is not panic; it is a routine you run every release, and each time you run it you pull a little further ahead of the team relearning it from their first outage.
 

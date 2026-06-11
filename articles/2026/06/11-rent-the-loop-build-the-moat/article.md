@@ -2,12 +2,11 @@
 title: "Rent the Loop, Build the Moat"
 subtitle: "Part two. If the harness is the moat, here's where the line sits between what you rent, what you build, and the discipline that keeps it yours."
 description: "Rent the agent loop. Build the harness that knows your domain. The build-vs-buy frameworks cut it wrong, and the half you own is where the moat lives."
-date: 2026-06-08
+date: 2026-06-11
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
 substack_url:
 hero_image: media/hero.jpg
 reading_time: 8
-draft: true
 ---
 
 Part one ended on a line that is easy to nod at and hard to act on: the moat is not the harness you have, it is how fast you can rebuild it when the model moves. True. Also useless on a Monday.

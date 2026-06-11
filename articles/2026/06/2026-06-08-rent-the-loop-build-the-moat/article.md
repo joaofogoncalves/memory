@@ -36,7 +36,7 @@ It is the part everyone underbuilds, because the lazy version is one line: ask t
 
 So the evaluator has to be separate, and it has to grade like a compiler instead of a manager. A compiler does not care how confident the submission is. It runs the check and returns pass or fail. The distinction that makes it real: the evaluator interacts with the running system instead of reading the diff. It clicks the button, hits the endpoint, reads the actual error. A diff that looks correct and a feature that works are different claims, and only one of them ships. [The whole loop rests on that](/articles/2026/05/2026-05-20-building-the-road-to-production-again/): a failure you can detect is the only kind the system recovers from on its own.
 
-In practice this is the least glamorous code in the system and the part I trust most. My agents fail their first CI run roughly seven times in ten, read the red build, and fix themselves before a human looks. [That thirty-percent first-pass rate](/articles/2026/05/2026-05-14-lead-time-is-the-wrong-half/) is not a number I am proud of, and it is not supposed to be. It is the evaluator earning its keep. The gate catches the confident, plausible, wrong output and sends it back, and the loop closes in tokens instead of in a stand-up.
+In practice this is the least glamorous code in the system and the part I trust most. My agents fail their first CI run roughly seven times in ten, read the red build, and fix themselves before a human looks. [That thirty-percent first-pass rate](/articles/2026/05/2026-05-14-lead-time-is-the-wrong-half/) is not a number I am proud of, and it is not supposed to be. It is the evaluator earning its keep. The number that would worry me is not the seven that fail; it is any of the three that pass and shouldn't have. A gate is only worth trusting if its green means green — the failures are cheap, the false pass is the one that reaches a customer. The gate catches the confident, plausible, wrong output and sends it back, and the loop closes in tokens instead of in a stand-up.
 
 The gate that matters most is the one that refuses to grade itself at all. A green diff that touches the billing path does not merge on a passing test. It routes to a human. Not because the model is dumb. Because the cost of being wrong there is asymmetric, and the asymmetry is a fact about my business that no model knows. That rule is a few lines of config and it is pure harness. It will be true on the next model, and the one after that.
 
@@ -67,6 +67,12 @@ You read your own harness as a list of bets. Every gate, every retry, every rese
 So you audit. The gates I delete are almost always the ones I added to compensate for a model that couldn't hold a plan or keep its context straight. The newer model holds both, and the gate that used to be a guardrail is now just latency. Deleting it is the work most teams skip, because a gate that no longer does anything still reads as safety.
 
 Then you go looking for the new failure surface, because there always is one. A model that writes better code fails in subtler ways. It is confidently wrong about more sophisticated things. The gate that caught last year's mistakes will not see this year's. Finding the new edge before your customers do is not panic; it is a routine you run every release, and each time you run it you pull a little further ahead of the team relearning it from their first outage.
+
+## The line keeps moving
+
+There is an obvious objection to all of this. The labs are already selling the part I called un-rentable. Managed Agents productized the loop, the sandbox, and the session log a year after everyone started writing them by hand, and the line between rent and build does not hold still. It moves outward every release, and verification on your own data is the next thing they reach for.
+
+So why bet on the evaluator surviving? Not because a vendor can't build an evaluation framework. They will, and you should use it the day it ships. The reason is narrower and harder to copy: what makes your evaluator correct is the ledger of incidents behind it, and that ledger is written in an ink the vendor cannot read. Your outages. Your data. The way your customers actually break things. They can ship the frame. They cannot ship the contents.
 
 ## It lives in the team, not the repo
 

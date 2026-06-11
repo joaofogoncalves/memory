@@ -6,7 +6,7 @@ allowed-tools: AskUserQuestion, Bash, Edit, Glob, Grep, Read
 
 Scrape the 10 most recent LinkedIn posts and reconcile them with the local archive.
 
-**In the authored-first model**, the site is canonical for posts. You write with `/post`, which saves to `posts/YYYY/MM/YYYY-MM-DD-slug/post.md` and generates paste-ready LinkedIn and X variants that you post natively. The scraper's job here is two-fold:
+**In the authored-first model**, the site is canonical for posts. You write with `/post`, which saves to `posts/YYYY/MM/DD-slug/post.md` and generates paste-ready LinkedIn and X variants that you post natively. The scraper's job here is two-fold:
 
 1. **Refresh engagement** — for every scraped post that matches a local post (by `post_url` or by content fingerprint within 14 days), update `reactions:` and `comments:` in the frontmatter. Body is never touched. This is handled automatically by the scraper.
 2. **Catch authored-post duplicates** — the scraper's URL match can miss authored posts because the user-facing share URL (`linkedin.com/posts/joaofogoncalves_<slug>-<share-id>`) and the activity URN (`linkedin.com/feed/update/urn:li:activity:<activity-id>`) reference the same post with different numeric IDs. This skill detects those duplicates by body fingerprint and merges engagement into the authored version.

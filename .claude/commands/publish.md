@@ -30,13 +30,13 @@ Leave `title`, `subtitle`, `tags`, `substack_url`, `hero_image`, `reading_time` 
 
 ## Step 3: Rename directory and file paths to match new date (if date changed)
 
-Articles live at `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`. If the new date differs from the old one, the directory path needs to match:
+Articles live at `articles/YYYY/MM/DD-slug/article.md` — `YYYY/MM` come from the frontmatter `date:`, and the directory name is the zero-padded **day** plus the slug (e.g. `articles/2026/06/11-rent-the-loop-build-the-moat/`). `build.py` derives year/month/date from frontmatter and uses the directory name verbatim as the URL slug, so the path only needs to carry the day. If the new date differs from the old one, the directory name needs to match:
 
-1. Compute new path: `articles/<new-YYYY>/<new-MM>/<new-YYYY-MM-DD>-<slug>/`
+1. Compute new path: `articles/<new-YYYY>/<new-MM>/<new-DD>-<slug>/` — zero-pad `<new-DD>` (e.g. `08`, `11`) so directories sort chronologically.
 2. If different from current path, `mkdir -p` the new parent and `git mv` the directory so history is preserved.
 3. If the parent month/year directory is now empty, remove it.
 
-The slug portion (everything after the date prefix) stays the same.
+The slug portion (everything after the `DD-` prefix) stays the same.
 
 ## Step 4: Generate Substack paste artifact
 

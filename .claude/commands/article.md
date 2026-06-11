@@ -199,7 +199,7 @@ For each visual decided in Step 5, produce **either** a chart spec (if it maps t
 
 ### Chart specs
 
-For each chart, save a JSON spec to `articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.json`. The JSON must set `template` to the template name and match the shape documented in `charts/README.md`.
+For each chart, save a JSON spec to `articles/YYYY/MM/DD-slug/media/<name>.json`. The JSON must set `template` to the template name and match the shape documented in `charts/README.md`.
 
 Default dimensions when rendering (documented in `charts/README.md`):
 - `flow` horizontal — `--width 1800 --height 620`
@@ -214,8 +214,8 @@ After saving each spec, render it:
 ```bash
 node charts/render.mjs \
   --template <name> \
-  --data articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.json \
-  --output articles/YYYY/MM/YYYY-MM-DD-slug/media/<name>.webp \
+  --data articles/YYYY/MM/DD-slug/media/<name>.json \
+  --output articles/YYYY/MM/DD-slug/media/<name>.webp \
   --width <w> --height <h>
 ```
 
@@ -274,7 +274,7 @@ Present both chart specs and image prompts together with AskUserQuestion:
 ## Step 6: Save the article
 
 1. Generate a slug from the title: key words, lowercased, hyphenated, max 60 chars
-2. Create the directory: `articles/YYYY/MM/YYYY-MM-DD-slug/`
+2. Create the directory: `articles/YYYY/MM/DD-slug/` — `DD` is the zero-padded day (e.g. `08`, `11`); the slug carries no date prefix, since `YYYY/MM` come from the path and the frontmatter `date:`
 3. **Write a meta description** (140–160 characters) for the `description:` frontmatter field. This is what shows up in Google SERP snippets and link previews — it must earn the click on its own. Rules:
    - Distinct from the subtitle (different phrasing, different beat — they sit next to each other in the preview)
    - Lead with the punch, not throat-clearing ("Most teams… X. Here's why."), not "This article explores…"
@@ -302,7 +302,7 @@ draft: true
 **Optional — FAQ section for snippet eligibility.** If the article naturally answers 3+ recurring questions about its topic (often surfaced by the People Also Ask box in Step 2.6), add a `## FAQ` section near the bottom with `### Question?` H3s and a short paragraph answer under each. The build pipeline auto-emits FAQPage JSON-LD when it detects this pattern, which can earn rich-result placement. Don't fabricate questions to game it — the FAQ has to read as a genuine extension of the piece, not a tacked-on SEO tail.
 
 4. Chart specs (`media/<name>.json`) and rendered `.webp` files are already saved from Step 5b. Include inline references (`![caption](media/<name>.webp)`) in the article body at the relevant sections.
-5. If AI image prompts were generated, save them as `articles/YYYY/MM/YYYY-MM-DD-slug/image-prompts.md`:
+5. If AI image prompts were generated, save them as `articles/YYYY/MM/DD-slug/image-prompts.md`:
 
 ```markdown
 # Image Prompts
@@ -324,13 +324,13 @@ draft: true
 
 Save a copy-pasteable critique prompt the user can take to another AI (ChatGPT, Claude.ai, Gemini) for a second-opinion review. This is the main defense against the polish-after-publish loop — catching weak spots while the draft is still a draft.
 
-Write to `articles/YYYY/MM/YYYY-MM-DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
+Write to `articles/YYYY/MM/DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
 
 Compute the draft URL:
-- Token: `sha256("<YYYY-MM-DD-slug>")[:16]` — hash the FULL directory name **with the date prefix**, not the bare slug. This is what `web/build.py` actually uses for draft routing; hashing the slug alone yields a dead URL the reviewer can't open.
+- Token: `sha256("<DD-slug>")[:16]` — hash the **exact directory name** you created (the day-prefixed form, e.g. `11-rent-the-loop-build-the-moat`). This is what `web/build.py` uses for draft routing (`slug = article_dir.name`); hashing anything else yields a dead URL the reviewer can't open.
 - URL: `{SITE_URL}/articles/drafts/{token}/`
 - Read `SITE_URL` from `.env`; fall back to `yoursite.com` if missing.
-- Compute: `python -c "import hashlib; print(hashlib.sha256('<YYYY-MM-DD-slug>'.encode()).hexdigest()[:16])"` — pass the full dated directory name (e.g. `2026-06-08-rent-the-loop-build-the-moat`), then confirm it matches the `/articles/drafts/<token>/` path `build.py` prints for this draft.
+- Compute: `python -c "import hashlib; print(hashlib.sha256('<DD-slug>'.encode()).hexdigest()[:16])"` — pass the exact directory name (e.g. `11-rent-the-loop-build-the-moat`), then confirm it matches the `/articles/drafts/<token>/` path `build.py` prints for this draft.
 
 Template (substitute `{AUDIENCE}` with the audience from Step 2.5, `{THESIS}` with the article's one-line thesis / promise to the reader from Step 3, and `{DRAFT_URL}` with the computed URL):
 

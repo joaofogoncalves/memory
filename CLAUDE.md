@@ -77,7 +77,7 @@ linkedin-post-archiver/  # Project root
 │       └── media/                    # Downloaded images/videos
 │
 ├── articles/                         # Long-form articles (tracked in git)
-│   └── YYYY/MM/YYYY-MM-DD-slug/
+│   └── YYYY/MM/DD-slug/
 │       ├── article.md                # Article markdown with frontmatter
 │       ├── image-prompts.md          # AI image generation prompts (optional)
 │       └── media/                    # Article images (hero, diagrams)
@@ -169,8 +169,8 @@ linkedin-post-archiver/  # Project root
 - All rate limiting handled in `linkedin_client.py`
 
 ### 4. Post Organization (authored-first model)
-- Structure: `posts/YYYY/MM/YYYY-MM-DD-slug/`
-- Slug format: `YYYY-MM-DD-first-words-of-post` (max 60 chars)
+- Structure: `posts/YYYY/MM/DD-slug/`
+- Directory name: `DD-first-words-of-post` (zero-padded day + slug, max 60 chars). `YYYY/MM` come from the path; `build.py` reads the date from frontmatter and uses the directory name as the URL slug, so the date isn't repeated in the name.
 - Duplicate slugs handled with numeric suffixes (-2, -3, etc.)
 - Media stored in `media/` subdirectory per post
 - **Site is canonical for short-form posts.** Authored via `/post`, which saves `post.md` (canonical body) plus `linkedin.md` and `x-thread.md` (paste-ready variants for manual posting). `posts/` is tracked in git — these are authored artifacts the user owns, not just a scraped mirror.
@@ -254,10 +254,10 @@ linkedin-post-archiver/  # Project root
 
 ### 13. Articles Section
 - `articles/` directory stores original long-form content (tracked in git, same as `posts/` now)
-- Structure: `articles/YYYY/MM/YYYY-MM-DD-slug/article.md` with `media/` subdirectory
+- Structure: `articles/YYYY/MM/DD-slug/article.md` with `media/` subdirectory (directory name is the zero-padded day + slug; `build.py` derives year/month/date from frontmatter and uses the directory name as the URL slug, so the date isn't repeated in the name)
 - Article frontmatter: `title`, `subtitle`, `date`, `tags`, `substack_url`, `hero_image`, `reading_time`, `draft` (default true on creation)
-- Draft mode: **new articles always start with `draft: true`** (set by `/article`). Drafts publish at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of slug, 16 chars), excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`.
-- To promote a draft: run `/publish <slug>` — removes `draft: true`, updates `date:` to today, and renames the directory to match the new date so the path stays `articles/YYYY/MM/YYYY-MM-DD-slug/`.
+- Draft mode: **new articles always start with `draft: true`** (set by `/article`). Drafts publish at an obfuscated `/articles/drafts/<token>/` URL (stable sha256 of the directory name, 16 chars), excluded from home, archive, topics, RSS, and sitemap; pages carry `noindex, nofollow` and the drafts tree is disallowed in `robots.txt`.
+- To promote a draft: run `/publish <slug>` — removes `draft: true`, updates `date:` to today, and renames the directory to match the new date so the path stays `articles/YYYY/MM/DD-slug/`.
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally cross-post to Substack → update `substack_url`
@@ -550,7 +550,7 @@ speaking_text: ""               # Short blurb shown on About page
 # Featured posts — auto-updated after each scrape from top engagement (last 90 days)
 # Override with explicit slugs to pin specific posts
 featured_posts:
-  - "YYYY-MM-DD-post-slug"
+  - "DD-post-slug"
 
 # Topics — generates /topics/ index and /topics/{slug}/ pages
 # Nav link appears automatically when this is configured
@@ -688,7 +688,7 @@ class Media:
 - Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
 - Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt. (Substack paste artifact is generated at publish time by `/publish`, not here.)
 - Asks for **target audience** up front (engineering leaders, product/business, generalists, mixed) — threads through angle selection, drafting depth, and visual choices
-- Saves to `articles/YYYY/MM/YYYY-MM-DD-slug/article.md`
+- Saves to `articles/YYYY/MM/DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
 - Generates a **critique prompt** (`critique-prompt.md`) — user pastes into another AI for a sharp second-opinion review before publishing
 - Does NOT generate the Substack paste artifact — that's moved to `/publish` so it's only created when a draft is promoted (saves tokens during the draft iteration loop)
@@ -697,7 +697,7 @@ class Media:
 
 ### /publish - Promote Draft to Published
 - Removes `draft: true` from an article's frontmatter and updates `date:` to today
-- Renames the directory (`articles/YYYY/MM/YYYY-MM-DD-slug/`) via `git mv` so the new date is reflected in the path
+- Renames the directory (`articles/YYYY/MM/DD-slug/`) via `git mv` so the new date is reflected in the path
 - Generates the **Substack paste artifact** (`substack-paste.md`) — reformats the article body for Substack's editor with posting checklist (title, subtitle, canonical URL pointing back to the site, image re-upload reminders). Only generated at publish time to avoid token churn during the draft loop.
 - Pass a slug fragment as arg, or run with no args to pick from a list of drafts
 - Reminds user to rebuild after
@@ -725,7 +725,7 @@ class Media:
 
 ### /post - Short-Form Post Authoring
 - Authors short-form content with the site as canonical home, and generates LinkedIn + X + Substack Note variants for manual posting
-- Writes four artifacts under `posts/YYYY/MM/YYYY-MM-DD-slug/`:
+- Writes four artifacts under `posts/YYYY/MM/DD-slug/`:
   - `post.md` — canonical site version (with `authored: true` in frontmatter, empty `post_url`/`x_url`/`substack_note_url` fields filled in later after posting)
   - `linkedin.md` — LinkedIn paste-ready variant (hook-first, intentional line breaks, 2-4 hashtags, no emojis)
   - `x-thread.md` — X paste-ready variant (single long post by default — X allows long-form now; for posts with an external URL, append one short reply tweet with just the link; no hashtags)

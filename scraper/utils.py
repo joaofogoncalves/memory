@@ -79,10 +79,12 @@ def slugify_post(content: str, date: datetime, max_length: int = 60) -> str:
     """
     Generate a URL-safe slug from post content and date.
 
-    Format: YYYY-MM-DD-first-words-of-post
+    Format: DD-first-words-of-post (zero-padded day prefix). Year and month
+    live in the directory path (posts/YYYY/MM/) and the full date in
+    frontmatter, so only the day is carried in the leaf directory name.
     """
-    # Format date prefix
-    date_prefix = date.strftime('%Y-%m-%d')
+    # Format day prefix (zero-padded, e.g. "08", "11")
+    date_prefix = date.strftime('%d')
 
     # Clean content: remove URLs, hashtags, mentions, and extra whitespace
     clean_content = re.sub(r'http\S+', '', content)

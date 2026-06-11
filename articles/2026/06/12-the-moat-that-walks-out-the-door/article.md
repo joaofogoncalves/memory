@@ -5,7 +5,7 @@ description: "The real moat is your team's judgment, and judgment can quit. Why 
 date: 2026-06-12
 tags: [ai, software-engineering, engineering-leadership]
 substack_url:
-hero_image:
+hero_image: media/hero.jpg
 reading_time: 7
 draft: true
 ---

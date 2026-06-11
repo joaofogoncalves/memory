@@ -1,0 +1,25 @@
+{
+  "template": "feature-compare",
+  "title": "What a runbook can hold",
+  "subtitle": "Documentation transfers the what. The judgment underneath is the part that never writes down.",
+  "left": {
+    "label": "On the page",
+    "title": "What documentation holds",
+    "items": [
+      "Skill files and gate configs",
+      "Runbook steps",
+      "Postmortem timelines",
+      "The answer to the last incident"
+    ]
+  },
+  "right": {
+    "label": "In the head",
+    "title": "What walks out the door",
+    "items": [
+      "Which failures were flukes, which were signal",
+      "When a gate became latency",
+      "The unease about a green test on the billing path",
+      "The instinct for the failure nobody has seen yet"
+    ]
+  }
+}

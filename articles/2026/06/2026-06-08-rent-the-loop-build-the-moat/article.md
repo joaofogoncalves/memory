@@ -74,6 +74,8 @@ Only the first kind compounds, which is why the audit runs as a routine and not 
 
 Then you go looking for the new failure surface, because there always is one. A model that writes better code fails in subtler ways. It is confidently wrong about more sophisticated things. The gate that caught last year's mistakes will not see this year's. Finding the new edge before your customers do is not panic; it is a routine you run every release, and each time you run it you pull a little further ahead of the team relearning it from their first outage.
 
+None of this is free, and it is not for every team. Running the audit every release is a standing tax, and a smaller shop will pin the model for six months and eat the staleness instead — often the right call. But staleness is not static. The model keeps moving whether you audit or not, the un-audited harness keeps rotting, and the distance between the team that re-derives and the team that waits is set by a release cadence neither of them controls.
+
 ## The line keeps moving
 
 There is an obvious objection to all of this. The labs are already selling the part I called un-rentable. Managed Agents productized the loop, the sandbox, and the session log a year after everyone started writing them by hand, and the line between rent and build does not hold still. It moves outward every release, and verification on your own data is the next thing they reach for.
@@ -84,7 +86,7 @@ So why bet on the evaluator surviving? Not because a vendor can't build an evalu
 
 So what is the asset, exactly.
 
-Not the harness. Part one already conceded that one: it depreciates, the model eats pieces of it, the leaner version next quarter is the better one. Not the skills files either. Those are copyable, and a competitor with your repo has all of them.
+Not the harness. Part one already conceded that one: it depreciates, the model eats pieces of it, the leaner version next quarter is the better one. Not the skills files either; those copy too.
 
 The asset is the judgment that decides which gate to delete and which to keep. That judgment does not live in the repo. It lives in the people who were there for the incidents, who know which failures were flukes and which were the model telling them something, who can read a new release and re-derive the harness in a week instead of relearning it over a quarter of outages.
 

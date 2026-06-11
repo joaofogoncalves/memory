@@ -1,0 +1,27 @@
+{
+  "title": "The filter moved",
+  "subtitle": "What separates engineers is shifting from syntax to system",
+  "arrowLabel": "moved",
+  "leftFlex": 0.62,
+  "rightFlex": 1.0,
+  "left": {
+    "label": "OLD FILTER",
+    "title": "Can you write the code?",
+    "items": [
+      "Syntax and language fluency",
+      "Make it compile, make it run",
+      "Knows the framework cold",
+      "Debug it line by line"
+    ]
+  },
+  "right": {
+    "label": "NEW FILTER",
+    "title": "Can you reason about the whole system?",
+    "items": [
+      "Idea to running in someone's hands",
+      "Deploy, scale, fail at 3am",
+      "Attack surface and blast radius",
+      "Taste and product sense on top"
+    ]
+  }
+}

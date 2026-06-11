@@ -132,6 +132,11 @@ if (d.orientation === 'vertical') {
   document.getElementById('arrowSvg').innerHTML =
     '<path d="M10 2 V54" stroke="#bbc9cc" stroke-width="1.5" stroke-linecap="round"/>' +
     '<path d="M3 48 L10 60 L17 48" stroke="#bbc9cc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
+} else if (d.leftFlex != null || d.rightFlex != null) {
+  // Optional asymmetric card widths (horizontal only). Defaults to 1fr / 1fr.
+  const lf = d.leftFlex != null ? d.leftFlex : 1;
+  const rf = d.rightFlex != null ? d.rightFlex : 1;
+  document.getElementById('compare').style.gridTemplateColumns = `${lf}fr auto ${rf}fr`;
 }
 document.getElementById('title').textContent = d.title || '';
 document.getElementById('subtitle').textContent = d.subtitle || '';

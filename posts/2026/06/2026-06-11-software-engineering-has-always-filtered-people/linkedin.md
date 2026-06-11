@@ -1,0 +1,31 @@
+# LinkedIn post — software-engineering-has-always-filtered-people
+
+Paste this directly into LinkedIn's composer. Zero emojis, 2-4 hashtags at the end.
+
+---
+
+Software engineering has always filtered people. The assumption now is that the filter is about to disappear, because the models write the code. It's not disappearing. It's moving.
+
+The old filter was syntax. Could you write the thing, make it compile, get it to run. That's the part the models close. ChatGPT is three years old. Extrapolate another three and producing the code stops being the hard part.
+
+What they don't close is system-wide reasoning. Holding the full thing in your head, from idea to the moment it's running in someone's hands. Not just the SDLC. The whole operating surface underneath it: how it deploys, how it scales, how it fails at 3am, where the attack surface sits, what the blast radius looks like when one service goes down. The model can write the auth flow. Knowing where that auth flow leaks, and what it costs you when it does, is a different skill entirely.
+
+Taste and product sense sit on top of that. But the core is the same: thinking about the whole system, not the syntax of any one piece.
+
+Builders, more than coders.
+
+This isn't true today. You still need deep technical skill to review, operate, and debug what the models produce. The output is fast and confidently wrong often enough that someone has to be able to read it closely, trace it through the infrastructure, and catch the security hole before it ships. But "today" has a short shelf life.
+
+So the intermediate shape is mixed: teams skewed toward builders, with a few deep-tech people in the review seat. Not the permanent structure. The bridge to it.
+
+The field still sorts people. It just stopped sorting on the part that got cheap.
+
+#SoftwareEngineering #AI #EngineeringLeadership
+
+---
+
+**Attach image:** media/image-1.webp
+
+---
+
+**After posting:** copy the LinkedIn permalink and paste it into `post.md` as `post_url:`.

@@ -91,6 +91,7 @@ linkedin-post-archiver/  # Project root
 │   └── commands/                     # Claude Code custom skills
 │       ├── article.md                # /article - long-form article writer
 │       ├── cover-letter.md           # /cover-letter - tailored cover letter for a JD
+│       ├── humanize.md               # /humanize - strip AI tells from a draft (two-pass audit in your voice)
 │       ├── interview-prep.md         # /interview-prep - prep doc for a specific interview
 │       ├── outreach.md               # /outreach - recruiter / HM / founder DMs + emails
 │       ├── pdf.md                    # /pdf - CV PDF generator (generic + JD-tailored)
@@ -261,9 +262,9 @@ linkedin-post-archiver/  # Project root
 - `article_style.md` — supplements `writing_style.md` with long-form patterns (section headers, citations, pacing)
 - Same core voice as LinkedIn posts, scaled up for longer format
 - Build workflow: write article locally → build site → deploy → optionally cross-post to Substack → update `substack_url`
-- The `/article` skill handles drafting; the `/publish` skill promotes a draft AND produces the `substack-paste.md` artifact ready to paste into Substack (with canonical URL pointing back to the site). Generating Substack paste only at publish time avoids wasted token churn during the draft loop. `/post` handles the LinkedIn + X promotion posts (decoupled).
+- The `/article` skill handles drafting; the `/publish` skill promotes a draft (flips the draft flag, updates the date, renames the directory). Cross-posting to Substack uses Substack's own **Import** tool pointed at the canonical site URL — no paste artifact is generated, since the import pulls body, formatting, and images directly from the deployed page. `/post` handles the LinkedIn + X promotion posts (decoupled).
 - Articles appear on: home page (Start Here spotlight + Essays grid — articles are the primary content on the home page), `/articles/` archive, `/articles/YYYY/MM/slug/` pages, RSS feed, sitemap
-- **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (via `substack-paste.md` for articles, `substack-note.md` for short-form Notes) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native artifact; no platform sees a generic cross-post.
+- **Distribution stack**: site is canonical (SEO + long-term home) → Substack for email + discovery (articles via Substack's Import-from-URL tool, short-form Notes via `substack-note.md`) → LinkedIn + X for short-form cold reach (via `/post`). Each surface gets a surface-native treatment; no platform sees a generic cross-post.
 - **Why separate from posts:** articles are long-form authored content with different frontmatter (title, subtitle, hero_image, reading_time). Short-form posts now also live in the site as canonical, but have their own structure optimized for short-form rhythm.
 
 ### 14. Image Specs
@@ -686,21 +687,21 @@ class Media:
 ### /article - Long-Form Article Writer
 - Writes long-form articles (1,000-3,500 words) for the website's articles section
 - Follows `article_style.md` (supplement) + `writing_style.md` (primary) + `profile.md` (voice)
-- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt. (Substack paste artifact is generated at publish time by `/publish`, not here.)
+- Workflow: gather input → research sources → pick target audience → propose angles → outline → draft → image prompts → save → generate critique prompt.
 - Asks for **target audience** up front (engineering leaders, product/business, generalists, mixed) — threads through angle selection, drafting depth, and visual choices
 - Saves to `articles/YYYY/MM/DD-slug/article.md`
 - Generates image prompts (hero + section diagrams) following `taste.md`
 - Generates a **critique prompt** (`critique-prompt.md`) — user pastes into another AI for a sharp second-opinion review before publishing
-- Does NOT generate the Substack paste artifact — that's moved to `/publish` so it's only created when a draft is promoted (saves tokens during the draft iteration loop)
+- Does NOT handle Substack — cross-posting happens at publish time via Substack's Import-from-URL tool (pointed at the canonical site URL), not a generated paste file
 - Decoupled from LinkedIn/X: reminds user to run `/post` for the short-form promo on LinkedIn and X after article is finalized
 - Article frontmatter: title, subtitle, date, tags, substack_url, hero_image, reading_time, draft (always true on creation)
 
 ### /publish - Promote Draft to Published
 - Removes `draft: true` from an article's frontmatter and updates `date:` to today
 - Renames the directory (`articles/YYYY/MM/DD-slug/`) via `git mv` so the new date is reflected in the path
-- Generates the **Substack paste artifact** (`substack-paste.md`) — reformats the article body for Substack's editor with posting checklist (title, subtitle, canonical URL pointing back to the site, image re-upload reminders). Only generated at publish time to avoid token churn during the draft loop.
+- Does not generate a Substack paste file — Substack's **Import** tool pulls the published article straight from its canonical URL (body, formatting, images). The confirm step reminds the user to deploy first, then import and set the Substack canonical URL back to the site.
 - Pass a slug fragment as arg, or run with no args to pick from a list of drafts
-- Reminds user to rebuild after
+- Reminds user to rebuild/deploy after (deploy must happen before the Substack import, since the import reads the live page)
 
 ### /pdf - CV PDF Generator
 - Generates a styled PDF version of the CV matching the site's brutalist dark theme
@@ -746,6 +747,16 @@ class Media:
 - For genuinely-new posts (things posted manually on LinkedIn without running `/post`), applies light noise curation: milestone posts, empty/placeholder posts, one-line reactions, pure reposts — flags each with a reason, user confirms drops via AskUserQuestion
 - **No longer does self-article-promo detection** — in the authored-first model, promo posts for articles are authored via `/post` and are canonical site content, not noise
 - Run before `pipeline.sh --skip-scrape` to keep engagement data fresh and catch stragglers
+
+### /humanize - Strip AI Tells from a Draft
+- Editing pass (not a rewrite) that removes the characteristic "AI writing" patterns from a piece of text and cleans it in João's voice
+- Adapted from the open-source [humanizer skill](https://github.com/blader/humanizer) — mined for its pattern catalogue and two-pass audit discipline, but calibrated to `writing_style.md` + `profile.md` rather than a generic default voice
+- Input modes: pasted text, a file path, or a post/article slug (located via Glob)
+- **Authoritative home for the AI-tell catalogue** — `/post` and `/article` run the same audit inline during drafting and reference `humanize.md`
+- Catalogue covers hard tells (em dashes, trailing `-ing` "analysis" clauses, copula avoidance like "serves as", significance inflation, "not X but Y", filler), soft tells (synonym cycling, false ranges, compulsive rule-of-three, vague attribution, signposting in both transitional and imperative forms, title-case headings), **cadence tells judged by density across the whole piece** (antithesis/staccato cadence, aphorism-formula section closers, anaphora), and chatbot communication tells
+- **Preserves on a budget** the deliberate signature moves the style guides are built around (the "same X, completely different Y" contrast, closing tricolons, single-line emphasis beats, dry one-liner closers). The discriminator is *density across the whole piece*, never per-instance — a move is a signature in ones and twos and a tell in dozens. This closes the blind spot a corpus-level review exposed: a per-instance "is this one earned?" answers yes every time and never notices it's the fifth.
+- Two-pass: rewrite (fix tells, preserve meaning/structure/length) → audit the rewrite for residual tells → output cleaned text + a short "what changed and why" report
+- For file inputs, offers to apply changes via Edit (body only — frontmatter, hashtags, media untouched); never writes back without confirmation
 
 ### /cover-letter - Tailored Cover Letter
 - Generates a 250–350 word cover letter for a specific job description (URL or text)

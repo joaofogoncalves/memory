@@ -1,10 +1,10 @@
 ---
 argument-hint: [article slug, path, or leave empty to pick]
-description: Promote a draft article to published — remove draft flag, update date, generate Substack paste artifact
-allowed-tools: AskUserQuestion, Glob, Read, Edit, Write, Bash
+description: Promote a draft article to published — remove draft flag, update date, rename directory to match
+allowed-tools: AskUserQuestion, Glob, Read, Edit, Bash
 ---
 
-Promote a draft article to published state by removing `draft: true` from frontmatter, updating `date:` to today, and generating the Substack paste-in artifact.
+Promote a draft article to published state by removing `draft: true` from frontmatter, updating `date:` to today, and renaming the directory to match the new date.
 
 ## Step 1: Locate the draft
 
@@ -38,65 +38,17 @@ Articles live at `articles/YYYY/MM/DD-slug/article.md` — `YYYY/MM` come from t
 
 The slug portion (everything after the `DD-` prefix) stays the same.
 
-## Step 4: Generate Substack paste artifact
+No Substack paste file is generated. Substack's Import tool pulls a published post straight from its canonical URL — body, formatting, and images — so a hand-formatted paste artifact is redundant once the site is deployed. The cross-post happens after the rebuild, driven by the live URL (see the confirm step).
 
-Substack is a distribution surface for the article — email delivery + discovery network — with the article's canonical home on the user's site. Substack has no public API for publishing, so this step produces a paste-ready file the user can drop into Substack's editor in ~2 minutes.
+**Do NOT modify `article.md`** for any downstream surface — the site article is canonical; Substack is downstream.
 
-Generate this only at publish time (not at draft creation) to save tokens during the draft loop.
+## Step 4: Confirm
 
-Save to `articles/<new-path>/substack-paste.md`. The file has two parts: a posting checklist and the article body reformatted for Substack paste.
-
-### Preparation
-
-1. Read the published `article.md` (post-Step-3 path). Extract from frontmatter:
-   - `title`, `subtitle`, `tags`, `hero_image`
-2. Read `SITE_URL` from `.env` — fall back to `yoursite.com` if missing.
-3. Scan the article body for inline images: `![caption](media/filename.ext)`. Collect each filename for the checklist.
-4. Transform the body for paste: replace every `![caption](media/filename.ext)` with `[IMAGE: caption — upload media/filename.ext here]`. This makes missed images impossible to overlook since local paths don't resolve in Substack.
-
-### Template
-
-```markdown
-# Substack paste-in — [article title]
-
-## Posting checklist (do these in Substack's editor)
-
-1. **Title:** [article title from frontmatter]
-2. **Subtitle:** [article subtitle from frontmatter]
-3. **Canonical URL** (Post settings → SEO → Canonical URL): `{SITE_URL}/articles/YYYY/MM/slug/` — this keeps SEO pointed at your site, not Substack.
-4. **Hero image:** upload `media/[hero-image-filename]` at the top of the post (Substack strips local paths on paste; you have to upload through their UI).
-5. **Inline images:** re-upload any of these as you reach them in the body:
-   - `media/[image-1]`
-   - `media/[image-2]`
-6. **Tags:** [comma-separated tags from frontmatter]
-7. At the end of the post, add this canonical-pointer line so readers who found you on Substack know where the piece actually lives:
-
-   > Originally published at [yoursite.com/articles/YYYY/MM/slug](SITE_URL/articles/YYYY/MM/slug/).
-
-## Body to paste
-
-Everything below the `---` line is the article body. Select all and paste into Substack's editor after you've set title and subtitle.
-
----
-
-[TRANSFORMED ARTICLE BODY — everything below the frontmatter, with `![caption](media/*)` replaced by `[IMAGE: caption — upload media/* here]`]
-
----
-
-## After posting
-
-- Grab the Substack post URL.
-- Update the `substack_url:` field.
-- Optional: share the Substack URL in a Notes post on Substack itself for an extra discovery pass.
-```
-
-**Do NOT modify `article.md`** — Substack is downstream; the site article is canonical.
-
-## Step 5: Confirm
+Compute the live URL: read `SITE_URL` from `.env` (fall back to `yoursite.com`), and join it with the new public path `/articles/YYYY/MM/slug/`.
 
 Tell the user:
 - Article title + new path
-- Old draft URL is now dead; new public URL will be `/articles/YYYY/MM/slug/` after rebuild
-- Substack paste-in saved to `articles/<path>/substack-paste.md`
-- Remind: "Rebuild with `python web/build.py` (or `bash pipeline.sh --skip-scrape` to deploy)"
-- Remind: "After publishing to Substack, grab the URL and add `substack_url:` to the article frontmatter"
+- Old draft URL is now dead; new public URL will be `{SITE_URL}/articles/YYYY/MM/slug/` after rebuild
+- Remind: "Rebuild and deploy first: `bash pipeline.sh --skip-scrape` (or `python web/build.py` to build only). Substack's import reads the live page, so it has to be deployed before you import."
+- Remind: "To cross-post to Substack: use its **Import** tool (New post → Import) and point it at the live URL `{SITE_URL}/articles/YYYY/MM/slug/`. It pulls in the body, formatting, and images. Then set the post's canonical URL (Settings → SEO) to that same URL so SEO stays pointed at your site."
+- Remind: "After publishing to Substack, grab the URL and add `substack_url:` to the article frontmatter."

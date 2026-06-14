@@ -142,6 +142,18 @@ Use the audience from Step 2.5:
 - **Generalists**: define technical terms on first use. Prefer concrete stories over abstractions. Analogies carry the explanation.
 - **Mixed**: lead with the broadly accessible frame. One or two technical asides for specialists are fine — don't lose the generalist reader.
 
+### AI-tell audit pass
+
+Before showing the draft, audit the full article against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. Long-form gives tells more room to accumulate, so this matters more here than in a short post. It's a cleanup read, not a content edit — don't restructure the argument or touch the evidence.
+
+Watch especially for the tells the style guides don't already name: trailing `-ing` "analysis" clauses ("…, underscoring the broader shift"), copula avoidance ("serves as", "plays a pivotal role in"), synonym cycling across a long section, and false ranges. Em dashes, hyperbole, signposting ("now let's turn to"), and generic conclusions ("key takeaways") are already banned — confirm none crept in.
+
+Most important for long-form: the **cadence tells**, which are judged by *density across the whole piece*, not per sentence. Count them — antithesis/staccato cadence ("The model was fine." / "Also useless on a Monday."), aphorism-formula section closers ("One compounds the moat. The other borrows against it."), anaphora ("It coordinates… It handles… It recovers…"), and rule-of-three/five stacking. Each is a signature in ones and twos and a tic in dozens. A long article with N sections is exactly where these pile up unnoticed; if every section closes on a balanced aphorism, thin them to the strongest one or two.
+
+**Preserve the deliberate signature moves** (see the Preserve list in `humanize.md`): the "same X, completely different Y" contrast, earned closing tricolons, single-line emphasis beats, and the reframe ending. The closing pattern depends on these — don't flatten them.
+
+This audit is internal and runs every draft. It's distinct from the external critique prompt in Step 7, which is a second-opinion pass on substance and argument.
+
 ### Show draft and iterate
 
 Output the full draft as regular text between horizontal rules (`---`). Then use AskUserQuestion with options:
@@ -390,6 +402,6 @@ Tell the user:
 - Image prompts saved to `articles/[path]/image-prompts.md` (if generated)
 - Remind: "To rebuild the site with this article: `python web/build.py`"
 - Remind: "When ready to promote on LinkedIn and X, run `/post [article-url]`"
-- Remind: "When ready to publish, run `/publish [slug]` — it flips the draft flag and generates the Substack paste-in artifact"
+- Remind: "When ready to publish, run `/publish [slug]` — it flips the draft flag and renames the directory to today's date"
 - Remind: "After publishing to Substack, update `substack_url` in the article frontmatter"
 - Remind: "After generating images, save hero to `media/` folder and update `hero_image` in frontmatter"

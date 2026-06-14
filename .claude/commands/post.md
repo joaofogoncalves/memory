@@ -72,6 +72,14 @@ Additional rules:
 
 This is the **canonical** draft. LinkedIn and X variants will be adapted from it in Step 4 — keep this version clean, platform-neutral, and suitable for the site. The canonical post may contain a link (e.g., to an article you're reacting to), but avoid LinkedIn-specific or X-specific phrasing.
 
+### AI-tell audit pass
+
+Before showing the draft, silently audit it against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. This is a quick second read, not a rewrite — preserve the meaning, structure, and length.
+
+Pay attention to the tells `writing_style.md` doesn't already name: trailing `-ing` "analysis" clauses ("…, highlighting the importance of"), copula avoidance ("serves as", "stands as a testament to"), synonym cycling, and false ranges ("from X to Y"). Em dashes, hyperbole, "not X but Y", corporate-speak, and filler are already banned — confirm none slipped in. A short post has little room for **cadence tells**, but the antithesis/staccato beat ("The model was fine." / "Also useless on a Monday.") can still stack — at this length the budget is one, so keep at most a single instance.
+
+**Preserve the deliberate signature moves** (see the Preserve list in `humanize.md`): the "same X, completely different Y" contrast, earned closing tricolons, single-line emphasis beats, and dry one-liner closers. Don't sand these off chasing a zero-tell score.
+
 ### Show draft and iterate
 
 IMPORTANT: Always output the full draft as regular text in your response BEFORE asking for feedback. Never put the draft inside the `preview` field of AskUserQuestion — previews don't render reliably. The user must be able to read the draft directly in the conversation.

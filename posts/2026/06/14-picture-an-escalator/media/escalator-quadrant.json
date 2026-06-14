@@ -1,0 +1,13 @@
+{
+  "template": "quadrant",
+  "title": "Four ways to ride the AI escalator",
+  "subtitle": "",
+  "xAxis": { "title": "Effort", "low": "Coasting", "high": "Flat out" },
+  "yAxis": { "title": "The escalator (AI)", "low": "Off it", "high": "On it" },
+  "quadrants": {
+    "tl": { "label": "Standing", "tone": "neutral", "description": "Coasting. You arrive with the crowd." },
+    "tr": { "label": "Climbing", "tone": "good", "description": "Working the steps. The only way ahead." },
+    "bl": { "label": "Refusing", "tone": "bad", "description": "Arms crossed. Stuck on the ground floor." },
+    "br": { "label": "The stairs", "tone": "neutral", "description": "Pure effort, no machine. Still losing ground." }
+  }
+}

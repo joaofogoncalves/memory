@@ -4,7 +4,7 @@ subtitle: "Part three. If the moat is the judgment in your team's heads, then th
 description: "The real moat isn't the harness or the docs. It's how fast your team re-derives judgment when the model moves, and that speed can walk out the door."
 date: 2026-06-14
 tags: [ai, software-engineering, engineering-leadership]
-substack_url:
+substack_url: "https://joaofogoncalves.substack.com/p/14-the-moat-that-walks-out-the-door"
 hero_image: media/hero.jpg
 reading_time: 12
 ---

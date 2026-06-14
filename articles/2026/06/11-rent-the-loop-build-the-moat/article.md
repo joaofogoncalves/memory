@@ -4,7 +4,7 @@ subtitle: "Part two. If the harness is the moat, here's where the line sits betw
 description: "Rent the agent loop. Build the harness that knows your domain. The build-vs-buy frameworks cut it wrong, and the half you own is where the moat lives."
 date: 2026-06-11
 tags: [ai, software-engineering, agents, claude-code, engineering-leadership]
-substack_url:
+substack_url: "https://joaofogoncalves.substack.com/p/11-rent-the-loop-build-the-moat"
 hero_image: media/hero.jpg
 reading_time: 8
 ---

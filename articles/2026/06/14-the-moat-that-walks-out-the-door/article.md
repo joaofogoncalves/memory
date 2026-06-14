@@ -1,13 +1,12 @@
 ---
 title: "The Moat That Walks Out the Door"
 subtitle: "Part three. If the moat is the judgment in your team's heads, then the moat can quit. What it takes to keep that judgment from leaving with the people who hold it."
-description: "The real moat is your team's judgment, and judgment can quit. Why you can't write it down, why it rots unused, and what keeps it from walking out the door."
-date: 2026-06-12
+description: "The real moat isn't the harness or the docs. It's how fast your team re-derives judgment when the model moves, and that speed can walk out the door."
+date: 2026-06-14
 tags: [ai, software-engineering, engineering-leadership]
 substack_url:
 hero_image: media/hero.jpg
-reading_time: 11
-draft: true
+reading_time: 12
 ---
 
 Part two ended somewhere uncomfortable, though it read like a win. The moat is not the harness, and it is not the skill files either. Those depreciate and those copy. What is left, the part a competitor cannot lift out of your repo, is the judgment of the people who were there when the system broke. [It lives in the team, not the repo.](/articles/2026/06/11-rent-the-loop-build-the-moat/)
@@ -26,15 +25,15 @@ There is an obvious answer, and a whole industry sells it. Capture the tribal kn
 
 For most of what a team knows, that is right. Write it down. The architecture, the runbook steps, the config, the timeline of what actually happened: all of it belongs on a page, and a team that skips that work is not guarding a moat, it is just undocumented.
 
-But the series has already walked us into the problem with it. The thing we are trying to preserve here is not a fact. It is judgment, and judgment does not hold still long enough to be written down.
+But the series has already walked us into the problem with it. The thing we are trying to preserve here is not a fact. Facts you write down and you are done. This is judgment, and the most you can write down about judgment is the answer it reached last time.
 
 Write a piece of it down completely enough to hand over, and what you have captured is a snapshot: what was true against one model, one architecture, one quarter's failure surface. The harness depreciates, and a frozen record of why you built it depreciates faster, because it cannot tell you which of its reasons still hold. The week a model ships, the page explaining last year's gate is worse than no page. It reads as current. It is not.
 
-So far this is the case against the wiki, and every engineer nodding along has already made it. Keep it in people's heads, then. That is where it has to live, for a reason the next section makes plain. But a head is not a vault, and this is where the easy version of the argument stops too early.
+So far this is the case against the wiki, and every engineer nodding along has already made it. But notice what the case actually shows. The problem is not that judgment cannot be written down. Plenty of it can. The problem is that what you write down is last release's answer, and the model does not hold still. Part one already named the real asset and part two sharpened it: the moat was never the harness you have, it is how fast you rebuild it when the model moves. The moat is a rate.
 
-Judgment in a head fails two ways, and they are not the same problem with the same fix. Left unused, it rots. The senior who built it, then moved to another team and stopped working the surface, is calibrated to failures that have already moved. Use it or lose it is not a slogan here, it is the mechanism. And left in one head, it concentrates, until the moat is a single person with a notice period. That second failure is the one the title is about.
+A rate does not live on a page, and it does not survive in a single head either. It fails two ways, and they are not the same problem with the same fix. Left unused, it slows. The senior who had it, then moved off the surface and stopped re-deriving anything, is back to reading last year's answers like everyone else. And lodged in one person, it is a rate with a notice period, which is the failure the title is about.
 
-So the question part two left open splits in two. You keep judgment exercised so it does not rot. You spread it so it cannot walk out. The rest of this is those two fixes, and the reason a team does neither until it is too late.
+So the question part two left open splits in two. You keep the rate exercised so it does not slow. You spread it so it cannot walk out. First, though, why neither a page nor the model can hold it for you. Then the two fixes, and the reason a team makes neither until it is too late.
 
 ## What a runbook can't hold
 
@@ -42,9 +41,9 @@ This is not an argument against writing things down. It is an argument about wha
 
 Michael Polanyi named it sixty years ago, in a line that has outlived most of what surrounded it: we can know more than we can tell. A diagnostician cannot fully explain the read that took thirty years to build. A senior engineer cannot fully explain why a passing test on the billing path still makes them reach for a second look. They can give you the rule. They cannot give you the thousand cases that taught them when the rule does not apply. The economist David Autor gave the idea a name for the automation age, Polanyi's Paradox: the work hardest to hand to a machine is the work whose rules we cannot fully state, because we never held them as rules.
 
-Documentation catches the what. The skill file, the gate config, the runbook step, the postmortem timeline. All of it real, all of it worth having. What it misses is the judgment underneath: the instinct for which failures were flukes and which were the model telling you something, the feel for when a gate has quietly become latency and when it is still load-bearing.
+Documentation catches the what. The skill file, the gate config, the runbook step, the postmortem timeline. All of it real, all of it worth having. What it cannot catch is the rate: the speed at which someone reads a new release and re-decides which of those entries still hold, which gate was a fluke and which was the model telling you something, which guard has quietly become latency and which is still load-bearing.
 
-Make it concrete, and notice that keeping the page current does not save you. A model ships and you audit the gates. The runbook for the billing path was updated last release, so it is not stale: this gate routes billing diffs to a human because the model cannot be trusted to grade them alone. Then the new model lands and the billing evals come back greener than they have ever been. Read literally, the up-to-date page now says the gate is redundant, because the reason it records no longer holds. The newer engineer cuts it. The one who was there keeps it, and cannot give you the sentence that would go in the wiki. The gate was never really about whether the model was good at billing. It was about the cost of being wrong on billing being asymmetric, which is a fact about the business and not about the model, and no release touches it. The page held the reason that was given. It could not hold the reason that was meant. That gap is the judgment, and it does not close by writing the page more carefully.
+Make it concrete. A model ships and you audit the gates. The runbook for the billing path was updated last release, so it is not stale: this gate routes billing diffs to a human because the model could not grade them safely. Then the new model lands and the billing evals come back greener than they have ever been. Now the page is a question, not an answer. Does the gate still earn its place, or did the release just pay it off? The page cannot tell you, because it records what was decided, not how to decide it again. Answering means re-running the reasoning against the new model: was this gate about the model's weakness, which a better model voids, or about the cost of being wrong on billing being asymmetric, which no release touches? That distinction is not hard to state. It is hard to redraw every release, fast, before you either cut a gate that still matters or keep one that has quietly become latency. The asset is not the sentence in the wiki. It is the speed of drawing the line again.
 
 ::: wide
 ![What documentation holds versus what walks out the door: the skill files and runbooks transfer cleanly; the judgment underneath them does not.](media/runbook-vs-judgment.webp)
@@ -52,21 +51,21 @@ Make it concrete, and notice that keeping the page current does not save you. A 
 
 Your [ledger of incidents](/articles/2026/06/11-rent-the-loop-build-the-moat/) records the answer to the last failure. It cannot record the instinct for the next one, the failure nobody has seen yet, the one that matches no entry in the book.
 
-This is where the AI-era objection lands, and it deserves a straight answer instead of a dodge. The model can read the whole ledger in a way no engineer can, and a frontier model does more than recite it back, it generalizes past the entries. Autor saw the move coming in the same paper that named the paradox: the project of modern machine learning is precisely to overcome Polanyi's Paradox by inferring, from enough examples, the rules we apply but cannot state. So why doesn't that close the gap here.
+This is where the AI-era objection lands, and it deserves a straight answer. The model can read the whole ledger in a way no engineer can, and a frontier model does more than recite it back, it generalizes past the entries. Autor named exactly this in the paper that named the paradox: modern machine learning is the project of overcoming Polanyi's Paradox, inferring from enough examples the rules we apply but cannot state. So won't the model just learn the judgment and hand it back?
 
-Because the part you would need to learn from is the part the ledger never recorded. An incident log holds the decision taken and the symptom seen. It does not hold the hypothesis the on-call discarded in the first thirty seconds, or the unlogged signal that made them distrust the obvious next step, or, in the billing case, the reason that was meant rather than the reason that was written. The tacit layer is missing from the training data for the same reason it was missing from the wiki: nobody could state it well enough to write it down. What the model learns cleanly is the recorded answer to a failure that already happened. The failure that matters is the one that matches no entry yet, where being confidently wrong about something more sophisticated than last year is the entire risk. The model improves on someone else's schedule, and it improves at the answers. The judgment is the part that was never on the page to train on.
+Use it. It will help you re-derive faster, and you should let it. But the same model lands in your competitor's repo the same week, improving on a schedule neither of you sets. What it gives you both is a better engine. What it cannot give either of you is the rate at which your team turns that engine on your own novel failures and redraws your own lines before a customer finds them. The ledger and the model are inputs to that rate. They are not the rate. Autor, who named the paradox as the thing machine learning was trying to dissolve, looked straight at that project and concluded the work demanding judgment was the part that held. The reason is narrow and it is ours: the next failure matches no entry yet, so meeting it is not retrieval, it is re-derivation, done in the moment against a model that just moved under you.
 
-That instinct is the asset, and it is the part no wiki page and no training set has ever held. Which means the people actively working the surface are not a documentation gap waiting to be closed. They are the moat, in the only form the moat takes: judgment in use.
+So the asset is not the instinct sitting in someone's head, which is just another snapshot. It is the rate at which the people working the surface keep redrawing the line as the model moves. They are not a documentation gap waiting to be closed. They are the moat, in the only form it takes: judgment in motion, fast enough to keep up.
 
 ## Onboard into the incident
 
-If judgment only stays sharp while it is being used, you transfer it the way it got built in the first place. Through exposure to failure.
+A rate is not a fact you can hand someone. It is a skill, and you build a skill the way this one got built in the first place. Through exposure to failure.
 
 That sounds soft. It is the most concrete thing in this piece.
 
-When the next incident hits, the move most teams make is to send in whoever can fix it fastest. Of course they do. The system is down. But the fix is the cheap part, and the person doing it already has the judgment. The expensive, durable thing is the reasoning happening out loud while they work, the hypotheses raised and discarded, the read on which signal mattered, and most teams let it evaporate. Put someone newer on the call. Not to watch. To hold the pen while the one with the judgment narrates what they are seeing and why this and not that. The outage is the curriculum. You will not build one this good on purpose.
+When the next incident hits, the move most teams make is to send in whoever can fix it fastest. Of course they do. The system is down. But the fix is the cheap part, and the person doing it already has the rate. The expensive, durable thing is the reps, and most teams let them evaporate. Put someone newer on the call. Not to watch, and not to take dictation. To hold the pen and make some of the calls, while the one who is fast says why this and not that and what to look at next. They are not memorizing your answer; that would be the snapshot again. They are building their own speed at finding it. The outage is the curriculum. You will not build one this good on purpose.
 
-The same logic runs through the re-derivation itself. Auditing the harness when a new model lands, deciding which gates to delete and which to keep, is the highest-judgment work the team does. It is also usually done fast, alone, by the one person who can. That is how you end up with a bus factor of one on the exact capability the series called the moat. Rotate the pen. Make the audit something two people do together, and change who leads it each release. It is slower the first few times. It is the only way the judgment ends up in more than one head.
+The same logic runs through the re-derivation itself. Auditing the harness when a new model lands, deciding which gates to cut and which to keep, is the work that sets the rate. It is also usually done fast, alone, by the one person who can. That is how you get a bus factor of one on the exact capability the series called the moat. Rotate the pen. Make the audit something two people do together, and change who leads it each release. It is slower the first few times. It is how the rate ends up in more than one head.
 
 There is a problem with learning from incidents, and a skeptic names it fast: on a healthy system they are rare. You cannot keep a second person sharp by waiting for the next high-severity failure on the expensive path, because if you are running well, one may not arrive for a quarter. So you stop waiting. The ledger changes job. Stored as a record, it is a filing cabinet nobody opens. Run as a drill, it is the closest thing you have to a flight simulator. Re-run an old incident with someone who was not there, let them make the calls, and only then show them where the real one went. Pilots rehearse the engine failure they will probably never see, on purpose, on the simulator. The entry was paid for once. Nothing says you can only spend it once.
 
@@ -74,7 +73,7 @@ None of this scales to every engineer and every incident, and it is not meant to
 
 ## Hire for the slope
 
-There is a hiring version of this, and it cuts against how most teams write the job description.
+This is where the argument cashes out, because hiring is the one decision that sets your rate for years, and it cuts against how most teams write the job description.
 
 You cannot hire someone who already holds your judgment. Nobody has it. The incidents that built it happened in your production, against your data, with your customers finding the failure modes only your product has. The most experienced engineer on the market arrives with deep judgment about systems that are not yours. That is worth a lot. It is not the same thing.
 
@@ -84,7 +83,9 @@ This is the same direction [the filter has been moving](/posts/2026/06/2026-06-1
 
 The trouble is that slope does not show up on a résumé, and most interview loops are built to measure inventory. You can measure it directly, but not by asking a candidate to guess at a system they have never seen. Give them enough to reason with: a redacted incident writeup from your own history and the slice of the current harness around it, the gates, the retries, what routes to a human and what does not. Then ask what they would look at first, which gate they would re-examine after a model change, and the single question they would put to the on-call to decide whether it still holds. You are not scoring the answer. It is your system and they cannot know it. You are watching how they build the question: what they reach for, which failure modes they suspect, whether they can reason about where this breaks without having lived in it.
 
-The same signal shows up in the first ninety days, and it is the one worth tracking. Not how much they shipped. How soon they could lead a harness audit without a chaperone, take the pen on a real incident and have it go well.
+What you are listening for is specific. Do they surface the unstated assumption behind the old gate, the business fact it was really protecting, in the first few minutes, or do they argue from the eval numbers in front of them. Do they reach for the past incident least like the current symptom and rule it out, or pattern-match to the nearest one. And watch the confound: a candidate who has run a system like yours will look fast because they are recognizing their old one, not re-deriving yours. Probe a part deliberately unlike anything on their résumé, where speed has to come from reasoning and not memory.
+
+The proof comes in the first ninety days, which is also how you learn whether your interview read slope or fooled itself. Not how much they shipped. How soon they could lead a harness audit without a chaperone, take the pen on a real incident, and have it go well.
 
 The engineer who can absorb your ledger in a month and the one who needs a year are not the same hire, even with identical résumés. One compounds the moat. The other borrows against it.
 
@@ -102,6 +103,6 @@ So walk the whole series back out.
 
 The model is rented. It gets better on someone else's schedule, and you take the upgrade when it lands. The harness is owned. It rots on yours, and the work is keeping it from rotting. And the moat underneath both of them, the judgment that decides which gate to cut and which to keep, lives in people. Which means it has legs. It can quit.
 
-You do not protect it by writing it down. The page never held the part that mattered, and the model reading the page inherits the same gap. You protect it the two ways the failures demand: you keep it exercised so it does not rot, and you spread it so it does not leave inside one person's resignation. That means treating every incident as a curriculum and not only a fix, every model release as a lesson and not only a sprint, every hire as a question of how fast someone takes on what only your production could teach. None of it is free, and all of it loses to this quarter unless someone decides it will not. The moat does not last because you locked it in a document, or because one person guards it. It lasts because more than one person is using it, and because the next person is already learning to.
+You do not protect it by writing it down, though you should write down what you can. The page holds last release's answer and the model holds everyone's; neither holds the rate at which you redraw the line when the ground moves. You protect a rate the two ways any practice is protected: you keep it exercised so it does not slow, and you spread it so it does not live on one person's calendar. That means treating every incident as a curriculum and not only a fix, every model release as a drill and not only a sprint, every hire as a question of how fast someone reaches your speed. None of it is free, and all of it loses to this quarter unless someone decides it will not. The moat does not last because you locked it in a document, or because one person guards it. It lasts because more than one person is fast, and because the next one is getting faster.
 
-The harness, you can lose to a better model. The judgment, you can only lose to a worse manager.
+A better offer takes a person. It takes the moat only if you let the moat ride out the door in one head. The harness, you can lose to a better model. The judgment, you can only lose to a worse manager.

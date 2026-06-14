@@ -142,9 +142,9 @@ Use the audience from Step 2.5:
 - **Generalists**: define technical terms on first use. Prefer concrete stories over abstractions. Analogies carry the explanation.
 - **Mixed**: lead with the broadly accessible frame. One or two technical asides for specialists are fine — don't lose the generalist reader.
 
-### AI-tell audit pass
+### AI-tell audit pass (quick first pass)
 
-Before showing the draft, audit the full article against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. Long-form gives tells more room to accumulate, so this matters more here than in a short post. It's a cleanup read, not a content edit — don't restructure the argument or touch the evidence.
+Before showing the draft, audit the full article against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. Long-form gives tells more room to accumulate, so this matters more here than in a short post. It's a cleanup read, not a content edit — don't restructure the argument or touch the evidence. It does **not** replace the full `/humanize` pass that runs after the draft is approved (see "Run the full /humanize pass" below); it just keeps the draft you show the user already mostly clean.
 
 Watch especially for the tells the style guides don't already name: trailing `-ing` "analysis" clauses ("…, underscoring the broader shift"), copula avoidance ("serves as", "plays a pivotal role in"), synonym cycling across a long section, and false ranges. Em dashes, hyperbole, signposting ("now let's turn to"), and generic conclusions ("key takeaways") are already banned — confirm none crept in.
 
@@ -163,6 +163,17 @@ Output the full draft as regular text between horizontal rules (`---`). Then use
 - "Scrap and start over" — back to Step 3
 
 Continue iterating until approved.
+
+### Run the full /humanize pass (mandatory, after approval)
+
+Once the draft is approved ("Looks good"), run the full `/humanize` skill on the **article body** before moving on to images and saving. Don't rely on the inline first-pass audit above — the full skill adds a second audit pass that re-reads the rewrite as a fresh submission (catching tells introduced while fixing others) plus a written change report. Long-form is exactly where residual cadence tells survive a single pass.
+
+- Invoke the `humanize` skill (via the Skill tool) with the approved article body as input (body only — never frontmatter).
+- If it returns changes, adopt the cleaned text as the new body before saving in Step 6.
+- If it comes back clean, the approved draft stands unchanged.
+- Surface the humanize report to the user before continuing.
+
+This is distinct from the external critique prompt in Step 7: `/humanize` is a voice/tell cleanup, the critique prompt is a second-opinion pass on substance. This gate is a standing user preference — the inline pass is a first read, the full `/humanize` two-pass + report is mandatory.
 
 ## Step 5: Decide whether the article needs images or charts
 

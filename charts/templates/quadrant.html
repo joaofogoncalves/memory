@@ -18,29 +18,33 @@
 html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--font-sans); color: var(--text); -webkit-font-smoothing: antialiased; }
 #chart-container {
   width: 100vw; min-height: 100vh;
-  padding: 56px 72px; box-sizing: border-box;
+  padding: 40px 52px; box-sizing: border-box;
   background: var(--bg);
-  display: flex; flex-direction: column; gap: 28px;
+  display: flex; flex-direction: column; gap: 16px;
 }
-.title { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
-.subtitle { font-size: 18px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 900px; line-height: 1.4; }
+.title { font-family: var(--font-display); font-size: 48px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.12; margin: 0; }
+.subtitle { font-size: 22px; font-weight: 400; color: var(--text-muted); margin: 0; max-width: 1000px; line-height: 1.4; }
 .diagram-wrap { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
 svg { max-width: 100%; max-height: 100%; }
-.caption { font-size: 13px; color: var(--text-muted); margin: 0; }
+.caption { font-size: 15px; color: var(--text-muted); margin: 0; }
 </style>
 </head>
 <body>
 <div id="chart-container">
   <h1 class="title" id="title"></h1>
   <p class="subtitle" id="subtitle"></p>
-  <div class="diagram-wrap"><svg id="svg" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="diagram-wrap"><svg id="svg" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg"></svg></div>
   <p class="caption" id="caption"></p>
 </div>
 <script>
 const d = window.__DATA__ || {};
 document.getElementById('title').textContent = d.title || '';
-document.getElementById('subtitle').textContent = d.subtitle || '';
-document.getElementById('caption').textContent = d.caption || '';
+const subEl = document.getElementById('subtitle');
+subEl.textContent = d.subtitle || '';
+if (!d.subtitle) subEl.style.display = 'none';
+const capEl = document.getElementById('caption');
+capEl.textContent = d.caption || '';
+if (!d.caption) capEl.style.display = 'none';
 
 const svg = document.getElementById('svg');
 const xLabel = d.xAxis || { low: 'Low', high: 'High', title: '' };
@@ -48,17 +52,31 @@ const yLabel = d.yAxis || { low: 'Low', high: 'High', title: '' };
 const q = d.quadrants || { tl: {}, tr: {}, bl: {}, br: {} };
 
 const NS = 'http://www.w3.org/2000/svg';
-const ox = 120, oy = 60, w = 960, h = 540;
+const ox = 140, oy = 16, w = 1010, h = 470;
 const cx = ox + w / 2, cy = oy + h / 2;
 
 const displayFont = '"Space Grotesk", "Inter", sans-serif';
 const bodyFont = '"Inter", sans-serif';
 
+// Per-quadrant tone: 'good' (cyan), 'bad' (coral), or 'neutral'. Defaults are
+// positional (tr=good, br=bad, everything else neutral) so existing specs render
+// unchanged; any quadrant can override by setting `tone` in its data.
+const TONES = {
+  good:    { fill: '#17242a', label: '#44d8f1' },
+  bad:     { fill: '#241820', label: '#ff8a9e' },
+  neutral: { fill: '#171b27', label: '#bbc9cc' },
+};
+function toneKey(key, data) {
+  if (data && data.tone && TONES[data.tone]) return data.tone;
+  if (key === 'tr') return 'good';
+  if (key === 'br') return 'bad';
+  return 'neutral';
+}
 const fills = {
-  tl: '#171b27',
-  tr: '#17242a',  // subtle cyan tint
-  bl: '#171b27',
-  br: '#241820',  // subtle coral tint
+  tl: TONES[toneKey('tl', q.tl)].fill,
+  tr: TONES[toneKey('tr', q.tr)].fill,
+  bl: TONES[toneKey('bl', q.bl)].fill,
+  br: TONES[toneKey('br', q.br)].fill,
 };
 const bgRects = [
   { x: ox, y: oy, w: w/2, h: h/2, fill: fills.tl },
@@ -94,46 +112,63 @@ function line(x1, y1, x2, y2, stroke = '#3c494c', width = 1) {
 line(cx, oy, cx, oy + h);
 line(ox, cy, ox + w, cy);
 
-function quadLabel(qx, qy, data, color) {
+const cellW = w / 2, cellH = h / 2;
+// Title + description are centered within each quadrant. The title is larger,
+// with a small vertical gap before the body text; the whole block is centered
+// vertically in the cell.
+function quadLabel(cellLeft, cellTop, data, color) {
   if (!data) return;
-  const g = document.createElementNS(NS, 'g');
+  const cxCell = cellLeft + cellW / 2;
+  const titleSize = 48, descSize = 26, descLineH = 34, gap = 20;
+
+  let lines = [];
+  if (data.description) {
+    const words = data.description.split(' ');
+    lines = [''];
+    const maxLen = 24;
+    for (const wd of words) {
+      if ((lines[lines.length - 1] + ' ' + wd).trim().length > maxLen) lines.push(wd);
+      else lines[lines.length - 1] = (lines[lines.length - 1] + ' ' + wd).trim();
+    }
+  }
+
+  const descBlockH = lines.length ? gap + descSize + (lines.length - 1) * descLineH : 0;
+  const blockH = titleSize + descBlockH;
+  const titleBaseline = cellTop + (cellH - blockH) / 2 + titleSize;
+
   const tLabel = document.createElementNS(NS, 'text');
-  tLabel.setAttribute('x', qx); tLabel.setAttribute('y', qy);
+  tLabel.setAttribute('x', cxCell);
+  tLabel.setAttribute('y', titleBaseline);
+  tLabel.setAttribute('text-anchor', 'middle');
   tLabel.setAttribute('font-family', displayFont);
-  tLabel.setAttribute('font-size', '22');
+  tLabel.setAttribute('font-size', titleSize);
   tLabel.setAttribute('font-weight', '700');
   tLabel.setAttribute('fill', color);
   tLabel.textContent = data.label || '';
-  g.appendChild(tLabel);
+  svg.appendChild(tLabel);
 
-  if (data.description) {
+  if (lines.length) {
     const tDesc = document.createElementNS(NS, 'text');
-    tDesc.setAttribute('x', qx); tDesc.setAttribute('y', qy + 28);
+    tDesc.setAttribute('x', cxCell);
+    tDesc.setAttribute('y', titleBaseline + gap + descSize);
+    tDesc.setAttribute('text-anchor', 'middle');
     tDesc.setAttribute('font-family', bodyFont);
-    tDesc.setAttribute('font-size', '15');
+    tDesc.setAttribute('font-size', descSize);
     tDesc.setAttribute('fill', '#dee2f2');
-    const words = data.description.split(' ');
-    let lines = [''], maxLen = 40;
-    for (const w of words) {
-      if ((lines[lines.length-1] + ' ' + w).trim().length > maxLen) lines.push(w);
-      else lines[lines.length-1] = (lines[lines.length-1] + ' ' + w).trim();
-    }
     lines.forEach((line, i) => {
       const ts = document.createElementNS(NS, 'tspan');
-      ts.setAttribute('x', qx);
-      ts.setAttribute('dy', i === 0 ? 0 : 20);
+      ts.setAttribute('x', cxCell);
+      ts.setAttribute('dy', i === 0 ? 0 : descLineH);
       ts.textContent = line;
       tDesc.appendChild(ts);
     });
-    g.appendChild(tDesc);
+    svg.appendChild(tDesc);
   }
-  svg.appendChild(g);
 }
-const pad = 24;
-quadLabel(ox + pad, oy + pad + 24, q.tl, '#bbc9cc');
-quadLabel(cx + pad, oy + pad + 24, q.tr, '#44d8f1');
-quadLabel(ox + pad, cy + pad + 24, q.bl, '#bbc9cc');
-quadLabel(cx + pad, cy + pad + 24, q.br, '#ff8a9e');
+quadLabel(ox, oy, q.tl, TONES[toneKey('tl', q.tl)].label);
+quadLabel(cx, oy, q.tr, TONES[toneKey('tr', q.tr)].label);
+quadLabel(ox, cy, q.bl, TONES[toneKey('bl', q.bl)].label);
+quadLabel(cx, cy, q.br, TONES[toneKey('br', q.br)].label);
 
 function axisText(x, y, text, opts = {}) {
   const t = document.createElementNS(NS, 'text');
@@ -147,12 +182,12 @@ function axisText(x, y, text, opts = {}) {
   t.textContent = text;
   svg.appendChild(t);
 }
-axisText(cx, oy + h + 40, xLabel.title || '', { anchor: 'middle', size: '14', weight: '600', fill: '#dee2f2', display: true });
-axisText(ox, oy + h + 40, xLabel.low || '', { anchor: 'start' });
-axisText(ox + w, oy + h + 40, xLabel.high || '', { anchor: 'end' });
-axisText(ox - 40, cy, yLabel.title || '', { anchor: 'middle', size: '14', weight: '600', fill: '#dee2f2', display: true, transform: `rotate(-90 ${ox - 40} ${cy})` });
-axisText(ox - 12, oy + 12, yLabel.high || '', { anchor: 'end' });
-axisText(ox - 12, oy + h, yLabel.low || '', { anchor: 'end' });
+axisText(cx, oy + h + 52, xLabel.title || '', { anchor: 'middle', size: '26', weight: '600', fill: '#dee2f2', display: true });
+axisText(ox, oy + h + 52, xLabel.low || '', { anchor: 'start', size: '24' });
+axisText(ox + w, oy + h + 52, xLabel.high || '', { anchor: 'end', size: '24' });
+axisText(ox - 68, cy, yLabel.title || '', { anchor: 'middle', size: '26', weight: '600', fill: '#dee2f2', display: true, transform: `rotate(-90 ${ox - 68} ${cy})` });
+axisText(ox - 22, oy + 18, yLabel.high || '', { anchor: 'end', size: '24' });
+axisText(ox - 22, oy + h, yLabel.low || '', { anchor: 'end', size: '24' });
 </script>
 </body>
 </html>

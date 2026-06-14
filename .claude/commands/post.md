@@ -72,9 +72,9 @@ Additional rules:
 
 This is the **canonical** draft. LinkedIn and X variants will be adapted from it in Step 4 — keep this version clean, platform-neutral, and suitable for the site. The canonical post may contain a link (e.g., to an article you're reacting to), but avoid LinkedIn-specific or X-specific phrasing.
 
-### AI-tell audit pass
+### AI-tell audit pass (quick first pass)
 
-Before showing the draft, silently audit it against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. This is a quick second read, not a rewrite — preserve the meaning, structure, and length.
+Before showing the draft, silently audit it against the AI-tell catalogue in `.claude/commands/humanize.md` (the `/humanize` skill) and fix what you find in place. This is a quick first read, not a rewrite — preserve the meaning, structure, and length. It does **not** replace the full `/humanize` pass that runs after the draft is approved (see "Run the full /humanize pass" at the end of this step); it just keeps the draft you show the user already mostly clean.
 
 Pay attention to the tells `writing_style.md` doesn't already name: trailing `-ing` "analysis" clauses ("…, highlighting the importance of"), copula avoidance ("serves as", "stands as a testament to"), synonym cycling, and false ranges ("from X to Y"). Em dashes, hyperbole, "not X but Y", corporate-speak, and filler are already banned — confirm none slipped in. A short post has little room for **cadence tells**, but the antithesis/staccato beat ("The model was fine." / "Also useless on a Monday.") can still stack — at this length the budget is one, so keep at most a single instance.
 
@@ -91,6 +91,17 @@ Format: output the draft text between horizontal rules (`---`) so it's visually 
 - "Scrap and start over" — ask for new input
 
 If the user selects "Needs changes," revise the draft, output the full revised text again, and ask once more. Continue iterating until they approve.
+
+### Run the full /humanize pass (mandatory, before variants)
+
+Once the canonical draft is approved ("Looks good"), run the full `/humanize` skill on the **canonical body** before generating any platform variants. Do not rely on the inline first-pass audit above — the full skill adds the two things that pass skips: a second audit pass that re-reads the rewrite as a fresh submission (catching tells introduced while fixing others), and a written change report.
+
+- Invoke the `humanize` skill (via the Skill tool) with the approved canonical body as input.
+- If it returns changes, adopt the cleaned text as the new canonical and generate the variants from it.
+- If it comes back clean, the approved canonical stands and you proceed unchanged.
+- Either way, surface the humanize report (what changed / what was deliberately preserved) to the user before moving to Step 4.
+
+This gate is a standing user preference: the inline pass is a first read during drafting; the full `/humanize` two-pass + report is mandatory before variants.
 
 ## Step 4: Generate platform variants
 

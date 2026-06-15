@@ -2,9 +2,9 @@
 date: 2026-06-14
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-upskilling-share-7472213527848534016-OW1u/"
+x_url: "https://x.com/joaofogoncalves/status/2066448045672108403"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-276582963"
 tags: [ai, future-of-work, upskilling]
 angle: The escalator parable — standing on AI is table stakes, climbing it is the only way ahead; the accelerating escalator retires the old "out-work it on the stairs" path that every prior tech revolution allowed.
 template: long-form

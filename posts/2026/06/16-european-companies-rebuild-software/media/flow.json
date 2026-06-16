@@ -1,0 +1,16 @@
+{
+  "template": "flow",
+  "title": "Same choice, two outcomes",
+  "subtitle": "Enforceability sets the equilibrium. The equilibrium sets the ceiling.",
+  "highlightStageIndex": 3,
+  "tracks": [
+    {
+      "label": "United States",
+      "stages": ["Contracts enforceable", "Compliance equilibrium", "Buy the best service", "Scale on others"]
+    },
+    {
+      "label": "Europe",
+      "stages": ["Enforcement weak", "Distrust by default", "Rebuild in-house", "Hit the ceiling"]
+    }
+  ]
+}

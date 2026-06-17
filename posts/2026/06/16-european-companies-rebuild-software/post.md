@@ -2,9 +2,9 @@
 date: 2026-06-16
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_startups-europe-gametheory-share-7472936901700898816-JRC9"
+x_url: "https://x.com/joaofogoncalves/status/2067171350716784964"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-277784307"
 tags: [startups, europe, game-theory]
 angle: US "trust" is an enforceable Nash equilibrium (cheap, fast, winnable litigation), not a cultural virtue. Low enforcement in Europe makes defection cheap, forces vertical integration, and caps company size. AI cuts both ways — the rented frontier widens the gap (data-to-3rd-party trust), cheap in-house build narrows it — and which wins turns on whether the frontier stays rented.
 template: long-form

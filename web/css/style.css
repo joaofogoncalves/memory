@@ -226,6 +226,40 @@ h4 { font-size: 1.1rem; }
   color: var(--bg);
 }
 
+/* Mobile menu toggle (burger) — hidden on desktop, shown ≤768px */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-right: -8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--on-surface-variant);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle:hover .nav-toggle-bar { background: var(--primary); }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 /* --- Noise Overlay (global grain texture) --- */
 .noise-overlay {
   position: fixed;
@@ -2025,6 +2059,51 @@ h4 { font-size: 1.1rem; }
   .page-container { padding: 0 1.25rem; }
   .nav-inner { padding: 0 1.25rem; }
   .footer-inner { padding: 0 1.25rem; }
+
+  /* Mobile nav: logo left, burger right, links collapse into a dropdown */
+  .nav-toggle { display: flex; }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 1.25rem;
+    background: rgba(14, 19, 30, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(60, 73, 76, 0.15);
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transition: max-height 0.25s ease, opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .nav-links.open {
+    max-height: calc(100vh - 60px);
+    visibility: visible;
+    opacity: 1;
+    padding: 0.25rem 1.25rem 0.75rem;
+  }
+
+  .nav-links a {
+    padding: 0.85rem 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(60, 73, 76, 0.12);
+  }
+
+  .nav-links a:last-child { border-bottom: 0; }
+
+  .nav-links a.nav-cta {
+    margin-top: 0.75rem;
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
 
   .hero h1 { font-size: 2.5rem; }
   .hero { padding-top: calc(40px + 2.5rem); padding-bottom: 2rem; }

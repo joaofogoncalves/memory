@@ -396,6 +396,40 @@
     }
   }, { passive: true });
 
+  // --- Mobile nav: burger toggle ---
+  function initNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-links');
+    if (!toggle || !menu) return;
+
+    const close = () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Close when a link is tapped
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (menu.classList.contains('open') &&
+          !menu.contains(e.target) && !toggle.contains(e.target)) {
+        close();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+
   // --- Code block copy buttons ---
   function initCodeCopy() {
     document.querySelectorAll('.post-content pre, .article-content pre').forEach(pre => {
@@ -424,6 +458,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initReveal();
       initCodeCopy();
+      initNav();
       updateNav();
       updateScrollTop();
       updateProgress();
@@ -431,6 +466,7 @@
   } else {
     initReveal();
     initCodeCopy();
+    initNav();
     updateNav();
     updateScrollTop();
     updateProgress();

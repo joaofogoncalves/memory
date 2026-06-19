@@ -664,8 +664,13 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
     nav_cls = 'nav nav--transparent' if transparent else 'nav'
     return f'''<nav class="{nav_cls}">
   <div class="nav-inner">
-    <a href="{prefix}" class="nav-logo-link"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
-    <div class="nav-links">
+    <a href="{prefix}" class="nav-logo-link" aria-label="Home"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <div class="nav-links" id="nav-menu">
       <a href="{prefix}about/"{cls("about")}>About</a>
       {work_link}
       {articles_link}

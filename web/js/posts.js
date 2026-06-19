@@ -396,21 +396,33 @@
     }
   }, { passive: true });
 
-  // --- Mobile nav: burger toggle ---
+  // --- Mobile nav: burger toggle (pushes content down, no overlay) ---
   function initNav() {
     const toggle = document.querySelector('.nav-toggle');
     const menu = document.querySelector('.nav-links');
     if (!toggle || !menu) return;
 
+    const root = document.documentElement;
+
+    const open = () => {
+      menu.classList.add('open');
+      document.body.classList.add('menu-open');
+      // Measure the menu's natural height (with its open padding applied)
+      // and drive both the dropdown reveal and the content push-down.
+      root.style.setProperty('--menu-h', menu.scrollHeight + 'px');
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+
     const close = () => {
       menu.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      root.style.setProperty('--menu-h', '0px');
       toggle.setAttribute('aria-expanded', 'false');
     };
 
     toggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      const open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.classList.contains('open') ? close() : open();
     });
 
     // Close when a link is tapped
@@ -428,6 +440,11 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') close();
     });
+
+    // Close (and reset) when leaving the mobile breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && menu.classList.contains('open')) close();
+    }, { passive: true });
   }
 
   // --- Code block copy buttons ---

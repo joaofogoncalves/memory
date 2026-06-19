@@ -1198,6 +1198,9 @@ h4 { font-size: 1.1rem; }
 }
 
 .about-cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
 }
@@ -2021,6 +2024,10 @@ h4 { font-size: 1.1rem; }
   .nav {
     transition: none;
   }
+  .nav-links,
+  main {
+    transition: none;
+  }
   .hero h1,
   .hero-subline,
   .hero-links {
@@ -2060,7 +2067,8 @@ h4 { font-size: 1.1rem; }
   .nav-inner { padding: 0 1.25rem; }
   .footer-inner { padding: 0 1.25rem; }
 
-  /* Mobile nav: logo left, burger right, links collapse into a dropdown */
+  /* Mobile nav: logo left, burger right, links collapse into a dropdown
+     that pushes the page content down (does not overlay it). */
   .nav-toggle { display: flex; }
 
   .nav-links {
@@ -2078,17 +2086,17 @@ h4 { font-size: 1.1rem; }
     border-bottom: 1px solid rgba(60, 73, 76, 0.15);
     max-height: 0;
     overflow: hidden;
-    visibility: hidden;
-    opacity: 0;
-    transition: max-height 0.25s ease, opacity 0.2s ease, visibility 0.2s ease;
+    transition: max-height 0.28s ease;
   }
 
   .nav-links.open {
-    max-height: calc(100vh - 60px);
-    visibility: visible;
-    opacity: 1;
+    max-height: var(--menu-h, 80vh);
     padding: 0.25rem 1.25rem 0.75rem;
   }
+
+  /* Content slides down by the open menu's height, in sync with it. */
+  main { transition: padding-top 0.28s ease; }
+  body.menu-open main { padding-top: var(--menu-h, 0px); }
 
   .nav-links a {
     padding: 0.85rem 0;
@@ -2098,11 +2106,18 @@ h4 { font-size: 1.1rem; }
 
   .nav-links a:last-child { border-bottom: 0; }
 
+  /* Mark the current page in the dropdown */
+  .nav-links a.active {
+    border-left: 2px solid var(--primary);
+    padding-left: 0.85rem;
+  }
+
   .nav-links a.nav-cta {
     margin-top: 0.75rem;
     align-self: flex-start;
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
+    border-left-width: 1px;
   }
 
   .hero h1 { font-size: 2.5rem; }
@@ -2180,10 +2195,6 @@ h4 { font-size: 1.1rem; }
     margin: 0 -1.25rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-  }
-
-  .topics-grid {
-    grid-template-columns: 1fr;
   }
 
   .now-badges {
@@ -2264,6 +2275,11 @@ h4 { font-size: 1.1rem; }
   font-size: 0.75rem;
   color: var(--outline);
   margin-top: auto;
+}
+
+/* Stack topic cards on mobile (declared after the base rule so it wins) */
+@media (max-width: 768px) {
+  .topics-grid { grid-template-columns: 1fr; }
 }
 
 /* --- Topic Badges (on post pages) --- */

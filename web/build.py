@@ -644,7 +644,7 @@ def _has_public_articles() -> bool:
 
 def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str:
     prefix = '../' * depth
-    cls = lambda name: ' active' if active == name else ''
+    cls = lambda name: ' class="active" aria-current="page"' if active == name else ''
     articles_link = (
         f'<a href="{prefix}articles/"{cls("articles")}>Articles</a>'
         if _has_public_articles() else ''

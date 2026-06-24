@@ -20,7 +20,7 @@ Experts pull 12 actions and 3,200 words out of a single prompt. Novices get 5 ac
 Humans make most of the planning calls. The model makes most of the execution calls. Cheap execution didn't erase the advantage. It moved it upstream, to whoever knows what to build and can tell when it's wrong.
 
 The skill curve didn't flatten. It just stopped being about syntax.
-*Attach: media/image-1.webp*
+*Attach (in this order): media/image-1.webp (the gap held), then media/image-2.webp (does more per prompt)*
 
 **Reply (link):**
 Study:

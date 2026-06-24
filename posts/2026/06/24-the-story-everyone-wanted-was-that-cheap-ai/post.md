@@ -29,3 +29,9 @@ That tracks with the split the data describes: humans make most of the planning 
 The skill curve didn't flatten. It just stopped being about syntax.
 
 **Hashtags:** #AI #SoftwareEngineering #AgenticCoding
+
+## Media
+
+![Expertise and how sessions end — verified success rises from 15% for novices to 33% for experts; the returns-to-expertise gap holds (Anthropic, 400k Claude Code sessions)](media/image-1.webp)
+
+![Claude does more per prompt for more expert users — actions and output words per turn rise with the user's domain expertise; experts pull ~11.7 actions and 3.2k words vs novices' 4.9 and 607](media/image-2.webp)

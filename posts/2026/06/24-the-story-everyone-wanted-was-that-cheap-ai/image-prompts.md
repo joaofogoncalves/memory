@@ -1,6 +1,10 @@
 # Image Prompts
 
-Chosen visual: **screenshot** of Anthropic's own success-rate-by-expertise figure (taste.md category 3 — external chart in its native palette, kept untouched). Save the final crop to `media/image-1.webp`.
+Chosen visual: **two of Anthropic's own study figures**, fetched directly from the announcement CDN and kept in their native palette (taste.md category 3 — external charts, untouched). Resized to 1440px long edge, saved as WebP:
+- `media/image-1.webp` (lead / site thumbnail) — **Figure 5 "Expertise and how sessions end"** (verified success 15% novice → 33% expert; the gap held). Source: `https://www-cdn.anthropic.com/images/4zrzovbb/website/140578bc2523d4945c016d72e69628d2692228c8-1920x1080.png`
+- `media/image-2.webp` — **Figure 3 "Claude does more per prompt for more expert users"** (4.9 actions/607 words → 11.7/3.2k). Source: `https://www-cdn.anthropic.com/images/4zrzovbb/website/a72b63aceab4eadb0baa5799a69cc3ff211e7462-1920x1080.png`
+
+Original single-screenshot capture instructions retained below for reference.
 
 ## Option 1 (chosen): Screenshot of Anthropic's success-rate figure
 Open https://www.anthropic.com/research/claude-code-expertise and find the figure showing verified session success rate by user expertise (novice ~15%, intermediate/expert ~28-33%). Screenshot just that chart.

@@ -24,7 +24,7 @@ Study: https://www.anthropic.com/research/claude-code-expertise
 
 ---
 
-**Attach image:** media/image-1.webp
+**Attach images (in this order):** media/image-1.webp (the gap held — success by expertise), then media/image-2.webp (does more per prompt)
 
 ---
 

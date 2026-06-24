@@ -59,13 +59,13 @@ linkedin-post-archiver/  # Project root
 │   │   ├── posts.js                  # Client-side search/filter (posts page)
 │   │   └── home.js                   # Homepage: particle canvas, spotlight, tabs
 │   ├── img/
-│   │   ├── headshot.jpg              # Author photo for About page
+│   │   ├── headshot.jpg              # Author photo for About page (tracked; public on the site)
 │   │   └── logo.webp                 # Site logo for nav bar
 │   └── dist/                         # Generated site output (git-ignored)
 │
 ├── config/
 │   ├── config.yaml                   # Scraper configuration (tracked)
-│   ├── site.yaml                     # Site personalization (git-ignored)
+│   ├── site.yaml                     # Site personalization (tracked; public identity only)
 │   └── site.yaml.example             # Site config template (tracked)
 │
 ├── examples/
@@ -525,9 +525,9 @@ logging:
   file: logs/scraper.log
 ```
 
-### config/site.yaml (git-ignored)
+### config/site.yaml (tracked — public identity only)
 
-Site identity for the static site generator. Copy from `config/site.yaml.example`:
+Site identity for the static site generator. Tracked in this repo (it holds only public-facing identity — name, bio, social links, thesis — and is needed for the build). For a fresh clone, copy from `config/site.yaml.example`:
 
 ```yaml
 # Identity
@@ -904,10 +904,10 @@ uv run python -m scraper.main --reauth
 - `writing_style.md`, `article_style.md`, `pitch_style.md` (style guides feeding the skills)
 - `articles/` directory (original long-form articles — authored content, not scraped)
 - `posts/` directory (short-form posts — authored via `/post` and historical scrape; the authored-first model treats these as canonical site content the user owns)
+- `config/site.yaml` (site identity — name, bio, social links, thesis; all public-facing and needed for the build, so tracked in this repo. `config/site.yaml.example` remains the template for fresh clones)
+- `web/img/headshot.jpg` (author photo — published on the About page anyway, so tracked here)
 
 **Ignored (runtime + per-application artifacts):**
-- `config/site.yaml` (site identity — copy `config/site.yaml.example` to start)
-- `web/img/headshot.jpg` (personal photo)
 - `.env` file (credentials)
 - `.venv/`, `cache/`, `logs/`, `web/dist/`, `drafts/`
 - `applications/` (per-application artifacts — cover letters, outreach, interview prep, tailored CVs; often contain confidential JD text and recipient details)

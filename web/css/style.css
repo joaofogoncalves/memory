@@ -183,12 +183,26 @@ h4 { font-size: 1.1rem; }
 .nav-logo {
   height: 24px;
   width: 24px;
-  object-fit: contain;
-  transition: filter 0.2s ease;
+  display: block;
+  color: var(--on-surface);
+  transition: color 0.2s ease;
 }
 
 .nav-logo-link:hover .nav-logo {
-  filter: brightness(0) saturate(100%) invert(78%) sepia(50%) saturate(1000%) hue-rotate(155deg) brightness(101%) contrast(92%);
+  color: var(--primary);
+  animation: nav-logo-glitch 0.55s steps(2, end) 1 both;
+}
+
+@keyframes nav-logo-glitch {
+  0%   { transform: none; filter: none; }
+  18%  { transform: translateX(-2px) skewX(-3deg); filter: drop-shadow(2px 0 var(--primary)) drop-shadow(-2px 0 var(--error)); }
+  36%  { transform: translateX(2px) skewX(1deg); filter: drop-shadow(-2px 0 var(--primary)); }
+  54%  { transform: translateX(-1px); filter: none; }
+  100% { transform: none; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-logo-link:hover .nav-logo { animation: none; }
 }
 
 .nav-links {

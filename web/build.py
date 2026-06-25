@@ -642,6 +642,38 @@ def _has_public_articles() -> bool:
     return False
 
 
+# Shared JG monogram path data (verbatim from web/img/logo.svg). Used inline by
+# the nav logo (so currentColor + the glitch hover work) and by the self-drawing
+# route loader. pathLength="1" on the loader copy keeps the stroke-draw math trivial.
+_LOGO_PATH_A = 'M0,0 L225,0 L217,16 L212,26 L213,384 L225,406 L225,407 L14,407 L14,298 L22,291 L52,261 L60,254 L88,226 L89,226 L89,308 L77,325 L76,326 L75,345 L150,345 L150,62 L54,62 L42,49 L35,41 L23,27 L13,16 L6,8 Z'
+_LOGO_PATH_B = 'M0,0 L211,0 L212,138 L211,150 L137,150 L143,138 L149,128 L150,62 L75,62 L75,345 L150,345 L149,262 L136,275 L129,283 L125,285 L123,289 L116,295 L115,297 L113,297 L113,193 L211,193 L211,407 L0,407 L2,402 L13,382 L13,24 L1,3 Z'
+
+NAV_LOGO_SVG = (
+    '<svg class="nav-logo" viewBox="0 0 563 563" width="24" height="24" '
+    'fill="currentColor" role="img" aria-label="JG" focusable="false">'
+    f'<path d="{_LOGO_PATH_A}" transform="translate(51,76)"/>'
+    f'<path d="{_LOGO_PATH_B}" transform="translate(290,76)"/>'
+    '</svg>'
+)
+
+# Full-screen route loader: the JG draws itself, then the overlay fades out on
+# window.load. Inline <script> attaches the listener during parse; a CSS autohide
+# in critical.css is the no-JS fallback so it can never get stuck. Styled via
+# critical.css (inlined) so it paints on the first frame, before stylesheets load.
+ROUTE_LOADER = (
+    '<div id="route-loader" aria-hidden="true">'
+    '<svg viewBox="0 0 563 563" width="84" height="84" focusable="false">'
+    f'<path d="{_LOGO_PATH_A}" transform="translate(51,76)" pathLength="1"/>'
+    f'<path d="{_LOGO_PATH_B}" transform="translate(290,76)" pathLength="1"/>'
+    '</svg></div>'
+    '<script>(function(){var l=document.getElementById("route-loader");if(!l)return;'
+    'var hide=function(){l.classList.add("loaded");};'
+    'if(document.readyState==="complete"){hide();}'
+    'else{window.addEventListener("load",hide);setTimeout(hide,1800);}'
+    'window.addEventListener("pageshow",function(e){if(e.persisted)hide();});})();</script>'
+)
+
+
 def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str:
     prefix = '../' * depth
     cls = lambda name: ' class="active" aria-current="page"' if active == name else ''
@@ -662,9 +694,10 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
         if SITE.get('newsletter_url') else ''
     )
     nav_cls = 'nav nav--transparent' if transparent else 'nav'
-    return f'''<nav class="{nav_cls}">
+    return f'''{ROUTE_LOADER}
+<nav class="{nav_cls}">
   <div class="nav-inner">
-    <a href="{prefix}" class="nav-logo-link" aria-label="Home"><img src="{prefix}img/logo.webp" alt="JG" class="nav-logo" width="24" height="24"></a>
+    <a href="{prefix}" class="nav-logo-link" aria-label="Home">{NAV_LOGO_SVG}</a>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>

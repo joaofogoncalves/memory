@@ -33,7 +33,7 @@ h2 { font-size: 2rem; }
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(14, 19, 30, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(60, 73, 76, 0.15); }
 .nav-inner { max-width: var(--max-page); margin: 0 auto; padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
 .nav-logo-link { display: flex; align-items: center; }
-.nav-logo { height: 24px; width: 24px; object-fit: contain; }
+.nav-logo { height: 24px; width: 24px; display: block; color: var(--on-surface); transition: color 0.2s ease; }
 .nav-links { display: flex; gap: 2rem; }
 .nav-links a { font-family: var(--font-mono); font-size: 0.8rem; color: var(--on-surface-variant); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
 .hero { min-height: auto; display: flex; flex-direction: column; justify-content: center; padding-top: 80px; padding-bottom: 1rem; position: relative; }
@@ -44,3 +44,12 @@ h2 { font-size: 2rem; }
 .hero-fullscreen-content { position: relative; z-index: 2; padding-top: 80px; }
 .hero-fullscreen h1 { font-size: 4.5rem; margin-bottom: 1.5rem; }
 .hero-thesis { font-size: 1.15rem; font-style: italic; color: var(--on-surface-variant); line-height: 1.7; margin-bottom: 2rem; border-left: 3px solid var(--primary); padding-left: var(--spacing-unit); }
+/* Route loader — self-drawing JG; fades out on load (JS), CSS autohide is the no-JS fallback */
+#route-loader { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: var(--bg); animation: rl-autohide 2s forwards; }
+#route-loader svg { width: 84px; height: 84px; color: var(--primary); }
+#route-loader svg path { fill: transparent; stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: rl-draw 2.9s ease-in-out infinite; }
+#route-loader svg path:nth-child(2) { animation-delay: 0.18s; }
+#route-loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; animation: none; transition: opacity 0.45s ease, visibility 0s 0.45s; }
+@keyframes rl-draw { 0% { stroke-dashoffset: 1; fill: transparent; opacity: 0; } 8% { opacity: 1; } 40% { stroke-dashoffset: 0; fill: transparent; opacity: 1; } 58% { fill: currentColor; } 82% { fill: currentColor; opacity: 1; } 100% { stroke-dashoffset: 0; fill: currentColor; opacity: 0; } }
+@keyframes rl-autohide { 0%, 80% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { #route-loader svg path { animation: none; fill: currentColor; stroke-dashoffset: 0; opacity: 1; } }

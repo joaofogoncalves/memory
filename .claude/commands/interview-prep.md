@@ -23,12 +23,12 @@ If a URL is provided, distinguish JD vs company URL by content type / path heuri
 
 In parallel:
 
-1. `cv.md` — proof bank (required)
-2. `pitch_style.md` — for the "Tell me about yourself" pitch tone
-3. `profile.md` — voice reference
-4. `writing_style.md` — format hygiene
+1. `content/cv.md` — proof bank (required)
+2. `style/pitch_style.md` — for the "Tell me about yourself" pitch tone
+3. `style/profile.md` — voice reference
+4. `style/writing_style.md` — format hygiene
 5. `config/site.yaml` — site identity
-6. Recent articles via `Glob articles/**/article.md` — pick the 3 most recent for thesis material to surface in answers
+6. Recent articles via `Glob content/articles/**/article.md` — pick the 3 most recent for thesis material to surface in answers
 7. JD (fetch URL or use inline text)
 8. Company URL if provided (fetch)
 

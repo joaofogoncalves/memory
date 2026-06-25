@@ -16,7 +16,7 @@ from pathlib import Path
 import requests
 
 ROOT = Path(__file__).resolve().parent.parent
-POSTS_DIR = ROOT / 'posts'
+POSTS_DIR = ROOT / 'content' / 'posts'
 LNKD_PATTERN = re.compile(r'https://lnkd\.in/[a-zA-Z0-9_-]+')
 
 # URLs that are part of LinkedIn's chrome, not the actual redirect target

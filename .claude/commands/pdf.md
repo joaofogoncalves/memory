@@ -19,11 +19,11 @@ If `$ARGUMENTS` starts with `http`, fetch the job description via WebFetch first
 
 Read these files in parallel:
 
-1. `cv.md` — the CV content (required; abort if missing)
+1. `content/cv.md` — the CV content (required; abort if missing)
 2. `config/site.yaml` — site identity (name, LinkedIn, GitHub, site URL, etc.)
 
 If in **tailored mode**, also read:
-3. `profile.md` — voice profile (if exists, for tone reference)
+3. `style/profile.md` — voice profile (if exists, for tone reference)
 4. The job description (fetched from URL or from `$ARGUMENTS` text)
 
 ## Step 2: Prepare CV content
@@ -111,7 +111,7 @@ Line height: 1.5 for body text, 1.2 for headings.
 
 ### Output path
 
-- Generic mode: `cv_joaofogoncalves.pdf` in project root
+- Generic mode: `content/cv_joaofogoncalves.pdf`
 - Tailored mode: `applications/{company-slug}/cv.pdf` (create the directory if missing — see CLAUDE.md "Applications folder structure")
 
 ## Step 4: Confirm completion
@@ -120,4 +120,4 @@ Tell the user:
 - Which mode was used (generic or tailored)
 - Output file path and size
 - If tailored: which aspects were reframed for the target role
-- If generic: remind them that `build.py` will copy `cv_joaofogoncalves.pdf` to `dist/about/` and the About page download link picks it up automatically
+- If generic: remind them that `build.py` will copy `content/cv_joaofogoncalves.pdf` to `dist/about/` and the About page download link picks it up automatically

@@ -32,7 +32,7 @@ uv sync
 uv run playwright install chromium
 
 # Verify setup
-uv run python verify_setup.py
+uv run python scripts/verify_setup.py
 ```
 
 ### 3. Create a Branch

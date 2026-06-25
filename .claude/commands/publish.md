@@ -9,11 +9,11 @@ Promote a draft article to published state by removing `draft: true` from frontm
 ## Step 1: Locate the draft
 
 If `$ARGUMENTS` is non-empty:
-- Treat it as a slug fragment or path. Use Glob with `articles/**/*$ARGUMENTS*/article.md` to find matches.
+- Treat it as a slug fragment or path. Use Glob with `content/articles/**/*$ARGUMENTS*/article.md` to find matches.
 - If multiple matches, use AskUserQuestion to disambiguate.
 
 If `$ARGUMENTS` is empty:
-- Glob `articles/**/article.md`, read each frontmatter, collect those with `draft: true`.
+- Glob `content/articles/**/article.md`, read each frontmatter, collect those with `draft: true`.
 - If zero drafts, tell the user and stop.
 - If one draft, use it.
 - If multiple, use AskUserQuestion listing each by title + date.
@@ -30,9 +30,9 @@ Leave `title`, `subtitle`, `tags`, `substack_url`, `hero_image`, `reading_time` 
 
 ## Step 3: Rename directory and file paths to match new date (if date changed)
 
-Articles live at `articles/YYYY/MM/DD-slug/article.md` — `YYYY/MM` come from the frontmatter `date:`, and the directory name is the zero-padded **day** plus the slug (e.g. `articles/2026/06/11-rent-the-loop-build-the-moat/`). `build.py` derives year/month/date from frontmatter and uses the directory name verbatim as the URL slug, so the path only needs to carry the day. If the new date differs from the old one, the directory name needs to match:
+Articles live at `content/articles/YYYY/MM/DD-slug/article.md` — `YYYY/MM` come from the frontmatter `date:`, and the directory name is the zero-padded **day** plus the slug (e.g. `content/articles/2026/06/11-rent-the-loop-build-the-moat/`). `build.py` derives year/month/date from frontmatter and uses the directory name verbatim as the URL slug, so the path only needs to carry the day. If the new date differs from the old one, the directory name needs to match:
 
-1. Compute new path: `articles/<new-YYYY>/<new-MM>/<new-DD>-<slug>/` — zero-pad `<new-DD>` (e.g. `08`, `11`) so directories sort chronologically.
+1. Compute new path: `content/articles/<new-YYYY>/<new-MM>/<new-DD>-<slug>/` — zero-pad `<new-DD>` (e.g. `08`, `11`) so directories sort chronologically.
 2. If different from current path, `mkdir -p` the new parent and `git mv` the directory so history is preserved.
 3. If the parent month/year directory is now empty, remove it.
 
@@ -49,6 +49,6 @@ Compute the live URL: read `SITE_URL` from `.env` (fall back to `yoursite.com`),
 Tell the user:
 - Article title + new path
 - Old draft URL is now dead; new public URL will be `{SITE_URL}/articles/YYYY/MM/slug/` after rebuild
-- Remind: "Rebuild and deploy first: `bash pipeline.sh --skip-scrape` (or `python web/build.py` to build only). Substack's import reads the live page, so it has to be deployed before you import."
+- Remind: "Rebuild and deploy first: `bash scripts/pipeline.sh --skip-scrape` (or `python web/build.py` to build only). Substack's import reads the live page, so it has to be deployed before you import."
 - Remind: "To cross-post to Substack: use its **Import** tool (New post → Import) and point it at the live URL `{SITE_URL}/articles/YYYY/MM/slug/`. It pulls in the body, formatting, and images. Then set the post's canonical URL (Settings → SEO) to that same URL so SEO stays pointed at your site."
 - Remind: "After publishing to Substack, grab the URL and add `substack_url:` to the article frontmatter."

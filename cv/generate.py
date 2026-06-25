@@ -21,8 +21,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_DIR = os.path.join(SCRIPT_DIR, "fonts")
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-OUTPUT = os.path.join(PROJECT_ROOT, "cv_joaofogoncalves.pdf")
-CV_MD = os.path.join(PROJECT_ROOT, "cv.md")
+OUTPUT = os.path.join(PROJECT_ROOT, "content", "cv_joaofogoncalves.pdf")
+CV_MD = os.path.join(PROJECT_ROOT, "content", "cv.md")
 
 # ---------- register fonts ----------
 HEADING_FONT = "Helvetica-Bold"

@@ -45,12 +45,12 @@ def style_bridge_in(html: str) -> str:
 # ============================================================
 
 ROOT = Path(__file__).resolve().parent.parent
-POSTS_DIR = ROOT / 'posts'
-CV_FILE = ROOT / 'cv.md'
-CV_PDF = ROOT / 'cv_joaofogoncalves.pdf'
-NOW_FILE = ROOT / 'now.md'
-WORK_FILE = ROOT / 'work.md'
-ARTICLES_DIR = ROOT / 'articles'
+POSTS_DIR = ROOT / 'content' / 'posts'
+CV_FILE = ROOT / 'content' / 'cv.md'
+CV_PDF = ROOT / 'content' / 'cv_joaofogoncalves.pdf'
+NOW_FILE = ROOT / 'content' / 'now.md'
+WORK_FILE = ROOT / 'content' / 'work.md'
+ARTICLES_DIR = ROOT / 'content' / 'articles'
 WEB_DIR = Path(__file__).resolve().parent
 DIST_DIR = WEB_DIR / 'dist'
 CSS_SRC = WEB_DIR / 'css'
@@ -1173,7 +1173,7 @@ def generate_now(posts: list[dict] = None, topics: list[dict] = None) -> str:
         if m:
             last_mod = f'<p class="post-stats">{escape(m.group(0).strip("_"))}</p>'
     else:
-        body_html = '<p class="muted">Add a <code>now.md</code> file in the project root to populate this page.</p>'
+        body_html = '<p class="muted">Add a <code>content/now.md</code> file to populate this page.</p>'
         badges_html = ''
         last_mod = ''
 
@@ -2109,7 +2109,7 @@ def generate_about() -> str:
 
     if not CV_FILE.exists():
         body = (
-            '<p class="muted">Add a <code>cv.md</code> file in the project root '
+            '<p class="muted">Add a <code>content/cv.md</code> file '
             'to populate this page.</p>'
         )
         return f'''{head_html("About", depth=1, jsonld=jsonld_person(), canonical_path='/about/')}

@@ -7,7 +7,7 @@ linkedin:
 
 # Post output settings
 output:
-  base_dir: posts          # directory for archived posts (relative or absolute)
+  base_dir: content/posts  # directory for archived posts (relative or absolute)
   date_format: "%Y/%m"     # subdirectory structure under base_dir
 
 # Media download settings

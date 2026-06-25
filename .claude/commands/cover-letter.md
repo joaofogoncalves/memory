@@ -20,10 +20,10 @@ The cover letter must **lead with proof, not promises** — it opens with a spec
 
 Read these files in parallel:
 
-1. `cv.md` — proof bank (required; abort if missing)
-2. `pitch_style.md` — primary style authority for self-positioning artifacts
-3. `profile.md` — secondary voice reference (vocabulary, recurring patterns)
-4. `writing_style.md` — for format hygiene rules (em-dashes, anti-pattern phrases)
+1. `content/cv.md` — proof bank (required; abort if missing)
+2. `style/pitch_style.md` — primary style authority for self-positioning artifacts
+3. `style/profile.md` — secondary voice reference (vocabulary, recurring patterns)
+4. `style/writing_style.md` — for format hygiene rules (em-dashes, anti-pattern phrases)
 5. `config/site.yaml` — name, links, current title
 
 Then fetch / read the JD as described above.

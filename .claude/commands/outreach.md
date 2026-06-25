@@ -21,10 +21,10 @@ The voice operationalizes "Target conversations, not applications": substantive,
 
 Read these in parallel:
 
-1. `cv.md` — proof bank
-2. `pitch_style.md` — primary style guide for self-positioning
-3. `profile.md` — voice reference
-4. `writing_style.md` — format hygiene
+1. `content/cv.md` — proof bank
+2. `style/pitch_style.md` — primary style guide for self-positioning
+3. `style/profile.md` — voice reference
+4. `style/writing_style.md` — format hygiene
 5. `config/site.yaml` — your site URL, LinkedIn, GitHub
 
 ## Step 2: Build recipient context

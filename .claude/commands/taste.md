@@ -16,8 +16,8 @@ Examples: `$ARGUMENTS` = "" -> 60 days, 10 batch. "90" -> 90 days, 10 batch. "60
 
 ## Step 1: Discover posts with images
 
-1. Glob `posts/**/post.md` to find all posts.
-2. Glob `posts/**/media/image-*.jpg` to find all images.
+1. Glob `content/posts/**/post.md` to find all posts.
+2. Glob `content/posts/**/media/image-*.jpg` to find all images.
 3. Read each post's YAML frontmatter to get `date`, `post_type`, and check for existing `media_descriptions`.
 4. **Filter posts** the same way as `/profile`:
    - Include: `post_type: original` or `post_type: article`
@@ -107,7 +107,7 @@ Apply tiered recency weighting:
 - Tier 1 (current window) descriptions get priority in the analysis
 - If a visual pattern appears only in Tier 2, note it as "historical"
 
-Analyze the descriptions for patterns and write `taste.md` to the project root.
+Analyze the descriptions for patterns and write `taste.md` to `style/`.
 
 **Output structure:**
 
@@ -159,4 +159,4 @@ Tell the user:
 - How many images were processed this run
 - Total description coverage (described / total)
 - Whether taste.md was generated or more runs needed
-- If taste.md was generated, suggest combining it with profile.md for a complete profile
+- If taste.md was generated, suggest combining it with `style/profile.md` for a complete profile

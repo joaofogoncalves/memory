@@ -4,7 +4,7 @@ description: Generate elevator pitches, talk abstracts, speaker bios, LinkedIn c
 allowed-tools: Read, Write, Glob, AskUserQuestion
 ---
 
-Generate self-pitch variants — the surface-tailored ways you describe yourself when the conversation isn't about a specific job. Saved to `pitches.md` at the project root as a single living document containing all variants.
+Generate self-pitch variants — the surface-tailored ways you describe yourself when the conversation isn't about a specific job. Saved to `content/pitches.md` as a single living document containing all variants.
 
 Use this for: networking events, recruiter calls before there's a JD, conference proposals, podcast intros, founder/VC chats, fast LinkedIn or X bio refreshes.
 
@@ -32,13 +32,13 @@ If a variant name is given but doesn't match, use AskUserQuestion to clarify.
 
 In parallel:
 
-1. `cv.md` — proof bank (required)
-2. `pitch_style.md` — primary style authority
-3. `profile.md` — voice reference (vocabulary, recurring patterns)
-4. `writing_style.md` — format hygiene
+1. `content/cv.md` — proof bank (required)
+2. `style/pitch_style.md` — primary style authority
+3. `style/profile.md` — voice reference (vocabulary, recurring patterns)
+4. `style/writing_style.md` — format hygiene
 5. `config/site.yaml` — name, links, current title
-6. Recent articles via `Glob articles/**/article.md` — read the 3 most recent for thesis material (titles, subtitles, opening claims)
-7. Existing `pitches.md` if present — preserve any user edits when regenerating only one variant
+6. Recent articles via `Glob content/articles/**/article.md` — read the 3 most recent for thesis material (titles, subtitles, opening claims)
+7. Existing `content/pitches.md` if present — preserve any user edits when regenerating only one variant
 
 ## Step 2: Build the through-line
 
@@ -158,7 +158,7 @@ If any fail, rewrite that variant before saving.
 
 ## Step 5: Save
 
-`pitches.md` lives at the project root. Structure:
+`pitches.md` lives in `content/`. Structure:
 
 ```markdown
 # Pitches
@@ -234,7 +234,7 @@ When `$ARGUMENTS` specifies a single variant, **only replace that variant's bloc
 
 Tell the user:
 
-- Path to `pitches.md`
+- Path to `content/pitches.md`
 - Which variant(s) were generated or regenerated
 - For LinkedIn headline: show all 3 candidates and which is recommended (the user picks)
 - The through-line sentence (so they can sanity-check the foundation)

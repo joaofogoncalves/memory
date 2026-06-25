@@ -6,7 +6,7 @@ allowed-tools: AskUserQuestion, Bash, Edit, Glob, Grep, Read
 
 Scrape the 10 most recent LinkedIn posts and reconcile them with the local archive.
 
-**In the authored-first model**, the site is canonical for posts. You write with `/post`, which saves to `posts/YYYY/MM/DD-slug/post.md` and generates paste-ready LinkedIn and X variants that you post natively. The scraper's job here is two-fold:
+**In the authored-first model**, the site is canonical for posts. You write with `/post`, which saves to `content/posts/YYYY/MM/DD-slug/post.md` and generates paste-ready LinkedIn and X variants that you post natively. The scraper's job here is two-fold:
 
 1. **Refresh engagement** — for every scraped post that matches a local post (by `post_url` or by content fingerprint within 14 days), update `reactions:` and `comments:` in the frontmatter. Body is never touched. This is handled automatically by the scraper.
 2. **Catch authored-post duplicates** — the scraper's URL match can miss authored posts because the user-facing share URL (`linkedin.com/posts/joaofogoncalves_<slug>-<share-id>`) and the activity URN (`linkedin.com/feed/update/urn:li:activity:<activity-id>`) reference the same post with different numeric IDs. This skill detects those duplicates by body fingerprint and merges engagement into the authored version.
@@ -19,7 +19,7 @@ Self-article-promo filtering (the old main job of this skill) is no longer neede
 Before scraping, capture the current set of post directories so you can diff new additions after the run:
 
 ```bash
-find posts -type d -name "2*" -mindepth 3 -maxdepth 3 | sort > /tmp/sync_before.txt
+find content/posts -type d -name "2*" -mindepth 3 -maxdepth 3 | sort > /tmp/sync_before.txt
 wc -l < /tmp/sync_before.txt
 ```
 
@@ -50,7 +50,7 @@ This is idempotent and only touches `post.md` files that still have unresolved l
 Compute the diff:
 
 ```bash
-find posts -type d -name "2*" -mindepth 3 -maxdepth 3 | sort > /tmp/sync_after.txt
+find content/posts -type d -name "2*" -mindepth 3 -maxdepth 3 | sort > /tmp/sync_after.txt
 comm -13 /tmp/sync_before.txt /tmp/sync_after.txt
 ```
 
@@ -75,10 +75,10 @@ For each genuinely-new post:
 
    ```bash
    # Find all authored posts in the date range — adjust the date math as needed
-   find posts -name "post.md" -newer <date-21-days-before> | xargs grep -l "^authored: true" 2>/dev/null
+   find content/posts -name "post.md" -newer <date-21-days-before> | xargs grep -l "^authored: true" 2>/dev/null
    ```
 
-   Or, more simply, glob `posts/YYYY/MM*/post.md` for the relevant months and Read each one's frontmatter.
+   Or, more simply, glob `content/posts/YYYY/MM*/post.md` for the relevant months and Read each one's frontmatter.
 
 3. **Compare opening fingerprints**. A match counts if the first sentence (up to the first period or ~80 chars) is substantially identical after normalization. Treat as a match if:
    - The first 60 normalized chars match exactly, OR
@@ -96,7 +96,7 @@ For each Authored duplicate pair, plan two actions:
   - Extract `reactions:` and `comments:` values from the scraped post.
   - Edit the authored post's frontmatter to add or overwrite `reactions:` and `comments:` (insert them right after the `tags:` line if not already present).
   - Preserve all other frontmatter fields exactly.
-- **Delete the scraped duplicate directory** (`rm -rf posts/YYYY/MM/<scraped-slug>/`).
+- **Delete the scraped duplicate directory** (`rm -rf content/posts/YYYY/MM/<scraped-slug>/`).
 
 Do NOT execute yet — collect pairs and present them in Step 6 for confirmation.
 
@@ -178,17 +178,17 @@ KEEP (Z):
 **For each confirmed authored-duplicate pair:**
 
 1. Use the Edit tool to update the authored post's frontmatter. Insert (or replace) `reactions:` and `comments:` lines. If those keys don't exist yet, insert them right after the `tags:` line. If they already exist, replace the values.
-2. `rm -rf posts/YYYY/MM/<scraped-slug>/` to remove the scraped duplicate directory entirely.
+2. `rm -rf content/posts/YYYY/MM/<scraped-slug>/` to remove the scraped duplicate directory entirely.
 
 **For each confirmed noise drop:**
 
 ```bash
-rm -rf posts/YYYY/MM/<slug>/
+rm -rf content/posts/YYYY/MM/<slug>/
 ```
 
 Delete the whole directory (post + media). Do NOT touch:
 - `site.yaml` featured_posts — the scraper regenerates this on each run
-- The articles themselves — they're in `articles/`, untouched by this skill
+- The articles themselves — they're in `content/articles/`, untouched by this skill
 - Any post not in the confirmed-drop or confirmed-merge list
 
 ## Step 8: Clean up temp files and confirm
@@ -201,7 +201,7 @@ Tell the user:
 - Engagement updated on N existing posts (by the scraper's built-in merge)
 - P authored-duplicate pairs found; engagement merged into authored versions and scraped dups deleted
 - K genuinely-new posts found; J dropped as noise, (K-J) kept
-- Next step: "Rebuild the site with `python web/build.py` — or run `bash pipeline.sh --skip-scrape` to rebuild and deploy."
+- Next step: "Rebuild the site with `python web/build.py` — or run `bash scripts/pipeline.sh --skip-scrape` to rebuild and deploy."
 
 ## Notes on the shifted model
 

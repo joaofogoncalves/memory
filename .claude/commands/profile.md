@@ -13,7 +13,7 @@ Parse the first number from the arguments. If empty or not a number, use 60.
 
 ## Step 1: Discover and filter posts
 
-1. Glob `posts/**/post.md` to find all archived posts.
+1. Glob `content/posts/**/post.md` to find all archived posts.
 2. Read each file's YAML frontmatter to extract `date` and `post_type`.
 3. **Include** posts where `post_type` is `original` or `article`.
 4. **Include** reposts ONLY if there is user-written text between the `# Date` heading and the `## Repost` section (this indicates the user added their own commentary when sharing).
@@ -72,7 +72,7 @@ Tell the agent to weight Tier 1 topics more heavily. If a topic appears only in 
 
 ## Step 5: Synthesize into profile.md
 
-Using the reports from both agents, write `profile.md` to the project root.
+Using the reports from both agents, write `profile.md` to `style/`.
 
 **Critical rules for the output:**
 - Every line must be a DIRECTIVE ("Use short opening sentences that make a claim") not a description ("The author uses short opening sentences")
@@ -136,5 +136,5 @@ Last updated: [today's date]
 
 Tell the user:
 - How many posts were analyzed (total, Tier 1, Tier 2)
-- That `profile.md` has been written to the project root
+- That `profile.md` has been written to `style/`
 - Suggest running `/taste` to add visual style analysis

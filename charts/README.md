@@ -6,12 +6,16 @@ Templates are standalone HTML that read their payload from `window.__DATA__`. A 
 
 ## Setup
 
+Run from this `charts/` directory — the npm project (`package.json`, `node_modules/`) lives here:
+
 ```bash
 npm install
 npx playwright install chromium
 ```
 
 ## Render a chart
+
+Run these from the repo root (paths below are repo-root-relative):
 
 ```bash
 node charts/render.mjs \
@@ -21,12 +25,12 @@ node charts/render.mjs \
   --width 1600 --height 900 --scale 2
 ```
 
-Or via the npm script:
+Or via the npm script (run from `charts/`, so paths are relative to it):
 
 ```bash
 npm run chart -- --template bar \
-  --data charts/examples/adoption-gap.json \
-  --output charts/out/adoption-gap.webp
+  --data examples/adoption-gap.json \
+  --output out/adoption-gap.webp
 ```
 
 ## Templates

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "chart": "node charts/render.mjs"
+    "chart": "node render.mjs"
   },
   "devDependencies": {
     "playwright": "^1.48.0",

@@ -4,7 +4,7 @@ description: Author a short-form post — saves canonical version to the site an
 allowed-tools: AskUserQuestion, WebFetch, Write, Read, Glob, Bash
 ---
 
-Author a short-form post. The site is canonical — the post is saved to `posts/YYYY/MM/DD-slug/post.md`. LinkedIn, X, and Substack Note variants are generated as paste-ready artifacts for manual posting on each platform.
+Author a short-form post. The site is canonical — the post is saved to `content/posts/YYYY/MM/DD-slug/post.md`. LinkedIn, X, and Substack Note variants are generated as paste-ready artifacts for manual posting on each platform.
 
 ## Arguments
 
@@ -16,9 +16,9 @@ If `$ARGUMENTS` is empty, use AskUserQuestion to ask what they want to write abo
 
 ## Step 1: Gather source material
 
-1. Read `writing_style.md` from the project root. This is the authoritative style guide — it defines structure, tone, language rules, length targets, and anti-patterns. Always follow it as the primary reference when drafting.
-2. Read `profile.md` from the project root. This is the auto-generated voice profile — it provides vocabulary, topic expertise, and deeper voice patterns. Where it conflicts with `writing_style.md`, defer to `writing_style.md`.
-3. Read `taste.md` from the project root. This is the visual taste profile — follow it when generating image prompts.
+1. Read `style/writing_style.md` from `style/`. This is the authoritative style guide — it defines structure, tone, language rules, length targets, and anti-patterns. Always follow it as the primary reference when drafting.
+2. Read `style/profile.md` from `style/`. This is the auto-generated voice profile — it provides vocabulary, topic expertise, and deeper voice patterns. Where it conflicts with `writing_style.md`, defer to `writing_style.md`.
+3. Read `style/taste.md` from `style/`. This is the visual taste profile — follow it when generating image prompts.
 4. If URLs were found in the arguments:
    - Fetch each URL using WebFetch
    - Extract the key content: headline, author, main argument, notable quotes, data points
@@ -259,8 +259,8 @@ When rendering a chart (single-image mode or as one slot of a sequence), save th
 
 ```bash
 node charts/render.mjs --template <name> \
-  --data posts/YYYY/MM/DD-slug/media/<name>.json \
-  --output posts/YYYY/MM/DD-slug/media/<name>.webp \
+  --data content/posts/YYYY/MM/DD-slug/media/<name>.json \
+  --output content/posts/YYYY/MM/DD-slug/media/<name>.webp \
   --width <w> --height <h>
 ```
 
@@ -297,7 +297,7 @@ Override the defaults when the content demands it (e.g., a tall flowchart might 
 ## Step 7: Save all artifacts
 
 1. Generate a slug from the canonical post's opening line: first 5-8 words, lowercased, hyphenated, max 50 chars.
-2. Compute the post directory path: `posts/YYYY/MM/DD-slug/` using today's date — `DD` is the zero-padded day; the slug carries no date prefix (`YYYY/MM` come from the path and the frontmatter `date:`).
+2. Compute the post directory path: `content/posts/YYYY/MM/DD-slug/` using today's date — `DD` is the zero-padded day; the slug carries no date prefix (`YYYY/MM` come from the path and the frontmatter `date:`).
 3. If the directory already exists (rare, but possible if re-running), append `-2`, `-3`, etc. to the slug.
 4. Create the directory and write the following files:
 
@@ -491,12 +491,12 @@ Chart JSON spec and rendered `.webp` go in the post's `media/` subdirectory (alr
 ## Step 8: Confirm completion
 
 Tell the user:
-- **Site canonical post saved:** `posts/YYYY/MM/DD-slug/post.md`
-- **LinkedIn variant:** `posts/YYYY/MM/DD-slug/linkedin.md` — paste into LinkedIn's native composer
-- **X variant:** `posts/YYYY/MM/DD-slug/x-thread.md` — paste into X or Typefully
-- **Substack Note variant:** `posts/YYYY/MM/DD-slug/substack-note.md` — paste into substack.com/notes
+- **Site canonical post saved:** `content/posts/YYYY/MM/DD-slug/post.md`
+- **LinkedIn variant:** `content/posts/YYYY/MM/DD-slug/linkedin.md` — paste into LinkedIn's native composer
+- **X variant:** `content/posts/YYYY/MM/DD-slug/x-thread.md` — paste into X or Typefully
+- **Substack Note variant:** `content/posts/YYYY/MM/DD-slug/substack-note.md` — paste into substack.com/notes
 - If image prompts: `image-prompts.md` in the same directory. Generate each image and save to `media/` as `image-1.webp` (single-image posts) or `image-1.webp` through `image-N.webp` in sequence order (multi-image posts).
 - Remind: "After posting on each surface, fill in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter."
-- Remind: "To publish the site post: `bash pipeline.sh --skip-scrape`"
+- Remind: "To publish the site post: `bash scripts/pipeline.sh --skip-scrape`"
 - Remind: "Later runs of the scraper will pick up engagement counts (reactions, comments) from LinkedIn and merge them into this post automatically — no duplicate will be created because `authored: true` is set."
 - Suggested posting order: site (auto-deployed via pipeline) → LinkedIn (broadest cold reach) → X (parallel cold reach) → Substack Note (warm conversion to subscribers).

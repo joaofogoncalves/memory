@@ -20,8 +20,8 @@ It is **not** a content edit. It won't restructure your argument, add evidence, 
 
 `$ARGUMENTS` can be one of:
 - **Pasted text** — the prose to clean, inline.
-- **A file path** — e.g. `posts/2026/06/14-foo/post.md` or any `.md` file.
-- **A slug fragment** — locate the file with `Glob` (`posts/**/*$ARGUMENTS*/post.md`, then `articles/**/*$ARGUMENTS*/article.md`). If multiple match, disambiguate with AskUserQuestion.
+- **A file path** — e.g. `content/posts/2026/06/14-foo/post.md` or any `.md` file.
+- **A slug fragment** — locate the file with `Glob` (`content/posts/**/*$ARGUMENTS*/post.md`, then `content/articles/**/*$ARGUMENTS*/article.md`). If multiple match, disambiguate with AskUserQuestion.
 
 If `$ARGUMENTS` is empty, ask the user to paste the text or name a file.
 
@@ -31,9 +31,9 @@ When the input is a file with frontmatter, operate **only on the body** — neve
 
 Read these before auditing — they ARE the voice calibration (don't ask the user for a writing sample; their style guides are more precise than a 2-paragraph sample):
 
-1. `writing_style.md` — primary authority. Note which tells it already bans (em dashes, hyperbole, "not X but Y", corporate-speak, filler phrases). These are non-negotiable.
-2. `profile.md` — vocabulary ("use naturally" vs "avoid" lists), rhetorical devices, and the deliberate signature moves to **preserve** (see below).
-3. If the input is an article, also read `article_style.md`.
+1. `style/writing_style.md` — primary authority. Note which tells it already bans (em dashes, hyperbole, "not X but Y", corporate-speak, filler phrases). These are non-negotiable.
+2. `style/profile.md` — vocabulary ("use naturally" vs "avoid" lists), rhetorical devices, and the deliberate signature moves to **preserve** (see below).
+3. If the input is an article, also read `style/article_style.md`.
 
 ## Step 2: Detect — audit against the AI-tell catalogue
 

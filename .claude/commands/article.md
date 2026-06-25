@@ -16,10 +16,10 @@ If `$ARGUMENTS` is empty, use AskUserQuestion to ask what the article is about.
 
 ## Step 1: Gather source material
 
-1. Read `article_style.md` from the project root. This is the long-form style supplement.
-2. Read `writing_style.md` from the project root. This is the primary style authority for voice, tone, and language rules.
-3. Read `profile.md` from the project root. This provides vocabulary, topic expertise, and voice patterns.
-4. Read `taste.md` from the project root. This is the visual taste profile for image prompts.
+1. Read `style/article_style.md` from `style/`. This is the long-form style supplement.
+2. Read `style/writing_style.md` from `style/`. This is the primary style authority for voice, tone, and language rules.
+3. Read `style/profile.md` from `style/`. This provides vocabulary, topic expertise, and voice patterns.
+4. Read `style/taste.md` from `style/`. This is the visual taste profile for image prompts.
 5. If URLs were found in the arguments:
    - Fetch each URL using WebFetch
    - Extract: headline, author, main argument, notable quotes, data points
@@ -90,8 +90,8 @@ Iterate until the outline is approved.
 
 After the outline is approved and **before drafting**, identify 2–4 candidate internal links the article should weave in naturally. Internal linking is one of the cheapest discoverability levers and is much harder to retrofit cleanly.
 
-1. **Scan existing articles**: list all non-draft article slugs and titles from `articles/YYYY/MM/*/article.md`. Glob is fine. For each, read the title and subtitle from frontmatter — that's enough to judge thematic fit.
-2. **Scan recent posts**: glob `posts/YYYY/MM/*/post.md` from the last ~12 months. Many short-form posts contain the seed of an idea this article expands on; linking back gives them a second life.
+1. **Scan existing articles**: list all non-draft article slugs and titles from `content/articles/YYYY/MM/*/article.md`. Glob is fine. For each, read the title and subtitle from frontmatter — that's enough to judge thematic fit.
+2. **Scan recent posts**: glob `content/posts/YYYY/MM/*/post.md` from the last ~12 months. Many short-form posts contain the seed of an idea this article expands on; linking back gives them a second life.
 3. **Check for matching topic pages**: read `config/site.yaml` `topics:` list. If the article fits one (or two), the topic page is a natural cross-link.
 4. **Pick 2–4 candidates** with a one-sentence reason each. Favor links that:
    - Expand on a claim made in passing in this article (so the link adds something the reader will actually click)
@@ -222,7 +222,7 @@ For each visual decided in Step 5, produce **either** a chart spec (if it maps t
 
 ### Chart specs
 
-For each chart, save a JSON spec to `articles/YYYY/MM/DD-slug/media/<name>.json`. The JSON must set `template` to the template name and match the shape documented in `charts/README.md`.
+For each chart, save a JSON spec to `content/articles/YYYY/MM/DD-slug/media/<name>.json`. The JSON must set `template` to the template name and match the shape documented in `charts/README.md`.
 
 Default dimensions when rendering (documented in `charts/README.md`):
 - `flow` horizontal — `--width 1800 --height 620`
@@ -237,8 +237,8 @@ After saving each spec, render it:
 ```bash
 node charts/render.mjs \
   --template <name> \
-  --data articles/YYYY/MM/DD-slug/media/<name>.json \
-  --output articles/YYYY/MM/DD-slug/media/<name>.webp \
+  --data content/articles/YYYY/MM/DD-slug/media/<name>.json \
+  --output content/articles/YYYY/MM/DD-slug/media/<name>.webp \
   --width <w> --height <h>
 ```
 
@@ -297,7 +297,7 @@ Present both chart specs and image prompts together with AskUserQuestion:
 ## Step 6: Save the article
 
 1. Generate a slug from the title: key words, lowercased, hyphenated, max 60 chars
-2. Create the directory: `articles/YYYY/MM/DD-slug/` — `DD` is the zero-padded day (e.g. `08`, `11`); the slug carries no date prefix, since `YYYY/MM` come from the path and the frontmatter `date:`
+2. Create the directory: `content/articles/YYYY/MM/DD-slug/` — `DD` is the zero-padded day (e.g. `08`, `11`); the slug carries no date prefix, since `YYYY/MM` come from the path and the frontmatter `date:`
 3. **Write a meta description** (140–160 characters) for the `description:` frontmatter field. This is what shows up in Google SERP snippets and link previews — it must earn the click on its own. Rules:
    - Distinct from the subtitle (different phrasing, different beat — they sit next to each other in the preview)
    - Lead with the punch, not throat-clearing ("Most teams… X. Here's why."), not "This article explores…"
@@ -325,7 +325,7 @@ draft: true
 **Optional — FAQ section for snippet eligibility.** If the article naturally answers 3+ recurring questions about its topic (often surfaced by the People Also Ask box in Step 2.6), add a `## FAQ` section near the bottom with `### Question?` H3s and a short paragraph answer under each. The build pipeline auto-emits FAQPage JSON-LD when it detects this pattern, which can earn rich-result placement. Don't fabricate questions to game it — the FAQ has to read as a genuine extension of the piece, not a tacked-on SEO tail.
 
 4. Chart specs (`media/<name>.json`) and rendered `.webp` files are already saved from Step 5b. Include inline references (`![caption](media/<name>.webp)`) in the article body at the relevant sections.
-5. If AI image prompts were generated, save them as `articles/YYYY/MM/DD-slug/image-prompts.md`:
+5. If AI image prompts were generated, save them as `content/articles/YYYY/MM/DD-slug/image-prompts.md`:
 
 ```markdown
 # Image Prompts
@@ -347,7 +347,7 @@ draft: true
 
 Save a copy-pasteable critique prompt the user can take to another AI (ChatGPT, Claude.ai, Gemini) for a second-opinion review. This is the main defense against the polish-after-publish loop — catching weak spots while the draft is still a draft.
 
-Write to `articles/YYYY/MM/DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
+Write to `content/articles/YYYY/MM/DD-slug/critique-prompt.md`. **Do not embed the article text** — pass the draft URL instead, so the reviewing AI fetches the live draft page directly. This keeps the prompt short and ensures the reviewer sees the rendered article (images, formatting) rather than raw markdown.
 
 Compute the draft URL:
 - Token: `sha256("<DD-slug>")[:16]` — hash the **exact directory name** you created (the day-prefixed form, e.g. `11-rent-the-loop-build-the-moat`). This is what `web/build.py` uses for draft routing (`slug = article_dir.name`); hashing anything else yields a dead URL the reviewer can't open.
@@ -362,7 +362,7 @@ Template (substitute `{AUDIENCE}` with the audience from Step 2.5, `{THESIS}` wi
 
 Paste the prompt below into another AI (ChatGPT, Claude.ai, Gemini — whichever gives you a fresh perspective) for a sharp second-opinion review. The reviewer will fetch the draft directly. Bring the feedback back to Claude Code and ask for targeted revisions.
 
-**Before pasting:** make sure the draft is deployed (`bash pipeline.sh --skip-scrape`) so the URL resolves.
+**Before pasting:** make sure the draft is deployed (`bash scripts/pipeline.sh --skip-scrape`) so the URL resolves.
 
 ---
 
@@ -408,9 +408,9 @@ Be direct. Don't cushion. The goal is a sharper article, not a comfortable autho
 ## Step 8: Wrap up
 
 Tell the user:
-- The article has been saved to `articles/[path]/article.md`
-- Critique prompt saved to `articles/[path]/critique-prompt.md` — paste it into another AI before publishing to catch weak spots
-- Image prompts saved to `articles/[path]/image-prompts.md` (if generated)
+- The article has been saved to `content/articles/[path]/article.md`
+- Critique prompt saved to `content/articles/[path]/critique-prompt.md` — paste it into another AI before publishing to catch weak spots
+- Image prompts saved to `content/articles/[path]/image-prompts.md` (if generated)
 - Remind: "To rebuild the site with this article: `python web/build.py`"
 - Remind: "When ready to promote on LinkedIn and X, run `/post [article-url]`"
 - Remind: "When ready to publish, run `/publish [slug]` — it flips the draft flag and renames the directory to today's date"

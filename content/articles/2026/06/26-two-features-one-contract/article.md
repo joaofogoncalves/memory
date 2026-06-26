@@ -6,7 +6,7 @@ date: 2026-06-26
 tags: [devops, infrastructure-as-code, mcp, api-design, ai]
 substack_url:
 hero_image: media/hero.png
-reading_time: 11
+reading_time: 12
 draft: true
 ---
 
@@ -95,5 +95,7 @@ It's the same reasoning as leaving deploys out of the Terraform provider. Every 
 Not everything in 3.0 was about the contract. The web UI was rebuilt on a standard component library, the front-end bundle was split into lazy-loaded chunks, and a configuration audit surfaced a batch of settings that had been hardcoded and removed a few the app had been silently ignoring. Useful, unglamorous, the kind of work a major version is mostly made of.
 
 Backups got the change that was overdue. Retention used to be flat: keep everything for N days, then delete it. That forces a bad trade, because 90 days of nightly backups is 90 files, and 7 days leaves no medium-term recovery point at all. 3.0 replaced it with grandfather-father-son rotation, the scheme borg, restic, and Time Machine have used for years: keep the last few, then thin older backups down to daily, weekly, monthly, and yearly tiers. Keeping 7 daily, 4 weekly, and 6 monthly backups spans half a year in roughly 17 files instead of 180. It ships as presets (lean, balanced, long-term) with a global default each database can override. Manual and pinned backups are exempt, a floor guarantees it never deletes down to nothing, and it prunes nothing at all until you opt in. This is table stakes for anything storing real data, and now it's in the box rather than in a cron job someone wrote once and forgot.
+
+The documentation went live with the release, at [bridgeport.bridgein.com](https://bridgeport.bridgein.com): installation and getting-started, a guide per subsystem, a [Terraform guide](https://bridgeport.bridgein.com/guides/terraform/) and an [MCP reference](https://bridgeport.bridgein.com/reference/mcp/) for the two surfaces this piece is about, the [API stability policy](https://bridgeport.bridgein.com/api-stability/), and a full [API reference](https://bridgeport.bridgein.com/reference/api/) generated from the same OpenAPI spec the release hardened. The contract ended up documenting itself.
 
 Once the API is a stable dependency, a new surface is mostly a curation problem, not an integration one. The CLI, the Go SDK, the Terraform provider, and the MCP server are all clients of the same definition, and not one of them had to rebuild validation, permissions, or audit. They inherited it. It's the same reason [the layer around a model usually matters more than the model](/articles/2026/06/2026-06-08-the-harness-is-the-moat/). The features are the visible part. The contract is the part that took the time.

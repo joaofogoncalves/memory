@@ -1,0 +1,20 @@
+{
+  "template": "flow",
+  "title": "One contract, two surfaces",
+  "subtitle": "The Terraform provider and the MCP server are the same API contract, projected two ways.",
+  "caption": "Both surfaces start from the same Zod schema and typed OpenAPI spec, then diverge.",
+  "highlightStageIndex": 1,
+  "tracks": [
+    {
+      "label": "Declarative",
+      "stages": ["Zod schema", "Typed OpenAPI", "Go client", "Terraform provider", "terraform plan"]
+    },
+    {
+      "label": "Conversational",
+      "stages": ["Zod schema", "Typed OpenAPI", "Tool schemas", "MCP server", "Agent call"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 1, "label": "one hardened contract" }
+  ]
+}

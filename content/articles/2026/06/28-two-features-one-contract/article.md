@@ -4,7 +4,7 @@ subtitle: "BridgePort 3.0 shipped a Terraform provider and an MCP server. Most o
 description: "BridgePort 3.0 shipped a Terraform provider and an MCP server from one hardened API contract. How to build the contract, and project it two ways."
 date: 2026-06-28
 tags: [devops, infrastructure-as-code, mcp, api-design, ai]
-substack_url:
+substack_url: "https://joaofogoncalves.substack.com/p/28-two-features-one-contract"
 hero_image: media/hero.png
 reading_time: 12
 ---

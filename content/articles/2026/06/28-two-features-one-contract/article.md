@@ -2,12 +2,11 @@
 title: "Two Features, One Contract"
 subtitle: "BridgePort 3.0 shipped a Terraform provider and an MCP server. Most of the work went into the API contract they both depend on."
 description: "BridgePort 3.0 shipped a Terraform provider and an MCP server from one hardened API contract. How to build the contract, and project it two ways."
-date: 2026-06-26
+date: 2026-06-28
 tags: [devops, infrastructure-as-code, mcp, api-design, ai]
 substack_url:
 hero_image: media/hero.png
 reading_time: 12
-draft: true
 ---
 
 [BridgePort 3.0](https://bridgeport.bridgein.com/changelog/#v3-0-0) has two headline features: a Terraform provider and an MCP server. They were built as separate efforts, in separate epics, and they look unrelated. One is infrastructure-as-code. The other is what people usually mean by "adding AI" to a tool.

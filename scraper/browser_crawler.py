@@ -16,6 +16,7 @@ from scraper.models import LinkedInPost, Media
 from scraper.utils import (
     extract_hashtags,
     parse_relative_date,
+    decode_linkedin_timestamp,
     load_checkpoint,
     save_checkpoint,
 )
@@ -272,7 +273,15 @@ class BrowserCrawler:
             if not content:
                 content = "(no text content)"
 
-            created_at = self._extract_date(el)
+            # Exact post time, decoded from the LinkedIn ID in the URN. The
+            # relative-timestamp parse ("3w", "1mo") is a coarse fallback only
+            # for posts whose URN can't be decoded. Converted to local
+            # wall-clock and made tz-naive to match the rest of the pipeline.
+            decoded_time = decode_linkedin_timestamp(urn)
+            if decoded_time:
+                created_at = decoded_time.astimezone().replace(tzinfo=None)
+            else:
+                created_at = self._extract_date(el)
             media = self._extract_media(el)
             post_type = self._determine_post_type(el)
             hashtags = extract_hashtags(content)

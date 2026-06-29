@@ -10,6 +10,8 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/05/2026-05-20-building-the-road-to-production-again/
 angle: The cheap-failure doctrine breaks because it assumed failure was detectable — agent-PR loops produce illegible failure that accumulates as architectural drift.
 template: article-reaction
+reactions: 7
+comments: 1
 ---
 
 A bad deploy is legible.

@@ -10,6 +10,8 @@ source_urls:
   - https://github.com/bridgeinpt/bridgeport/releases/tag/v2.0.0
 angle: 2.0 is a redesign whose headline is performance, not a feature. Lead with the numbers (8.2s to 46ms p99, 6s to <500ms dashboard) and let them carry; the service-model rewrite and the 2.0.1/2.0.2 cleanup are the supporting cast.
 template: short-form
+reactions: 11
+comments: 2
 ---
 
 Most 2.0 releases lead with a new feature. This one leads with what got faster.

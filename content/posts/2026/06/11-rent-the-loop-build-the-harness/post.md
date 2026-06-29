@@ -10,6 +10,8 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/06/11-rent-the-loop-build-the-moat/
 angle: Rent the generic agent loop; build the harness that knows your domain. The build-vs-buy frameworks treat the agent as one object. It is a loop plus a harness on opposite sides of the line. The clean test - knowable from outside, rent it; learned in your own production, build it.
 template: article-reaction
+reactions: 4
+comments: 1
 ---
 
 Rent the loop. Build the harness. The line runs exactly where your domain starts.

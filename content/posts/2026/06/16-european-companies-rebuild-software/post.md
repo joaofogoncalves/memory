@@ -8,6 +8,8 @@ substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/
 tags: [startups, europe, game-theory]
 angle: US "trust" is an enforceable Nash equilibrium (cheap, fast, winnable litigation), not a cultural virtue. Low enforcement in Europe makes defection cheap, forces vertical integration, and caps company size. AI cuts both ways — the rented frontier widens the gap (data-to-3rd-party trust), cheap in-house build narrows it — and which wins turns on whether the frontier stays rented.
 template: long-form
+reactions: 7
+comments: 2
 ---
 
 European companies rebuild software that already exists. Constantly. Give an American company the same choice and it buys the better version and moves on.

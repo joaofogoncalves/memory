@@ -10,6 +10,8 @@ source_urls:
   - https://www.anthropic.com/research/claude-code-expertise
 angle: The "returns to expertise" gap didn't close — cheap AI moved the advantage upstream to domain command and judgment.
 template: article-reaction
+reactions: 9
+comments: 2
 ---
 
 The story everyone wanted was that cheap AI flattens the skill curve. Anybody can ship now, the gap closes, expertise stops mattering.

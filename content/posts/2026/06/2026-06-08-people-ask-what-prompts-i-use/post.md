@@ -10,6 +10,8 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/06/2026-06-08-the-harness-is-the-moat/
 angle: "Article promo for 'The Harness Is the Moat' — prompt-vs-system, the harness is the hard and owned part. Reinforces the thesis, does not summarize; teases part 2."
 template: article-reaction
+reactions: 9
+comments: 1
 ---
 
 People ask what prompts I use to run a multi-agent system in production. It's the wrong question.

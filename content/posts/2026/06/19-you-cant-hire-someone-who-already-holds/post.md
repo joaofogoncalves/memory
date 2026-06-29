@@ -10,6 +10,8 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/06/14-the-moat-that-walks-out-the-door/
 angle: Hire for the slope (absorption rate), not the inventory — interview loops measure what a candidate already knows when the job pays out on how fast they reach your team's judgment.
 template: article-reaction
+reactions: 2
+comments: 1
 ---
 
 You can't hire someone who already holds your team's judgment. Nobody has it.

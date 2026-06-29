@@ -268,6 +268,7 @@ class LinkedInArchiver:
                         post.reactions,
                         post.comments,
                         post_url=post.post_url,
+                        impressions=post.impressions,
                     )
                     stats['engagement_updated'] += 1
                     stats['successful'] += 1
@@ -292,6 +293,7 @@ class LinkedInArchiver:
                         post.reactions,
                         post.comments,
                         post_url=post.post_url,
+                        impressions=post.impressions,
                     )
                     stats['engagement_updated'] += 1
                     stats['successful'] += 1

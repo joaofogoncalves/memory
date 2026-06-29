@@ -102,6 +102,8 @@ class MarkdownGenerator:
             header.append(f'reactions: {post.reactions}')
         if post.comments:
             header.append(f'comments: {post.comments}')
+        if getattr(post, 'impressions', 0):
+            header.append(f'impressions: {post.impressions}')
 
         header.append('---\n')
 
@@ -234,6 +236,7 @@ class MarkdownGenerator:
         reactions: int,
         comments: int,
         post_url: Optional[str] = None,
+        impressions: int = 0,
     ) -> bool:
         """Update reactions/comments (and optionally fill empty post_url) in an existing post.md.
 
@@ -291,6 +294,12 @@ class MarkdownGenerator:
             if comments and comments != existing_comments:
                 if not replace_line('comments', comments):
                     new_fields.append(f'comments: {comments}')
+                changed = True
+
+            existing_impressions = int(fm.get('impressions', 0) or 0)
+            if impressions and impressions != existing_impressions:
+                if not replace_line('impressions', impressions):
+                    new_fields.append(f'impressions: {impressions}')
                 changed = True
 
             if post_url and not existing_post_url:

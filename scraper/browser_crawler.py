@@ -284,7 +284,7 @@ class BrowserCrawler:
             if post_type == 'repost':
                 repost_commentary, original_post_url = self._extract_repost_info(el)
 
-            reactions, comments = self._extract_engagement(el)
+            reactions, comments, impressions = self._extract_engagement(el)
 
             return LinkedInPost(
                 id=urn,
@@ -298,13 +298,14 @@ class BrowserCrawler:
                 repost_commentary=repost_commentary,
                 reactions=reactions,
                 comments=comments,
+                impressions=impressions,
             )
         except Exception as e:
             logger.warning(f"Failed to parse post {urn}: {e}")
             return None
 
-    def _extract_engagement(self, el: Locator) -> tuple[int, int]:
-        """Extract reaction and comment counts from a post element.
+    def _extract_engagement(self, el: Locator) -> tuple[int, int, int]:
+        """Extract reaction, comment, and impression counts from a post element.
 
         Strategy: try aria-label first (stable screen-reader text like
         "482 reactions" / "193 comments") since class names change frequently
@@ -313,8 +314,11 @@ class BrowserCrawler:
         rendered in offscreen/lazy containers when a post is processed
         before it fully enters the viewport.
 
+        Impressions are shown only on the author's own posts ("787 impressions",
+        inline beside a "View analytics" link), so they're 0 for others' posts.
+
         Returns:
-            Tuple of (reactions, comments) as integers.
+            Tuple of (reactions, comments, impressions) as integers.
         """
         def _parse_count(text: str) -> int:
             """Parse '1,234', '1K', or '1.2M' style counts into an integer."""
@@ -325,6 +329,7 @@ class BrowserCrawler:
             for suffix in (
                 ' reactions', ' reaction', ' likes', ' like',
                 ' comments', ' comment', ' reposts', ' repost',
+                ' impressions', ' impression', ' views', ' view',
             ):
                 if text.lower().endswith(suffix):
                     text = text[:-len(suffix)].strip()
@@ -413,8 +418,28 @@ class BrowserCrawler:
                 'button[aria-label*="comment" i] span[aria-hidden="true"]',
             ])
 
-        logger.debug(f"Engagement extracted: reactions={reactions} comments={comments}")
-        return reactions, comments
+        # Impressions — shown only on the author's own posts ("787 impressions"),
+        # inline next to a "View analytics" link. aria-label first, then a regex
+        # over the element text anchored on the word "impression".
+        impressions = _from_aria_label(
+            'a[aria-label*="impression" i], button[aria-label*="impression" i], '
+            'a[aria-label*="analytics" i], button[aria-label*="analytics" i]',
+            r'(?:impression|impressions|view|views)',
+        )
+        if impressions == 0:
+            try:
+                whole = el.text_content(timeout=800) or ''
+                m = re.search(r'([\d.,]+\s*[KkMm]?)\s*impression', whole, re.IGNORECASE)
+                if m:
+                    impressions = _parse_count(m.group(1))
+            except Exception as e:
+                logger.debug(f"impressions text read failed: {e}")
+
+        logger.debug(
+            f"Engagement extracted: reactions={reactions} comments={comments} "
+            f"impressions={impressions}"
+        )
+        return reactions, comments, impressions
 
     def _expand_post_text(self, el: Locator) -> None:
         """Click 'see more' button if present to expand truncated text."""

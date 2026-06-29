@@ -39,6 +39,7 @@ class LinkedInPost:
     author_headline: Optional[str] = None
     reactions: int = 0    # LinkedIn reaction count at time of scrape
     comments: int = 0     # LinkedIn comment count at time of scrape
+    impressions: int = 0  # LinkedIn impression count (own posts only) at scrape time
 
     def __post_init__(self):
         """Validate post type."""

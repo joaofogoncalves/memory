@@ -13,7 +13,7 @@ reading_time: 12
 
 They turned out to be two clients of the same thing: BridgePort's HTTP API. The Terraform provider drives it from a file in version control, and the MCP server drives it from an agent in an editor. They expose different slices of it, one declaring configuration and the other running operations, but neither had to build its own validation, permissions, or audit trail. Both inherited that from the API. Most of the release didn't go into either feature. It went into making the API stable enough to be that dependency.
 
-The release before this one, [2.0, was about speed](/posts/2026/06/2026-06-07-bridgeport-2-0-what-got-faster/). The slowest production transaction dropped from a p99 over 8 seconds to 46 milliseconds. 3.0 is about the API surface instead. Less visible, same general idea: make the control plane something other software can rely on.
+The release before this one, [2.0, was about speed](/posts/2026/06/07-bridgeport-2-0-what-got-faster/). The slowest production transaction dropped from a p99 over 8 seconds to 46 milliseconds. 3.0 is about the API surface instead. Less visible, same general idea: make the control plane something other software can rely on.
 
 ::: wide
 ![One API contract, projected onto a declarative surface (the Terraform provider) and a conversational one (the MCP server). Both start from the same Zod schema and typed OpenAPI spec, then diverge.](media/contract-two-surfaces.webp)

@@ -18,7 +18,8 @@ from scraper.utils import (
     load_env_vars,
     slugify_post,
     get_unique_slug,
-    create_directory
+    create_directory,
+    decode_linkedin_timestamp,
 )
 from scraper.media_downloader import MediaDownloader
 from scraper.markdown_generator import MarkdownGenerator
@@ -109,11 +110,12 @@ class LinkedInArchiver:
         Returns:
             Dict with:
               'by_url': {post_url: Path}  — exact post_url → post.md path
+              'by_time': [(epoch_seconds, Path), ...]  — decoded post time
               'by_fingerprint': [(fingerprint, YYYY-MM-DD str, Path), ...]
         """
         import yaml
 
-        index = {'by_url': {}, 'by_fingerprint': []}
+        index = {'by_url': {}, 'by_time': [], 'by_fingerprint': []}
         if not self.base_dir.exists():
             return index
 
@@ -131,6 +133,14 @@ class LinkedInArchiver:
                 post_url = (fm.get('post_url') or '').strip('"\' ')
                 if post_url:
                     index['by_url'][post_url] = md_path
+
+                # Index by exact post time, decoded from the LinkedIn ID in the
+                # URL. The share-URL and activity-URN forms decode to the same
+                # instant, so this matches an authored post to its scraped twin
+                # even when the two URL formats differ (the by_url miss).
+                decoded = decode_linkedin_timestamp(post_url)
+                if decoded:
+                    index['by_time'].append((decoded.timestamp(), md_path))
 
                 fingerprint = self._content_fingerprint(body)
                 if not fingerprint:
@@ -152,7 +162,10 @@ class LinkedInArchiver:
 
         Priority:
           1. Exact post_url match.
-          2. Content fingerprint match within ±14 days of the post's date.
+          2. Decoded post-time match within a tight window (closes the
+             share-URL vs activity-URN gap, since both IDs encode the same
+             creation instant).
+          3. Content fingerprint match within ±14 days of the post's date.
 
         Args:
             post: A LinkedInPost from the scraper.
@@ -163,6 +176,20 @@ class LinkedInArchiver:
         """
         if post.post_url and post.post_url in index['by_url']:
             return index['by_url'][post.post_url]
+
+        # Match by decoded post time. Two LinkedIn URL forms for the same post
+        # decode to within ~1s of each other; a 5-minute window is far inside
+        # the gap between two genuinely different posts, so this is safe.
+        incoming_time = decode_linkedin_timestamp(post.post_url)
+        if incoming_time and index['by_time']:
+            target = incoming_time.timestamp()
+            best, best_delta = None, 300  # 5-minute tolerance (seconds)
+            for epoch, path in index['by_time']:
+                delta = abs(epoch - target)
+                if delta <= best_delta:
+                    best, best_delta = path, delta
+            if best is not None:
+                return best
 
         incoming_fp = self._content_fingerprint(post.content)
         if not incoming_fp:

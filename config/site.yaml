@@ -32,11 +32,11 @@ newsletter_url: "https://joaofogoncalves.substack.com/subscribe"
 # Curated "Start Here" posts — auto-updated by scraper from LinkedIn top performers.
 # Override by listing slugs manually; set to [] to disable the section.
 featured_posts:
-  - "2026-04-10-the-funny-part-is-every-single-item-on"
+  - "10-the-funny-part-is-every-single-item-on"
   - "26-everyone-s-dunking-on-this-ceo-i-get-it-2"
-  - "2026-04-09-the-best-thing-you-can-say-about-your"
-  - "2026-04-11-the-most-anti-ai-slop-project-in-open-source-just"
-  - "2026-04-06-this-chart-has-been-going-around-and-it-s"
+  - "09-the-best-thing-you-can-say-about-your"
+  - "11-the-most-anti-ai-slop-project-in-open-source-just"
+  - "06-this-chart-has-been-going-around-and-it-s"
   - "06-yesterday-anthropic-published-a-labor-market-repo-2"
 topics:
   - name: "AI in Engineering"

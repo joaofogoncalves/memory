@@ -53,7 +53,7 @@ This is not new in shape. Scoping, criteria, and structured feedback are familia
 
 ## 03 — The floor and the ceiling
 
-I have been [running prompting sessions](/posts/2026/04/2026-04-26-most-ai-trainings-meet-people-where-they-are/) for over 6 months. The pattern is consistent.
+I have been [running prompting sessions](/posts/2026/04/26-most-ai-trainings-meet-people-where-they-are/) for over 6 months. The pattern is consistent.
 
 The floor is structural. People who already know how to describe work in measurable, scoped, criteria-bearing terms become functional with almost any model inside an hour. The transferable competence is mostly older than the technology.
 

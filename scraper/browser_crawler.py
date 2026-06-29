@@ -314,8 +314,10 @@ class BrowserCrawler:
         rendered in offscreen/lazy containers when a post is processed
         before it fully enters the viewport.
 
-        Impressions are shown only on the author's own posts ("787 impressions",
-        inline beside a "View analytics" link), so they're 0 for others' posts.
+        Impressions show inline on the author's own original posts ("787
+        impressions", beside a "View analytics" link), old ones included. They
+        are absent on reposts (the archiver skips those anyway) and on others'
+        posts, so impressions read 0 there.
 
         Returns:
             Tuple of (reactions, comments, impressions) as integers.

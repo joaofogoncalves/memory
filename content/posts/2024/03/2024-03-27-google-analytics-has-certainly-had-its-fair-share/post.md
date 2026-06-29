@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7108803455074340865/
+posted_at: 2023-09-16T13:26:58Z
 post_type: original
 archived_at: 2026-03-27
 tags: [ChangeManagement, Google, googleanalytics, TechLeaders]

@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7256654347487363073/
+posted_at: 2024-10-28T13:13:38Z
 post_type: original
 archived_at: 2026-03-27
 tags: [refactoring, softwaredevelopment, technicaldebt]

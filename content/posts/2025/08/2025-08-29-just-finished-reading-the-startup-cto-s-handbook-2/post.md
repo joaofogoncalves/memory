@@ -1,6 +1,7 @@
 ---
 date: 2025-08-29
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7356051394719559680/
+posted_at: 2025-07-29T20:02:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [bookreview, leadership]

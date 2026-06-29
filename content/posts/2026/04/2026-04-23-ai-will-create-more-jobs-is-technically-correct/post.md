@@ -3,6 +3,7 @@ date: 2026-04-23
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-aiadoption-share-7453091432267120640-Dr6c"
+posted_at: 2026-04-23T14:44:29Z
 x_url: "https://x.com/joaofogoncalves/status/2047326603491881386"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-247979578"
 tags: [ai, future-of-work, ai-adoption]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7163125495889346561/
+posted_at: 2024-02-13T11:03:22Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, EQ, teamwork]

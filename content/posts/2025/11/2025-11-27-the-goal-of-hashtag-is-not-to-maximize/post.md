@@ -1,6 +1,7 @@
 ---
 date: 2025-11-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7397673154329899009/
+posted_at: 2025-11-21T16:32:02Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [startup]

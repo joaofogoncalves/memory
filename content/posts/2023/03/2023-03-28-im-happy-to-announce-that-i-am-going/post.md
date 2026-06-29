@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6980539112621510656/
+posted_at: 2022-09-27T14:50:16Z
 post_type: original
 archived_at: 2026-03-27
 tags: [companyculture, jobfairs, lisbonjobs, jobfair2022, jobevent, jobfair, devopsjobs, lisbonne, jobsinlisbon, devOpsengineer, portugal, Valispace, portugaljobs, TechJobsFair, TJF]

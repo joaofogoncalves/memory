@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7122938466937544704/
+posted_at: 2023-10-25T13:34:28Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [teammanagement, retention]

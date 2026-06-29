@@ -1,6 +1,7 @@
 ---
 date: 2017-03-29
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6151731263964217344/
+posted_at: 2016-06-23T13:03:46Z
 post_type: article
 archived_at: 2026-03-27
 ---

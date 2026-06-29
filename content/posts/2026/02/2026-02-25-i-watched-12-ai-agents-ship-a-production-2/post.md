@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7429439461706346496/
+posted_at: 2026-02-17T08:19:59Z
 post_type: article
 archived_at: 2026-03-27
 tags: [CodingAgents, SoftwareDevelopment, AI]

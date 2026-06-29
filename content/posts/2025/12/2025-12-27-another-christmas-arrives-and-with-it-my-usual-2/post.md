@@ -1,6 +1,7 @@
 ---
 date: 2025-12-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7401162391348084736/
+posted_at: 2025-12-01T07:37:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [Xmastree]

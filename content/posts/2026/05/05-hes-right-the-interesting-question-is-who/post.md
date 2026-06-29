@@ -3,6 +3,7 @@ date: 2026-05-05
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineering-softwareengineering-share-7457411713320042496-qrAg/"
+posted_at: 2026-05-05T12:51:44Z
 x_url: "https://x.com/joaofogoncalves/status/2051646387888996653"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-254051534"
 tags: [ai, engineering, softwareengineering, aicoding]

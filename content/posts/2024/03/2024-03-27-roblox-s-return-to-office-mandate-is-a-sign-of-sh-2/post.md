@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7120866071615569920/
+posted_at: 2023-10-19T20:19:30Z
 post_type: article
 archived_at: 2026-03-27
 tags: [remote, workfromhome]

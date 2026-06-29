@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7123666328065818624/
+posted_at: 2023-10-27T13:46:43Z
 post_type: original
 archived_at: 2026-03-27
 tags: [growth, ai, carrer]

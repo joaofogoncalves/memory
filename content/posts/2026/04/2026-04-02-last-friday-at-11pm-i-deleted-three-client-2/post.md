@@ -1,6 +1,7 @@
 ---
 date: 2026-04-02
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7445372200959991808/
+posted_at: 2026-04-02T07:31:01Z
 post_type: original
 archived_at: 2026-04-05
 tags: [SoftwareEngineering, AI, DevOps]

@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7422561918558769152/
+posted_at: 2026-01-29T08:51:05Z
 post_type: original
 archived_at: 2026-03-27
 tags: [curiosity, Ai, softwaredevelopment]

@@ -3,6 +3,7 @@ date: 2026-06-16
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_startups-europe-gametheory-share-7472936901700898816-JRC9"
+posted_at: 2026-06-17T09:03:17Z
 x_url: "https://x.com/joaofogoncalves/status/2067171350716784964"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-277784307"
 tags: [startups, europe, game-theory]

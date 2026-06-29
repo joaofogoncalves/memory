@@ -1,6 +1,7 @@
 ---
 date: 2026-04-08
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7447547283136700417/
+posted_at: 2026-04-08T07:34:01Z
 post_type: original
 archived_at: 2026-04-08
 tags: [Leadership, Prompting, AI]

@@ -1,6 +1,7 @@
 ---
 date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7421534010700447744/
+posted_at: 2026-01-26T12:46:33Z
 post_type: original
 archived_at: 2026-03-27
 tags: [Productivity, GenerativeAI, DevTools, SoftwareEngineering, AI]

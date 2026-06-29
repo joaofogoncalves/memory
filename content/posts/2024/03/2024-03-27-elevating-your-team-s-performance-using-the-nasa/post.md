@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7110495370526232576/
+posted_at: 2023-09-21T05:30:02Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, productivity, teamwork, NASA]

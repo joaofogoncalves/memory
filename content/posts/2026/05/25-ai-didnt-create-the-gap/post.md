@@ -3,6 +3,7 @@ date: 2026-05-25
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineering-craftsmanship-share-7464639021743460352-aTPz/"
+posted_at: 2026-05-25T11:30:29Z
 x_url: "https://x.com/joaofogoncalves/status/2058872408728076448"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-264809018"
 tags: [ai, engineering, craftsmanship]

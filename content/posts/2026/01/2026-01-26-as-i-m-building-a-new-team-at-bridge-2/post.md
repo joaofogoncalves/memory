@@ -1,6 +1,7 @@
 ---
 date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7419295177707782144/
+posted_at: 2026-01-20T08:30:14Z
 post_type: original
 archived_at: 2026-03-27
 tags: [agents, ai, leadership]

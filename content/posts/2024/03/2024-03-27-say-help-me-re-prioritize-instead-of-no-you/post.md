@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7152566328862683139/
+posted_at: 2024-01-15T07:45:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, prioritization, successmindset, teamwork]

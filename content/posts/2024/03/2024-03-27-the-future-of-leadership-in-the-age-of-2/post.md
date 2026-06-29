@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7130161933109854208/
+posted_at: 2023-11-14T11:57:56Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, ai]

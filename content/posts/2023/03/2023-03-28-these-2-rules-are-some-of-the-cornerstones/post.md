@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6936259578170908672/
+posted_at: 2022-05-28T10:19:12Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [automation, devops]

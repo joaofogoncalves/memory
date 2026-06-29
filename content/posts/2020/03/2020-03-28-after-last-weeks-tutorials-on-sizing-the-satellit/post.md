@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6563059756033019904/
+posted_at: 2019-08-02T14:16:21Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [EmpoweringEngineers]

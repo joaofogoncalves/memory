@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7096510681440559104/
+posted_at: 2023-08-13T15:19:53Z
 post_type: original
 archived_at: 2026-03-27
 tags: [bookreview, reading]

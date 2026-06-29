@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7431625078414409728/
+posted_at: 2026-02-23T09:04:51Z
 post_type: original
 archived_at: 2026-03-27
 tags: [ClaudeCode, SoftwareDevelopment, AI]

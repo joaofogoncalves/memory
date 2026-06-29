@@ -48,6 +48,16 @@ Write LinkedIn posts in the following style:
 - Excitement. If something is interesting, show it through the argument, not the adjectives.
 - Repeating the source material when the screenshot or context is already attached.
 
+**Engagement Levers** (data-informed · Apr–Jun 2026 · n≈45 · directional, not law)
+
+Reach (reactions) and discussion (comments) are different games, and LinkedIn weights comments far more — so optimize for comments.
+
+- **Stake a position; don't just summarize news.** The posts with the highest comment-to-reaction ratio (0.5–0.8) took a clear, arguable stance ("the best thing you can say about your product is 'we ship'"; "who lands on which side"; "trust ≠ motivated-to-do-well"). News reactions and build-in-public posts pull reactions but almost no comments (0.01–0.36). The "most people think X; the real split is Y" move is the comment engine — write things people want to argue with.
+- **The AI-and-jobs/labor lane has the highest ceiling.** The single biggest hit (393 reactions / 68 comments) was a jobs take. Worth deliberately revisiting.
+- **Reacting fast to Anthropic/Claude news is reliable reach plus decent discussion.** Open-source / build-in-public (BridgePort) reliably earns reactions, but graft a position onto it or it draws near-zero comments (the 3.0 "don't embed a model" post does this right).
+- **Shorter wins.** Under ~120 words beat 200–400 on reactions. Confirms "bias short."
+- **Timing (weak signal, Lisbon time):** weekday over weekend; afternoon ~15–18 (catches the US morning) and early AM (before 9) outperform the midday lull (12–15). Save the most discussion-bait positions for Mon–Wed.
+
 ---
 
 **Example opener patterns:**

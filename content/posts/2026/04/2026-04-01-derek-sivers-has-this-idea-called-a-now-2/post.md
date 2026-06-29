@@ -1,6 +1,7 @@
 ---
 date: 2026-04-01
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7445010820125622273/
+posted_at: 2026-04-01T07:35:01Z
 post_type: original
 archived_at: 2026-04-05
 tags: [NowPage, PersonalWebsite, ContentOwnership]

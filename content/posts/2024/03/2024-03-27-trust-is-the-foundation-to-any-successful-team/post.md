@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7120488593214570497/
+posted_at: 2023-10-18T19:19:32Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, trust, teamwork]

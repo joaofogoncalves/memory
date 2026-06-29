@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7237878717291626497/
+posted_at: 2024-09-06T17:45:59Z
 post_type: article
 archived_at: 2026-03-27
 tags: [TechJobs, RemoteWork, Valispace, FrontendDeveloper, Engineering]

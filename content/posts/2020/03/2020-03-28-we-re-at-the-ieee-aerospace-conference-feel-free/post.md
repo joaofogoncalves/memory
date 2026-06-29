@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6643473347462201344/
+posted_at: 2020-03-11T11:51:15Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [BetterEngineering, Valispace, EmpoweringEngineers]

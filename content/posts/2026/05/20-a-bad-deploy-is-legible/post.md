@@ -3,6 +3,7 @@ date: 2026-05-20
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7462868545165479937/"
+posted_at: 2026-05-20T14:15:14Z
 x_url: "https://x.com/joaofogoncalves/status/2057103333928706529"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-262187695"
 tags: [ai, software-engineering, devops, engineering-leadership]

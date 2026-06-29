@@ -1,6 +1,7 @@
 ---
 date: 2026-03-24
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7439956120992964608/
+posted_at: 2026-03-18T08:49:26Z
 post_type: original
 archived_at: 2026-03-31
 tags: [AI]

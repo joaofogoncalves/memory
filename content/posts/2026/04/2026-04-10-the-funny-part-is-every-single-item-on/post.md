@@ -1,6 +1,7 @@
 ---
 date: 2026-04-10
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7448270253517680640/
+posted_at: 2026-04-10T07:26:50Z
 post_type: original
 archived_at: 2026-04-12
 tags: [ai, coding, softwaredevelopment]

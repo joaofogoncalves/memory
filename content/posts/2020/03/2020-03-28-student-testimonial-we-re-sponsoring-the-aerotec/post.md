@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6536607864759422976/
+posted_at: 2019-05-21T14:25:59Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [aircargochallenge, tech, BetterEngineering, EmpoweringEngineers, aeronautics, space]

@@ -1,6 +1,7 @@
 ---
 date: 2025-12-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7402433338373746688/
+posted_at: 2025-12-04T19:47:18Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [DeloittePortugal, Technology, Fast50]

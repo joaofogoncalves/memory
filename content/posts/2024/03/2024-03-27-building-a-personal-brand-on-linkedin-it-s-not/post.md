@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7126681100231266304/
+posted_at: 2023-11-04T21:26:21Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [personalbrand, bestadvice]

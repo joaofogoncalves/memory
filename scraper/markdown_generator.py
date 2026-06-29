@@ -9,7 +9,7 @@ from typing import Optional
 import yaml
 
 from scraper.models import LinkedInPost
-from scraper.utils import format_datetime
+from scraper.utils import decode_linkedin_timestamp, format_datetime
 
 
 logger = logging.getLogger('linkedin_scraper.markdown')
@@ -82,6 +82,14 @@ class MarkdownGenerator:
             '---',
             f'date: {post.created_at.strftime("%Y-%m-%d")}',
             f'post_url: {post.post_url}',
+        ]
+
+        # Exact post time, decoded from the LinkedIn ID in the URL (UTC).
+        posted_at = decode_linkedin_timestamp(post.post_url)
+        if posted_at:
+            header.append(f'posted_at: {posted_at.strftime("%Y-%m-%dT%H:%M:%SZ")}')
+
+        header += [
             f'post_type: {post.post_type}',
             f'archived_at: {archived_at}',
         ]
@@ -289,6 +297,15 @@ class MarkdownGenerator:
                 if not replace_line('post_url', post_url):
                     new_fields.append(f'post_url: {post_url}')
                 changed = True
+
+            # Backfill exact post time from the LinkedIn ID if not already set.
+            if not (fm.get('posted_at') or ''):
+                decoded = decode_linkedin_timestamp(post_url or existing_post_url)
+                if decoded:
+                    ts = decoded.strftime('%Y-%m-%dT%H:%M:%SZ')
+                    if not replace_line('posted_at', ts):
+                        new_fields.append(f'posted_at: {ts}')
+                    changed = True
 
             if not changed:
                 return True

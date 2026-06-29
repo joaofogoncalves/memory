@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6879505141326729216/
+posted_at: 2021-12-22T19:37:20Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [greatplacetowork, valispace, gptwcertified]

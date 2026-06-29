@@ -3,6 +3,7 @@ date: 2026-06-24
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_the-story-everyone-wanted-was-that-cheap-ugcPost-7475563559465385985-aBx9/"
+posted_at: 2026-06-24T15:00:41Z
 x_url: "https://x.com/joaofogoncalves/status/2069798229122646040"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-281945853"
 tags: [ai, software-engineering, agentic-coding]

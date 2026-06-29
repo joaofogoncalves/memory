@@ -6,7 +6,7 @@ import re
 import logging
 import yaml
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
 from slugify import slugify as make_slug
 from dotenv import load_dotenv
@@ -159,6 +159,42 @@ def parse_linkedin_date(date_str: str) -> Optional[datetime]:
         return datetime.fromtimestamp(timestamp)
     except (ValueError, TypeError):
         return None
+
+
+def decode_linkedin_timestamp(url_or_id: str) -> Optional[datetime]:
+    """Decode a post's exact creation time from its LinkedIn activity/share ID.
+
+    LinkedIn's 64-bit post IDs encode the creation time in their high bits: the
+    first 41 bits are the Unix timestamp in milliseconds, so ``id >> 22`` yields
+    milliseconds since the Unix epoch. The numeric ID appears in both URL forms
+    the scraper handles:
+      - activity URN: ``.../feed/update/urn:li:activity:<id>/``
+      - share URL:    ``.../posts/<slug>-share-<id>-<suffix>/``
+
+    This is exact (to the second) and works retroactively, unlike the relative
+    timestamp ("2w", "1mo") the feed shows, which only yields an approximate date.
+
+    Args:
+        url_or_id: A LinkedIn post URL or the bare numeric ID.
+
+    Returns:
+        A timezone-aware UTC datetime, or None if no plausible ID is found.
+    """
+    if not url_or_id:
+        return None
+    text = str(url_or_id)
+    match = re.search(r'urn:li:activity:(\d+)', text) or re.search(r'(\d{15,})', text)
+    if not match:
+        return None
+    try:
+        ms = int(match.group(1)) >> 22
+        dt = datetime.fromtimestamp(ms / 1000, tz=timezone.utc)
+    except (ValueError, OverflowError, OSError):
+        return None
+    # Sanity bound: reject IDs that decode to an implausible year.
+    if not (2010 <= dt.year <= 2035):
+        return None
+    return dt
 
 
 def parse_relative_date(text: str) -> Optional[datetime]:

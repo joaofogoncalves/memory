@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7124521360541765632/
+posted_at: 2023-10-29T22:24:19Z
 post_type: original
 archived_at: 2026-03-27
 tags: [productmanagement, product]

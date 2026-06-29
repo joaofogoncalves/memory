@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7156607790306729985/
+posted_at: 2024-01-26T11:24:20Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, oneonone, mentoring]

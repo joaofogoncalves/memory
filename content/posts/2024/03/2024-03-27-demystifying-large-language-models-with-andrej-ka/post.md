@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7135686428222533633/
+posted_at: 2023-11-29T17:50:19Z
 post_type: article
 archived_at: 2026-03-27
 tags: [llms, ai, openai]

@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6986653524856066048/
+posted_at: 2022-10-14T11:46:46Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [success, startup, hiring]

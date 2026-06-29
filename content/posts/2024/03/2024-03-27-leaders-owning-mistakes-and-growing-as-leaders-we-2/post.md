@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7128276275437142016/
+posted_at: 2023-11-09T07:05:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [apology, leadership, mistakes]

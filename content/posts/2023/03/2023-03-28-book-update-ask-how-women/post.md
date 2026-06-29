@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7014676535068487680/
+posted_at: 2022-12-30T19:40:12Z
 post_type: original
 archived_at: 2026-03-27
 tags: [CareerGrowth, WomenInTechnology, WomenInTech, WomenInBusiness, WomenLeaders]

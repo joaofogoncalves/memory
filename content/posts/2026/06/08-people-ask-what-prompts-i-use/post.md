@@ -3,6 +3,7 @@ date: 2026-06-08
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7470057636823109635/"
+posted_at: 2026-06-09T10:22:07Z
 x_url: "https://x.com/joaofogoncalves/status/2064112741745655845"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-272937555"
 tags: [ai, agents, software-engineering]

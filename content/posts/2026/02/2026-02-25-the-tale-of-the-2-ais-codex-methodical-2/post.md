@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7427253864413966336/
+posted_at: 2026-02-11T07:35:12Z
 post_type: original
 archived_at: 2026-03-27
 tags: [Codex, Claude, SoftwareDevelopment, AI]

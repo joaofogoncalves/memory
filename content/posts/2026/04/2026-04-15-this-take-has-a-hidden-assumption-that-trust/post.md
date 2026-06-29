@@ -1,6 +1,7 @@
 ---
 date: 2026-04-15
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7450184427395014656/
+posted_at: 2026-04-15T14:13:05Z
 post_type: original
 archived_at: 2026-04-15
 tags: [SoftwareEngineering, EngineeringLeadership, AI]

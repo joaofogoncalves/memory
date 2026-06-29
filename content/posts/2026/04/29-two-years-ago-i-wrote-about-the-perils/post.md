@@ -3,6 +3,7 @@ date: 2026-04-29
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_softwaredevelopment-ai-agents-activity-7455361719528411136-1ZHi"
+posted_at: 2026-04-29T21:05:47Z
 x_url: "https://x.com/i/status/2049595737973965116"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-251226791?r=1vl76e"
 tags: [softwaredevelopment, ai, agents]

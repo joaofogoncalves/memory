@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7126497802540449792/
+posted_at: 2023-11-04T09:18:00Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, hypecycle, gartner]

@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6899709557938225152/
+posted_at: 2022-02-16T13:42:29Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [salesdevelopment, werehiring, Sales, recruiting, growingteam]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7121835719999827968/
+posted_at: 2023-10-22T12:32:32Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, question, leadershipdevelopment]

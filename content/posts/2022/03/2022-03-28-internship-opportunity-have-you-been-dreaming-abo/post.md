@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6902224562826944512/
+posted_at: 2022-02-23T12:16:12Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [internshipopportunity]

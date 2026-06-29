@@ -1,6 +1,7 @@
 ---
 date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7419647325926576129/
+posted_at: 2026-01-21T07:49:32Z
 post_type: original
 archived_at: 2026-03-27
 tags: [ai, slop, dobetter]

@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7217130688813158402/
+posted_at: 2024-07-11T11:40:44Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, teammanagement, trust, bookreview]

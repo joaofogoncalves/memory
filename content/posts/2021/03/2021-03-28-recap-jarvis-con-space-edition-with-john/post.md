@@ -1,6 +1,7 @@
 ---
 date: 2021-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6692148608114003969/
+posted_at: 2020-07-23T19:29:22Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [JarvisCon, Engineering, Aerospace, SpaceEdition]

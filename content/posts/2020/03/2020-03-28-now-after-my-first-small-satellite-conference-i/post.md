@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6569867495866531840/
+posted_at: 2019-08-21T09:07:53Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [SmallSat2019, Valispace, EmpoweringEngineers]

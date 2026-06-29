@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7177926684573089792/
+posted_at: 2024-03-25T07:18:01Z
 post_type: article
 archived_at: 2026-03-27
 tags: [leadership, amazon, jeffbezos, management]

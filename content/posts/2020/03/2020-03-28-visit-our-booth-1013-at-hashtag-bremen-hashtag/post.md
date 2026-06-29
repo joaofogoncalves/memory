@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6602598382844416000/
+posted_at: 2019-11-19T16:48:44Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [SpaceTechExpo, Excel_Is_Not_Enough_To_Develop_Spacecraft_v3_final_2_xls]

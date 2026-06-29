@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7116104939382161408/
+posted_at: 2023-10-06T17:00:28Z
 post_type: original
 archived_at: 2026-03-27
 tags: [datascience, data, datamining, LinkedIn, startups, strategy, innovation, bestadvice, technology, userexperience, ai, bigdata, success, leadership, inspiration, culture, analytics, personaldevelopment]

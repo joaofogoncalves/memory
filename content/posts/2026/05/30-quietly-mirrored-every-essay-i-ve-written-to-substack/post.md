@@ -1,6 +1,7 @@
 ---
 date: 2026-05-30
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7459597762670579715/
+posted_at: 2026-05-11T13:38:19Z
 post_type: original
 archived_at: 2026-06-29
 tags: [AI, Substack, Writing]

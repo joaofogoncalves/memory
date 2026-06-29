@@ -1,6 +1,7 @@
 ---
 date: 2026-01-26
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7420033330802335744/
+posted_at: 2026-01-22T09:23:23Z
 post_type: article
 archived_at: 2026-03-27
 tags: [future, ai, developers]

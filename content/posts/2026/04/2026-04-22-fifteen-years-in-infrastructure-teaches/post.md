@@ -3,6 +3,7 @@ date: 2026-04-22
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_opensource-devops-selfhosted-share-7452688127594450944-4r7C"
+posted_at: 2026-04-22T12:01:53Z
 x_url: "https://x.com/joaofogoncalves/status/2046923364661395503"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-247338394"
 tags: [opensource, devops, infrastructure, engineering, bridgeport]

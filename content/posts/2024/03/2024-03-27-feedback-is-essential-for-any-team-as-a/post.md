@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7138458302727835648/
+posted_at: 2023-12-07T09:24:45Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, feedback]

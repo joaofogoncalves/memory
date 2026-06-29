@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7219768622422884352/
+posted_at: 2024-07-18T18:22:56Z
 post_type: article
 archived_at: 2026-03-27
 tags: [TechLeadership, CTO, CareerGrowth, SoftwareEngineering]

@@ -1,6 +1,7 @@
 ---
 date: 2026-05-30
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7461012406199291904/
+posted_at: 2026-05-15T11:19:36Z
 post_type: original
 archived_at: 2026-06-29
 tags: [Anthropic, AI, Engineering, Careers]

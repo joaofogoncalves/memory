@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7163933516349521920/
+posted_at: 2024-02-15T16:34:09Z
 post_type: article
 archived_at: 2026-03-27
 tags: [nvidia, ai, futureofai]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7137703141474467841/
+posted_at: 2023-12-05T07:24:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, excellence]

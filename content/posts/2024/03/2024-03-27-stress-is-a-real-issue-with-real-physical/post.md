@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7122215429342658561/
+posted_at: 2023-10-23T13:41:22Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [stressmanagement, selfcare]

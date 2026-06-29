@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7108385208696999936/
+posted_at: 2023-09-15T09:45:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [TechLeadership, Timezones, SoftwareDevelopment, ShareYourWisdom]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7106744484415049728/
+posted_at: 2023-09-10T21:05:22Z
 post_type: original
 archived_at: 2026-03-27
 tags: [Innovation, TechnologyEvolution, EmbraceChange]

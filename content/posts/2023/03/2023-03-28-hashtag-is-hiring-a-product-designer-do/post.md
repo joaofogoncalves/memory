@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6977904053720649728/
+posted_at: 2022-09-20T08:19:29Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [productdesigner, Valispace, hiring]

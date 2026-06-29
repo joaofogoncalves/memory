@@ -1,6 +1,7 @@
 ---
 date: 2026-06-15
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7470181385874419714/
+posted_at: 2026-06-09T18:33:51Z
 post_type: original
 archived_at: 2026-06-29
 tags: [AI, Claude]

@@ -3,6 +3,7 @@ date: 2026-05-15
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-anthropic-careers-share-7461012403112194048-8XSZ/"
+posted_at: 2026-05-15T11:19:35Z
 x_url: "https://x.com/joaofogoncalves/status/2055247458406470049"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-259410834"
 tags: [ai, careers, engineering, anthropic]

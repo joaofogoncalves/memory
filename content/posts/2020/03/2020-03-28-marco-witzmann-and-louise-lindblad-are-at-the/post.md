@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6522109772588814336/
+posted_at: 2019-04-11T14:15:44Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [tech, BetterEngineering, 35thSpaceSymposium, engineers, EmpoweringEngineers, ddse, software, space]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7107445411967041536/
+posted_at: 2023-09-12T19:30:36Z
 post_type: original
 archived_at: 2026-03-27
 tags: [Innovation, Leadership, Nvidia]

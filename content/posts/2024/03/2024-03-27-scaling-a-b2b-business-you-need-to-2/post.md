@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7117183180272513024/
+posted_at: 2023-10-09T16:25:01Z
 post_type: article
 archived_at: 2026-03-27
 tags: [startups, technology, teambuilding, success, leadership, 1]

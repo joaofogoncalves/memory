@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7109960313382326274/
+posted_at: 2023-09-19T18:03:55Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [TechLeadership, ProfessionalGrowth, Mentorship, CareerDevelopment, Leadership, TeamBuilding]

@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7424010875159715840/
+posted_at: 2026-02-02T08:48:44Z
 post_type: original
 archived_at: 2026-03-27
 tags: [SoftwareEngineering, Startups, TechLeadership, BuildVsBuy]

@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6574305578464743424/
+posted_at: 2019-09-02T15:03:14Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [SpaceTechnology, BetterEngineering, EmpoweringEngineers]

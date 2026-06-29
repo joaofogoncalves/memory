@@ -1,6 +1,7 @@
 ---
 date: 2018-03-29
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6334042791236161536/
+posted_at: 2017-11-08T15:04:42Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [2, 3]

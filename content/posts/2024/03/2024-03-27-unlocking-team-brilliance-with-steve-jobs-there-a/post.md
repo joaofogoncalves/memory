@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7129818185523953664/
+posted_at: 2023-11-13T13:12:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, teamexcellence, apple, recruitment]

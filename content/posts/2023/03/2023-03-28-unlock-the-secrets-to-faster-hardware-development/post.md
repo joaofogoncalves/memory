@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7029575324841512960/
+posted_at: 2023-02-09T22:22:40Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [AgileHardwareDevelopment, HardwareEngineering, ProductDevelopment]

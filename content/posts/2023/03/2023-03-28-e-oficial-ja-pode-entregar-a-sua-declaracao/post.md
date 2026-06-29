@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6916417561202937856/
+posted_at: 2022-04-03T16:14:07Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [ConsignacaoIRS, Impacto, Pobreza, IRS, JustAChange, Consignacao, PobrezaHabitacional]

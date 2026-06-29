@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7120290907916034048/
+posted_at: 2023-10-18T06:14:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [decisionmaking, strategy, cognitivebias]

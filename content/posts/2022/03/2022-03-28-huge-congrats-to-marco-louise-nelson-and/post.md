@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6824402698222264321/
+posted_at: 2021-07-23T18:19:54Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [spacetech, innovation, automotive, hardware, venturecapital]

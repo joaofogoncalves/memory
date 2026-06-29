@@ -3,6 +3,7 @@ date: 2026-05-26
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ailiteracy-engineeringleadership-aiadoption-share-7464993071504633856-23JW/"
+posted_at: 2026-05-26T10:57:21Z
 x_url: "https://x.com/joaofogoncalves/status/2059227711030050826"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-265343237"
 tags: [ai, ai-literacy, engineering-leadership, ai-adoption]

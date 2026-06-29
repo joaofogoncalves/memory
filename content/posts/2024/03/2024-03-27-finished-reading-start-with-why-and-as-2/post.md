@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7103848980752609280/
+posted_at: 2023-09-02T21:19:40Z
 post_type: original
 archived_at: 2026-03-27
 tags: [BookReview, StartWithWhy, Leadership]

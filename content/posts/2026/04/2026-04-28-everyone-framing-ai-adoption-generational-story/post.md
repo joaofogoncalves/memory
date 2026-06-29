@@ -3,6 +3,7 @@ date: 2026-04-28
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-leadership-aiadoption-share-7454842364159934464-lf06"
+posted_at: 2026-04-28T10:42:03Z
 x_url: "https://x.com/joaofogoncalves/status/2049077563629158429"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-250380003"
 tags: [ai-adoption, leadership, decision-making, ai]

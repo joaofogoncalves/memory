@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7117831879768088576/
+posted_at: 2023-10-11T11:22:43Z
 post_type: original
 archived_at: 2026-03-27
 tags: [github, innovation, productivity, technology, ai]

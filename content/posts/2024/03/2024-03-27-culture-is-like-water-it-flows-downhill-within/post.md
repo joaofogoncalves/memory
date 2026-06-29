@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7150029865335898112/
+posted_at: 2024-01-08T07:46:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, culture]

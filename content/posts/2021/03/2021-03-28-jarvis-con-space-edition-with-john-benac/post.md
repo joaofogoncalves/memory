@@ -1,6 +1,7 @@
 ---
 date: 2021-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6678967460093284352/
+posted_at: 2020-06-17T10:32:11Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [Masterclass, NewSpace, Jarvis, SpaceEdition]

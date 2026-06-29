@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7257698958045564930/
+posted_at: 2024-10-31T10:24:33Z
 post_type: original
 archived_at: 2026-03-27
 tags: [officelife, Halloween, scaryfruit]

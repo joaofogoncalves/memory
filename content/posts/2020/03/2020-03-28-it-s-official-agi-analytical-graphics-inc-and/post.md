@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6590602185447395328/
+posted_at: 2019-10-17T14:20:08Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [digitalengineering, EmpoweringEngineers]

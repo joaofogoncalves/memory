@@ -3,6 +3,7 @@ date: 2026-06-14
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-futureofwork-upskilling-share-7472213527848534016-OW1u/"
+posted_at: 2026-06-15T09:08:52Z
 x_url: "https://x.com/joaofogoncalves/status/2066448045672108403"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-276582963"
 tags: [ai, future-of-work, upskilling]

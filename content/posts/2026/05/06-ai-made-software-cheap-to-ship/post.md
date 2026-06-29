@@ -3,6 +3,7 @@ date: 2026-05-06
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_agenticai-aiengineering-agentsday-ugcPost-7457770975598792704-Ge1k"
+posted_at: 2026-05-06T12:39:19Z
 x_url: "https://x.com/joaofogoncalves/status/2052007372806148470"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-254590944"
 tags: [ai, agents, engineering, agentsday, agentic]

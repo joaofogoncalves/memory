@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7140687321749770240/
+posted_at: 2023-12-13T13:02:05Z
 post_type: original
 archived_at: 2026-03-27
 media_descriptions:

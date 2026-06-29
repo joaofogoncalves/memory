@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7202319633184468992/
+posted_at: 2024-05-31T14:46:53Z
 post_type: original
 archived_at: 2026-03-27
 tags: [uncertainty, professionaldevelopment, leadership, portugal]

@@ -3,6 +3,7 @@ date: 2026-05-08
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-aiagents-automation-ugcPost-7458438151531978755-DPFU"
+posted_at: 2026-05-08T08:50:26Z
 x_url: "https://x.com/joaofogoncalves/status/2052672998276993259"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-255623377"
 tags: [ai, ai-agents, automation, lisbon]

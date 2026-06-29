@@ -3,6 +3,7 @@ date: 2026-05-04
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-softwareengineering-aicoding-share-7456976419697438720--LeI"
+posted_at: 2026-05-04T08:02:02Z
 x_url: "https://x.com/joaofogoncalves/status/2051211118102655449"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-253425173"
 tags: [ai, ai-coding, sycophancy, software-engineering, depth]

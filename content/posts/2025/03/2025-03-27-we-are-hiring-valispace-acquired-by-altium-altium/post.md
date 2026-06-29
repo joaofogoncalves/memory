@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7184185769392033793/
+posted_at: 2024-04-11T13:49:23Z
 post_type: article
 archived_at: 2026-03-27
 tags: [backend, hiring]

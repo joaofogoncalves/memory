@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7123760316487729152/
+posted_at: 2023-10-27T20:00:12Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [success, strategy, planning]

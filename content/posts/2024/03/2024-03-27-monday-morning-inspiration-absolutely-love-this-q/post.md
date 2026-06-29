@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7114520653361233921/
+posted_at: 2023-10-02T08:05:05Z
 post_type: original
 archived_at: 2026-03-27
 tags: [inspiration]

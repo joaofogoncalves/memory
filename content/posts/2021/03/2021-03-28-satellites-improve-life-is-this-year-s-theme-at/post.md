@@ -1,6 +1,7 @@
 ---
 date: 2021-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6720246869169123328/
+posted_at: 2020-10-09T08:21:49Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [engineering, engineers, satellites, engineeringlife, WorldSpaceWeek, space, aerospace, empoweringengineers]

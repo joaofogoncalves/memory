@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7119250233095561216/
+posted_at: 2023-10-15T09:18:44Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [leadership, prioritization]

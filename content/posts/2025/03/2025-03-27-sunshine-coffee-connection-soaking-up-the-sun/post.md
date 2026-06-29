@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7203714719772266496/
+posted_at: 2024-06-04T11:10:27Z
 post_type: original
 archived_at: 2026-03-27
 tags: [coffee, remote, office]

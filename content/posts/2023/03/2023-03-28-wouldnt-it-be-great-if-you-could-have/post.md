@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6960665288723824640/
+posted_at: 2022-08-03T18:38:47Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [digital, design, satellite]

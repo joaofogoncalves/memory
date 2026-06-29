@@ -1,6 +1,7 @@
 ---
 date: 2026-04-11
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7448734606801055745/
+posted_at: 2026-04-11T14:12:01Z
 post_type: original
 archived_at: 2026-04-12
 tags: [AI, OpenSource, SoftwareEngineering]

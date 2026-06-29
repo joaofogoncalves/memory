@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6866014046068514816/
+posted_at: 2021-11-15T14:08:32Z
 post_type: original
 archived_at: 2026-03-27
 tags: [frontenddeveloper]

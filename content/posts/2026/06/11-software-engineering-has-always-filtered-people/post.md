@@ -3,6 +3,7 @@ date: 2026-06-11
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_softwareengineering-ai-engineeringleadership-share-7470764860914708481-Fd_H/"
+posted_at: 2026-06-11T09:12:22Z
 x_url: "https://x.com/joaofogoncalves/status/2064999101809242395"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-274327829"
 tags: [ai, software-engineering, engineering-leadership]

@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7120429571530788864/
+posted_at: 2023-10-18T15:25:01Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [success, laughter]

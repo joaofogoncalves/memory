@@ -3,6 +3,7 @@ date: 2026-05-19
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-anthropic-careers-share-7462599108818804736-MYyy"
+posted_at: 2026-05-19T20:24:35Z
 x_url: "https://x.com/joaofogoncalves/status/2056833043147411817"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-261798181"
 tags: [ai, anthropic, careers, frontier-labs]

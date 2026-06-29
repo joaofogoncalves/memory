@@ -1,6 +1,7 @@
 ---
 date: 2026-03-30
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7444281037444059136/
+posted_at: 2026-03-30T07:15:07Z
 post_type: original
 archived_at: 2026-03-31
 tags: [ContentOwnership, AICoding, LinkedInArchive]

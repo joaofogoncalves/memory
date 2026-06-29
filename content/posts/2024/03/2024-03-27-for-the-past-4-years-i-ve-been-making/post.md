@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7137074758449307648/
+posted_at: 2023-12-03T13:47:02Z
 post_type: original
 archived_at: 2026-03-27
 tags: [christmastree]

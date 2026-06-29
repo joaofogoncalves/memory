@@ -1,6 +1,7 @@
 ---
 date: 2022-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6913121506893914112/
+posted_at: 2022-03-25T13:56:46Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [teambuilding, esg, socialimpact]

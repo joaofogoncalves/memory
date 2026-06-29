@@ -3,6 +3,7 @@ date: 2026-05-21
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_opensource-devtools-softwareengineering-share-7463225722602631169-UDcV"
+posted_at: 2026-05-21T13:54:32Z
 x_url: "https://x.com/joaofogoncalves/status/2057460504688202201"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-262761564"
 tags: [open-source, devtools, software-engineering, bridgeport]

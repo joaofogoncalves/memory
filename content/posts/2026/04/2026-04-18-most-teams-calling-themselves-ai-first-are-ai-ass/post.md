@@ -1,6 +1,7 @@
 ---
 date: 2026-04-18
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7451240981456285696/
+posted_at: 2026-04-18T12:11:27Z
 post_type: original
 archived_at: 2026-04-19
 tags: [changemanagement, leadership, ai, softwareengineering]

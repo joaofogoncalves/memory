@@ -3,6 +3,7 @@ date: 2026-05-18
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_leadership-ai-engineeringleadership-share-7462108919507677184-G-Gp"
+posted_at: 2026-05-18T11:56:45Z
 x_url: "https://x.com/joaofogoncalves/status/2056343416242344053"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-260951421"
 tags: [Leadership, AI, EngineeringLeadership]

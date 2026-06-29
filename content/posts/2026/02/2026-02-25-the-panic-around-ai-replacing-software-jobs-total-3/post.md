@@ -1,6 +1,7 @@
 ---
 date: 2026-02-25
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7423323130636713984/
+posted_at: 2026-01-31T11:15:53Z
 post_type: original
 archived_at: 2026-03-27
 tags: [ProductManagement, CareerGrowth, FutureOfWork, SoftwareEngineering, AI]

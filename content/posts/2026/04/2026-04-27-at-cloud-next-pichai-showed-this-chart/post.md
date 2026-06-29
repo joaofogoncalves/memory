@@ -3,6 +3,7 @@ date: 2026-04-27
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-softwareengineering-greenfield-ugcPost-7454511096109101056-vTfv/"
+posted_at: 2026-04-27T12:45:43Z
 x_url: "https://x.com/joaofogoncalves/status/2048744813864837599"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-249888632"
 tags: [ai, ai-coding, software-engineering, greenfield, bridge-in]

@@ -3,6 +3,7 @@ date: 2026-05-29
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:share:7466037400167665664/"
+posted_at: 2026-05-29T08:07:08Z
 x_url: "https://x.com/joaofogoncalves/status/2060271892620095697"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-267006389"
 tags: [ai, careers, frontier-labs]

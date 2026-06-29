@@ -1,6 +1,7 @@
 ---
 date: 2026-04-17
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7450797016516997120/
+posted_at: 2026-04-17T06:47:17Z
 post_type: article
 archived_at: 2026-04-19
 tags: [AgenticCoding, AI, SoftwareEngineering, Agents]

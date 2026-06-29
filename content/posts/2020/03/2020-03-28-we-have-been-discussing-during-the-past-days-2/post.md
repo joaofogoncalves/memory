@@ -1,6 +1,7 @@
 ---
 date: 2020-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6646403336671236097/
+posted_at: 2020-03-19T13:53:59Z
 post_type: original
 archived_at: 2026-03-27
 tags: [HelpfulEngineering, EmpoweringEngineers, LetsFightCOVID19, OpenInnovation]

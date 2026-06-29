@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7111023850057834498/
+posted_at: 2023-09-22T16:30:02Z
 post_type: article
 archived_at: 2026-03-27
 tags: [strategy, teammanagement, innovation, leadership]

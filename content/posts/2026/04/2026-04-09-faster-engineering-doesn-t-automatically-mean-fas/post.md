@@ -1,6 +1,7 @@
 ---
 date: 2026-04-09
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7447896584790507521/
+posted_at: 2026-04-09T06:42:01Z
 post_type: original
 archived_at: 2026-04-12
 tags: [ai, leadership, engineering, teamperformance]

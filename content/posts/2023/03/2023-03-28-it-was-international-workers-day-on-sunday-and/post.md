@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6927228940457545728/
+posted_at: 2022-05-03T12:14:41Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [internationalworkersday, workhardplayhard, teambuilding, team]

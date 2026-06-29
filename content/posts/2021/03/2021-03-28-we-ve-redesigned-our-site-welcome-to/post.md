@@ -1,6 +1,7 @@
 ---
 date: 2021-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6729410647773233152/
+posted_at: 2020-11-03T15:15:24Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [engineering, automotiveindustry, energyindustry, cars, hyperloops, engineers, valispace, nuclearenergy, rockets, aerospaceengineering, biomedicalengineering, aircraft]

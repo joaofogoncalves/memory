@@ -1,6 +1,7 @@
 ---
 date: 2023-03-28
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:6998587266390478848/
+posted_at: 2022-11-16T10:07:11Z
 post_type: repost
 archived_at: 2026-03-27
 tags: [argomoon, nasa, argotec, artemis1, artemis]

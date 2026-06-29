@@ -3,6 +3,7 @@ date: 2026-06-19
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_hiring-engineeringleadership-ai-share-7473699217426010112-nRst/"
+posted_at: 2026-06-19T11:32:28Z
 x_url: "https://x.com/joaofogoncalves/status/2067933988161716444"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-279023242"
 tags: [hiring, engineering-leadership, ai]

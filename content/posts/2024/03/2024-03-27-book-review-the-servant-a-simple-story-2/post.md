@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7106389480948793344/
+posted_at: 2023-09-09T21:34:42Z
 post_type: original
 archived_at: 2026-03-27
 tags: [BookReview, LoveInLeadership, Leadership]

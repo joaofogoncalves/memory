@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7134809826672455683/
+posted_at: 2023-11-27T07:47:01Z
 post_type: original
 archived_at: 2026-03-27
 tags: [redflags, teammanagement, leadership]

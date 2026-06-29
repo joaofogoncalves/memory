@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7110336814057439232/
+posted_at: 2023-09-20T19:00:00Z
 post_type: article
 archived_at: 2026-03-27
 tags: [QualitySoftware, SoftwareDevelopment, TechIndustry]

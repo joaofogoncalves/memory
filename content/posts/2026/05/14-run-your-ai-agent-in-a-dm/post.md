@@ -3,6 +3,7 @@ date: 2026-05-14
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineeringleadership-agents-share-7460699682374115328-PQED"
+posted_at: 2026-05-14T14:36:57Z
 x_url: "https://x.com/joaofogoncalves/status/2054934014385877196"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-258948196"
 tags: [ai, engineering-leadership, agents]

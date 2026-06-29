@@ -1,6 +1,7 @@
 ---
 date: 2025-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7247543664443334656/
+posted_at: 2024-10-03T09:51:02Z
 post_type: original
 archived_at: 2026-03-27
 tags: [ai, llm]

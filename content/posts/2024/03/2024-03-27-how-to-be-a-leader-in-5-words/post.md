@@ -1,6 +1,7 @@
 ---
 date: 2024-03-27
 post_url: https://www.linkedin.com/feed/update/urn:li:activity:7145374543841341440/
+posted_at: 2023-12-26T11:27:25Z
 post_type: original
 archived_at: 2026-03-27
 tags: [leadership, empathy]

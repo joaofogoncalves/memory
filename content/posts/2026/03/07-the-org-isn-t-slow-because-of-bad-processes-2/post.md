@@ -1,0 +1,45 @@
+---
+date: 2026-03-07
+post_url: https://www.linkedin.com/feed/update/urn:li:activity:7436185576791363585/
+posted_at: 2026-03-07T23:06:39Z
+post_type: original
+archived_at: 2026-03-31
+comments: 2
+media_descriptions:
+  image-1.jpg: >-
+    Substack pull-quote card on a white/cream background. Large left-aligned
+    dark serif quote in big type: "Velocity is no longer a code problem.
+    It's an org design problem." Attribution below in smaller text: "Ed Sim
+    — What's [fire emoji] in Enterprise IT/VC #488", with WWW.WHATSHOTIT.VC
+    URL bottom left and a small Substack mark bottom right. Branded
+    quote-graphic asset, text-forward, light mode.
+---
+
+# March 10, 2026
+
+The org isn't slow because of bad processes.
+It's slow because of people who built their confidence around a pace that no longer exists.
+
+That's the harder problem. You can redesign the org chart. You can't redesign someone's sense of identity overnight. 
+
+The manager who thrives on being the person who "knows the product cold" now has to accept they'll always be slightly behind. The lead who built trust through careful, deliberate delivery now has to trust output they didn't fully read.
+
+The teams that actually keep up with agentic engineering velocity won't be the ones who ran a workshop on AI tools. 
+They'll be the ones who created enough psychological safety for people to say "I don't know how to work at this speed yet" without it feeling like a performance review.
+
+The bottleneck moved from engineering to everywhere else.
+
+Moving it back means helping people change how they see themselves at work. Not their skills. Their identity.
+That takes longer than any process redesign.
+
+
+---
+
+## Media
+
+![image-1.jpg](media/image-1.jpg)
+
+
+---
+
+[View original post on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7436185576791363585/)

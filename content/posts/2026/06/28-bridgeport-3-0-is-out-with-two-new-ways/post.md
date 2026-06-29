@@ -2,9 +2,9 @@
 date: 2026-06-28
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_mcp-selfhosted-opensource-share-7477264270947393536-1b-6/"
+x_url: "https://x.com/joaofogoncalves/status/2071499235384549609"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-284695287"
 tags: [mcp, selfhosted, opensource, devtools]
 source_urls:
   - https://joaofogoncalves.com/articles/2026/06/28-two-features-one-contract/

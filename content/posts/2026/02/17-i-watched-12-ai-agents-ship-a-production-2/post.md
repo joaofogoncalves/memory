@@ -5,6 +5,9 @@ posted_at: 2026-02-17T08:19:59Z
 post_type: article
 archived_at: 2026-03-27
 tags: [CodingAgents, SoftwareDevelopment, AI]
+reactions: 33
+comments: 9
+impressions: 4231
 ---
 
 # February 25, 2026

@@ -11,6 +11,7 @@ angle: US "trust" is an enforceable Nash equilibrium (cheap, fast, winnable liti
 template: long-form
 reactions: 7
 comments: 2
+impressions: 858
 ---
 
 European companies rebuild software that already exists. Constantly. Give an American company the same choice and it buys the better version and moves on.

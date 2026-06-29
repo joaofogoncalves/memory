@@ -7,6 +7,7 @@ archived_at: 2026-06-29
 tags: [AI, Claude]
 reactions: 10
 comments: 6
+impressions: 993
 ---
 
 # June 15, 2026

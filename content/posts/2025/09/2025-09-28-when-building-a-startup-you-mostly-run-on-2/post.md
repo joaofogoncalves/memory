@@ -9,6 +9,9 @@ media_descriptions:
     Real-world photograph of a blue card pinned to a cork board reading "you don't need an
     inspirational quote -- you need coffee!" with a coffee cup icon. Casual, warm photo with
     playful anti-motivational humor.
+reactions: 11
+comments: 2
+impressions: 730
 ---
 
 # September 28, 2025

@@ -11,6 +11,7 @@ angle: Karpathy joining Anthropic as the loudest data point yet for the proximit
 template: long-form
 reactions: 9
 comments: 4
+impressions: 3843
 ---
 
 Karpathy joining Anthropic is the loudest version yet of a pattern that's been building for a year.

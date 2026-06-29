@@ -11,8 +11,9 @@ source_urls:
   - https://joaofogoncalves.com/articles/2026/06/28-two-features-one-contract/
 angle: "BridgePort 3.0 release promo. Lead with the announcement (Terraform provider + MCP server), then the no-model / BYO-model decision and why self-hosted is the right posture for an infra tool."
 template: article-reaction
-reactions: 1
-comments: 2
+reactions: 8
+comments: 4
+impressions: 449
 ---
 
 BridgePort 3.0 is out, with two new ways to drive it.

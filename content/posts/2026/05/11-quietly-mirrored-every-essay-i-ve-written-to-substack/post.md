@@ -6,6 +6,7 @@ post_type: original
 archived_at: 2026-06-29
 tags: [AI, Substack, Writing]
 reactions: 7
+impressions: 616
 ---
 
 # May 30, 2026

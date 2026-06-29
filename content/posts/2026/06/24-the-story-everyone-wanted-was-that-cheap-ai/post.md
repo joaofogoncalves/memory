@@ -13,6 +13,7 @@ angle: The "returns to expertise" gap didn't close — cheap AI moved the advant
 template: article-reaction
 reactions: 9
 comments: 2
+impressions: 761
 ---
 
 The story everyone wanted was that cheap AI flattens the skill curve. Anybody can ship now, the gap closes, expertise stops mattering.

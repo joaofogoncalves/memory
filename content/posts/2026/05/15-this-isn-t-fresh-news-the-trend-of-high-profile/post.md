@@ -7,6 +7,7 @@ archived_at: 2026-06-29
 tags: [Anthropic, AI, Engineering, Careers]
 reactions: 9
 comments: 3
+impressions: 987
 ---
 
 # May 30, 2026

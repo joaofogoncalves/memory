@@ -4,8 +4,8 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74471793588023336
 posted_at: 2026-04-07T07:12:01Z
 post_type: original
 archived_at: 2026-04-08
-comments: 5
-reactions: 19
+comments: 4
+reactions: 18
 media_descriptions:
   image-1.jpg: >-
     Screenshot of a single X (Twitter) post by Lenny Rachitsky (@lennysan).
@@ -17,6 +17,7 @@ media_descriptions:
     15–20 engineers and Anthropic is hiring more PMs and deputizing
     product-minded engineers as mini-PMs. Standalone quote-tweet screenshot,
     text-dense.
+impressions: 6441
 ---
 
 # April 07, 2026

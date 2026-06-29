@@ -10,6 +10,9 @@ media_descriptions:
     Dark mode UI with speed (blue line) and heart rate (orange line) graphs over
     ~40 minutes. Summary shows 39:36 time, 4.86km distance, 7.3 km/h pace.
     Square format, data visualization from a personal fitness tracker.
+reactions: 19
+comments: 3
+impressions: 1962
 ---
 
 # November 27, 2025

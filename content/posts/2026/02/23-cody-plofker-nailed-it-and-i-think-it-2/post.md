@@ -11,6 +11,9 @@ media_descriptions:
     Tweet compares Claude Code to "a video game for adults" where you get stuck,
     try everything, break through, and stack skills. Verified badge visible. Dark
     background, standard Twitter post layout, text-only content.
+reactions: 9
+comments: 2
+impressions: 1174
 ---
 
 # February 25, 2026

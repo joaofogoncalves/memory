@@ -11,6 +11,9 @@ media_descriptions:
     "96% of developers don't fully trust AI-generated code..." with gold text
     below: "yet only 48% always verify it." Moody, dramatic composition with
     strong visual contrast. Data-driven hook image.
+reactions: 12
+comments: 5
+impressions: 937
 ---
 
 # January 26, 2026

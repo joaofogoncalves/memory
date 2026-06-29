@@ -9,6 +9,8 @@ media_descriptions:
     Cinematic quote graphic featuring Ned Stark from Game of Thrones with the quote "The man who
     passes the sentence should swing the sword" in bold white serif typography. Split composition
     with character image and text, dark moody color palette, MagicalQuote branding.
+reactions: 5
+impressions: 1219
 ---
 
 # September 28, 2025

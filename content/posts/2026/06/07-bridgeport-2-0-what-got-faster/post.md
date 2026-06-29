@@ -13,6 +13,7 @@ angle: 2.0 is a redesign whose headline is performance, not a feature. Lead with
 template: short-form
 reactions: 11
 comments: 2
+impressions: 586
 ---
 
 Most 2.0 releases lead with a new feature. This one leads with what got faster.

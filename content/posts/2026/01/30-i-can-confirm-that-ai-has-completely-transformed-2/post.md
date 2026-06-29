@@ -11,6 +11,9 @@ media_descriptions:
     Short quip: "Major refactorings used to be expensive to do and very risky.
     Now they are only very risky." Shows 96.4K views, timestamp Jan 28 2026.
     Dark background, white text, minimal composition.
+reactions: 74
+comments: 3
+impressions: 10703
 ---
 
 # February 25, 2026

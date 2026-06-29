@@ -4,7 +4,7 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74429453721020170
 posted_at: 2026-03-26T14:47:39Z
 post_type: original
 archived_at: 2026-03-31
-comments: 40
+comments: 37
 media_descriptions:
   image-1.jpg: >-
     Screenshot of a Reddit post, light mode. Title in bold: "CEO is obsessed
@@ -14,6 +14,8 @@ media_descriptions:
     thinks about it?". Visible engagement counts at the bottom: 402 upvotes,
     193 comments. Typical Reddit UI chrome cropped to the post itself,
     text-dense, light/cream background.
+reactions: 44
+impressions: 149793
 ---
 
 # March 27, 2026

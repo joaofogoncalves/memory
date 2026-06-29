@@ -13,6 +13,7 @@ angle: "Article promo for 'The Harness Is the Moat' — prompt-vs-system, the ha
 template: article-reaction
 reactions: 9
 comments: 1
+impressions: 935
 ---
 
 People ask what prompts I use to run a multi-agent system in production. It's the wrong question.

@@ -12,6 +12,9 @@ media_descriptions:
     Purple/magenta "AI" chip at center with glowing circuit board patterns
     radiating outward. Dark blue background, neon cyberpunk style. Visual
     metaphor for AI amplifying multiple skills simultaneously.
+reactions: 11
+comments: 3
+impressions: 1235
 ---
 
 # February 25, 2026

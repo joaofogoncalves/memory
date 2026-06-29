@@ -10,6 +10,9 @@ media_descriptions:
     flowcharts, arrows, and technical drawings in blue, red, and green markers.
     Office environment visible in background. Visual metaphor for engineering
     complexity and process overhead. Candid, editorial feel.
+reactions: 14
+comments: 3
+impressions: 3562
 ---
 
 # February 25, 2026

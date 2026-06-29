@@ -6,7 +6,7 @@ post_type: original
 archived_at: 2026-04-12
 tags: [AI, OpenSource, SoftwareEngineering]
 comments: 1
-reactions: 72
+reactions: 74
 media_descriptions:
   image-1.jpg: >-
     Screenshot of a multi-post X (Twitter) thread, dark mode. Shows FFmpeg's
@@ -16,6 +16,7 @@ media_descriptions:
     you mad because of AI sloppy pull requests ?????" and FFmpeg's reply
     "Because the patches appear to be written by humans". Multi-post
     conversation screenshot, text-dense, no surrounding browser chrome.
+impressions: 48505
 ---
 
 # April 11, 2026

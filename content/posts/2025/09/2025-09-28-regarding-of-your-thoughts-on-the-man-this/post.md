@@ -9,6 +9,9 @@ media_descriptions:
     Screenshot of an Elon Musk tweet on dark background about accomplishing a 10-year plan in 6
     months. Text-heavy with white text on dark background in familiar Twitter/X post format, profile
     picture showing a rocket launch.
+reactions: 25
+comments: 2
+impressions: 7787
 ---
 
 # September 28, 2025

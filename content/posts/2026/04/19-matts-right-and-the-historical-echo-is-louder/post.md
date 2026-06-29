@@ -21,6 +21,9 @@ media_descriptions:
     the person doing adequate work at adequate speed who's in trouble.
     Adequate is now free." Timestamped 11:17 PM, Apr 18, 2026. Standalone
     quoted-tweet screenshot.
+reactions: 21
+comments: 51
+impressions: 6632
 ---
 
 Matt's right, and the historical echo is louder than it reads.

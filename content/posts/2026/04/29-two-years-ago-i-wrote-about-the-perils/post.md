@@ -22,6 +22,7 @@ media_descriptions:
     + monospaced typography, on-brand teal-and-navy palette.
 reactions: 6
 comments: 1
+impressions: 652
 ---
 
 Two years ago I wrote about the perils of over-engineering. Heavy abstractions, premature microservices, solving problems that don't exist, picking technology for problems you don't have.

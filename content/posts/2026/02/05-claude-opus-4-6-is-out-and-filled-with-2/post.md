@@ -5,6 +5,9 @@ posted_at: 2026-02-05T18:27:42Z
 post_type: article
 archived_at: 2026-03-27
 tags: [1]
+reactions: 9
+comments: 2
+impressions: 2034
 ---
 
 # February 25, 2026

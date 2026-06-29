@@ -5,8 +5,8 @@ posted_at: 2026-04-10T07:26:50Z
 post_type: original
 archived_at: 2026-04-12
 tags: [ai, coding, softwaredevelopment]
-comments: 68
-reactions: 393
+comments: 69
+reactions: 402
 media_descriptions:
   image-1.jpg: >-
     Screenshot of a single X (Twitter) post by Kyle Gawley (@kylegawley).
@@ -17,6 +17,7 @@ media_descriptions:
     / just like wix replaced developers / just like squarespace replaced
     developers / just like dreamweaver replaced developers". Standalone
     screenshot, image-light/text-forward.
+impressions: 114545
 ---
 
 # April 10, 2026

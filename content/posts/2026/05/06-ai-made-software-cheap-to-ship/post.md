@@ -30,6 +30,7 @@ media_descriptions:
     glasses and a navy hoodie, the other wears sunglasses and a black
     jacket. Soft daylight, blurred greenery in the background, intimate
     photojournalism feel.
+impressions: 1531
 ---
 
 AI made software cheap to ship. The hard part is now figuring out what to ship.

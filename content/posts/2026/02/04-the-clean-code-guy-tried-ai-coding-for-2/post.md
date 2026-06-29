@@ -11,6 +11,9 @@ media_descriptions:
     experience to a carpenter given access to power tools for the first time.
     Dark background, white text, profile avatar showing cartoon illustration.
     Text-heavy, no embedded media.
+reactions: 139
+comments: 88
+impressions: 37527
 ---
 
 # February 25, 2026

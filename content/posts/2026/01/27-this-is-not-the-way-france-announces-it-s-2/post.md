@@ -11,6 +11,9 @@ media_descriptions:
     response to Emmanuel Pernot-Leplay's post about France phasing out Teams/Zoom
     for European solution Visio. Dark background, text-heavy, nested thread format
     with quote tweet visible.
+reactions: 14
+comments: 6
+impressions: 3543
 ---
 
 # January 26, 2026

@@ -17,6 +17,8 @@ media_descriptions:
     etc.). Below that, three post-list rows with date / read-time / one-line
     title. Self-referential product/site screenshot, on-brand brutalist
     dark theme.
+reactions: 19
+impressions: 3597
 ---
 
 # March 30, 2026

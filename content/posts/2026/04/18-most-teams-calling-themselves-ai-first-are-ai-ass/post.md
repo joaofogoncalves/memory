@@ -5,8 +5,8 @@ posted_at: 2026-04-18T12:11:27Z
 post_type: original
 archived_at: 2026-04-19
 tags: [changemanagement, leadership, ai, softwareengineering]
-reactions: 4
-comments: 1
+reactions: 11
+comments: 5
 media_descriptions:
   image-1.jpg: >-
     Article header/hero card for a long-form piece on the site. Dark navy
@@ -18,6 +18,7 @@ media_descriptions:
     of a glass-walled conference room inside a futuristic open-plan office,
     engineers at a long table with screens, cinematic top-down architectural
     rendering. Brand-aligned site header crop.
+impressions: 1533
 ---
 
 # April 18, 2026

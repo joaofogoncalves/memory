@@ -2,7 +2,7 @@
 date: 2026-06-11
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7471099900399751168/"
 x_url: "https://x.com/joaofogoncalves/status/2065201094272409862"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-274717348"
 tags: [ai, software-engineering, agents]
@@ -12,6 +12,8 @@ angle: Rent the generic agent loop; build the harness that knows your domain. Th
 template: article-reaction
 reactions: 4
 comments: 1
+impressions: 528
+posted_at: 2026-06-12T07:23:42Z
 ---
 
 Rent the loop. Build the harness. The line runs exactly where your domain starts.

@@ -6,6 +6,7 @@ post_type: article
 archived_at: 2026-04-15
 comments: 3
 reactions: 9
+impressions: 1092
 ---
 
 # April 14, 2026

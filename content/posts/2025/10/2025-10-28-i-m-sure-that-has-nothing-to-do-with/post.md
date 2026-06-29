@@ -11,6 +11,9 @@ media_descriptions:
     Published Aug 13, 2025 by Tom Huddleston Jr. Shows article header with author
     byline, share buttons, and a "Trending Now" sidebar. Light mode web article
     screenshot, cropped to headline and lead image.
+reactions: 79
+comments: 3
+impressions: 10096
 ---
 
 # October 28, 2025

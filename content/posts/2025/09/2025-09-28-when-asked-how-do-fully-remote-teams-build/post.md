@@ -9,6 +9,8 @@ media_descriptions:
     Screenshot of a Brian Armstrong (Coinbase CEO) tweet on dark background listing how Coinbase
     builds remote culture through values, high hiring bars, DRIs, quarterly meetups, and recharge
     weeks. Text-heavy bulleted list format.
+reactions: 18
+impressions: 1492
 ---
 
 # September 28, 2025

@@ -13,6 +13,7 @@ angle: Hire for the slope (absorption rate), not the inventory — interview loo
 template: article-reaction
 reactions: 2
 comments: 1
+impressions: 748
 ---
 
 You can't hire someone who already holds your team's judgment. Nobody has it.

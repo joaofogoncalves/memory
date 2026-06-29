@@ -10,6 +10,9 @@ media_descriptions:
     character saying "I'm putting together a team. People with special abilities."
     Low resolution, classic internet meme format with white Impact-style text
     overlay. Humorous, informal recruitment post visual. yam.c watermark visible.
+reactions: 34
+comments: 7
+impressions: 5614
 ---
 
 # November 27, 2025

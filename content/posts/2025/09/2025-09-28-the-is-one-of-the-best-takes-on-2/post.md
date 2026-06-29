@@ -9,6 +9,9 @@ media_descriptions:
     Minimalist text-only quote graphic on solid black background with white text reading a Kieran
     Klaassen quote about AI handling specifiable tasks while humans focus on judgment calls.
     Extremely clean, no imagery or decorative elements.
+reactions: 7
+comments: 3
+impressions: 1551
 ---
 
 # September 28, 2025

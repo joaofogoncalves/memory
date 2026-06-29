@@ -11,6 +11,7 @@ angle: Leaders are laundering hard decisions through AI output — same delegati
 template: long-form
 reactions: 8
 comments: 1
+impressions: 553
 ---
 
 There's a new way to dodge accountability and it sounds like science.

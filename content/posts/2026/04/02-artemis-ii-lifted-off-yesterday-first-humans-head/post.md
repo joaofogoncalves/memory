@@ -15,6 +15,7 @@ media_descriptions:
     smoke billowing outward, sun glaring behind the smoke. Sky is deep blue
     with thin clouds. Wire-service style cinematic event photo, no text
     overlay.
+impressions: 531
 ---
 
 # April 02, 2026

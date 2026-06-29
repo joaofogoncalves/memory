@@ -11,6 +11,9 @@ media_descriptions:
     line the middle shelf as a visual metaphor for SaaS tool bloat. Moody,
     blue-tinted lighting with a single laptop on an empty lower shelf. Editorial,
     conceptual composition.
+reactions: 15
+comments: 3
+impressions: 2381
 ---
 
 # March 06, 2026

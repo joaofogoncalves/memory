@@ -9,6 +9,9 @@ media_descriptions:
     Screenshot of a Tumblr post about Microsoft mandating return to office while making Teams, with
     a witty recursive wordplay on "teams." Dark Tumblr dark-mode background, entirely text-based,
     showing 18K notes indicating viral engagement.
+reactions: 70
+comments: 7
+impressions: 9181
 ---
 
 # September 28, 2025

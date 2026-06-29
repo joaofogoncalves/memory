@@ -7,6 +7,7 @@ archived_at: 2026-04-19
 tags: [AgenticCoding, AI, SoftwareEngineering, Agents]
 reactions: 15
 comments: 3
+impressions: 1614
 ---
 
 # April 17, 2026

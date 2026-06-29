@@ -18,6 +18,7 @@ media_descriptions:
     screenshot cropped to just the post content, no surrounding UI chrome.
     Text reads: "you can outsource your thinking but you cannot outsource
     your understanding". Timestamped 3:15 AM, Feb 4, 2026.
+impressions: 1580
 ---
 
 He's right. The interesting question is who lands on which side of that line.

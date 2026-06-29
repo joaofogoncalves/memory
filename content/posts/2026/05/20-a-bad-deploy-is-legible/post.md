@@ -13,6 +13,7 @@ angle: The cheap-failure doctrine breaks because it assumed failure was detectab
 template: article-reaction
 reactions: 7
 comments: 1
+impressions: 597
 ---
 
 A bad deploy is legible.

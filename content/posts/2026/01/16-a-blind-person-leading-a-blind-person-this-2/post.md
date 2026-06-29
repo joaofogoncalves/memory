@@ -12,6 +12,9 @@ media_descriptions:
     "91 people on the waitlist" exposed, alongside browser dev tools revealing
     the code. Dark background, annotated with red circle highlight. Meme-style
     cautionary screenshot.
+reactions: 24
+comments: 10
+impressions: 6267
 ---
 
 # January 26, 2026

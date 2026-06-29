@@ -4,6 +4,9 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:73489844863924305
 posted_at: 2025-07-10T08:00:39Z
 post_type: original
 archived_at: 2026-03-27
+reactions: 10
+comments: 1
+impressions: 1363
 ---
 
 # July 30, 2025

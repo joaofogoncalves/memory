@@ -12,6 +12,9 @@ media_descriptions:
     symbols. Dark blue/purple background with neon blue and purple glowing
     accents. Tech-futuristic style, square aspect ratio. Visual metaphor for
     engineering feedback loops applied to AI.
+reactions: 6
+comments: 3
+impressions: 746
 ---
 
 # January 26, 2026

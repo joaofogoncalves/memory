@@ -5,8 +5,8 @@ posted_at: 2026-04-01T07:35:01Z
 post_type: original
 archived_at: 2026-04-05
 tags: [NowPage, PersonalWebsite, ContentOwnership]
-comments: 5
-reactions: 5
+comments: 4
+reactions: 4
 media_descriptions:
   image-1.jpg: >-
     Simple custom diagram on a dark navy background. Left side shows a
@@ -16,6 +16,7 @@ media_descriptions:
     Topics, /now, Reading List, RSS. Minimal hand-drawn-feeling illustration,
     on-brand dark+teal palette, small sparkle icon bottom-right. Light text
     density, conceptual.
+impressions: 592
 ---
 
 # April 01, 2026

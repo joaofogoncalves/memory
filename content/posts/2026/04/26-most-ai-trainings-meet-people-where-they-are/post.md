@@ -19,6 +19,9 @@ media_descriptions:
     "The actual prerequisites" (structured problem solving, task decomposition,
     quality criteria, clear communication, working through blockers) with
     teal left border. JG/joaofogoncalves.com wordmark bottom right.
+reactions: 9
+comments: 7
+impressions: 1072
 ---
 
 Most AI trainings try to meet non-technical people where they are. That radically limits what they can get out of the tool.

@@ -6,7 +6,7 @@ post_type: original
 archived_at: 2026-04-12
 tags: [AI, Security, Mythos]
 comments: 18
-reactions: 23
+reactions: 25
 media_descriptions:
   image-1.jpg: >-
     Screenshot of a single X (Twitter) post by Wise (@trikcode). Dark mode
@@ -17,6 +17,7 @@ media_descriptions:
     Thousands of security audits. Claude found it overnight. For $50. And
     Anthropic said 'this is too dangerous to release.'" Standalone
     quote-tweet screenshot.
+impressions: 35083
 ---
 
 # April 09, 2026

@@ -12,6 +12,9 @@ media_descriptions:
     even autocomplete a line... 2025: it can't even handle complex projects...
     2026: oh no." Shows 180 replies, 344 retweets, 4.8K likes. Light background,
     text-only, humorous timeline format.
+reactions: 10
+comments: 13
+impressions: 18564
 ---
 
 # January 26, 2026

@@ -20,6 +20,9 @@ media_descriptions:
     Everyone." with serif italic subtitle "Jevons was right. The paradox
     has a door policy." and italic byline "João Gonçalves". Mood-piece
     hero with editorial newspaper-magazine feel.
+reactions: 14
+comments: 3
+impressions: 1407
 ---
 
 "AI will create more jobs" is technically correct and completely hollow.

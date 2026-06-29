@@ -10,6 +10,9 @@ media_descriptions:
     making a website with ChatGPT then shares a local file path (C:\Users\ben\Downloads\index.html)
     instead of a real URL. Photo of a projected slide with iMessage blue/gray bubbles on light
     background, text-heavy with a "2025 Zencoder AI Inc" watermark.
+reactions: 865
+comments: 51
+impressions: 129338
 ---
 
 # September 28, 2025

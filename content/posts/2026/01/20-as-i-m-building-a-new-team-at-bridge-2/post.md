@@ -13,6 +13,9 @@ media_descriptions:
     agents. Four pillars labeled: "From Hierarchies to Horizontal Teams,"
     "Leaders as Enablers, Not Bottlenecks," "AI Agents as New Junior Devs,"
     "Obsess Over Quality." Teal/green corporate illustration style.
+reactions: 10
+comments: 3
+impressions: 1116
 ---
 
 # January 26, 2026

@@ -11,6 +11,9 @@ media_descriptions:
     behind him. Overlaid text shows the four Agile Manifesto principles. Teal
     and warm tones, cartoon/digital illustration style, mixed text-and-image
     composition.
+reactions: 9
+comments: 4
+impressions: 586
 ---
 
 # February 25, 2026

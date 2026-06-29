@@ -11,6 +11,9 @@ media_descriptions:
     things he never deeply learned (regexs, sql, nginx confs, shell commands,
     JavaScript frameworks, webpack, etc.) saying Claude Code validated that
     strategy. Dark background, white text, text-only tweet with verified badge.
+reactions: 77
+comments: 26
+impressions: 78368
 ---
 
 # February 25, 2026

@@ -13,6 +13,7 @@ angle: "Public agents move the AI productivity gain to the org; private agents k
 template: article-reaction
 reactions: 9
 comments: 4
+impressions: 566
 ---
 
 Run your AI agent in a DM and one person learns from it. Run it in a public channel and the whole team does.

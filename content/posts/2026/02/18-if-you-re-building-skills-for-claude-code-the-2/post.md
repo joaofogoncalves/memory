@@ -10,6 +10,9 @@ media_descriptions:
     planning tools for your skills." Dark background with warm orange/brown accents.
     Table format listing three tools (EnterPlanMode, AskUserQuestion, ExitPlanMode)
     with descriptions. Polished, product-documentation style design.
+reactions: 10
+comments: 2
+impressions: 1267
 ---
 
 # February 25, 2026

@@ -11,6 +11,9 @@ media_descriptions:
     spinner verbs ("Beaming up..."). Tweet text explains customizable spinner
     verbs feature. Dark background with Anthropic pixel mascot logo visible.
     Mix of tweet UI and embedded terminal screenshot.
+reactions: 7
+comments: 1
+impressions: 1843
 ---
 
 # February 25, 2026

@@ -15,6 +15,8 @@ media_descriptions:
     Factory Lisboa. Deep blue/purple lighting with metallic trophy sculpture.
     Sponsor logos along the bottom (Remote, Cuatrecasas, NTTData, Lisboa, Claranet,
     etc.). Event photography, landscape orientation, dramatic stage lighting.
+reactions: 24
+impressions: 923
 ---
 
 # October 28, 2025

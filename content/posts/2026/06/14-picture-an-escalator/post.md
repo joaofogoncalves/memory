@@ -11,6 +11,7 @@ angle: The escalator parable — standing on AI is table stakes, climbing it is 
 template: long-form
 reactions: 6
 comments: 2
+impressions: 789
 ---
 
 Picture an escalator. At the top is wherever you're trying to get: the things you want to build, the depth you want to understand, the level you want to operate at. The closer you get, the further the top moves. One escalator runs up, stairs winding alongside. Four ways to make the climb.

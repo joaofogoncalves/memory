@@ -5,7 +5,7 @@ posted_at: 2026-04-16T17:32:49Z
 post_type: original
 archived_at: 2026-04-19
 tags: [AI, Claude]
-reactions: 10
+reactions: 12
 comments: 1
 media_descriptions:
   image-1.jpg: >-
@@ -16,6 +16,7 @@ media_descriptions:
     Terminal-Bench, MCP-Atlas, GPQA Diamond, etc.). Anthropic "A" logo
     bottom right. Heavy text/data density, official branded comparison
     asset.
+impressions: 1987
 ---
 
 # April 16, 2026

@@ -2,7 +2,7 @@
 date: 2026-04-20
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7452023548950335488/"
 x_url: "https://x.com/joaofogoncalves/status/2046251685849252140"
 substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-246366175"
 tags: [security, ai-platforms, supply-chain, vibe-coding]
@@ -17,6 +17,10 @@ media_descriptions:
     and a Vercel security bulletin. Text-dense screenshot collage, mixed
     image-and-text content, native X UI chrome visible (handles,
     timestamps, engagement counts).
+reactions: 19
+comments: 6
+impressions: 2114
+posted_at: 2026-04-20T16:01:05Z
 ---
 
 Two app-platform breaches in 48 hours.

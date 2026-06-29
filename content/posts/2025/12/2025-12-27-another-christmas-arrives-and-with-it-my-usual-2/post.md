@@ -11,6 +11,9 @@ media_descriptions:
     star frame with a "BRIDGE IN" banner below. Colorful bokeh lights in the
     background from the tree. Personal, festive, candid photo. Portrait
     orientation with warm holiday lighting.
+reactions: 26
+comments: 8
+impressions: 1159
 ---
 
 # December 27, 2025

@@ -13,6 +13,8 @@ media_descriptions:
     — What's [fire emoji] in Enterprise IT/VC #488", with WWW.WHATSHOTIT.VC
     URL bottom left and a small Substack mark bottom right. Branded
     quote-graphic asset, text-forward, light mode.
+reactions: 27
+impressions: 1961
 ---
 
 # March 10, 2026

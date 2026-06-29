@@ -5,6 +5,9 @@ posted_at: 2026-01-22T09:23:23Z
 post_type: article
 archived_at: 2026-03-27
 tags: [future, ai, developers]
+reactions: 17
+comments: 2
+impressions: 1577
 ---
 
 # January 26, 2026

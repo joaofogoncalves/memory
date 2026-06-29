@@ -15,6 +15,7 @@ media_descriptions:
     glassy reflective water. One rower mid-stroke with paddle raised. No
     text overlay. Moody, cinematic stock-photo style aligned with the
     "rowing team problem" metaphor in the post.
+impressions: 648
 ---
 
 # April 09, 2026

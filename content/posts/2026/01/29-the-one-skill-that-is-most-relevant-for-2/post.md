@@ -11,6 +11,9 @@ media_descriptions:
     in a misty open field, with one door in the center glowing with warm golden
     light. Moody, atmospheric, dark tones with a single bright focal point.
     Visual metaphor for curiosity and finding the right path among many options.
+reactions: 17
+comments: 5
+impressions: 1242
 ---
 
 # February 25, 2026

@@ -11,6 +11,9 @@ media_descriptions:
     dark mode. Compares Codex to a "senior/architect engineer in their 40s" and
     Claude Code to a "senior engineer in their mid-20s running on Red Bulls."
     Dark background, text-only, verified badge visible.
+reactions: 256
+comments: 35
+impressions: 46819
 ---
 
 # February 25, 2026

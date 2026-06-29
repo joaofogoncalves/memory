@@ -5,7 +5,7 @@ posted_at: 2026-04-17T15:23:10Z
 post_type: original
 archived_at: 2026-04-19
 tags: [AI, Claude]
-reactions: 13
+reactions: 14
 comments: 2
 media_descriptions:
   image-1.jpg: >-
@@ -15,6 +15,7 @@ media_descriptions:
     sage-green panel underneath holds a minimal hand-drawn line illustration
     of a hand holding pages with a swirly mark. Branded Anthropic Labs
     asset, light mode, image-light/text-forward.
+impressions: 1014
 ---
 
 # April 17, 2026

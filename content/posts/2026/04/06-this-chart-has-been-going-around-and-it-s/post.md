@@ -5,7 +5,7 @@ posted_at: 2026-04-06T07:45:03Z
 post_type: original
 archived_at: 2026-04-08
 tags: [Leadership, AgenticDevelopment, Engineering, AI]
-comments: 14
+comments: 12
 reactions: 21
 media_descriptions:
   image-1.jpg: >-
@@ -17,6 +17,7 @@ media_descriptions:
     side is labeled with phase groupings ("IDE ERA", "AGENT-FIRST",
     "ORCHESTRATION") and a vertical axis "AI Autonomy + Trust". Diagram-style
     visual reference, monospaced typography, text-dense.
+impressions: 10238
 ---
 
 # April 06, 2026

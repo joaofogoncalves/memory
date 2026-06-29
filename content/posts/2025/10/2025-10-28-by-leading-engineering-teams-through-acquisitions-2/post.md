@@ -10,6 +10,9 @@ media_descriptions:
     One-liner: "You can't build for tomorrow if your team is still following
     yesterday's rules." Dark background, white text, verified badge. Minimal,
     text-only tweet. Landscape crop.
+reactions: 14
+comments: 2
+impressions: 1406
 ---
 
 # October 28, 2025

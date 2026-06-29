@@ -24,6 +24,9 @@ media_descriptions:
     S-curve rising from 0% in Nov '25 to ~100% by Apr '26. JG/joaofogoncalves.com
     wordmark bottom right. Companion piece deliberately mirroring the
     Google chart but in the site's palette.
+reactions: 11
+comments: 4
+impressions: 1287
 ---
 
 At Cloud Next Pichai showed this chart. 25% to 75% of new code at Google written by AI in 18 months.

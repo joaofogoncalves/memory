@@ -11,6 +11,7 @@ angle: The filter moved — engineering still differentiates people, but the axi
 template: long-form
 reactions: 7
 comments: 1
+impressions: 977
 ---
 
 Software engineering has always filtered people. The assumption now is that the filter is about to disappear, because the models write the code. It's not disappearing. It's moving.

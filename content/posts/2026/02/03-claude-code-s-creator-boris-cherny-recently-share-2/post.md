@@ -12,6 +12,9 @@ media_descriptions:
     layout of 12 illustrated tips with small icons for each (clipboard, code
     blocks, charts, microphone). Information-dense, compact design. Credit to
     Carl Velloti. Professional but stylized visual.
+reactions: 15
+comments: 4
+impressions: 1691
 ---
 
 # February 25, 2026

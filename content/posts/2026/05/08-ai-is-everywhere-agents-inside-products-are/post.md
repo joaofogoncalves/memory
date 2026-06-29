@@ -28,6 +28,7 @@ media_descriptions:
     type "Innovation Day / Real World Automations in Action", May 7 / 5pm
     date pill, partner logos (Google, Microsoft, Hostinger, Cursor, MEO).
     Designed branded asset, dense text, vivid brand colors.
+impressions: 990
 ---
 
 AI is everywhere. Agents inside products are still rare.

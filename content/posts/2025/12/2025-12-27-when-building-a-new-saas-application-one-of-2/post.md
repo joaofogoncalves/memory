@@ -4,6 +4,9 @@ post_url: https://www.linkedin.com/feed/update/urn:li:activity:74000940873301729
 posted_at: 2025-11-28T08:51:57Z
 post_type: article
 archived_at: 2026-03-27
+reactions: 8
+comments: 1
+impressions: 977
 ---
 
 # December 27, 2025

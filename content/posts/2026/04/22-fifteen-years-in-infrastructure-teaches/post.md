@@ -19,6 +19,9 @@ media_descriptions:
     motion-blurred shot of glowing red "BRIDGEPORT" wordmark with a
     glitchy/streaked motion effect, looking like a sci-fi movie title card.
     External brand asset, light-mode at top with dark hero below.
+reactions: 21
+comments: 4
+impressions: 1337
 ---
 
 Fifteen years in infrastructure teaches you what breaks.

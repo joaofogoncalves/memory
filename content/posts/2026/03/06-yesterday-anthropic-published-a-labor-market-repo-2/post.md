@@ -16,6 +16,8 @@ media_descriptions:
     shape reaching outer rings on cognitive jobs), red = observed AI coverage
     (much smaller blob clustered near center). Figure 2 caption underneath
     in small text. Official research paper chart, data-dense.
+reactions: 75
+impressions: 9644
 ---
 
 # March 10, 2026

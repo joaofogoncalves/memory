@@ -13,6 +13,7 @@ angle: Quiet shipping — v1.2.0 is mostly unsexy maintenance work, and that's t
 template: short-form
 reactions: 17
 comments: 1
+impressions: 1604
 ---
 
 Shipped Bridgeport v1.2.0 today. Most of it is the unsexy stuff.

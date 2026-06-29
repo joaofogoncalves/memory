@@ -13,6 +13,7 @@ angle: AI is a depth amplifier, not a depth creator — it scales whatever you a
 template: short-form
 reactions: 9
 comments: 4
+impressions: 1682
 ---
 
 AI didn't create the gap between writing code and shipping useful products. It exposed it.

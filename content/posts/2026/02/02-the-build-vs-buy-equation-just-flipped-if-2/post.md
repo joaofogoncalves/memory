@@ -12,6 +12,9 @@ media_descriptions:
     Coffee cup and "Terms of Service" document visible on desk. Digital
     illustration style with warm/cool lighting contrast. Visual metaphor for
     SaaS sprawl vs building your own tools.
+reactions: 4
+comments: 4
+impressions: 906
 ---
 
 # February 25, 2026

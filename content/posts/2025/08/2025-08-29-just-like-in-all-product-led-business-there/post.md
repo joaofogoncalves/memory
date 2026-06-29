@@ -9,6 +9,8 @@ media_descriptions:
     Screenshot of a tweet from @Indian_Bronson on dark background about a dad who bought NVIDIA
     stock because he saw their sticker on laptops. Text-heavy social media format, humorous
     anecdote.
+reactions: 3
+impressions: 1749
 ---
 
 # August 29, 2025

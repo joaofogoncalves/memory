@@ -10,6 +10,9 @@ media_descriptions:
     Photograph of the physical book "The Startup CTO's Handbook" by Zach Goldberg with red cover,
     sitting on a woven placemat with yellow sticky tabs protruding from pages. Casual top-down
     photo with warm natural lighting.
+reactions: 23
+comments: 1
+impressions: 1309
 ---
 
 # August 29, 2025

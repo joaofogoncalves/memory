@@ -13,6 +13,7 @@ angle: Opportunity warning for the general public — Anthropic put their entire
 template: short-form
 reactions: 36
 comments: 13
+impressions: 3840
 ---
 
 Anthropic just put their entire Claude curriculum online. Free. With certificates.

@@ -10,6 +10,9 @@ media_descriptions:
     logo in bold red text overlaid. White bench in foreground on a sunny waterfront
     promenade. Bright, clean, landscape composition. Company announcement/branding
     image using a real Lisbon landmark.
+reactions: 103
+comments: 19
+impressions: 4989
 ---
 
 # November 27, 2025

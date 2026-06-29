@@ -12,6 +12,9 @@ source_urls:
   - https://x.com/JayaGup10/status/2047508230813917600
 angle: Behavior, not biography — identifying AI-fluent operators by what they actually do
 template: article-reaction
+reactions: 9
+comments: 2
+impressions: 756
 ---
 
 Everyone framing AI adoption as a generational story has the variable wrong.

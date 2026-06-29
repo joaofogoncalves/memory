@@ -13,6 +13,9 @@ media_descriptions:
     vibe coding / Vibe coding creates weak engineers / Weak engineers create bad
     times / Bad times create strong engineers." Dark background, text-only, verified
     badge visible.
+reactions: 1021
+comments: 89
+impressions: 106311
 ---
 
 # January 26, 2026

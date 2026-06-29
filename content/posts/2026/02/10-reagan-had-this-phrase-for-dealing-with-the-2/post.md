@@ -12,6 +12,9 @@ media_descriptions:
     a humanoid robot with exposed mechanical parts sitting at a modern desk with
     a laptop displaying code. Cinematic, desaturated tones. Visual metaphor for
     "trust but verify" applied to AI coding agents.
+reactions: 9
+comments: 3
+impressions: 1234
 ---
 
 # February 25, 2026

@@ -11,6 +11,9 @@ media_descriptions:
     loft office with plants, brick walls, and a bridge visible through the window
     (likely Lisbon's 25 de Abril). Warm, inviting workspace illustration.
     Recruitment/hiring post visual.
+reactions: 19
+comments: 13
+impressions: 1976
 ---
 
 # January 26, 2026

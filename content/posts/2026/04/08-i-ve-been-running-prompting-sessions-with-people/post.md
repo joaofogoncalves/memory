@@ -5,8 +5,9 @@ posted_at: 2026-04-08T07:34:01Z
 post_type: original
 archived_at: 2026-04-08
 tags: [Leadership, Prompting, AI]
-comments: 3
-reactions: 7
+comments: 2
+reactions: 6
+impressions: 1058
 ---
 
 # April 08, 2026

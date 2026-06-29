@@ -14,6 +14,8 @@ media_descriptions:
     "1,135 open AI PM jobs / 465% from low" in orange showing similar
     upward curve. "Lenny's Newsletter" + flame icon branding bottom right,
     trueup attribution bottom left. Editorial branded chart, source asset.
+reactions: 7
+impressions: 1511
 ---
 
 # March 26, 2026

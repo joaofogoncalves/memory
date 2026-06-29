@@ -11,6 +11,9 @@ media_descriptions:
     split panes. Shows a team lead coordinating 4 parallel agents (cli-agent,
     env-updater, docs-docs, vdocs-docs) with status updates and progress logs.
     Developer tooling screenshot, information-dense, multiple colored highlights.
+reactions: 23
+comments: 6
+impressions: 2464
 ---
 
 # February 25, 2026

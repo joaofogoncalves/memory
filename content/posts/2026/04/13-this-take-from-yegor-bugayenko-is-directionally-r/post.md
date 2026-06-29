@@ -17,6 +17,7 @@ media_descriptions:
     coordination, control, and tracking. These are exactly the things AI
     does better than humans." Standalone quote-tweet screenshot, no replies
     visible.
+impressions: 8023
 ---
 
 # April 13, 2026

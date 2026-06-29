@@ -6,6 +6,7 @@ post_type: original
 archived_at: 2026-06-29
 reactions: 15
 comments: 3
+impressions: 2292
 ---
 
 # May 30, 2026

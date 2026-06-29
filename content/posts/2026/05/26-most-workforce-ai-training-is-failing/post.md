@@ -13,6 +13,7 @@ angle: Floor (structural scoping skill) and ceiling (engineering depth) — most
 template: article-reaction
 reactions: 11
 comments: 1
+impressions: 681
 ---
 
 Most workforce AI training is failing at the floor and ignoring the ceiling entirely.

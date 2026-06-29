@@ -17,6 +17,8 @@ media_descriptions:
     Anthropic's line climbs steeply to ~90% top right while OpenAI/Google
     cluster around 30–50%. Editorial chart, attributable third-party data
     visualization.
+reactions: 27
+impressions: 4167
 ---
 
 # March 24, 2026

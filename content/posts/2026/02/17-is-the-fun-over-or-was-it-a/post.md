@@ -10,6 +10,9 @@ media_descriptions:
     and red cartoon characters at a gathering, satirizing OpenAI dynamics. Small
     resolution, whimsical illustration style with handwritten text and expressive
     characters. Humorous, internet-culture tone.
+reactions: 34
+comments: 3
+impressions: 8040
 ---
 
 # February 25, 2026

@@ -21,6 +21,7 @@ media_descriptions:
     distant light source. Bold white sans-serif title overlaid left
     ("AI as the Great Filter"), with a subtitle and the "JG joaofogoncalves.com"
     wordmark in the bottom right. Mood-piece hero, not branded site palette.
+impressions: 875
 ---
 
 Two things compound in AI coding tools that don't get talked about together.

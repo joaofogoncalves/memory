@@ -1,0 +1,18 @@
+{
+  "template": "flow",
+  "title": "The self-offboarding audit, end to end",
+  "subtitle": "One orchestrator, thirteen scouts, one human verdict layer. Judgment is the gate everything routes through.",
+  "caption": "200MB of raw sources became 300KB of digests before any scout saw them. Findings only became actions after human triage.",
+  "highlightStageIndex": 4,
+  "tracks": [
+    {
+      "label": "Audit",
+      "stages": ["Sources: repos, 100 sessions, Slack, wiki", "Digest (200MB → 300KB)", "13 Sonnet scouts, in parallel", "Fable synthesis: blind-spot report", "Human triage: 40 verdicts", "Execution: PRs, runbooks, handoffs"]
+    }
+  ],
+  "gates": [
+    { "afterIndex": 2, "label": "forced schema" },
+    { "afterIndex": 3, "label": "verify findings" },
+    { "afterIndex": 4, "label": "human authorization" }
+  ]
+}

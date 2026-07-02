@@ -1,0 +1,23 @@
+# X post — every-substantive-change-in-our-repos-ends
+
+Paste into X manually. No hashtags. No external link, so no reply block.
+
+---
+
+**Main post:**
+Every substantive change in our repos ends with the same request to the model: update the docs this change just made stale.
+
+That's the entire system. No documentation sprints, no wiki cleanup quarter.
+
+Docs always rotted for the same reason: the update was a separate task, assigned to a human who had already moved on. The knowledge was freshest at the exact moment nobody had time to write it down.
+
+That's the part AI actually fixed. The model that just made the change still holds everything the runbook needs. Updating the architecture notes costs one more sentence in the same session. So the ask happens every time, and the docs grow alongside the code instead of rotting behind it.
+
+Runbooks, decision logs, architecture notes. Months of them, none written in a sprint.
+
+Documentation stopped being a project. It became a habit.
+*Attach: media/image-1.webp*
+
+---
+
+**After posting:** copy the X permalink and paste it into `post.md` as `x_url:`.

@@ -1,0 +1,25 @@
+{
+  "title": "Why docs stopped rotting",
+  "subtitle": "The update moved to the moment the knowledge is freshest",
+  "arrowLabel": "the cost flipped",
+  "left": {
+    "label": "BEFORE",
+    "title": "Documentation as a project",
+    "items": [
+      "Update is a separate task",
+      "Assigned to someone who already moved on",
+      "Written in sprints, quarters later",
+      "Stale the day after it ships"
+    ]
+  },
+  "right": {
+    "label": "NOW",
+    "title": "Documentation as a habit",
+    "items": [
+      "One more sentence, same session",
+      "The model still holds the change",
+      "Updated while the change is warm",
+      "Grows alongside the code"
+    ]
+  }
+}

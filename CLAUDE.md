@@ -237,6 +237,8 @@ linkedin-post-archiver/  # Project root
 - `web/deploy.sh` builds the site and deploys via rsync over SSH
 - Credentials loaded from `.env` (OPAL_* variables)
 - Deletes stale files on remote
+- **CI deploy**: `.github/workflows/deploy.yml` builds and deploys on manual trigger only (workflow_dispatch from the Actions tab). Config comes from repository variables (`SITE_URL`, `GA_MEASUREMENT_ID`, `OPAL_SSH_USER`, `OPAL_SSH_HOST`, `OPAL_SSH_PORT`, `OPAL_APP_PATH`) and one secret (`OPAL_SSH_PASSWORD`, used via sshpass). This workflow only builds and deploys — scraping is a separate workflow.
+- **CI scrape**: `.github/workflows/scrape.yml` (manual trigger) runs the browser crawler headlessly and opens a PR with the results on branch `automated/linkedin-scrape`. Auth comes from the `LINKEDIN_LI_AT` secret (LinkedIn session cookie, injected into the browser context by `browser_crawler.py`); the profile comes from the `LINKEDIN_PROFILE_URL` variable. The PR always needs review — new posts scraped outside `/post` may include noise or duplicates. Requires "Allow GitHub Actions to create and approve pull requests" in repo Actions settings.
 
 ### 10. Full Pipeline Automation
 - `scripts/pipeline.sh` runs the complete workflow: scrape → resolve links → build → deploy

@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineeringleadership-careergrowth-activity-7483111531992391680-7hpY"
 x_url: "https://x.com/i/status/2077346545364586531"
-substack_note_url: "https://substack.com/@adfectusadulatio393615/note/c-294913595"
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-294913595"
 tags: [careergrowth, ai, leadership]
 source_urls:
   - https://joaofogoncalves.com/articles/2026/07/15-i-offboarded-myself-with-ai/

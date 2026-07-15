@@ -4,7 +4,7 @@ _Last updated: July 2026 — [nownownow.com](https://nownownow.com/)_
 
 ## Building
 
-In between chapters. I just wrapped up as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/): eight months building the BRIDGE IN OS and the 14-agent orchestration system that shipped it. The next role starts later this month. More on that soon.
+In between chapters. I just wrapped up as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/): ten months building the BRIDGE IN OS and the 14-agent orchestration system that shipped it. The next role starts later this month. More on that soon.
 
 ## Thinking About
 

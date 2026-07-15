@@ -1,6 +1,7 @@
 """Browser-based LinkedIn post crawler using Playwright."""
 
 import logging
+import os
 import random
 import re
 import time
@@ -61,6 +62,21 @@ class BrowserCrawler:
                 '--disable-blink-features=AutomationControlled',
             ],
         )
+        # Headless environments (e.g. CI) have no saved profile to log in with.
+        # LINKEDIN_LI_AT bootstraps the session from LinkedIn's auth cookie instead.
+        li_at = os.environ.get('LINKEDIN_LI_AT', '').strip()
+        if li_at:
+            self._context.add_cookies([{
+                'name': 'li_at',
+                'value': li_at,
+                'domain': '.linkedin.com',
+                'path': '/',
+                'httpOnly': True,
+                'secure': True,
+                'sameSite': 'None',
+            }])
+            logger.info("Injected li_at session cookie from LINKEDIN_LI_AT")
+
         self._page = self._context.new_page()
         Stealth().apply_stealth_sync(self._page)
         return self._page

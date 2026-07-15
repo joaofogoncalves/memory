@@ -1,0 +1,71 @@
+# Build the static site and deploy it to Opalstack via rsync-over-SSH.
+#
+# Runs manually only, via the Actions tab (workflow_dispatch).
+#
+# Repository VARIABLES (Settings → Secrets and variables → Actions → Variables):
+#   SITE_URL           — public site URL for Open Graph tags
+#   GA_MEASUREMENT_ID  — Google Analytics measurement ID (optional)
+#   OPAL_SSH_USER      — Opalstack SSH username
+#   OPAL_SSH_HOST      — Opalstack SSH host
+#   OPAL_SSH_PORT      — SSH port (optional, defaults to 22)
+#   OPAL_APP_PATH      — remote app path
+#
+# Repository SECRETS (Settings → Secrets and variables → Actions → Secrets):
+#   OPAL_SSH_PASSWORD  — Opalstack SSH password (used via sshpass). Required.
+#
+# The LinkedIn credentials (LINKEDIN_CLIENT_ID/SECRET, LINKEDIN_PROFILE_URL) are
+# NOT used here: the scraper needs an interactive logged-in browser session, so
+# it can't run in CI. This workflow builds from the posts committed to the repo.
+
+name: Build & Deploy Website
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-website
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Build site
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
+        run: uv run python web/build.py
+
+      - name: Install sshpass
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+
+      - name: Deploy to Opalstack
+        env:
+          SSHPASS: ${{ secrets.OPAL_SSH_PASSWORD }}
+          OPAL_SSH_USER: ${{ vars.OPAL_SSH_USER }}
+          OPAL_SSH_HOST: ${{ vars.OPAL_SSH_HOST }}
+          OPAL_SSH_PORT: ${{ vars.OPAL_SSH_PORT || '22' }}
+          OPAL_APP_PATH: ${{ vars.OPAL_APP_PATH }}
+        run: |
+          : "${SSHPASS:?Add OPAL_SSH_PASSWORD as a repository secret}"
+          : "${OPAL_SSH_USER:?Add OPAL_SSH_USER as a repository variable}"
+          : "${OPAL_SSH_HOST:?Add OPAL_SSH_HOST as a repository variable}"
+          : "${OPAL_APP_PATH:?Add OPAL_APP_PATH as a repository variable}"
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "$OPAL_SSH_PORT" "$OPAL_SSH_HOST" >> ~/.ssh/known_hosts
+          rsync -avz --delete \
+            --exclude='.DS_Store' \
+            -e "sshpass -e ssh -p $OPAL_SSH_PORT" \
+            web/dist/ \
+            "${OPAL_SSH_USER}@${OPAL_SSH_HOST}:${OPAL_APP_PATH}/"

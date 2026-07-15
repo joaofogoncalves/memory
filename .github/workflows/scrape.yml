@@ -1,0 +1,103 @@
+# Crawl LinkedIn posts headlessly and open a PR with the results.
+#
+# Runs manually only, via the Actions tab (workflow_dispatch). The PR always
+# needs human review — merge mode prevents body overwrites, but genuinely-new
+# posts may include noise (milestones, one-liners) worth curating before merge.
+#
+# Repository VARIABLES:
+#   LINKEDIN_PROFILE_URL — profile to crawl (https://www.linkedin.com/in/<username>)
+#
+# Repository SECRETS:
+#   LINKEDIN_LI_AT — LinkedIn session cookie. In a logged-in browser: DevTools →
+#                    Application → Cookies → https://www.linkedin.com → copy the
+#                    `li_at` value. Expires after ~a year or on logout/password
+#                    change; refresh the secret when the workflow reports
+#                    "Not logged in".
+#
+# Repo setting required for PR creation: Settings → Actions → General →
+# "Allow GitHub Actions to create and approve pull requests".
+#
+# Note: LinkedIn may challenge logins from datacenter IPs. If the crawl fails
+# with a checkpoint/authwall redirect, re-run later or refresh the cookie.
+
+name: Scrape LinkedIn Posts
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max posts to crawl (empty = full crawl)"
+        required: false
+        default: "25"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: linkedin-scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install Playwright Chromium
+        run: uv run playwright install --with-deps chromium
+
+      - name: Crawl LinkedIn posts
+        env:
+          LINKEDIN_PROFILE_URL: ${{ vars.LINKEDIN_PROFILE_URL }}
+          LINKEDIN_LI_AT: ${{ secrets.LINKEDIN_LI_AT }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          : "${LINKEDIN_LI_AT:?Add LINKEDIN_LI_AT as a repository secret (li_at cookie from a logged-in browser)}"
+          : "${LINKEDIN_PROFILE_URL:?Add LINKEDIN_PROFILE_URL as a repository variable}"
+          LIMIT_ARG=()
+          if [ -n "$LIMIT" ]; then
+            LIMIT_ARG=(--limit "$LIMIT")
+          fi
+          uv run python -m scraper.main --crawl "${LIMIT_ARG[@]}"
+
+      - name: Resolve lnkd.in short links
+        run: uv run python web/resolve_links.py
+
+      - name: Upload scraper log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-log
+          path: logs/scraper.log
+          if-no-files-found: ignore
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: |
+            content/posts/**
+            config/site.yaml
+          branch: automated/linkedin-scrape
+          delete-branch: true
+          commit-message: "Scrape LinkedIn: new posts + engagement refresh"
+          title: "LinkedIn scrape: new posts + engagement refresh"
+          body: |
+            Automated crawl of LinkedIn posts (headless browser, merge mode).
+
+            **Review before merging:**
+            - Existing posts only get `reactions:`/`comments:` refreshed — bodies are never overwritten.
+            - Genuinely-new posts (written outside `/post`) may include noise: milestone posts, one-line reactions, duplicates the fingerprint matcher missed. Drop those commits/files as needed.
+            - `config/site.yaml` `featured_posts` is auto-updated from engagement.
+
+            After merging, run the **Build & Deploy Website** workflow to publish.

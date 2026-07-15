@@ -811,7 +811,7 @@ def jsonld_person() -> str:
         'name': SITE_NAME,
         'description': SITE_DESCRIPTION,
         'url': SITE_URL or '/',
-        'jobTitle': 'Founding Engineer',
+        'jobTitle': 'Engineering Leader',
         'knowsAbout': [
             'Agentic engineering', 'LLM orchestration', 'Multi-agent systems',
             'RAG', 'Context engineering', 'Forward-deployed engineering',
@@ -1130,9 +1130,8 @@ def _hero_links_html() -> str:
         f'<span class="hero-links-social">{social}</span>'
         f'<span class="sep hero-links-sep">·</span>'
         f'<span class="hero-links-role">'
-        f'Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
-        f'<span class="sep">·</span>'
-        f'Previously at: <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
+        f'Previously at: <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
+        f', <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
         f' and <a href="https://www.valispace.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--valispace">Valispace</a>'
         f'</span>'
         f'</div>'

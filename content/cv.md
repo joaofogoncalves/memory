@@ -1,17 +1,17 @@
 # João Gonçalves
 
-**Founding Engineer @ BRIDGE IN**
+**Engineering Leader · Agentic AI Systems**
 Lisbon, Portugal
 
 ## Hero
 
-*15 years scaling engineering teams and DevOps. Shipped AI into product within a month of ChatGPT's launch. Now I run 14 AI agents that ship full-stack features end-to-end.*
+*15 years scaling engineering teams and DevOps. Shipped AI into product within a month of ChatGPT's launch. Most recently ran 14 AI agents that shipped full-stack features end-to-end.*
 
 [stats] 14 / AI agents · 97% / agent autonomy · 88% / faster releases · 15+ / years engineering
 
 ## Summary
 
-Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that ships full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
+Most recently Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that shipped full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
 
 ## Thesis
 
@@ -21,15 +21,15 @@ Engineering used to be where everything stalled. Now it's everywhere else: produ
 
 The teams pulling ahead aren't using AI more carefully. They're using it harder, with their hands on the wheel. Senior judgment plus AI velocity. Depth in the system, ruthless review of output, willingness to throw the model's first answer away.
 
-I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I started shipping AI into product within a month of ChatGPT's launch, before the playbook existed. I now run the new pattern at BRIDGE IN, with agents handling most of the code. The leverage is different. The work is the same.
+I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I started shipping AI into product within a month of ChatGPT's launch, before the playbook existed. I ran the new pattern at BRIDGE IN, with agents handling most of the code. The leverage is different. The work is the same.
 
 ## Building
 
-*BRIDGE IN, since November 2025.*
+*BRIDGE IN, November 2025 – July 2026.*
 
-Founding Engineer at BRIDGE IN. Building the BRIDGE IN Operating System, a Django/React platform that centralizes payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
+Founding Engineer at BRIDGE IN. Built the BRIDGE IN Operating System, a Django/React platform that centralizes payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
 
-The unusual part is how it gets built. A 14-agent AI orchestration system runs a 4-phase workflow (plan, implement, test, deliver) through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operate as a permanent member of the engineering team. I direct the system. The system does most of the work.
+The unusual part was how it got built. A 14-agent AI orchestration system ran a 4-phase workflow (plan, implement, test, deliver) through 27 custom development skills I authored. Sentry triage, Slack feedback processing, autonomous issue creation, CI failure resolution, production deployment. The agents operated as a permanent member of the engineering team. I directed the system. The system did most of the work.
 
 The receipts: in a recent month the system merged 30 agent-authored PRs at 97% autonomy, 29 of 30 with no human commits, every one through the full CI gate. It triaged Sentry alerts into filed-and-fixed issues autonomously, caught regressions before users did, and turned reported feedback into shipped fixes at a 4.9-hour median. Median PR lead time, open to merge, was 7 minutes.
 
@@ -54,7 +54,7 @@ If that fits, the email and LinkedIn below work.
 ## Experience
 
 ### BRIDGE IN — Founding Engineer
-**November 2025 – Present** · Lisbon, Portugal
+**November 2025 – July 2026** · Lisbon, Portugal
 
 - Building the BRIDGE IN Operating System from the ground up. A full-stack platform (Django, React) centralizing payroll, accounting, HR, legal, and tax compliance for international companies across four European markets.
 - Designing and operating a 14-agent AI orchestration system where specialized agents coordinate through a 4-phase workflow to plan, implement, test, and deliver full-stack features end-to-end with minimal human intervention.

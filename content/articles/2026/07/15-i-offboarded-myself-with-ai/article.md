@@ -2,12 +2,11 @@
 title: "I Offboarded Myself With AI. The Writing Was the Easy Part."
 subtitle: "Two weeks to hand over an engineering lead's head: one orchestrator model, fleets of Sonnet scouts, and every place the transfer still ran through me."
 description: "A departing engineering lead ran his own knowledge transfer with an AI orchestrator and 13 scout agents. The writing was cheap. The judgment wasn't."
-date: 2026-07-02
+date: 2026-07-15
 tags: [ai, software-engineering, engineering-leadership]
 substack_url:
 hero_image: media/hero.jpg
 reading_time: 14
-draft: true
 ---
 
 Two Tuesdays ago I handed in my resignation with two weeks of runway. Then I opened a terminal and took inventory of what was about to walk out the door with me.

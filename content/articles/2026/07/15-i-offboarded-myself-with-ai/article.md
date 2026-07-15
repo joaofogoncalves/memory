@@ -4,7 +4,7 @@ subtitle: "Two weeks to hand over an engineering lead's head: one orchestrator m
 description: "A departing engineering lead ran his own knowledge transfer with an AI orchestrator and 13 scout agents. The writing was cheap. The judgment wasn't."
 date: 2026-07-15
 tags: [ai, software-engineering, engineering-leadership]
-substack_url:
+substack_url: https://joaofogoncalves.substack.com/p/15-i-offboarded-myself-with-ai
 hero_image: media/hero.jpg
 reading_time: 14
 ---

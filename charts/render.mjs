@@ -99,7 +99,10 @@ async function main() {
 
   await mkdir(dirname(outPath), { recursive: true });
 
-  const browser = await chromium.launch();
+  // CHROMIUM_PATH overrides the bundled browser (sandboxes/CI with a system chromium)
+  const browser = await chromium.launch(
+    process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
+  );
   const context = await browser.newContext({
     viewport: { width: argv.width, height: argv.height },
     deviceScaleFactor: argv.scale,

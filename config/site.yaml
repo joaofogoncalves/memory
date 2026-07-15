@@ -1,6 +1,6 @@
 # Site personalization
 site_name: "João Gonçalves"
-site_description: "Founding Engineer building agentic engineering systems in production. 15 years in DevOps, platform, and engineering leadership. Forward-deployed AI, RAG, and AI-native tooling."
+site_description: "Engineering leader building agentic engineering systems in production. 15 years in DevOps, platform, and engineering leadership. Forward-deployed AI, RAG, and AI-native tooling."
 
 # Social links
 linkedin: "https://linkedin.com/in/joaofogoncalves"
@@ -13,12 +13,13 @@ substack: "https://joaofogoncalves.substack.com/"
 hero_title: "João Gonçalves"
 hero_proof: >-
   I build and run agentic engineering systems in production. Fifteen years scaling
-  DevOps and platforms, now a 14-agent orchestration that ships full-stack features
-  end to end.
+  DevOps and platforms, most recently a 14-agent orchestration that shipped full-stack
+  features end to end.
 hero_subline: >-
-  Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
+  Most recently Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
   style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a>. Previously Director
   of Engineering at Altium/Valispace. Building things with AI, not just talking about it.
+  Next chapter lands soon.
 about_teaser: >-
   15+ years building software and teams. Steered an engineering org through a $20M acquisition.
   Now building from scratch again. Currently writing about what happens when AI changes how we build.

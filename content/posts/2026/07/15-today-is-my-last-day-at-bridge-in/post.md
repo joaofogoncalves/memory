@@ -1,0 +1,27 @@
+---
+date: 2026-07-15
+post_type: original
+authored: true
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_ai-engineeringleadership-careergrowth-activity-7483111531992391680-7hpY"
+x_url: "https://x.com/i/status/2077346545364586531"
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-294913595"
+tags: [careergrowth, ai, leadership]
+source_urls:
+  - https://joaofogoncalves.com/articles/2026/07/15-i-offboarded-myself-with-ai/
+angle: Farewell told through the offboarding itself — thanks to Pedro Henriques for funding the experiment, article as the receipt for how I left
+template: article-reaction
+---
+
+Today is my last day at BRIDGE IN.
+
+Ten months ago Pedro Henriques handed me a hard problem: build the platform that runs payroll, HR, legal, and tax compliance for companies across four European markets. No legacy code, no playbook, and enough rope to try something unusual with how it got built. The unusual part was a 14-agent system doing most of the shipping while three engineers steered. Not many founders would fund that experiment in month one.
+
+Thank you, Pedro, and the whole BRIDGE IN team. Ten months here taught me more than some full jobs did.
+
+I spent my final two weeks making sure nothing leaves with me. Ran the entire knowledge transfer with an AI orchestrator and a fleet of scout agents. The writing turned out to be the easy part. The judgment didn't.
+
+Wrote up how the handover went: https://joaofogoncalves.com/articles/2026/07/15-i-offboarded-myself-with-ai/
+
+What's next starts in a few days. More soon.
+
+**Hashtags:** #AI #EngineeringLeadership #CareerGrowth

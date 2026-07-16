@@ -21,3 +21,11 @@ Most teams that adopt OKRs import the spreadsheet half and skip the CFR half. Th
 The measurement system runs on the part nobody measures.
 
 **Hashtags:** #OKRs #Leadership #EngineeringManagement
+
+---
+
+## Media
+
+![image-1.jpg](media/image-1.jpg)
+
+![image-2.jpg](media/image-2.jpg)

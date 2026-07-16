@@ -1,6 +1,6 @@
 # Image Prompts
 
-**Chosen: Option 2 (evidence photo).** Take the photo and save it as `media/image-1.jpg` in this directory before posting. The other options are kept below as fallbacks.
+**Chosen: Option 2 (evidence photos) — done.** Two photos saved to `media/`: `image-1.jpg` (book cover, main/thumbnail) and `image-2.jpg` (the "A Typical OKR Cycle" resource page). The other options are kept below as fallbacks.
 
 ## Option 1: Chart — feature-compare (fallback)
 Render via: `node charts/render.mjs --template feature-compare --data <spec>.json --output media/image-1.webp --width 1600 --height 720`

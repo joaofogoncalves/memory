@@ -18,7 +18,11 @@ The measurement system runs on the part nobody measures.
 
 ---
 
-**Attach image:** media/image-1.jpg (photo of your physical copy of the book — see image-prompts.md)
+**Attach as a carousel (in order):**
+- media/image-1.jpg (book cover photo — the feed thumbnail)
+- media/image-2.jpg ("A Typical OKR Cycle" page)
+
+LinkedIn renders 2+ images as a swipeable carousel. Order matters — image-1 is the feed thumbnail, and readers swipe left in sequence.
 
 ---
 

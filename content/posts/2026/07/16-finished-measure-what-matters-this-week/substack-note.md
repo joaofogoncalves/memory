@@ -16,7 +16,11 @@ The measurement system runs on the part nobody measures.
 
 ---
 
-**Attach image:** media/image-1.jpg
+**Attach inline (in order):**
+- media/image-1.jpg (primary — book cover photo, shown above the fold)
+- media/image-2.jpg ("A Typical OKR Cycle" page)
+
+Substack Notes supports multiple inline images. Paste the text first, then drag both images in as a block before or after the text (simplest), or place image-2 after the CFR paragraph if you want it next to the argument it illustrates.
 
 ---
 

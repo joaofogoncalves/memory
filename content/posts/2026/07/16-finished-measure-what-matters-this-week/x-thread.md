@@ -14,7 +14,7 @@ Doerr pairs OKRs with CFRs: conversations, feedback, recognition. Roughly half t
 Most teams that adopt OKRs import the spreadsheet half and skip the CFR half. Then the quarterly ritual turns into scoring theater, and the framework takes the blame.
 
 The measurement system runs on the part nobody measures.
-*Attach: media/image-1.jpg*
+*Attach: media/image-1.jpg, media/image-2.jpg* (cover photo first — it carries the timeline thumbnail; the OKR-cycle page reveals on tap)
 
 ---
 

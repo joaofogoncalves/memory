@@ -2,9 +2,9 @@
 date: 2026-07-16
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/posts/joaofogoncalves_okrs-leadership-engineeringmanagement-activity-7483521077399232512-2C4b"
+x_url: "https://x.com/i/status/2077755782678921389"
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-295718577"
 tags: [okrs, leadership, engineering-management]
 angle: The human layer surprise — the OKR book's real subject is the CFR system underneath the measurement
 template: short-form

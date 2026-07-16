@@ -14,7 +14,9 @@ Also: how small teams should be calibrating their AI usage right now. Not the to
 
 ## Reading
 
-[Measure What Matters](https://www.whatmatters.com/the-book) by John Doerr — OKRs, but more specifically the discipline of deciding what actually matters before you start measuring anything.
+Just finished [Measure What Matters](https://www.whatmatters.com/the-book) by John Doerr. Went in for the OKR mechanics; the part that stuck was the CFR half — the human system of conversations, feedback, and recognition the whole framework runs on.
+
+Now starting a reread of Dune, in preparation for Dune: Part Three landing in December. Some books you reread for the plot. This one is for the ecology, the politics, and how well Villeneuve's casting has colonized my imagination.
 
 ## Recently
 

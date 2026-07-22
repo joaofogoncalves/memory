@@ -8,6 +8,12 @@ name: Scrape LinkedIn Profile
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - claude/linkedin-profile-sync-p52v8j
+    paths:
+      - .github/workflows/profile-scrape.yml
+      - scripts/scrape_profile.py
 
 permissions:
   contents: read

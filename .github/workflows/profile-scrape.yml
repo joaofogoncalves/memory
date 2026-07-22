@@ -1,0 +1,48 @@
+# Dump the LinkedIn profile About + Experience sections to the job log.
+#
+# One-off helper for syncing website/CV content with the live LinkedIn
+# profile. Reuses the same auth as scrape.yml: the LINKEDIN_LI_AT session
+# cookie secret and the LINKEDIN_PROFILE_URL repository variable.
+
+name: Scrape LinkedIn Profile
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install Playwright Chromium
+        run: uv run playwright install --with-deps chromium
+
+      - name: Scrape profile sections
+        env:
+          LINKEDIN_LI_AT: ${{ secrets.LINKEDIN_LI_AT }}
+          LINKEDIN_PROFILE_URL: ${{ vars.LINKEDIN_PROFILE_URL }}
+        run: |
+          : "${LINKEDIN_LI_AT:?Add LINKEDIN_LI_AT as a repository secret}"
+          uv run python scripts/scrape_profile.py | tee profile_dump.txt
+
+      - name: Upload profile dump
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: profile-dump
+          path: profile_dump.txt
+          if-no-files-found: ignore

@@ -3,6 +3,7 @@
 # One-off helper for syncing website/CV content with the live LinkedIn
 # profile. Reuses the same auth as scrape.yml: the LINKEDIN_LI_AT session
 # cookie secret and the LINKEDIN_PROFILE_URL repository variable.
+# Push a change to a watched path to re-trigger.
 
 name: Scrape LinkedIn Profile
 

@@ -11,7 +11,7 @@ Lisbon, Portugal
 
 ## Summary
 
-Most recently Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that shipped full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
+AI Product Engineer at Tribe AI, working on agentic development. Before that, Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that shipped full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
 
 ## Thesis
 

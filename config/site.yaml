@@ -16,13 +16,15 @@ hero_proof: >-
   DevOps and platforms, most recently a 14-agent orchestration that shipped full-stack
   features end to end.
 hero_subline: >-
-  Most recently Founding Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
-  style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a>. Previously Director
-  of Engineering at Altium/Valispace. Building things with AI, not just talking about it.
-  Next chapter lands soon.
+  Now at <a href="https://www.tribe.ai/" target="_blank" rel="noopener"
+  style="color:#ff7c0f;font-weight:500;text-decoration:none">Tribe AI</a>. Previously Founding
+  Engineer at <a href="https://www.bridgein.pt/" target="_blank" rel="noopener"
+  style="color:#cc0000;font-weight:500;text-decoration:none">BRIDGE IN</a> and Director of
+  Engineering at Altium/Valispace. Building things with AI, not just talking about it.
 about_teaser: >-
   15+ years building software and teams. Steered an engineering org through a $20M acquisition.
-  Now building from scratch again. Currently writing about what happens when AI changes how we build.
+  Now at Tribe AI, building from scratch again. Currently writing about what happens when AI
+  changes how we build.
 
 # Thesis / POV statement (shown on home page as a callout block)
 thesis: Everyone's optimizing for speed. The more interesting question is what gets lost when you do. I write about the engineering judgment AI can't replace, and the parts it already has.

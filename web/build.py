@@ -31,13 +31,30 @@ load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 # Brand constants
 # ============================================================
 
-# BRIDGE IN always renders in brand red — never changes without explicit consent
-_BRIDGE_IN_HTML = '<span style="color:#cc0000;font-weight:600">BRIDGE IN</span>'
+# Company names always render in their own brand color — never change without explicit consent.
+# Tribe AI: #ff7c0f is Tribe's --color-accent-orange. Their --color-brand (#65d9ee) is too close
+# to this site's own accent (#44d8f1) to read as a distinct brand mark.
+BRAND_COLORS = {
+    'BRIDGE IN': '#cc0000',
+    'Tribe AI': '#ff7c0f',
+}
+
+# Longest name first, so a name containing another is matched whole.
+_BRAND_RE = re.compile(
+    '|'.join(re.escape(n) for n in sorted(BRAND_COLORS, key=len, reverse=True))
+)
 
 
-def style_bridge_in(html: str) -> str:
-    """Apply red brand styling to every occurrence of 'BRIDGE IN' in HTML."""
-    return html.replace('BRIDGE IN', _BRIDGE_IN_HTML)
+def style_brands(html: str) -> str:
+    """Apply brand color styling to every company name in BRAND_COLORS."""
+    def _wrap(m: 're.Match') -> str:
+        name = m.group(0)
+        return f'<span style="color:{BRAND_COLORS[name]};font-weight:600">{name}</span>'
+    return _BRAND_RE.sub(_wrap, html)
+
+
+# Back-compat alias for existing call sites.
+style_bridge_in = style_brands
 
 
 # ============================================================
@@ -697,7 +714,10 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
     return f'''{ROUTE_LOADER}
 <nav class="{nav_cls}">
   <div class="nav-inner">
-    <a href="{prefix}" class="nav-logo-link" aria-label="Home">{NAV_LOGO_SVG}</a>
+    <div class="nav-brand">
+      <a href="{prefix}" class="nav-logo-link" aria-label="Home">{NAV_LOGO_SVG}</a>
+      <a href="https://www.tribe.ai/" target="_blank" rel="noopener" class="nav-company">Tribe AI</a>
+    </div>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
@@ -1130,7 +1150,9 @@ def _hero_links_html() -> str:
         f'<span class="hero-links-social">{social}</span>'
         f'<span class="sep hero-links-sep">·</span>'
         f'<span class="hero-links-role">'
-        f'Previously at: <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
+        f'Currently at: <a href="https://www.tribe.ai/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--tribeai">Tribe AI</a>'
+        f'<span class="sep">·</span>'
+        f'Previously: <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
         f', <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
         f' and <a href="https://www.valispace.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--valispace">Valispace</a>'
         f'</span>'

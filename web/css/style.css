@@ -175,9 +175,40 @@ h4 { font-size: 1.1rem; }
   justify-content: space-between;
 }
 
+.nav-brand {
+  display: flex;
+  align-items: center;
+}
+
 .nav-logo-link {
   display: flex;
   align-items: center;
+}
+
+/* Current company — brand color, site-wide in the header */
+.nav-company {
+  color: #ff7c0f;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  margin-left: 0.85rem;
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--outline-variant);
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+
+.nav-company:hover {
+  opacity: 0.72;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .nav-company {
+    display: none;
+  }
 }
 
 .nav-logo {
@@ -415,6 +446,8 @@ h4 { font-size: 1.1rem; }
   color: var(--outline);
 }
 
+.hero-links .logo-strip-name--tribeai,
+.hero-links .logo-strip-name--tribeai:hover { color: #ff7c0f; }
 .hero-links .logo-strip-name--bridgein,
 .hero-links .logo-strip-name--bridgein:hover { color: #cc0000; }
 .hero-links .logo-strip-name--altium:hover { color: #ffffff; }

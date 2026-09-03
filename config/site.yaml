@@ -12,8 +12,8 @@ substack: "https://joaofogoncalves.substack.com/"
 # Home page
 hero_title: "João Gonçalves"
 hero_proof: >-
-  I build and run agentic engineering systems in production. Fifteen years scaling
-  DevOps and platforms, most recently a 14-agent orchestration that shipped full-stack
+  I build production AI systems with enterprise teams. Now a Forward Deployed AI Product
+  Engineer at Tribe AI, after running a 14-agent orchestration that shipped full-stack
   features end to end.
 hero_subline: >-
   Now at <a href="https://www.tribe.ai/" target="_blank" rel="noopener"

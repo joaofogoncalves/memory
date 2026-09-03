@@ -4,7 +4,9 @@ _Last updated: September 2026 — [nownownow.com](https://nownownow.com/)_
 
 ## Building
 
-AI Product Engineer at [Tribe AI](https://www.tribe.ai/), working on agentic development. Before this: ten months as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/), building the BRIDGE IN OS and the 14-agent orchestration system that shipped it.
+Forward Deployed AI Product Engineer at [Tribe AI](https://www.tribe.ai/), building production AI systems side-by-side with Fortune 1000 teams. Agentic development, pointed at enterprise problems instead of my own repo.
+
+Before this: nine months as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/), building the BRIDGE IN OS and the 14-agent orchestration system that shipped it.
 
 ## Thinking About
 

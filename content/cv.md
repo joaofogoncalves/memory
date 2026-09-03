@@ -1,17 +1,17 @@
 # João Gonçalves
 
-**Engineering Leader · Agentic AI Systems**
+**Forward Deployed AI Product Engineer · Agentic AI Systems**
 Lisbon, Portugal
 
 ## Hero
 
-*15 years scaling engineering teams and DevOps. Shipped AI into product within a month of ChatGPT's launch. Most recently ran 14 AI agents that shipped full-stack features end-to-end.*
+*Forward-deployed AI product engineering with Fortune 1000 teams. 15 years scaling engineering teams and DevOps before that. Shipped AI into product within a month of ChatGPT's launch, and ran 14 AI agents that shipped full-stack features end-to-end.*
 
 [stats] 14 / AI agents · 97% / agent autonomy · 88% / faster releases · 15+ / years engineering
 
 ## Summary
 
-AI Product Engineer at Tribe AI, working on agentic development. Before that, Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that shipped full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
+Forward Deployed AI Product Engineer at Tribe AI, building production AI systems side-by-side with Fortune 1000 teams. Before that, Founding Engineer at BRIDGE IN, running a 14-agent AI orchestration system that shipped full-stack features end-to-end. 15 years of engineering leadership before that — DevOps, platform, and engineering departments through one $20M acquisition and several scale-ups.
 
 ## Thesis
 
@@ -24,6 +24,18 @@ The teams pulling ahead aren't using AI more carefully. They're using it harder,
 I've spent 15 years in the old pattern: scaling teams, owning DevOps and platform functions, leading a department through a $20M acquisition. I started shipping AI into product within a month of ChatGPT's launch, before the playbook existed. I ran the new pattern at BRIDGE IN, with agents handling most of the code. The leverage is different. The work is the same.
 
 ## Building
+
+*Tribe AI, July 2026 – Present.*
+
+Forward Deployed AI Product Engineer at Tribe AI, building production AI systems side-by-side with Fortune 1000 teams as part of Tribe's forward-deployed model.
+
+- Partnering directly with enterprise teams to design and ship AI products with $100M+ in enterprise value on the line.
+- Working as part of Tribe's platform + services model, closing the gap between frontier models and production-grade applications.
+- Helping enterprise teams become AI-native, rethinking how they create value and how their people work in an AI-first world.
+
+[badges] Forward-deployed AI · Agentic development · Fortune 1000 teams
+
+---
 
 *BRIDGE IN, November 2025 – July 2026.*
 
@@ -52,6 +64,18 @@ What I won't: anything pitched as "AI transformation," roles where AI is a buzzw
 If that fits, the email and LinkedIn below work.
 
 ## Experience
+
+### Tribe AI — Forward Deployed AI Product Engineer
+**July 2026 – Present** · Lisbon, Portugal · Remote
+
+- Building production AI systems side-by-side with Fortune 1000 teams as part of Tribe's forward-deployed model.
+- Partnering directly with enterprise teams to design and ship AI products with $100M+ in enterprise value on the line.
+- Working as part of Tribe's platform + services model, closing the gap between frontier models and production-grade applications.
+- Helping enterprise teams become AI-native, rethinking how they create value and how their people work in an AI-first world.
+
+[badges] Forward-deployed AI · Agentic development · Fortune 1000 teams
+
+---
 
 ### BRIDGE IN — Founding Engineer
 **November 2025 – July 2026** · Lisbon, Portugal

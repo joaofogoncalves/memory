@@ -1186,13 +1186,20 @@ def generate_now(posts: list[dict] = None, topics: list[dict] = None) -> str:
     if NOW_FILE.exists():
         _, content = parse_frontmatter(NOW_FILE.read_text(encoding='utf-8'))
         md_renderer.reset()
-        body_html = style_bridge_in(autolink_urls(md_renderer.convert(content)))
-        badges_html = _now_badges(content)
+        # The page header owns the title and updated metadata. Remove those lines
+        # from the Markdown body to avoid rendering a duplicate, raw header block.
+        body_content = re.sub(r'^# Now\s*\n+', '', content, count=1)
+        m = re.search(r'(?m)^_[Ll]ast updated[^_]*_\s*\n*', body_content)
         last_mod = ''
-        # Extract "last updated" line if present
-        m = re.search(r'_[Ll]ast updated[^_]*_', content)
         if m:
-            last_mod = f'<p class="post-stats">{escape(m.group(0).strip("_"))}</p>'
+            md_renderer.reset()
+            _lm = md_renderer.convert(m.group(0).strip().strip('_'))
+            _lm = re.sub(r'^<p>|</p>$', '', _lm.strip())
+            last_mod = f'<p class="post-stats">{_lm}</p>'
+            md_renderer.reset()
+            body_content = body_content[:m.start()] + body_content[m.end():]
+        body_html = style_bridge_in(autolink_urls(md_renderer.convert(body_content)))
+        badges_html = _now_badges(content)
     else:
         body_html = '<p class="muted">Add a <code>content/now.md</code> file to populate this page.</p>'
         badges_html = ''
@@ -1757,7 +1764,9 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
         thesis_html = f'<p class="hero-thesis">{thesis_escaped}</p>'
 
     proof_text = SITE.get('hero_proof', '')
-    proof_html = f'<p class="hero-proof">{escape(proof_text)}</p>' if proof_text else ''
+    proof_html = (
+        f'<p class="hero-proof">{style_brands(escape(proof_text))}</p>' if proof_text else ''
+    )
 
     home_script = f'<script src="js/home.js?v={_HOME_JS_VER}" defer></script>'
 

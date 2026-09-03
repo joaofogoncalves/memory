@@ -2072,7 +2072,7 @@ def _render_about_section(num: str, label: str, parsed: dict,
     italic_html = ''
     if parsed.get('italic'):
         italic_html = (
-            f'\n  <div class="about-section-italic">{escape(parsed["italic"])}</div>'
+            f'\n  <div class="about-section-italic">{style_brands(escape(parsed["italic"]))}</div>'
         )
 
     if body_html_override is not None:
@@ -2198,7 +2198,7 @@ def generate_about() -> str:
     if entries:
         timeline_html = _render_timeline(entries)
         history_parsed = {
-            'italic': 'Fifteen years before BRIDGE IN.',
+            'italic': 'Fifteen years before Tribe AI.',
             'body_md': '',
             'badges': [],
         }

@@ -31,13 +31,30 @@ load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 # Brand constants
 # ============================================================
 
-# BRIDGE IN always renders in brand red — never changes without explicit consent
-_BRIDGE_IN_HTML = '<span style="color:#cc0000;font-weight:600">BRIDGE IN</span>'
+# Company names always render in their own brand color — never change without explicit consent.
+# Tribe AI: #ff7c0f is Tribe's --color-accent-orange. Their --color-brand (#65d9ee) is too close
+# to this site's own accent (#44d8f1) to read as a distinct brand mark.
+BRAND_COLORS = {
+    'BRIDGE IN': '#cc0000',
+    'Tribe AI': '#ff7c0f',
+}
+
+# Longest name first, so a name containing another is matched whole.
+_BRAND_RE = re.compile(
+    '|'.join(re.escape(n) for n in sorted(BRAND_COLORS, key=len, reverse=True))
+)
 
 
-def style_bridge_in(html: str) -> str:
-    """Apply red brand styling to every occurrence of 'BRIDGE IN' in HTML."""
-    return html.replace('BRIDGE IN', _BRIDGE_IN_HTML)
+def style_brands(html: str) -> str:
+    """Apply brand color styling to every company name in BRAND_COLORS."""
+    def _wrap(m: 're.Match') -> str:
+        name = m.group(0)
+        return f'<span style="color:{BRAND_COLORS[name]};font-weight:600">{name}</span>'
+    return _BRAND_RE.sub(_wrap, html)
+
+
+# Back-compat alias for existing call sites.
+style_bridge_in = style_brands
 
 
 # ============================================================
@@ -75,6 +92,7 @@ def _load_site_config() -> dict:
         'hero_title': cfg.get('hero_title', cfg.get('site_name', 'My Site')),
         'hero_subline': cfg.get('hero_subline', ''),
         'hero_proof': cfg.get('hero_proof', ''),
+        'show_hero_stats': bool(cfg.get('show_hero_stats', True)),
         'about_teaser': cfg.get('about_teaser', ''),
         'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
         'speaking_text': cfg.get('speaking_text', ''),
@@ -697,7 +715,10 @@ def nav_html(active: str = '', depth: int = 0, transparent: bool = False) -> str
     return f'''{ROUTE_LOADER}
 <nav class="{nav_cls}">
   <div class="nav-inner">
-    <a href="{prefix}" class="nav-logo-link" aria-label="Home">{NAV_LOGO_SVG}</a>
+    <div class="nav-brand">
+      <a href="{prefix}" class="nav-logo-link" aria-label="Home">{NAV_LOGO_SVG}</a>
+      <a href="https://www.tribe.ai/" target="_blank" rel="noopener" class="nav-company">Tribe AI</a>
+    </div>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
@@ -1130,7 +1151,9 @@ def _hero_links_html() -> str:
         f'<span class="hero-links-social">{social}</span>'
         f'<span class="sep hero-links-sep">·</span>'
         f'<span class="hero-links-role">'
-        f'Previously at: <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
+        f'Currently at: <a href="https://www.tribe.ai/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--tribeai">Tribe AI</a>'
+        f'<span class="sep">·</span>'
+        f'Previously: <a href="https://www.bridgein.pt/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--bridgein">BRIDGE IN</a>'
         f', <a href="https://www.altium.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--altium">Altium</a>'
         f' and <a href="https://www.valispace.com/" target="_blank" rel="noopener" class="logo-strip-name logo-strip-name--valispace">Valispace</a>'
         f'</span>'
@@ -1164,13 +1187,20 @@ def generate_now(posts: list[dict] = None, topics: list[dict] = None) -> str:
     if NOW_FILE.exists():
         _, content = parse_frontmatter(NOW_FILE.read_text(encoding='utf-8'))
         md_renderer.reset()
-        body_html = style_bridge_in(autolink_urls(md_renderer.convert(content)))
-        badges_html = _now_badges(content)
+        # The page header owns the title and updated metadata. Remove those lines
+        # from the Markdown body to avoid rendering a duplicate, raw header block.
+        body_content = re.sub(r'^# Now\s*\n+', '', content, count=1)
+        m = re.search(r'(?m)^_[Ll]ast updated[^_]*_\s*\n*', body_content)
         last_mod = ''
-        # Extract "last updated" line if present
-        m = re.search(r'_[Ll]ast updated[^_]*_', content)
         if m:
-            last_mod = f'<p class="post-stats">{escape(m.group(0).strip("_"))}</p>'
+            md_renderer.reset()
+            _lm = md_renderer.convert(m.group(0).strip().strip('_'))
+            _lm = re.sub(r'^<p>|</p>$', '', _lm.strip())
+            last_mod = f'<p class="post-stats">{_lm}</p>'
+            md_renderer.reset()
+            body_content = body_content[:m.start()] + body_content[m.end():]
+        body_html = style_bridge_in(autolink_urls(md_renderer.convert(body_content)))
+        badges_html = _now_badges(content)
     else:
         body_html = '<p class="muted">Add a <code>content/now.md</code> file to populate this page.</p>'
         badges_html = ''
@@ -1735,7 +1765,9 @@ def generate_home(posts: list[dict], articles: Optional[list[dict]] = None) -> s
         thesis_html = f'<p class="hero-thesis">{thesis_escaped}</p>'
 
     proof_text = SITE.get('hero_proof', '')
-    proof_html = f'<p class="hero-proof">{escape(proof_text)}</p>' if proof_text else ''
+    proof_html = (
+        f'<p class="hero-proof">{style_brands(escape(proof_text))}</p>' if proof_text else ''
+    )
 
     home_script = f'<script src="js/home.js?v={_HOME_JS_VER}" defer></script>'
 
@@ -1938,6 +1970,8 @@ def _render_stack(text: str) -> str:
 
 def _home_hero_stats_html() -> str:
     """Render home hero stat chips from the cv.md Hero `[stats]` line."""
+    if not SITE.get('show_hero_stats', True):
+        return ''
     if not CV_FILE.exists():
         return ''
     _, cv_content = parse_frontmatter(CV_FILE.read_text(encoding='utf-8'))
@@ -2002,7 +2036,7 @@ def _render_hero(name: str, parsed: dict, summary_md: str) -> str:
     )
 
     stats_html = ''
-    if stat_pairs:
+    if stat_pairs and SITE.get('show_hero_stats', True):
         items = []
         for pair in stat_pairs:
             if '/' in pair:
@@ -2038,7 +2072,7 @@ def _render_about_section(num: str, label: str, parsed: dict,
     italic_html = ''
     if parsed.get('italic'):
         italic_html = (
-            f'\n  <div class="about-section-italic">{escape(parsed["italic"])}</div>'
+            f'\n  <div class="about-section-italic">{style_brands(escape(parsed["italic"]))}</div>'
         )
 
     if body_html_override is not None:
@@ -2164,7 +2198,7 @@ def generate_about() -> str:
     if entries:
         timeline_html = _render_timeline(entries)
         history_parsed = {
-            'italic': 'Fifteen years before BRIDGE IN.',
+            'italic': 'Fifteen years before Tribe AI.',
             'body_md': '',
             'badges': [],
         }

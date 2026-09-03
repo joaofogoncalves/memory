@@ -1,10 +1,12 @@
 # Now
 
-_Last updated: July 2026 — [nownownow.com](https://nownownow.com/)_
+_Last updated: September 2026 — [nownownow.com](https://nownownow.com/)_
 
 ## Building
 
-In between chapters. I just wrapped up as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/): ten months building the BRIDGE IN OS and the 14-agent orchestration system that shipped it. The next role starts later this month. More on that soon.
+Forward Deployed AI Product Engineer at [Tribe AI](https://www.tribe.ai/), building production AI systems side-by-side with Fortune 1000 teams. Agentic development, pointed at enterprise problems instead of my own repo.
+
+Before this: nine months as Founding Engineer at [BRIDGE IN](https://www.bridgein.pt/), building the BRIDGE IN OS and the 14-agent orchestration system that shipped it.
 
 ## Thinking About
 

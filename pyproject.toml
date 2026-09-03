@@ -19,7 +19,7 @@ dependencies = [
     # Content processing
     "pyyaml>=6.0.1",
     "python-dotenv>=1.0.0",
-    "pillow>=10.2.0",
+    "pillow>=12.3.0",
     "python-slugify>=8.0.1",
 
     # Site generator

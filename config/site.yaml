@@ -9,6 +9,11 @@ twitter: "https://x.com/joaofogoncalves"
 twitter_handle: "@joaofogoncalves"
 substack: "https://joaofogoncalves.substack.com/"
 
+# Home / about hero stats row (14 agents, 97% autonomy, etc.). Hidden until
+# there are Tribe-era numbers worth putting here; the [stats] line in
+# content/cv.md is kept so flipping this on is one line.
+show_hero_stats: false
+
 # Home page
 hero_title: "João Gonçalves"
 hero_proof: >-

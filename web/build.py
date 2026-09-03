@@ -92,6 +92,7 @@ def _load_site_config() -> dict:
         'hero_title': cfg.get('hero_title', cfg.get('site_name', 'My Site')),
         'hero_subline': cfg.get('hero_subline', ''),
         'hero_proof': cfg.get('hero_proof', ''),
+        'show_hero_stats': bool(cfg.get('show_hero_stats', True)),
         'about_teaser': cfg.get('about_teaser', ''),
         'footer_text': cfg.get('footer_text', cfg.get('site_name', 'My Site')),
         'speaking_text': cfg.get('speaking_text', ''),
@@ -1969,6 +1970,8 @@ def _render_stack(text: str) -> str:
 
 def _home_hero_stats_html() -> str:
     """Render home hero stat chips from the cv.md Hero `[stats]` line."""
+    if not SITE.get('show_hero_stats', True):
+        return ''
     if not CV_FILE.exists():
         return ''
     _, cv_content = parse_frontmatter(CV_FILE.read_text(encoding='utf-8'))
@@ -2033,7 +2036,7 @@ def _render_hero(name: str, parsed: dict, summary_md: str) -> str:
     )
 
     stats_html = ''
-    if stat_pairs:
+    if stat_pairs and SITE.get('show_hero_stats', True):
         items = []
         for pair in stat_pairs:
             if '/' in pair:

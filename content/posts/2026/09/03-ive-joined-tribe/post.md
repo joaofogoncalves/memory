@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7501344979315994626/"
 x_url: "https://x.com/joaofogoncalves/status/2095583341676560869"
-substack_note_url: ""
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-329041948"
 tags: [careergrowth, ai, engineering]
 angle: Forward-facing join announcement. The job is production reliability inside the client's org, not demos.
 template: short-form

@@ -116,7 +116,7 @@ LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), 
 - Keep paragraph breaks generous (single-sentence paragraphs work well here)
 - Hashtags at the end, 2-4 tags
 - Length: 150-300 words comfortable; longer is fine if the argument earns it
-- **Article-promo posts:** include the full article URL inline in the body (typically near the close, after a short framing line). LinkedIn's reach penalty on external links is real but not absolute — and an article-promo without the link defeats the purpose. Put the link in the body, not in a separate attach block.
+- **External links (standing rule):** do **not** put external URLs in the LinkedIn post body. LinkedIn still penalizes reach on posts with outbound links. Keep the body link-free (including article-promo and source-citation posts). After the post is live, immediately publish the source/article URL as the **first comment**, optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). When posting via browser automation, the agent posts that comment right after the main post goes live — not later, not as a draft reminder.
 
 ### X variant
 
@@ -355,16 +355,25 @@ Notes:
 # LinkedIn post — [slug]
 
 Paste this directly into LinkedIn's composer. Zero emojis, 2-4 hashtags at the end.
+Do **not** put external URLs in the body.
 
 ---
 
-[LinkedIn variant body, exactly as approved]
+[LinkedIn variant body, exactly as approved — no external URLs]
 
 #Tag1 #Tag2 #Tag3
 
 ---
 
 **Attach image:** media/image-1.webp
+
+---
+
+**First comment (post immediately after the main post goes live):**
+[optional one-line framing]
+[external URL]
+
+Omit this block if the post has no external URL.
 
 ---
 

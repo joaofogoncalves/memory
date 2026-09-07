@@ -50,6 +50,7 @@ Preserve frontmatter conventions from the skill files (`authored: true` on posts
 4. Never create, overwrite, or force-push authored content without explicit approval for the mutation.
 5. Zero emojis by default; no em dashes; no corporate LinkedIn-speak; bias short.
 6. Visuals default **on** for posts unless you can state a clear reason to skip (see `post.md`).
+7. LinkedIn: no external URLs in the post body. Put the source/article link in the **first comment**, posted immediately after the main post (see `.claude/commands/post.md`).
 
 ## Site pipeline (when publishing)
 

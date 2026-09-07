@@ -2,9 +2,9 @@
 date: 2026-09-07
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:share:7502720822105632769"
+x_url: "https://x.com/joaofogoncalves/status/2096959048855802066"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-331652432"
 tags: [ai, mathematics, softwareengineering]
 source_urls:
   - https://www.anthropic.com/research/formalizing-fermats-last-theorem

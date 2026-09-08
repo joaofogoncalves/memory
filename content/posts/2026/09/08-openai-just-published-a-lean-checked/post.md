@@ -2,7 +2,7 @@
 date: 2026-09-08
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:share:7503202284294799360/"
 x_url: ""
 substack_note_url: ""
 tags: [ai, mathematics, openai, softwareengineering]

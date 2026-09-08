@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/posts/joaofogoncalves_claude-certified-developer-foundations-share-7503018854017634304-ZLnk/"
 x_url: "https://x.com/joaofogoncalves/status/2097255289154085252"
-substack_note_url: ""
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-332305831"
 tags: [ai, softwareengineering, careergrowth]
 source_urls:
   - https://www.credly.com/badges/105bdd89-5036-40d3-9204-ac53d68211c4

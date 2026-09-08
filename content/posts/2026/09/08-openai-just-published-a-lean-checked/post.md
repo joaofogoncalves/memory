@@ -3,7 +3,7 @@ date: 2026-09-08
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:share:7503202284294799360/"
-x_url: ""
+x_url: "https://x.com/joaofogoncalves/status/2097389847765819811"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-332728274"
 tags: [ai, mathematics, openai, softwareengineering]
 source_urls:

@@ -12,7 +12,7 @@ An agent-first linter for Tailwind design systems just landed from @shadcn. You 
 Verification lives in that failure message. A prompt file can drift, while a lint rule that fails the build with your Button variants in the message is a feedback loop the agent can actually close.
 
 The design system holds when the refusal surface is machine-checkable.
-*Attach: media/image-1.png*
+*Attach: media/image-1.svg*
 
 **Reply (link):**
 Source:

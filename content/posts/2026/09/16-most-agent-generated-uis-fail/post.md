@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:share:7506011770478604288/"
 x_url: "https://x.com/joaofogoncalves/status/2100245955077456127"
-substack_note_url: ""
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-338543392"
 tags: [ai, softwareengineering, designsystems, tailwind]
 source_urls:
   - https://x.com/shadcn/status/2099534231114314145

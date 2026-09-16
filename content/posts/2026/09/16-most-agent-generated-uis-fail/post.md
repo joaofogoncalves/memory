@@ -2,7 +2,7 @@
 date: 2026-09-16
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:share:7506011770478604288/"
 x_url: "https://x.com/joaofogoncalves/status/2100245955077456127"
 substack_note_url: ""
 tags: [ai, softwareengineering, designsystems, tailwind]

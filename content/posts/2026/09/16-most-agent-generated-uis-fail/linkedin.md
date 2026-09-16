@@ -17,7 +17,7 @@ The design system holds when the refusal surface is machine-checkable.
 
 ---
 
-**Attach image:** media/image-1.png
+**Attach image:** media/image-1.svg
 
 ---
 

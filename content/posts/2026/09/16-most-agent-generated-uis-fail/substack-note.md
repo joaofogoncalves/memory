@@ -17,7 +17,7 @@ https://x.com/shadcn/status/2099534231114314145
 
 ---
 
-**Attach image:** media/image-1.png
+**Attach image:** media/image-1.svg
 
 ---
 

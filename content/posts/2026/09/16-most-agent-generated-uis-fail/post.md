@@ -3,7 +3,7 @@ date: 2026-09-16
 post_type: original
 authored: true
 post_url: ""
-x_url: ""
+x_url: "https://x.com/joaofogoncalves/status/2100245955077456127"
 substack_note_url: ""
 tags: [ai, softwareengineering, designsystems, tailwind]
 source_urls:

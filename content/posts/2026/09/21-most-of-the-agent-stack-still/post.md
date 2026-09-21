@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:share:7507773870125477888/"
 x_url: "https://x.com/joaofogoncalves/status/2102007878714347546"
-substack_note_url: ""
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-342233326"
 tags: [ai, kubernetes, software-engineering, agentic-ai]
 source_urls:
   - https://github.com/agent-substrate/substrate

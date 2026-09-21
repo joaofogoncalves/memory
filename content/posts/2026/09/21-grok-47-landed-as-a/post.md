@@ -4,7 +4,7 @@ post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:share:7507842841059053568/"
 x_url: "https://x.com/joaofogoncalves/status/2102074751606829179"
-substack_note_url: ""
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-342441347"
 tags: [ai, software-engineering, llms]
 source_urls:
   - https://x.com/SpaceXAI/status/2102069815225586149

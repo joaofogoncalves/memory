@@ -2,7 +2,7 @@
 date: 2026-09-21
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:share:7507842841059053568/"
 x_url: "https://x.com/joaofogoncalves/status/2102074751606829179"
 substack_note_url: ""
 tags: [ai, software-engineering, llms]

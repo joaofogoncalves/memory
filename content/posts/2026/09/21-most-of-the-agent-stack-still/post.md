@@ -3,7 +3,7 @@ date: 2026-09-21
 post_type: original
 authored: true
 post_url: ""
-x_url: ""
+x_url: "https://x.com/joaofogoncalves/status/2102007878714347546"
 substack_note_url: ""
 tags: [ai, kubernetes, software-engineering, agentic-ai]
 source_urls:

@@ -11,7 +11,7 @@ I'm here on day one. The venue is nicer than most conference hotels, which helps
 
 If the scarce thing at AI events is usually production scars in the room, this one seems built around that shortage.
 
-#AI #SoftwareEngineering #Lisbon
+#AI #SoftwareEngineering #LisbonAI
 
 ---
 

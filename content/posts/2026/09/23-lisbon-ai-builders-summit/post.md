@@ -2,7 +2,7 @@
 date: 2026-09-23
 post_type: original
 authored: true
-post_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7508522155014397953/"
 x_url: ""
 substack_note_url: ""
 tags: [ai, software-engineering, lisbon]
@@ -18,7 +18,7 @@ I'm here on day one. The venue is nicer than most conference hotels, which helps
 
 If the scarce thing at AI events is usually production scars in the room, this one seems built around that shortage.
 
-**Hashtags:** #AI #SoftwareEngineering #Lisbon
+**Hashtags:** #AI #SoftwareEngineering #LisbonAI
 
 ---
 

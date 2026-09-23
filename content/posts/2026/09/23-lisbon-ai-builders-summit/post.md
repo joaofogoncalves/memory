@@ -3,8 +3,8 @@ date: 2026-09-23
 post_type: original
 authored: true
 post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7508522155014397953/"
-x_url: ""
-substack_note_url: ""
+x_url: "https://x.com/joaofogoncalves/status/2102758301863649589"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-343943362"
 tags: [ai, software-engineering, lisbon]
 source_urls:
   - https://lisbonai.org/

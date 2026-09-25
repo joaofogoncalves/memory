@@ -14,7 +14,7 @@ https://www.reddit.com/r/ClaudeAI/comments/1wkqszd/asked_claude_to_waste_my_rema
 
 ---
 
-**Attach image:** media/image-1.webp
+**Attach image:** media/image-1.svg
 
 ---
 

@@ -10,7 +10,7 @@ Someone asked Claude to waste the rest of their weekly limit on something ridicu
 There's a live CCTV feed of the rock, movement charts for the rock, an event log where the rock declines a meeting called "quick sync?" because it is a rock, an AI insights panel about the rock, and an org chart in which the rock reports to itself, which is honestly a cleaner reporting line than most companies manage.
 
 Given total freedom to be pointless, the model built a monitoring stack, and I can't say I'd have done anything different.
-*Attach: media/image-1.webp*
+*Attach: media/image-1.svg*
 
 **Reply (link):**
 Source: https://www.reddit.com/r/ClaudeAI/comments/1wkqszd/asked_claude_to_waste_my_remaining_usage_before/

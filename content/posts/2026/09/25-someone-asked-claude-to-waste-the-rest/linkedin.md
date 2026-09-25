@@ -15,7 +15,7 @@ Given total freedom to be pointless, the model built a monitoring stack, and I c
 
 ---
 
-**Attach image:** media/image-1.webp
+**Attach image:** media/image-1.svg
 
 ---
 

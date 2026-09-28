@@ -117,6 +117,7 @@ LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), 
 - Hashtags at the end, 2-4 tags
 - Length: 150-300 words comfortable; longer is fine if the argument earns it
 - **External links (standing rule):** do **not** put external URLs in the LinkedIn post body. LinkedIn still penalizes reach on posts with outbound links. Keep the body link-free (including article-promo and source-citation posts). After the post is live, immediately publish the source/article URL as the **first comment**, optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). When posting via browser automation, the agent posts that comment right after the main post goes live — not later, not as a draft reminder.
+- **Multiple sources:** when the post cites more than one source, post each source as its own comment, one URL per comment, in the order the post mentions them. Give each an optional one-line framing that names what it is (e.g. "The Nature Communications paper:"). Don't bundle several URLs into one comment.
 
 ### X variant
 
@@ -129,6 +130,8 @@ Single-post construction rules:
 - **No hashtags** — X culture, feels spammy. Optional `@`-mentions if quoting someone.
 
 **External links:** if the canonical post references an external URL (article-promo, source citation), append a single short **reply** with just that link, optionally prefixed by a one-line framing ("Full piece:", "Source:", etc.). The main post does not contain the URL. X still throttles reach on posts with links — keeping the link in a reply preserves the algorithm's reach while still giving readers a clean path. For posts with no external link, the output is a single tweet only.
+
+**Multiple sources:** when the canonical post cites more than one source, post one reply per source, one URL each, chained under the main post in the order the post mentions them (reply 1 to the main post, reply 2 to reply 1, and so on), each with an optional one-line framing. Don't bundle several URLs into one reply.
 
 **Thread exception:** rare. Only when each beat genuinely benefits from its own card — a numbered breakdown, a multi-step narrative where the cards' visual separation carries weight. Default is single post; thread is the deliberate choice.
 
@@ -180,6 +183,8 @@ LinkedIn supports carousels up to 9 images. X allows up to 4 images per post. Su
 
 **Default: single image.** Choose a sequence only when you can name what each slot carries. If you can't articulate what slide 2 adds beyond slide 1, you don't have a sequence — you have one image with extras.
 
+**Multi-source posts: always offer a source carousel.** When the post draws on two or more sources that are each screenshot-worthy (tweets, posts, article headlines, paper abstracts or figures), one of the visual options must be a carousel with one screenshot per source, in the order the post mentions them. Each slot has a clear role (it shows one source), so this passes the sequence test above. X caps a post at 4 images, so with 5 or more sources pick the 4 the post leans on most for X and keep the full set for the LinkedIn carousel.
+
 If choosing a sequence, use AskUserQuestion to decide the count:
 - 2-3 images: tight narrative, works on all three platforms cleanly
 - 4 images: fits X per-tweet max; fine on LinkedIn carousel and Substack
@@ -221,7 +226,7 @@ Produce **3 image prompts** as alternatives for one slot — user picks one. If 
 #### Three different visual approaches
 
 Each prompt should target a **different image type** from the taste profile:
-1. **Screenshot or evidence-based visual** — if the source material came from a URL (especially a tweet, LinkedIn post, or article), the FIRST option should be a **screenshot suggestion** instead of a generation prompt. Describe exactly what to screenshot (the tweet, the article headline, the key quote), specify dark mode if it's a Twitter/X screenshot, note whether to crop to a specific section or capture full-width. If the source isn't screenshot-worthy, replace this with a third generation prompt.
+1. **Screenshot or evidence-based visual** — if the source material came from a URL (especially a tweet, LinkedIn post, or article), the FIRST option should be a **screenshot suggestion** instead of a generation prompt. Describe exactly what to screenshot (the tweet, the article headline, the key quote), specify dark mode if it's a Twitter/X screenshot, note whether to crop to a specific section or capture full-width. If the source isn't screenshot-worthy, replace this with a third generation prompt. If the post has two or more sources, make this option a **source carousel** instead: one screenshot per source, listed slot by slot with what to capture for each. If the user picks it, switch to sequence mode and save the screenshots as `image-1.webp` through `image-N.webp` in the order the post mentions the sources.
 2. **Diagram or infographic** — visualize a framework, comparison, or data point from the post. Dark background preferred, deep blues/teals, readable text labels.
 3. **AI-generated conceptual illustration** — for the abstract concept in the post. Non-threatening, stylized. Dark palette. No split-layout banners, no floating 3D icons, no bright pastels.
 
@@ -375,6 +380,8 @@ Do **not** put external URLs in the body.
 
 Omit this block if the post has no external URL.
 
+For multiple sources, repeat the block once per source (**First comment**, **Second comment**, ...), one URL each, in the order the post mentions them.
+
 ---
 
 **After posting:** copy the LinkedIn permalink and paste it into `post.md` as `post_url:`.
@@ -416,6 +423,8 @@ Paste into X manually. No hashtags.
 ```
 
 If the post has no external link, omit the **Reply** block entirely — output a single **Main post** block only.
+
+For multiple sources, use one reply block per source, labeled **Reply 1 (to main post):**, **Reply 2 (to reply 1):**, and so on, one URL each, in the order the post mentions them.
 
 **Image rules:**
 - **Single-image post:** attach `media/image-1.webp` to the main post. Use `*Attach: media/image-1.webp*` as an italic line directly under the body.

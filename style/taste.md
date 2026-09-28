@@ -7,10 +7,10 @@ You share images on LinkedIn that follow these patterns. Use this guide when sel
 Default to one of these five categories. Roughly weighted by frequency in current voice:
 
 1. **Dark-mode X/Twitter screenshot of a single post** — about half of all images. Used as the reaction-anchor whenever the post is a take on someone else's claim. Crop tight, no surrounding UI chrome, no browser frame.
-2. **Custom dark-mode diagram in your own brand palette** — second most common. Deep navy (#0e131e-adjacent) background, teal accents (#44d8f1-adjacent), mono + sans typography, "JG joaofogoncalves.com" wordmark bottom right. Used for original ideas: comparison tables, two-column "before/after" frames, arrow diagrams, ladders, side-by-side concept maps.
+2. **Custom dark-mode diagram in your own brand palette** — second most common. Deep navy (#0e131e-adjacent) background, teal accents (#44d8f1-adjacent), mono + sans typography, wordmark bottom right: the JG monogram from `web/img/logo.svg` followed by `joaofogoncalves.com` in white Inter, as `charts/render.mjs` adds it (the real logo, never "JG" typed as text). Used for original ideas: comparison tables, two-column "before/after" frames, arrow diagrams, ladders, side-by-side concept maps.
 3. **External chart or data graphic in its native palette** — kept untouched. Lenny's job-market chart, Anthropic's radar charts, Google Cloud Next slide, BullshitBench leaderboards, adoption-ladder diagrams. Don't restyle them.
 4. **Candid event photography** — documentary, no branded overlay. Wide stage shots, audience POV, close-ups of collaborators looking at laptops. Soft daylight or natural venue light.
-5. **Painterly editorial article hero** — only for article-promotion posts. Cinematic, off-palette (warm tones, muted moody scenes), Wired/NYT-Magazine register. Bold sans-serif title overlaid, wordmark bottom right.
+5. **Painterly editorial article hero** — only for article-promotion posts. Cinematic, off-palette (warm tones, muted moody scenes), Wired/NYT-Magazine register. Bold sans-serif title overlaid, wordmark bottom right (the JG monogram from `web/img/logo.svg` followed by `joaofogoncalves.com` in white Inter, as `charts/render.mjs` adds it).
 
 Rare and acceptable: light-mode screenshots from sources that are natively light-mode (Substack, Reddit, Anthropic announcement cards). Don't force dark mode on light-mode source material.
 
@@ -39,7 +39,7 @@ Rare and acceptable: light-mode screenshots from sources that are natively light
 
 ## Branding and Consistency
 
-- Custom diagrams are **fully branded**: navy + teal, mono + sans, JG wordmark. This is your "studio identity" and it should be instantly recognizable.
+- Custom diagrams are **fully branded**: navy + teal, mono + sans, JG monogram + `joaofogoncalves.com` wordmark. This is your "studio identity" and it should be instantly recognizable.
 - Screenshots and event photos are **unbranded**. No watermark, no overlay, no JG wordmark applied retroactively. The source's native presentation is the point.
 - Article heroes are **deliberately off-brand**: they carry the essay's mood, not the site's palette. The only brand element is the wordmark in the bottom corner, small and unobtrusive.
 - Consistency level: **curated and intentional**. Each image type has its own discipline. Don't mix — never restyle a screenshot, never paint an article hero in site palette, never brand an event photo.

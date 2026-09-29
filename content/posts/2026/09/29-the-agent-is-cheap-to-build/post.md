@@ -2,9 +2,9 @@
 date: 2026-09-29
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7510708116997439488/"
+x_url: "https://x.com/joaofogoncalves/status/2104945935914607054"
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-348698922"
 tags: [ai, agents]
 source_urls:
   - https://dreaming.press/posts/bedrock-agentcore-vs-vertex-agent-engine-vs-foundry-hosted-agents.html

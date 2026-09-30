@@ -2,9 +2,9 @@
 date: 2026-09-30
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7511092957769388032/"
+x_url: "https://x.com/joaofogoncalves/status/2105329177654091902"
+substack_note_url: "https://substack.com/@joaofogoncalves/note/c-349590687"
 tags: [ai, agents]
 source_urls:
   - https://openai.com/index/introducing-dots/

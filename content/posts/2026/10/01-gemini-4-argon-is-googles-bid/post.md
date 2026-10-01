@@ -2,9 +2,9 @@
 date: 2026-10-01
 post_type: original
 authored: true
-post_url: ""
-x_url: ""
-substack_note_url: ""
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7511429712544575489/"
+x_url: "https://x.com/joaofogoncalves/status/2105663951757324473"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-350336027"
 tags: [ai, agents]
 source_urls:
   - https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/

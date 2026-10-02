@@ -2,7 +2,7 @@
 date: 2026-10-02
 post_type: original
 authored: true
-post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7511805047307948032/"
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7511808545034584064/"
 x_url: "https://x.com/joaofogoncalves/status/2106039769570349318"
 substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-351207173"
 tags: [ai, agents]

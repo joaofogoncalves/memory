@@ -27,6 +27,8 @@ If `$ARGUMENTS` is empty, use AskUserQuestion to ask what they want to write abo
 
 ## Step 2: Propose angles
 
+**Default scope:** one scene, one argument, or one launch. A multi-item roundup only when João explicitly asks for one.
+
 Based on the source material and text notes, propose **2-3 angles** for the post. Each angle should:
 - Be 1-2 sentences describing the take
 - Map to one of the recurring topics from profile.md

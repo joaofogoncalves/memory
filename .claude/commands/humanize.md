@@ -48,6 +48,10 @@ These read as AI to anyone and have no legitimate use in this voice:
 - **Copula avoidance / inflation verbs** — dodging plain "is/does" with "*serves as*", "*stands as a testament to*", "*plays a pivotal role in*", "*acts as a cornerstone of*", "*represents a significant*". Replace with plain "is", "does", or the specific fact.
 - **Significance inflation** — "game-changing", "revolutionary", "transformative", "a landmark", "groundbreaking", "in an era of". Cut, or replace with the concrete thing that's actually notable. Already banned by `writing_style.md`.
 - **"Not X, but Y" correction frames** — "It's not just a tool, it's a philosophy." Restructure to a direct claim. Already banned. (Do NOT confuse with the *deliberate* "same X, completely different Y" contrast — see Preserve.)
+- **Emoji**: any emoji, anywhere. Strip it. Non-negotiable.
+- **Punchline closers**: a last line built to land: a zinger, an aphorism, a dry one-liner, a balanced couplet. Replace with a plain sentence that finishes the thought (the consequence, what to watch next, or the position in ordinary words). Non-negotiable.
+- **Rhetorical furniture**: "here's the thing", "let that sink in", "read that again", "the kicker?", a setup question answered in the next line. Cut.
+- **Unsure framing**: hedges that make João sound unsure ("I might be wrong", "time will tell", "who knows", ending on a shrug). State the caveat as a fact with its source, or cut.
 - **Filler / throat-clearing** — "It's worth noting that", "In today's landscape", "At the end of the day", "Needless to say", "When it comes to", "In order to" (→ "to"). Cut. Already banned.
 
 ### Soft tells (fix unless deliberate)
@@ -60,7 +64,7 @@ These can be legitimate occasionally; the tell is *reflexive overuse*. Use judgm
 - **Vague attribution** — "experts say", "studies show", "many believe", "it's widely understood". Name the source or cut. (`article_style.md` already requires named citations.)
 - **Excessive signposting** — two forms. The transitional ("Now let's turn to", "As we discussed above", "In the next section") and the imperative/declarative ("Make it concrete.", "Here is the trap.", "Here is the strongest objection."). The second is subtler — it reads as a model announcing its own next beat — and slips past the `article_style.md` ban, which only names the transitional form. Cut both, or fold the setup into the sentence that follows.
 - **Title-case headings** — "The Future Of Work". Use sentence-case thematic headers ("What actually dies").
-- **Boldface / emoji overuse** — bold sprinkled mid-sentence for emphasis; any emoji. Strip both.
+- **Boldface overuse**: bold sprinkled mid-sentence for emphasis. Strip it. (Emoji is a hard tell above.)
 
 ### Cadence tells (density-gated — the hardest call)
 
@@ -81,6 +85,13 @@ Rare in `post.md`/`article.md`, common in pasted chatbot output:
 - **Sycophancy** — "Great question!", "That's a fascinating point."
 - **Generic conclusions** — "In conclusion", "To sum up", "All in all". `article_style.md` bans "Key takeaways" sections for the same reason.
 
+### Substance checks (posts only, report, don't rewrite)
+
+These two can't be fixed by surgery, so flag them in the report and suggest a fix for João to approve:
+
+- **Concrete first sentence**: does the first sentence carry a concrete number or a concrete claim? If it is a wind-up or a vague frame, flag it and propose a first sentence using a number or claim already in the draft or its source. Never invent a number.
+- **Clear position**: can you state the post's position in one sentence? If the post only summarises, flag it.
+
 ## Step 3: Preserve — but on a budget, not unlimited
 
 The humanizer philosophy over-corrects by blanket-banning patterns that are deliberate in this voice. The moves below are signatures — **when sparse**. But there's an opposite failure mode that's just as real: treating them as always-keep, instance by instance, so they pile up until the density itself is the tell. Each of these is a signature in ones and twos and a tic in dozens. Preserve them; budget them.
@@ -88,9 +99,9 @@ The humanizer philosophy over-corrects by blanket-banning patterns that are deli
 The discriminator is **density, judged across the whole piece** — never per-instance. So count first (use the Cadence tells method above), then decide. When a device is over budget, keep the strongest one or two instances and rewrite the weakest as plain prose — don't zero out the device.
 
 - **The "same X, completely different Y" contrast** — a signature move (`writing_style.md`). It's a contrast, not a "not X but Y" correction. Keep it — sparingly.
-- **Closing tricolons** — "Pain is the ignition. Curiosity is the engine. You need both." A deliberate rhythm, not reflexive rule-of-three — until the piece has five of them. Keep the strongest; thin the rest.
+- **Tricolons in the body**: a deliberate rhythm, not reflexive rule-of-three, until the piece has five of them. Keep the strongest; thin the rest. A tricolon as the closing line counts as a punchline closer.
 - **Single-line emphasis beats** — a standalone short sentence after a longer block. Intentional pacing — but a *run* of them is the staccato cadence above. Keep them as occasional punctuation, not the default sentence shape.
-- **Dry one-liner closers** and **quiet reframes** — the whole point of the ending. Don't "smooth" them into a generic conclusion. One balanced aphorism per section closing is the budget; if *every* section ends on one, that's the tell, not the voice.
+- **Quiet reframes** in the body: a plain sentence that widens the view. Don't "smooth" them into a generic conclusion. This does not cover the last line of a post: punchline closers are a hard tell (see above) since 2026-10-26.
 - **Deliberate repetition** for rhythm or emphasis. Repetition is human; flag it only when it's reflexive or when the device repeats past its budget.
 
 When you're unsure whether a single instance is deliberate or a tell, leave it and note it in the audit report rather than changing it. The judgment call is reserved for *density*, not for any one sentence.

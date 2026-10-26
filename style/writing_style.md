@@ -9,27 +9,32 @@ Write LinkedIn posts in the following style:
 **Voice & Tone**
 - Conversational, dry, and understated. Humor comes from observation, not jokes.
 - Confident but not preachy. You have a take, you share it, you don't oversell it.
-- Self-aware. Willing to end on uncertainty or a quiet admission.
+- Sure of the point. A draft never makes João sound unsure: no "I might be wrong", no "time will tell", no ending on a shrug. A real caveat is stated as a fact with its source.
 - Sounds like a senior dev who reads a lot and has strong opinions but holds them loosely.
 - Commentary over summary. When reacting to someone else's post or tweet, don't repeat it — riff on it, extend it, reframe it.
 
 **Structure**
-- Short punchy opener — one or two lines that frame the subject or drop a hook. No fluff.
-- Don't open with a person's name as the first word. Lead with context, framing, or the data point and place the name later in the sentence (or in the next sentence) so they can still be tagged. Example: "At Cloud Next Pichai showed this chart." not "Pichai showed this chart at Cloud Next."
+- The first sentence carries a concrete number or a concrete claim ("The robot ran [N] hours on a real assembly line.", with N taken from the source), not a wind-up. The post takes a clear position by the end of the second paragraph. No fluff.
+- Don't open with a person's or company's name or @ mention as the first word. Lead with context, framing, or the data point and place the name or @ mention later in the sentence (or in the next sentence) so they can still be tagged. Example: "At Cloud Next Pichai showed this chart." not "Pichai showed this chart at Cloud Next."
 - Build through contrast, observation, or analogy. Let the argument develop naturally.
 - The middle earns the ending. Don't rush to the point.
-- End with a reframe, a dry one-liner, or a quiet conclusion that lands without spelling itself out. Avoid manufactured calls to action.
-- Paragraphs are short. One to three sentences. White space is intentional.
+- End with a plain last sentence that finishes the thought: the consequence, what to watch next, or the position restated in ordinary words. No punchline closers (no zinger, no aphorism, no dry one-liner built to land), no manufactured calls to action.
+- Longer flowing prose is the default for narrative posts (one scene, one argument). Paragraphs stay short, one to three sentences, and casual line breaks are fine where a pause helps the read.
+- How-it-works and how-they-did-it posts may use a numbered step list. Each step is a real step that names a concrete thing (a model, a dataset, a tool, a number). If a step could be cut without losing information, it is filler; cut it.
 
 **Signature Moves**
 - Set up two opposing extremes early, then explain the gap between them rather than picking a side.
 - Use the "same X, completely different Y" construction to create contrast without editorializing.
 - Zoom out from the specific to the principle. A post about a tool becomes a post about how people learn.
-- End on something that recontextualizes what came before. The last line should make the reader think about the whole post differently.
-- Self-aware closer: "Both people are probably telling the truth. They're just on different levels." Land the point quietly.
+- Let the last paragraph widen the view without turning it into a punchline: say plainly what the post changes about how to read the news.
 
 **Language Rules**
 - No em dashes.
+- No emojis.
+- No rhetorical furniture: no "here's the thing", "let that sink in", "read that again", "the kicker?", setup questions answered in the next line, or "thread" announcements.
+- No callbacks to earlier posts ("as I wrote last week"). Each post stands alone.
+- Never tie a post to João's employer (Tribe), its clients, or its work.
+- Never invent numbers. Every figure comes from a named source João can link; if the number is not in the source, leave it out.
 - No hyperbole ("game-changing", "revolutionary", "mind-blowing").
 - No "not X but Y" constructions.
 - No corporate LinkedIn-speak ("leverage", "unpack", "thought leader").
@@ -43,7 +48,7 @@ Write LinkedIn posts in the following style:
 - Never pad. Cut anything that restates what was already said.
 
 **What to Avoid**
-- Bullet lists as a structure substitute.
+- Bullet lists as a structure substitute for an argument. Numbered steps are allowed only for how-it-works or how-they-did-it posts, under the rules in Structure.
 - Moralizing or telling the reader what to think.
 - Excitement. If something is interesting, show it through the argument, not the adjectives.
 - Repeating the source material when the screenshot or context is already attached.
@@ -62,15 +67,14 @@ Reach (reactions) and discussion (comments) are different games, and LinkedIn we
 
 **Example opener patterns:**
 - "This is the most accurate description of X I've read."
-- "[Person] nailed it and I think it explains why..."
+- "[N] hours on a real assembly line is the number that matters here."
 - "You've seen both extremes."
 - "Most people doing X are missing Y."
 
-**Example closing patterns:**
-- "The tool doesn't get better. You do."
-- "Both people are probably telling the truth. They're just on different levels."
-- "That's a different thing entirely."
-- "Different mental model. Better outcomes once you have it."
+**Example closing patterns** (plain, not punchlines):
+- "The next test is whether it holds outside the lab."
+- "That is the part worth watching over the next year."
+- "So the claim is right about the model and early about the factory."
 
 ---
 
@@ -82,4 +86,43 @@ Same voice rules apply, but tighten three things:
 - **The post is not the artifact.** Link to the thing. The post should make someone want to click through, not summarize the work in place. Two sentences of what changed + a link is better than five paragraphs of what you built.
 - **No self-positioning language.** Don't write "passionate about," "thought leader," "results-driven," "leverage." Use `pitch_style.md` if you find yourself reaching for them — it lists the anti-patterns and proof-led replacements.
 
-Same closing rule as everything else: a quiet observation, not a marketing CTA. "Worth understanding why" beats "Excited to discuss in the comments!"
+Same closing rule as everything else: a plain observation, not a marketing CTA and not a punchline. "Worth understanding why" beats "Excited to discuss in the comments!"
+
+---
+
+## Cadence and formats (decided 2026-10-26)
+
+Goal: grow audience, views and followers on X, LinkedIn and Substack while staying plain and human.
+
+- **One flagship post a day.** Each flagship is one scene, one argument, or one launch, never a roundup unless João asks for one. It goes to LinkedIn, X, a Substack Note and the site.
+- **Around it:** short X-native posts (quote-posts with a real line, single observations) and one Substack Note a day.
+- **Ride the wave the same day.** The 8:30 and 22:00 (Lisbon) watchlist scans surface topics that are already moving. When a wave is live in João's lanes, the flagship for that day is about it and goes out the same day, not the next morning.
+
+### Formats
+
+1. **Scene.** One concrete moment (a robot on a line, a lab result, a demo) told as flowing prose, with the number in the first sentence.
+2. **Argument.** One claim, developed, with the position stated plainly.
+3. **Launch.** One thing shipped, what it does, who it is useful for, with the proof asset attached.
+4. **How it works / how they did it.** First sentence with the result and the number, then numbered steps that each name a concrete thing, then one plain sentence on what it means.
+5. **Grounded counter-take.** When something is already going viral, a reasoned caveat is a standard flagship format. Optimistic overall, never cynical, doomer or alarmist. Write it in three moves:
+   - State the viral claim fairly, in the terms its author would accept, and credit them (name or @ mention later in the sentence).
+   - Name the one thing that may not hold. One, not five.
+   - Support it with a concrete source or number, then say what would have to be true for the original claim to fully hold.
+
+### Topics
+
+Optimistic and constructive: science, medicine, builders, useful launches, and the physical AI and robotics thread. The AI-and-jobs lane stays open when there is a real number behind the take.
+
+### Platform rules
+
+- **X.** João posts by hand; the agent hands him the text. When the take doesn't fit as a standalone post, quote-post the source tweet with a short original line that makes a claim, not a description. With several sources, one reply per source, one URL each. Replies under other people's posts are always written by João; agents only name reply targets (link plus one line of context on why it is worth replying to).
+- **LinkedIn.** No URLs in the body by default; each source URL goes in its own first comment, posted right after the post goes live. Exception: an A/B test over the next 6 flagship posts from 2026-10-26, alternating first-comment and URL-at-the-end-of-the-body (see `growth.md`), decided at the weekly review. Several sources means a carousel with one screenshot per source. Robotics and physical AI posts use native video when a clip exists (with credit). Hashtags: 0 to 2, never a default suffix.
+- **Substack Notes.** 250 to 299 characters, no emoji, no Substack link inside the Note, no tags. A source URL goes at the end of its paragraph only when the Note needs it. Join other people's threads; one Note a day.
+
+### Never
+
+No engagement pods, no generated replies, no generated engagement comments (the source-URL first comment is fine), no automated X paste.
+
+## Growth feedback loop
+
+How the style docs learn from results lives in [`growth.md`](growth.md): daily metrics log, Monday review, and "what the data says so far". Style rules change only from what worked, and only after João confirms.

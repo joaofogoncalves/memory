@@ -31,7 +31,7 @@ Report the count to the user: "Found N archived posts. Scraping the last 10 from
 python -m scraper.main --crawl --limit 10
 ```
 
-This uses `LINKEDIN_PROFILE_URL` from `.env` automatically. The scraper may take a minute and requires a valid browser session (from a prior `--browser-login`). Capture stdout so you can report the engagement-update count to the user in Step 5.
+This uses `LINKEDIN_PROFILE_URL` from `.env` automatically. The scraper may take a minute and requires a valid browser session: either a saved local profile from a prior `--browser-login`, or `LINKEDIN_LI_AT` (the `li_at` cookie) set in the environment for headless runs. Where no local profile exists (a fresh box or CI), use the **Scrape LinkedIn Posts** GitHub workflow (`.github/workflows/scrape.yml`, manual dispatch only), which reads `LINKEDIN_LI_AT` from repository secrets and opens a PR. Neither path runs on a schedule, so engagement data goes stale whenever nobody runs it; the weekly review in `style/growth.md` depends on it, so run `/sync` (or the workflow) before each Monday review. Capture stdout so you can report the engagement-update count to the user in Step 5.
 
 If the scraper fails (login expired, network error, etc.), surface the error and stop — don't fake curation on stale data.
 

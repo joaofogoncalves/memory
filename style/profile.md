@@ -72,15 +72,15 @@ Never open with a question, "Here's a thought…", or "I want to share…". Lead
 
 - Emoji: never. Zero.
 - Bold/italic in body text: never.
-- Bullet lists: rare. Default to prose paragraphs with drop-lines.
+- Bullet lists: rare. Default to prose paragraphs with drop-lines. Numbered steps are allowed for how-it-works or how-they-did-it posts (see `writing_style.md`).
 - Headers within a post: never.
-- Hashtags: 2-4 at the end, always trailing, never inline.
+- Hashtags: 0 to 2 at the end, always trailing, never inline. No default suffix.
 
 ## Post Structure Templates
 
 ### Short-form (commentary / reaction)
 
-Open with the sharpest declarative or reframe. One or two paragraphs developing the angle. A single-line drumbeat as the turn. Close with a one-line restatement of the thesis — the "naming-the-thing" line. Length: 100-180 words.
+Open with the sharpest declarative or reframe. One or two paragraphs developing the angle. A single-line drumbeat as the turn. Close with a plain sentence that states the position, not a punchline. Length: 100-180 words.
 
 ### Long-form (original thought piece)
 
@@ -92,12 +92,12 @@ Open with the sharpest line of the article — the thesis itself, not a teaser. 
 
 ## Closers
 
-Close one of these ways, ranked by preference:
+Close one of these ways, ranked by preference (no punchline closers since 2026-10-26; see `writing_style.md`):
 
-1. **Punchline restating the thesis** — "That's the actual filter." / "The agentic version just costs more per token to be wrong."
-2. **Compressed reframe of the opening** — "The surface got smaller. The blast radius got bigger." / "Same disease, new vocabulary."
+1. **Plain consequence**: what the post changes, said in ordinary words.
+2. **What to watch next**: the concrete test or number that would confirm or break the claim.
 3. **Bare link line** (article-promo only) — "Full piece with the sources: [URL]"
-4. **A `ps:` aside** appending a sharper second point or a credit — "ps: shoutout to…" / "ps: the verification model works better on humans too."
+4. **A `ps:` aside** appending a second point or a credit: "ps: shoutout to…"
 
 Never close with "what do you think?", a thanks, or a question to the audience.
 
@@ -125,7 +125,7 @@ Sharp claims to revisit and recombine:
 - No emoji. None. Anywhere.
 - No exclamation marks. No "Excited to share." No "Thrilled to announce."
 - No questions to the audience. No "What do you think?" / "Let me know in the comments."
-- No bullet-list listicles ("5 pillars of…", "Here are 3 things…"). The voice prefers prose with drop-lines.
+- No bullet-list listicles ("5 pillars of…", "Here are 3 things…"). The voice prefers prose with drop-lines. The exception is real numbered steps in a how-it-works post.
 - No Unicode-bold subheaders, no arrows (→), no inline hashtags.
 - No hedge phrases: "I think," "in my opinion," "just my take," "hot take," "unpopular opinion."
 - No prescription: "Leaders need to," "We must," "You should." Describe the shape; let the reader draw the should.

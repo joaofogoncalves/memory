@@ -19,6 +19,26 @@ Linked from `writing_style.md`, which stays the primary authority. This file rec
 
 The next 6 LinkedIn flagships from 2026-10-26 alternate: post 1, 3, 5 put the source URL in the first comment; post 2, 4, 6 put it at the end of the body. Record `link_placement` in the log. Decide at the first weekly review after post 6, using the 30-post median score. Until then the first-comment rule stays the default for anything outside the test.
 
+## Variety rules
+
+Added 2026-10-26 after João noted that recent posts all felt alike. In October, 7 of 12 flagships used a clipped source video, 3 an image and 1 a paper figure, nearly all were single-source launch explainers opening with the company and a verb, and 9 of 12 were about models, agents or robot video. Each flagship picks from four independent dimensions, and the weekly review flags when the last 7 days lean on one.
+
+**Subject lane.** Rotate across physical AI and robotics, science and medicine, builder tools and João's own builds, Europe and industry, and one human or culture story. Never the same lane two days in a row, and no lane more than twice in a week. The physical AI thread keeps running inside this rotation.
+
+**Post type.** Launch explainer, contrarian counter-take, numbered step list, quote post with a real take, first-person build log ("I tried this"), a chart built around one number, a question to the community, and a long-form article about once a fortnight on Substack and X. At most two launch explainers in a week.
+
+**Visual.** Source video, carousel of source screenshots, annotated screenshot, João's own screen recording or photo, a paper figure, or text only. Never the same visual two days in a row, and video on at most 2 days out of 5. Quote cards and chart cards from the repo (`charts/render.mjs`, real JG monogram from `web/img/logo.svg`, `joaofogoncalves.com` in white Inter bottom right) are made only when João asks. The digest may mention that a card would fit, but does not make one unprompted.
+
+**Opener.** Rotate between a number, a quote, a scene, a plain claim and a question. Do not start two flagships in a row with the product or company name and a verb. Every opener still carries a concrete number or claim.
+
+**First-person material.** João sends his own builds, recordings or photos occasionally. When he does, it jumps the queue as a flagship, since the stickers post was the one different post in October. The digest asks for it when the week has none.
+
+**Article cadence.** One long-form article about every two weeks, written with the `article` workflow and `style/article_style.md`, published on Substack and X, with a LinkedIn post that points to it. It counts as that day's flagship.
+
+**Tagging.** Do not default every post to `ai, agents`. Use tags that match the lane.
+
+**Tracking.** Each post's front matter gets `lane`, `type`, `visual` and `opener` fields so the weekly review can score variety and compare formats against the 30-post median.
+
 ## What the data says so far
 
 Seeded from the 2026-10-26 growth research. Numbers as reported there.

@@ -16,6 +16,7 @@ Claude Code users: keep using [`CLAUDE.md`](CLAUDE.md) and the skills under [`.c
 3. [`style/profile.md`](style/profile.md) — vocabulary and topic patterns; defer to `writing_style.md` on conflict
 4. [`style/taste.md`](style/taste.md) — visuals and image prompts
 5. [`style/pitch_style.md`](style/pitch_style.md) — self-positioning / about-your-work only
+6. [`style/growth.md`](style/growth.md): growth feedback loop and current data; informs, never overrides `writing_style.md`
 
 Always re-read these from the repo before drafting. Do not cache a private paraphrase as policy.
 

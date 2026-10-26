@@ -29,6 +29,8 @@ If `$ARGUMENTS` is empty, use AskUserQuestion to ask what they want to write abo
 
 **Default scope:** one scene, one argument, or one launch. A multi-item roundup only when João explicitly asks for one.
 
+**Cadence:** this is the daily flagship (see "Cadence and formats" in `writing_style.md`). When the source is a topic wave surfaced by the 8:30 or 22:00 watchlist scan, draft it for same-day posting. When the source is already going viral, offer a grounded counter-take as one of the angles (fair statement of the claim, the one thing that may not hold, a concrete source or number).
+
 Based on the source material and text notes, propose **2-3 angles** for the post. Each angle should:
 - Be 1-2 sentences describing the take
 - Map to one of the recurring topics from profile.md
@@ -51,6 +53,8 @@ Based on input type and chosen angle, select the template. Word counts below ref
 - **Source is an article/data + user has a thesis** → Long-form thought piece (**200-300 words**, only if the argument genuinely needs the space — and it usually doesn't)
 - **No URL, just text notes with a thesis** → Long-form thought piece (**200-300 words**, same caveat)
 - **No URL, brief reaction to an event/trend** → Short-form commentary (**100-150 words**)
+- **How it works / how a lab or builder did something** → Step list (**100-200 words**): first sentence with the result and the number, numbered steps that each name a concrete thing, one plain closing sentence
+- **Something already viral that deserves a caveat** → Counter-take (**100-150 words**), following the three moves in `writing_style.md`
 
 **Hard floor:** 100 words. Posts under 100 underperform across the archive.
 **Hard ceiling default:** 250 words. Going past requires the argument to earn it; cut anything restating what's already said.
@@ -68,7 +72,8 @@ Where `profile.md` and `writing_style.md` conflict, `writing_style.md` wins.
 
 Additional rules:
 - Emoji: zero by default
-- Hashtags: 2-4 at the very end of the body (LinkedIn convention — the site strips them before rendering)
+- Hashtags: 0 to 2 at the very end of the body, only when a tag is specific to the topic. No default suffix (the old `#AI #Robotics` default is gone). The site strips them before rendering.
+- First sentence carries a concrete number or claim; the post takes a clear position. Numbers only from the sources.
 - No engagement asks, no self-promotion
 - If using the "ps:" aside device, keep it lowercase and casual
 
@@ -80,7 +85,7 @@ Before showing the draft, silently audit it against the AI-tell catalogue in `.c
 
 Pay attention to the tells `writing_style.md` doesn't already name: trailing `-ing` "analysis" clauses ("…, highlighting the importance of"), copula avoidance ("serves as", "stands as a testament to"), synonym cycling, and false ranges ("from X to Y"). Em dashes, hyperbole, "not X but Y", corporate-speak, and filler are already banned — confirm none slipped in. A short post has little room for **cadence tells**, but the antithesis/staccato beat ("The model was fine." / "Also useless on a Monday.") can still stack — at this length the budget is one, so keep at most a single instance.
 
-**Preserve the deliberate signature moves** (see the Preserve list in `humanize.md`): the "same X, completely different Y" contrast, earned closing tricolons, single-line emphasis beats, and dry one-liner closers. Don't sand these off chasing a zero-tell score.
+**Preserve the deliberate signature moves** (see the Preserve list in `humanize.md`): the "same X, completely different Y" contrast and single-line emphasis beats. Punchline closers are no longer a signature; replace them with a plain last sentence. Don't sand these off chasing a zero-tell score.
 
 ### Show draft and iterate
 
@@ -111,14 +116,17 @@ Once the canonical post is approved, produce three platform-adapted artifacts (L
 
 ### LinkedIn variant
 
-LinkedIn rewards: a sharp hook in the first 1-2 lines (shown above "see more"), intentional paragraph breaks, conversational rhythm, hashtags at the end, zero emojis (per style guide).
+LinkedIn rewards: a concrete first line (shown above "see more"), intentional paragraph breaks, conversational rhythm, 0 to 2 hashtags at the end, zero emojis (per style guide).
 
 - Usually very close to the canonical draft — often identical
 - Double-check: first 2 lines MUST earn the expand click
 - Keep paragraph breaks generous (single-sentence paragraphs work well here)
-- Hashtags at the end, 2-4 tags
+- Hashtags at the end, 0 to 2 tags, none by default
 - Length: 150-300 words comfortable; longer is fine if the argument earns it
-- **External links (standing rule):** do **not** put external URLs in the LinkedIn post body. LinkedIn still penalizes reach on posts with outbound links. Keep the body link-free (including article-promo and source-citation posts). After the post is live, immediately publish the source/article URL as the **first comment**, optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). When posting via browser automation, the agent posts that comment right after the main post goes live — not later, not as a draft reminder.
+- **External links (standing rule):** do **not** put external URLs in the LinkedIn post body by default. Keep the body link-free (including article-promo and source-citation posts). The source/article URL goes in the **first comment**, posted right after the post goes live (by the agent through browser automation when it publishes for João), optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). The first comment is only the source URL with an optional one-line framing; no generated engagement comment is ever posted.
+- **Link-placement A/B test (6 posts from 2026-10-26):** alternate between first-comment (posts 1, 3, 5) and the URL on the last line of the body (posts 2, 4, 6). Count earlier posts with `link_placement:` in front matter to know which slot this is, and set `link_placement:` on this one. After post 6 the weekly review in `style/growth.md` decides the rule.
+- **Carousel for several sources:** when the post has two or more sources, the LinkedIn visual is a carousel with one screenshot per source.
+- **Native video for robotics and physical AI:** when a source clip exists, attach it natively with credit instead of a screenshot.
 - **Multiple sources:** when the post cites more than one source, post each source as its own comment, one URL per comment, in the order the post mentions them. Give each an optional one-line framing that names what it is (e.g. "The Nature Communications paper:"). Don't bundle several URLs into one comment.
 
 ### X variant
@@ -129,7 +137,9 @@ Single-post construction rules:
 - **Hook still leads.** The first 1-2 lines must earn the unfold — X shows "Show more" once the post exceeds the timeline preview window (~500 chars).
 - **Paragraph breaks matter.** Use them generously. Readers scan more aggressively than on LinkedIn.
 - **Length:** match the canonical post. Don't pad to use the longer limit just because it exists. If the canonical is 120 words, the X version is too.
-- **No hashtags** — X culture, feels spammy. Optional `@`-mentions if quoting someone.
+- **No hashtags**: X culture, feels spammy. Optional `@`-mentions if quoting someone, never as the first word.
+- **João posts by hand.** The agent only hands him the text. If the take doesn't fit as a standalone post, make the variant a quote-post of the source tweet with a short original line that makes a claim, not a description.
+- **Replies are João's.** Never draft replies to other people's posts. When useful, list reply targets: the post link plus one line on why it is worth a reply.
 
 **External links:** if the canonical post references an external URL (article-promo, source citation), append a single short **reply** with just that link, optionally prefixed by a one-line framing ("Full piece:", "Source:", etc.). The main post does not contain the URL. X still throttles reach on posts with links — keeping the link in a reply preserves the algorithm's reach while still giving readers a clean path. For posts with no external link, the output is a single tweet only.
 
@@ -139,15 +149,14 @@ Single-post construction rules:
 
 ### Substack Note variant
 
-Substack Notes is a different beast from LinkedIn and X — the audience is already inside the newsletter ecosystem and one click from subscribing. Notes is mid-funnel (conversion), not top-of-funnel (cold reach). Adapt the LinkedIn variant with these moves:
+A Note is its own short piece, not a trimmed LinkedIn post. One Note a day.
 
-- **Strip the hashtags.** Notes culture doesn't use them.
-- **Soften the hook.** LinkedIn's first line has to earn the expand-click against a noisy feed; Notes readers are more receptive. The opener can be conversational rather than punchy. A flat first sentence is fine.
-- **Welcome the link.** Unlike X, Substack Notes don't throttle posts with links. If this is an article-promo post or a riff on a source, include the link inline near the close (or as a final standalone line for click prominence).
-- **Length:** roughly the same as LinkedIn — 100-250 words. Notes can go longer than tweets, but shorter feels native.
-- **No Subscribe CTA.** The Subscribe button shows up automatically on every Note for non-subscribers; don't ask explicitly.
-
-For most posts the Note is ~90% of the LinkedIn copy with these adjustments — a fast transform, not a fresh write. If the LinkedIn variant is also link-free and tag-light, the Note can be nearly identical.
+- **Length: 250 to 299 characters** (count them).
+- **No emoji, no tags, no Substack link** inside the Note.
+- A source URL goes at the end of its paragraph only when the Note needs it.
+- Same voice rules: concrete first sentence, clear position, no punchline closer.
+- **No Subscribe CTA.**
+- Notes grow through other people's threads: when relevant, list one or two Notes threads João could join (link plus one line of context). João writes those replies himself.
 
 ### Show variants and iterate
 
@@ -318,6 +327,7 @@ authored: true
 post_url: ""
 x_url: ""
 substack_note_url: ""
+link_placement: ""   # only during the LinkedIn A/B test: comment | body
 tags: [tag1, tag2, tag3]
 source_urls:
   - [url1]
@@ -327,13 +337,13 @@ template: [short-form | long-form | article-reaction]
 
 [the canonical post body, exactly as approved]
 
-**Hashtags:** #Tag1 #Tag2 #Tag3
+**Hashtags:** #Tag1 #Tag2
 ```
 
 **For sequence posts (2+ images):** append a `## Media` section after the hashtags line with one markdown reference per image, in sequence order. This matches the scraper's existing convention and makes all images render stacked on the individual post page.
 
 ```markdown
-**Hashtags:** #Tag1 #Tag2 #Tag3
+**Hashtags:** #Tag1 #Tag2
 
 ---
 
@@ -361,14 +371,14 @@ Notes:
 ```markdown
 # LinkedIn post — [slug]
 
-Paste this directly into LinkedIn's composer. Zero emojis, 2-4 hashtags at the end.
-Do **not** put external URLs in the body.
+Paste this directly into LinkedIn's composer. Zero emojis, 0 to 2 hashtags at the end.
+Do **not** put external URLs in the body (unless this is a `link_placement: body` post in the A/B test, then the URL is the last line).
 
 ---
 
 [LinkedIn variant body, exactly as approved — no external URLs]
 
-#Tag1 #Tag2 #Tag3
+[0 to 2 hashtags, or none]
 
 ---
 
@@ -376,7 +386,7 @@ Do **not** put external URLs in the body.
 
 ---
 
-**First comment (post immediately after the main post goes live):**
+**First comment (posted right after the main post goes live):**
 [optional one-line framing]
 [external URL]
 
@@ -440,11 +450,13 @@ If a thread is genuinely warranted (rare — see X variant section above), use s
 ```markdown
 # Substack Note — [slug]
 
-Paste into Substack Notes (substack.com/notes). No hashtags. Links welcome.
+Paste into Substack Notes (substack.com/notes). 250 to 299 characters, no emoji, no tags, no Substack link.
 
 ---
 
-[Substack Note body, adapted from the LinkedIn variant — no hashtags, softer hook, link welcomed if applicable]
+[Substack Note body: 250 to 299 characters, source URL at the end of its paragraph only if needed]
+
+Character count: [N]
 
 ---
 
@@ -513,7 +525,7 @@ Chart JSON spec and rendered `.webp` go in the post's `media/` subdirectory (alr
 Tell the user:
 - **Site canonical post saved:** `content/posts/YYYY/MM/DD-slug/post.md`
 - **LinkedIn variant:** `content/posts/YYYY/MM/DD-slug/linkedin.md` — paste into LinkedIn's native composer
-- **X variant:** `content/posts/YYYY/MM/DD-slug/x-thread.md` — paste into X or Typefully
+- **X variant:** `content/posts/YYYY/MM/DD-slug/x-thread.md`: João pastes it into X by hand
 - **Substack Note variant:** `content/posts/YYYY/MM/DD-slug/substack-note.md` — paste into substack.com/notes
 - If image prompts: `image-prompts.md` in the same directory. Generate each image and save to `media/` as `image-1.webp` (single-image posts) or `image-1.webp` through `image-N.webp` in sequence order (multi-image posts).
 - Remind: "After posting on each surface, fill in `post_url:`, `x_url:`, and `substack_note_url:` in `post.md` frontmatter."

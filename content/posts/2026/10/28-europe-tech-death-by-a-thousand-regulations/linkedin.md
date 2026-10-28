@@ -1,6 +1,6 @@
 # LinkedIn: europe-tech-death-by-a-thousand-regulations
 
-Published as text only (no image). Link-test post 3: sources in the first comment.
+Published with the chart image from Michael A. Arouet's post attached (the same chart X shows through the quote; the image is not stored in the repo). Link-test post 3: sources in the first comment.
 
 ---
 
@@ -22,3 +22,4 @@ Sources:
 Draghi report: https://commission.europa.eu/topics/competitiveness/draghi-report_en
 GDPR and EU venture deals (NBER): https://www.nber.org/papers/w25248
 EU Inc. Council position: https://www.consilium.europa.eu/en/press/press-releases/2026/10/23/eu-inc-council-adopts-position-on-a-new-eu-corporate-law-for-innovative-companies/
+Chart: Michael A. Arouet on X (https://x.com/MichaelAArouet/status/2115358287814123830), redrawn from a chart by Oliver Coste. The chart counts ICT company R&D only.

@@ -1,6 +1,6 @@
 # Substack Note: europe-tech-death-by-a-thousand-regulations
 
-Text only. No hashtags.
+Published with the same chart image attached (not stored in the repo). Text only otherwise. No hashtags, no link.
 
 ---
 

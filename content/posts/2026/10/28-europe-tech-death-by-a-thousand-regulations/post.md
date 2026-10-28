@@ -2,9 +2,9 @@
 date: 2026-10-28
 post_type: original
 authored: true
-post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7521227773424783360/"
+post_url: "https://www.linkedin.com/feed/update/urn:li:activity:7521232003820613633/"
 x_url: "https://x.com/joaofogoncalves/status/2115461615692751325"
-substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-372551739"
+substack_note_url: "https://substack.com/profile/113523350-joaofogoncalves/note/c-372565718"
 tags: [europe, regulation, tech-policy]
 source_urls:
   - https://x.com/MichaelAArouet/status/2115358287814123830
@@ -16,7 +16,7 @@ angle: "The viral chart of Europe's tech R&D share falling to 8% is real for ICT
 template: short-form
 lane: europe-industry
 type: contrarian-counter-take
-visual: text-only
+visual: quoted-chart
 opener: plain-claim
 link_placement: first-comment
 ---

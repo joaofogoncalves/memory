@@ -123,8 +123,8 @@ LinkedIn rewards: a concrete first line (shown above "see more"), intentional pa
 - Keep paragraph breaks generous (single-sentence paragraphs work well here)
 - Hashtags at the end, 0 to 2 tags, none by default
 - Length: 150-300 words comfortable; longer is fine if the argument earns it
-- **External links (standing rule):** do **not** put external URLs in the LinkedIn post body by default. Keep the body link-free (including article-promo and source-citation posts). The source/article URL goes in the **first comment**, posted right after the post goes live (by the agent through browser automation when it publishes for João), optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). The first comment is only the source URL with an optional one-line framing; no generated engagement comment is ever posted.
-- **Link-placement A/B test (6 posts from 2026-10-26):** alternate between first-comment (posts 1, 3, 5) and the URL on the last line of the body (posts 2, 4, 6). Count earlier posts with `link_placement:` in front matter to know which slot this is, and set `link_placement:` on this one. After post 6 the weekly review in `style/growth.md` decides the rule.
+- **External links (standing rule):** the source/article URL goes on the last line of the LinkedIn post body, optionally prefixed with a one-line framing ("Source:", "Full piece:", etc.). No generated engagement comment is ever posted.
+- **Link placement (decided 2026-11-02):** the LinkedIn A/B test (6 posts from 2026-10-26, first comment vs end of body) is finished. The source link goes at the end of the body; set `link_placement: end-of-body` on every post. See `style/growth.md`.
 - **Carousel for several sources:** when the post has two or more sources, the LinkedIn visual is a carousel with one screenshot per source.
 - **Native video for robotics and physical AI:** when a source clip exists, attach it natively with credit instead of a screenshot.
 - **Multiple sources:** when the post cites more than one source, post each source as its own comment, one URL per comment, in the order the post mentions them. Give each an optional one-line framing that names what it is (e.g. "The Nature Communications paper:"). Don't bundle several URLs into one comment.
@@ -327,14 +327,18 @@ authored: true
 post_url: ""
 x_url: ""
 substack_note_url: ""
-link_placement: ""   # only during the LinkedIn A/B test: comment | body
-found_via: ""        # scan | digest | joao
-post_hour: ""        # Europe/Lisbon hour of the LinkedIn post, filled in after posting
 tags: [tag1, tag2, tag3]
 source_urls:
   - [url1]
 angle: [one-line description of the chosen angle]
 template: [short-form | long-form | article-reaction]
+lane: ""             # subject lane, see style/growth.md: robotics | science-medicine | builder-tools | europe-industry | human-story | ...
+type: ""             # post type: launch-explainer | counter-take | quote-post-with-clip | one-number-chart | first-person | ...
+visual: ""           # source-video | quoted-clip | quoted-chart | paper-figure | screenshot | text-only | own-recording
+opener: ""           # number | quote | scene | plain-claim | question
+link_placement: end-of-body   # LinkedIn A/B test finished, decided 2026-11-02: source link at the end of the body
+found_via: ""        # scan | digest | joao
+post_hour: ""        # Europe/Lisbon hour of the LinkedIn post, filled in after posting
 ---
 
 [the canonical post body, exactly as approved]
@@ -375,7 +379,7 @@ Notes:
 # LinkedIn post — [slug]
 
 Paste this directly into LinkedIn's composer. Zero emojis, 0 to 2 hashtags at the end.
-Do **not** put external URLs in the body (unless this is a `link_placement: body` post in the A/B test, then the URL is the last line).
+The source URL goes on the last line of the body (`link_placement: end-of-body`, decided 2026-11-02).
 
 ---
 

@@ -15,9 +15,9 @@ Linked from `writing_style.md`, which stays the primary authority. This file rec
 - Propose at most two style changes, each tied to the posts that support it. João confirms or rejects; only confirmed changes go into the style docs, with the date.
 - Pick one or two experiments for the week.
 
-### LinkedIn link-placement test (open)
+### LinkedIn link-placement test (finished)
 
-The next 6 LinkedIn flagships from 2026-10-26 alternate: post 1, 3, 5 put the source URL in the first comment; post 2, 4, 6 put it at the end of the body. Record `link_placement` in the log. Decide at the first weekly review after post 6, using the 30-post median score. Until then the first-comment rule stays the default for anything outside the test.
+The next 6 LinkedIn flagships from 2026-10-26 alternate: post 1, 3, 5 put the source URL in the first comment; post 2, 4, 6 put it at the end of the body. Record `link_placement` in the log. Decide at the first weekly review after post 6, using the 30-post median score. Decided 2026-11-02: the source link goes at the end of the body (body median 518 vs first comment 323, n=3 each).
 
 ## Variety rules
 
@@ -27,7 +27,7 @@ Added 2026-10-26 after João noted that recent posts all felt alike. In October,
 
 **Post type.** Launch explainer, contrarian counter-take, numbered step list, quote post with a real take, first-person build log ("I tried this"), a chart built around one number, a question to the community, and a long-form article about once a fortnight on Substack and X. At most two launch explainers in a week.
 
-**Visual.** Source video, carousel of source screenshots, annotated screenshot, João's own screen recording or photo, a paper figure, or text only. Never the same visual two days in a row, and video on at most 2 days out of 5. Quote cards and chart cards from the repo (`charts/render.mjs`, real JG monogram from `web/img/logo.svg`, `joaofogoncalves.com` in white Inter bottom right) are made only when João asks. The digest may mention that a card would fit, but does not make one unprompted.
+**Visual.** Source video, carousel of source screenshots, annotated screenshot, João's own screen recording or photo, a paper figure, or text only. Never the same visual two days in a row, and video on at most 2 days out of 5. Quote cards and chart cards from the repo (`charts/render.mjs`, real JG monogram from `web/img/logo.svg`, `joaofogoncalves.com` in white Inter bottom right) are made only when João asks. The digest may mention that a card would fit, but does not make one unprompted. Prefer clips of something physical moving; quoted screen or demo clips count toward the video limit and have run at 0.4 to 0.7x.
 
 **Opener.** Rotate between a number, a quote, a scene, a plain claim and a question. Do not start two flagships in a row with the product or company name and a verb. Every opener still carries a concrete number or claim.
 
@@ -35,9 +35,11 @@ Added 2026-10-26 after João noted that recent posts all felt alike. In October,
 
 **Article cadence.** One long-form article about every two weeks, written with the `article` workflow and `style/article_style.md`, published on Substack and X, with a LinkedIn post that points to it. It counts as that day's flagship.
 
+**Cadence.** One flagship a day and never more than one LinkedIn post a day; extra same-day waves go to X and Notes only.
+
 **Tagging.** Do not default every post to `ai, agents`. Use tags that match the lane.
 
-**Tracking.** Each post's front matter gets `lane`, `type`, `visual` and `opener` fields so the weekly review can score variety and compare formats against the 30-post median.
+**Tracking.** Each post's front matter gets `lane`, `type`, `visual`, `opener`, `found_via` (scan, digest or joao) and `post_hour` (Europe/Lisbon hour of the LinkedIn post) fields so the weekly review can score variety, compare formats against the 30-post median and judge which scans and digests produce winners.
 
 ## What the data says so far
 

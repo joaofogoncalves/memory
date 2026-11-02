@@ -328,6 +328,8 @@ post_url: ""
 x_url: ""
 substack_note_url: ""
 link_placement: ""   # only during the LinkedIn A/B test: comment | body
+found_via: ""        # scan | digest | joao
+post_hour: ""        # Europe/Lisbon hour of the LinkedIn post, filled in after posting
 tags: [tag1, tag2, tag3]
 source_urls:
   - [url1]
@@ -363,6 +365,7 @@ Notes:
 - `post_url` starts empty — fill in with the LinkedIn permalink after posting manually.
 - `x_url` starts empty — fill in with the X permalink after posting.
 - `substack_note_url` starts empty — fill in with the Substack Note permalink after posting.
+- `found_via` is where the topic came from: `scan` (watchlist scan), `digest` or `joao`. `post_hour` starts empty; fill in the Europe/Lisbon hour of the LinkedIn post after posting. Both feed the weekly review in `style/growth.md`.
 - `source_urls` — omit if the post has no external sources.
 - `tags` — lowercase tags extracted from the hashtags or the topic (match `site.yaml` topics where relevant).
 

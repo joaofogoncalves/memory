@@ -27,7 +27,7 @@ Added 2026-10-26 after João noted that recent posts all felt alike. In October,
 
 **Post type.** Launch explainer, contrarian counter-take, numbered step list, quote post with a real take, first-person build log ("I tried this"), a chart built around one number, a question to the community, and a long-form article about once a fortnight on Substack and X. At most two launch explainers in a week.
 
-**Visual.** Source video, carousel of source screenshots, annotated screenshot, João's own screen recording or photo, a paper figure, or text only. Never the same visual two days in a row, and video on at most 2 days out of 5. Quote cards and chart cards from the repo (`charts/render.mjs`, real JG monogram from `web/img/logo.svg`, `joaofogoncalves.com` in white Inter bottom right) are made only when João asks. The digest may mention that a card would fit, but does not make one unprompted. Prefer clips of something physical moving; quoted screen or demo clips count toward the video limit and have run at 0.4 to 0.7x.
+**Visual.** Source video, carousel of source screenshots, annotated screenshot, João's own screen recording or photo, a paper figure, or text only. Never the same visual two days in a row, and video on at most 2 days out of 5. Quote cards and chart cards from the repo (`charts/render.mjs`, real JG monogram from `web/img/logo.svg`, `joaofogoncalves.com` in white Inter bottom right) are made only when João asks. The digest may mention that a card would fit, but does not make one unprompted. Prefer clips of something physical moving; quoted screen or demo clips count toward the video limit and have run at 0.4 to 0.7x. Both LinkedIn breakouts (AirPointer 554,753, Fable 5.2 hardware 7,879) showed a physical thing someone made working on video and went past 90% out of network.
 
 **Opener.** Rotate between a number, a quote, a scene, a plain claim and a question. Do not start two flagships in a row with the product or company name and a verb. Every opener still carries a concrete number or claim.
 
@@ -52,7 +52,7 @@ Seeded from the 2026-10-26 growth research. Numbers as reported there.
 - Substack Notes: no metrics stored yet.
 
 **What worked**
-- **Replies.** The best replies reached 2,524, 1,631, 887 and 658 impressions, against a best original of 409. Short human replies inside other people's conversations, written by João.
+- **Replies.** The best replies reached 2,524, 1,631, 887 and 658 impressions, against a best original of 409. Short human replies inside other people's conversations, written by João. Week of 9 Nov: two FDE replies in @lennysan threads reached 1,343 and 179, more than all 10 originals that week (641).
 - **Video for robotics.** For 10 of 16 comparable accounts, video beat image and text, often by 3 to 10x (for example @TheHumanoidHub video median 14,679 vs image 7,884).
 - **Quote with a real take.** Quote-posts sit at the median (31) when the line is descriptive. Quote weight is 5x a repost, so the line has to be an arguable claim.
 - **Concrete first line.** All three viral posts studied and the top LinkedIn hits open with a stakes or results claim. On LinkedIn every top-6 post was a counter-take on something already viral (top: 149,793 impressions, then 114,545).
